@@ -10,7 +10,7 @@ import { StyledContainer } from "./styled";
 const statuses = [OrderStatus.NEW, OrderStatus.SCHEDULED, OrderStatus.NOW_IN_DELIVERY, OrderStatus.DELIVERED];
 
 export interface IBoardProps {
-  initial: { [status: string]: Array<IOrder> };
+  initial: Record<string, Array<IOrder>>;
   onOrderStatusChange: (id: string, status: OrderStatus) => void;
   onEdit: (order: IOrder) => void;
 }

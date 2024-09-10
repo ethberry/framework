@@ -18,7 +18,15 @@ export interface ILootUnpackButtonProps {
 }
 
 export const LootWrapperUnpackButton: FC<ILootUnpackButtonProps> = props => {
-  const { className, disabled, onRefreshPage = () => {}, token, variant = ListActionVariant.button } = props;
+  const {
+    className,
+    disabled,
+    onRefreshPage = () => {
+      /* empty */
+    },
+    token,
+    variant = ListActionVariant.button,
+  } = props;
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
     const contract = new Contract(

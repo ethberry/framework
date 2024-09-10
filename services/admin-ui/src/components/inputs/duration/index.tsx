@@ -45,7 +45,9 @@ export const DurationInput: FC<IDurationInput> = props => {
       name="durationAmount"
       formatValue={formatValue}
       normalizeValue={normalizeValue}
-      onBlur={() => {}}
+      onBlur={() => {
+        /* empty */
+      }}
       InputProps={{
         endAdornment: (
           <InputAdornment position="start" sx={{ ml: 1 }}>

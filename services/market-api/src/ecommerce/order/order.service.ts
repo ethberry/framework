@@ -31,7 +31,7 @@ export class OrderService {
     const { orderStatus, dateRange } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 
-    if (orderStatus && orderStatus.length) {
+    if (orderStatus?.length) {
       if (orderStatus.length === 1) {
         queryBuilder.andWhere("order.orderStatus = :orderStatus", { orderStatus: orderStatus[0] });
       } else {
@@ -73,7 +73,7 @@ export class OrderService {
     // @ts-ignore
     const cartEntity = await this.cartService.findOne({ sessionId: req.sessionID });
 
-    if (!cartEntity || !cartEntity.items.length) {
+    if (!cartEntity?.items.length) {
       throw new NotFoundException("cartNotFound");
     }
 

@@ -134,7 +134,7 @@ export const ReferralReward: FC = () => {
   };
 
   const getClaimStatus = (share: IReferralRewardShare | null) => {
-    if (share && share.claim) {
+    if (share?.claim) {
       const { claim } = share;
       switch (claim.claim?.claimStatus) {
         case ClaimStatus.NEW:

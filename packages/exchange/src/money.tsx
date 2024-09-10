@@ -19,7 +19,7 @@ export const formatEther = (amount = "0", decimals = 18, currency = "Ξ", maxDec
 };
 
 export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number) => {
-  if (!asset || !asset.components) {
+  if (!asset?.components) {
     return [];
   }
 

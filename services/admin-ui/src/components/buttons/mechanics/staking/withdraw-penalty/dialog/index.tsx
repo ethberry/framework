@@ -59,7 +59,7 @@ export const StakingWithdrawPenaltyDialog: FC<IStakingWithdrawPenaltyDialogProps
   useEffect(() => {
     if (open) {
       void fn().then((res: IStakingPenalty | null) => {
-        if (res && res.penalty) {
+        if (res?.penalty) {
           setRows(res.penalty.components);
         }
         // setRows(rows);

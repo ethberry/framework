@@ -41,7 +41,7 @@ export const createNestedValidationError = (
     if (typeof property === "string" && property.includes(".")) {
       const newPath = property.split(".");
       // Set children propery as 'contractId'
-      child.property = newPath.pop() as string;
+      child.property = newPath.pop()!;
       // newPath already ['item', 'components']
       // we pass current target, newPath and current child with updated property 'contractId'
       return createNestedValidationError(target, newPath, [child])[0]; // We know that only first propertyPath would be executed

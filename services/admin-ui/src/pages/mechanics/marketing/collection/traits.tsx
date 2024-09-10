@@ -11,7 +11,7 @@ export interface ITokenMetadataView {
 export const TokenTraitsView: FC<ITokenMetadataView> = props => {
   const { metadata } = props;
   const result = Object.entries(metadata).reduce<Record<string, any>>((memo, [key, value]) => {
-    switch (key) {
+    switch (key as TokenTraits) {
       // MODULE:COLLECTION
       case TokenTraits.CLOTHES:
       case TokenTraits.EYES:

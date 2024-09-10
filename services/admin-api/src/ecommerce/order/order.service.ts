@@ -35,7 +35,7 @@ export class OrderService {
       queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
     }
 
-    if (orderStatus && orderStatus.length) {
+    if (orderStatus?.length) {
       if (orderStatus.length === 1) {
         queryBuilder.andWhere("order.orderStatus = :orderStatus", { orderStatus: orderStatus[0] });
       } else {

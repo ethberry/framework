@@ -14,7 +14,8 @@ export const recursivelyDecodeResult = (result: Result): Record<string, any> => 
       obj[key] = recursivelyDecodeResult(obj[key]);
     });
     return obj;
-  } catch (err) {
+  } catch (e) {
+    void e;
     // Result is array.
     return result.toArray().map(item => recursivelyDecodeResult(item as Result));
   }

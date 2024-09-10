@@ -114,7 +114,7 @@ export class MarketplaceService {
     const { actions } = await seaport.createOrder(seaportOrder, offerer);
     const response: Array<{ to: string; data: string }> = [];
 
-    if (actions && actions.length) {
+    if (actions?.length) {
       for (const action of actions) {
         if (action.type === "approval") {
           const approveTx = await action.transactionMethods.buildTransaction();

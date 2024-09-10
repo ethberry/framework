@@ -5,9 +5,7 @@ export interface IEnjinTokenMetadataRichProperty {
   value: string;
   display_value: string;
   class?: string;
-  css?: {
-    [key: string]: string | number;
-  };
+  css?: Record<string, string | number>;
 }
 
 export interface IEnjinTokenMetadataArrayProperty {
@@ -20,7 +18,5 @@ export interface IEnjinTokenMetadata {
   name: string;
   description: string;
   image: string;
-  properties: {
-    [key: string]: string | IEnjinTokenMetadataRichProperty | IEnjinTokenMetadataArrayProperty;
-  };
+  properties: Record<string, string | IEnjinTokenMetadataRichProperty | IEnjinTokenMetadataArrayProperty>;
 }

@@ -67,7 +67,7 @@ export const Signal: FC = () => {
           const isRouteMatchToEvent =
             Object.keys(EventRouteMatch).includes(dto.transactionType) &&
             location.pathname.startsWith(
-              EventRouteMatch[dto.transactionType as unknown as keyof typeof EventRouteMatch] as string,
+              EventRouteMatch[dto.transactionType as unknown as keyof typeof EventRouteMatch]!,
             );
 
           if (isRouteMatchToEvent) {

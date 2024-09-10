@@ -60,7 +60,7 @@ import { ChainLinkSubscriptionModule } from "../../subscription/subscription.mod
             topics,
           },
           block: {
-            fromBlock: vrfCoordinator && vrfCoordinator.fromBlock ? vrfCoordinator.fromBlock : startingBlock,
+            fromBlock: vrfCoordinator?.fromBlock || startingBlock,
             cron,
             debug: nodeEnv === NodeEnv.development,
           },

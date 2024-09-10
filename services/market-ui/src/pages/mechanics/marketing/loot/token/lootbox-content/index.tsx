@@ -52,7 +52,7 @@ export const LootBoxContent: FC<ILootBoxContentProps> = props => {
               {component.tokenType !== TokenType.ERC20 ? (
                 <Link
                   component={RouterLink}
-                  to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId as number}`}
+                  to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}`}
                 >
                   {`${component.amount} x ${component.template?.title}`}
                 </Link>

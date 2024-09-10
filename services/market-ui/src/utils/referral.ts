@@ -22,7 +22,7 @@ export const getRefLevelShare = (
   return { share: 0, totalCount: 0 };
 };
 
-export const calculateDepth = (tree: IReferralTree, targetId: number, currentDepth: number = 0): number | null => {
+export const calculateDepth = (tree: IReferralTree, targetId: number, currentDepth = 0): number | null => {
   if (tree.id === targetId) {
     return currentDepth;
   }

@@ -9,7 +9,7 @@ import { formatEther } from "@framework/exchange";
 import { ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";
 
-import { TopUpButton } from "../../../../common/top-up";
+import { TopUpButton } from "../../../../common";
 
 export interface IStakingDepositBalanceCheck {
   token: IToken;
@@ -78,9 +78,9 @@ export const StakingCheckBalanceDialog: FC<IStakingCheckBalanceDialogProps> = pr
         >
           {rows.map((bal, idx) => (
             <StyledListItem key={idx}>
-              <ListItemText sx={{ width: 0.3 }}>{bal && bal.token ? bal.token.template?.title : ""}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{bal?.token ? bal.token.template?.title : ""}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
-                {bal && bal.token
+                {bal?.token
                   ? formatEther(
                       bal.stakingBalance.toString(),
                       bal.token?.template?.contract!.decimals,
@@ -92,7 +92,7 @@ export const StakingCheckBalanceDialog: FC<IStakingCheckBalanceDialogProps> = pr
                 {bal && BigInt(bal.stakingBalance) > BigInt(bal.depositAmount) ? ">" : "<"}
               </ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
-                {bal && bal.token
+                {bal?.token
                   ? formatEther(
                       bal.depositAmount.toString(),
                       bal.token?.template?.contract!.decimals,

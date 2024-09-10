@@ -77,7 +77,7 @@ export class StakingRulesService {
       }
     }
 
-    if (deposit && deposit.tokenType) {
+    if (deposit?.tokenType) {
       if (deposit.tokenType.length === 1) {
         queryBuilder.andWhere("deposit_contract.contractType = :depositTokenType", {
           depositTokenType: deposit.tokenType[0],
@@ -89,7 +89,7 @@ export class StakingRulesService {
       }
     }
 
-    if (reward && reward.tokenType) {
+    if (reward?.tokenType) {
       queryBuilder.andWhere(
         new Brackets(qb => {
           for (let i = 0, l = reward.tokenType.length; i < l; i++) {

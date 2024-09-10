@@ -25,7 +25,8 @@ export const getMetadata = async function (
       {} as Record<string, string>,
     ) as Record<string, string>;
   } catch (e) {
+    void e;
     logger.error("metadataNotFound", tokenId, address);
-    return { "": "" };
+    return {};
   }
 };

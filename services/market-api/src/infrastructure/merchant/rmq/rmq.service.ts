@@ -20,7 +20,7 @@ export class RmqService {
     const rmqUserName = `merchant${merchant.id}`;
 
     // MUST GET HASH
-    if (rmqUserPasswordHash && rmqUserPasswordHash.ok && rmqUserPasswordHash.ok.length > 1) {
+    if (rmqUserPasswordHash?.ok?.length > 1) {
       return this.httpService
         .post<Record<string, any>>(
           // URL

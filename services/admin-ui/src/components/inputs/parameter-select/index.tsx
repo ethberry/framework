@@ -24,7 +24,7 @@ export const ParameterSelectInput: FC<IParameterSelectInput> = props => {
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
-  const ancestorPrefix = prefix.split(".").pop() as string;
+  const ancestorPrefix = prefix.split(".").pop()!;
   const { fields, append, remove } = useFieldArray({ name: prefix, control: form.control });
   const watchFields = useWatch({ name: prefix });
   const parameters: IParameter[] = fields.map(

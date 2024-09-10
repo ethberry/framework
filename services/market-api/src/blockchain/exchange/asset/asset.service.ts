@@ -124,7 +124,7 @@ export class AssetService {
   }
 
   public summarize(dto: Array<IAssetComponentDto>): Array<IAssetComponentDto> {
-    const summaryMap: { [name: string]: IAssetComponentDto } = {};
+    const summaryMap: Record<string, IAssetComponentDto> = {};
     // Summarize values based on the name
     dto.forEach(comp => {
       const { contractId, tokenId, templateId, amount } = comp;

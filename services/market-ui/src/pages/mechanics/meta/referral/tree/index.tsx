@@ -67,7 +67,7 @@ export const ReferralTree: FC = () => {
   }, [isActive]);
 
   useEffect(() => {
-    if (rows && rows.length) {
+    if (rows?.length) {
       setPrograms(
         rows.map(row => ({
           merchantId: row.merchantId,

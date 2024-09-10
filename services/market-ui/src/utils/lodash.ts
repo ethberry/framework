@@ -29,10 +29,10 @@ export const deepClone = <T = any>(target: T): T => {
     return cloneArray as T;
   }
 
-  const cloneObject: { [key: string]: any } = {};
+  const cloneObject: Record<string, any> = {};
   for (const key in target) {
     if (Object.prototype.hasOwnProperty.call(target, key)) {
-      cloneObject[key] = deepClone((target as { [key: string]: any })[key]);
+      cloneObject[key] = deepClone((target as Record<string, any>)[key]);
     }
   }
 
