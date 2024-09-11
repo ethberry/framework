@@ -3,8 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository, FindManyOptions, In } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IDismantleSearchDto, IDismantleSignDto } from "@framework/types";
 import {
@@ -186,7 +185,7 @@ export class DismantleService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     dismantleEntity: DismantleEntity,
     tokenEntity: TokenEntity,
   ): Promise<string> {

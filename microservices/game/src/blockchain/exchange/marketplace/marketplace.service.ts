@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ITemplateSignDto } from "@framework/types";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
@@ -56,7 +55,7 @@ export class MarketplaceService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     templateEntity: TemplateEntity,
   ): Promise<string> {
     return this.signerService.getOneToManySignature(

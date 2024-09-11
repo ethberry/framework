@@ -3,8 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { concat, encodeBytes32String, hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ContractFeatures, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IBreedSignDto } from "@framework/types";
@@ -124,7 +123,7 @@ export class BreedService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     momTokenEntity: TokenEntity,
     dadTokenEntity: TokenEntity,
   ): Promise<string> {

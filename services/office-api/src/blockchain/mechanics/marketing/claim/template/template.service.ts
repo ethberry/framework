@@ -12,7 +12,7 @@ import { DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type {
   IClaimCreateDto,
@@ -205,7 +205,7 @@ export class ClaimTemplateService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
     return this.signerService.getManyToManySignature(

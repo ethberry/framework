@@ -3,8 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IDismantleSearchDto, IDismantleSignDto } from "@framework/types";
 import { DismantleStatus, DismantleStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
@@ -99,11 +98,10 @@ export class DismantleService {
     return this.dismantleEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithRelations(
-    where: FindOptionsWhere<DismantleEntity>,
-    merchantEntity: MerchantEntity,
-  ): Promise<DismantleEntity | null> {
+  public findOneWithRelations(where: FindOptionsWhere<DismantleEntity>): Promise<DismantleEntity | null> {
     const queryBuilder = this.dismantleEntityRepository.createQueryBuilder("dismantle");
+
+    queryBuilder.where(where);
 
     queryBuilder.leftJoinAndSelect("dismantle.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("dismantle.item", "item");
@@ -130,20 +128,12 @@ export class DismantleService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    queryBuilder.andWhere("dismantle.id = :id", {
-      id: where.id,
-    });
-
-    queryBuilder.andWhere("dismantle.merchantId = :merchantId", {
-      merchantId: merchantEntity.id,
-    });
-
     return queryBuilder.getOne();
   }
 
   public async sign(dto: IDismantleSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, dismantleId, chainId, tokenId } = dto;
-    const dismantleEntity = await this.findOneWithRelations({ id: dismantleId }, merchantEntity);
+    const dismantleEntity = await this.findOneWithRelations({ id: dismantleId, merchantId: merchantEntity.id });
 
     if (!dismantleEntity) {
       throw new NotFoundException("dismantleNotFound");
@@ -186,7 +176,7 @@ export class DismantleService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     dismantleEntity: DismantleEntity,
     tokenEntity: TokenEntity,
   ): Promise<string> {

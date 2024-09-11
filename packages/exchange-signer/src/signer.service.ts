@@ -1,10 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Wallet } from "ethers";
 
+import type { ISignatureAsset, ISignatureParams } from "@gemunion/types-blockchain";
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IContract } from "@framework/types";
-
-import type { IBlockchainAsset, IParams } from "./interfaces";
 
 @Injectable()
 export class SignerService {
@@ -16,9 +15,9 @@ export class SignerService {
   public async getOneToOneSignature(
     verifyingContract: IContract,
     account: string,
-    params: IParams,
-    item: IBlockchainAsset,
-    price: IBlockchainAsset,
+    params: ISignatureParams,
+    item: ISignatureAsset,
+    price: ISignatureAsset,
   ): Promise<string> {
     return this.signer.signTypedData(
       // Domain
@@ -64,9 +63,9 @@ export class SignerService {
   public async getOneToManySignature(
     verifyingContract: IContract,
     account: string,
-    params: IParams,
-    item: IBlockchainAsset,
-    price: Array<IBlockchainAsset>,
+    params: ISignatureParams,
+    item: ISignatureAsset,
+    price: Array<ISignatureAsset>,
   ): Promise<string> {
     return this.signer.signTypedData(
       // Domain
@@ -112,9 +111,9 @@ export class SignerService {
   public async getManyToManySignature(
     verifyingContract: IContract,
     account: string,
-    params: IParams,
-    items: Array<IBlockchainAsset>,
-    price: Array<IBlockchainAsset>,
+    params: ISignatureParams,
+    items: Array<ISignatureAsset>,
+    price: Array<ISignatureAsset>,
   ): Promise<string> {
     return this.signer.signTypedData(
       // Domain
@@ -160,10 +159,10 @@ export class SignerService {
   public async getOneToManyToManySignature(
     verifyingContract: IContract,
     account: string,
-    params: IParams,
-    item: IBlockchainAsset,
-    price: Array<IBlockchainAsset>,
-    content: Array<IBlockchainAsset>,
+    params: ISignatureParams,
+    item: ISignatureAsset,
+    price: Array<ISignatureAsset>,
+    content: Array<ISignatureAsset>,
     config: string,
   ): Promise<string> {
     return this.signer.signTypedData(

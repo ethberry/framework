@@ -1,10 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-
-import type { IServerSignature } from "@gemunion/types-blockchain";
 import { ModuleType, TokenType } from "@framework/types";
 import type { IRaffleSignDto } from "@framework/types";
 
@@ -56,7 +54,7 @@ export class RaffleSignService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     roundEntity: RaffleRoundEntity,
   ): Promise<string> {
     return this.signerService.getOneToOneSignature(

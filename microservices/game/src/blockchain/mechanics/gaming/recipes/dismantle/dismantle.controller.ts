@@ -33,6 +33,6 @@ export class DismantleController {
     @Param("id", ParseIntPipe) id: number,
     @User() merchantEntity: MerchantEntity,
   ): Promise<DismantleEntity | null> {
-    return this.dismantleService.findOneWithRelations({ id }, merchantEntity);
+    return this.dismantleService.findOneWithRelations({ id, merchantId: merchantEntity.id });
   }
 }

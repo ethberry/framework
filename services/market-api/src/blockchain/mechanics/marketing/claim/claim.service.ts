@@ -3,7 +3,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
@@ -188,7 +188,7 @@ export class ClaimService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
     return this.signerService.getManyToManySignature(

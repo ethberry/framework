@@ -3,8 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ICraftSearchDto, ICraftSignDto } from "@framework/types";
 import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";
@@ -178,7 +177,7 @@ export class CraftService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     craftEntity: CraftEntity,
   ): Promise<string> {
     return this.signerService.getManyToManySignature(

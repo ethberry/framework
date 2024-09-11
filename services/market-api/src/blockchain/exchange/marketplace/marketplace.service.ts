@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { encodeBytes32String, ethers, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ITemplateSignDto } from "@framework/types";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
@@ -20,10 +19,10 @@ import type { ITokenSellDto } from "./interfaces";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import {
   calculatePricesFees,
-  getOpenSeaSigner,
-  getPriceType,
   conduitKey,
   getItemType,
+  getOpenSeaSigner,
+  getPriceType,
 } from "../../../common/utils/opensea";
 
 @Injectable()
@@ -178,7 +177,7 @@ export class MarketplaceService {
     verifyingContract: ContractEntity,
     account: string,
     amount: string,
-    params: IParams,
+    params: ISignatureParams,
     templateEntity: TemplateEntity,
   ): Promise<string> {
     return this.signerService.getOneToManySignature(

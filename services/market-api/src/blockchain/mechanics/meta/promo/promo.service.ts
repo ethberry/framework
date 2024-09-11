@@ -3,9 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { defaultChainId } from "@framework/constants";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IPromoSignDto, IPromoSearchDto } from "@framework/types";
@@ -203,7 +202,7 @@ export class AssetPromoService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     assetPromoEntity: AssetPromoEntity,
   ): Promise<string> {
     const mysteryComponents =

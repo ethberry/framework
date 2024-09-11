@@ -1,8 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IRentSignDto } from "@framework/types";
@@ -67,7 +66,7 @@ export class RentSignService {
   public getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     tokenEntity: TokenEntity,
     rentEntity: RentEntity,
   ): Promise<string> {

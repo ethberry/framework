@@ -3,12 +3,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, FindManyOptions, In, Repository } from "typeorm";
 import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
+import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
 import { defaultChainId } from "@framework/constants";
 import type { IMergeSearchDto, IMergeSignDto } from "@framework/types";
 import { MergeStatus, ModuleType, SettingsKeys, TemplateStatus, TokenType } from "@framework/types";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
@@ -200,7 +199,7 @@ export class MergeService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    params: IParams,
+    params: ISignatureParams,
     mergeEntity: MergeEntity,
     tokenEntities: Array<TokenEntity>,
   ): Promise<string> {
