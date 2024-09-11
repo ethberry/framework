@@ -1,11 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+
+import { comparator } from "@gemunion/utils";
 import type { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { MerchantService } from "../../../../../infrastructure/merchant/merchant.service";
-import { sorter } from "../../../../../common/utils/sorter";
 import { ReferralProgramEntity } from "./referral.program.entity";
 
 @Injectable()
@@ -64,7 +65,7 @@ export class ReferralProgramService {
 
     if (levels.length > 0) {
       // CREATE ALL REF PROGRAM LEVELS
-      for (const level of levels.sort(sorter("level"))) {
+      for (const level of levels.sort(comparator("level"))) {
         await this.create({
           merchantId: userEntity.merchantId,
           level: level.level,

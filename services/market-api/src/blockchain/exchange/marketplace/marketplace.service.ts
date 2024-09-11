@@ -2,11 +2,11 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { encodeBytes32String, ethers, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import { comparator } from "@gemunion/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ITemplateSignDto } from "@framework/types";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
-import { sorter } from "../../../common/utils/sorter";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
@@ -193,7 +193,7 @@ export class MarketplaceService {
             : templateEntity.id.toString(),
         amount: amount || "1",
       },
-      templateEntity.price.components.sort(sorter("id")).map(component => ({
+      templateEntity.price.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

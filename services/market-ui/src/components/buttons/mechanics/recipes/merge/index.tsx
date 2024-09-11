@@ -7,13 +7,14 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useAppSelector } from "@gemunion/redux";
 import { walletSelectors } from "@gemunion/provider-wallet";
 import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { convertDatabaseAssetToChainAsset, convertTemplateToTokenTypeAsset, sortArrObj } from "@framework/exchange";
+import { convertDatabaseAssetToChainAsset, convertTemplateToTokenTypeAsset } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { IContract, IMerge, TokenType } from "@framework/types";
 
 import ExchangeMergeFacetMergeABI from "@framework/abis/json/ExchangeMergeFacet/merge.json";
 
 import { MergeDialog, IMergeDto } from "./dialog";
+import { arrayComparator } from "./utils";
 
 interface IMergeButtonProps {
   className?: string;
@@ -44,7 +45,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
 
       const items = convertDatabaseAssetToChainAsset(merge.item?.components);
 
-      const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el => ({
+      const price = arrayComparator(values.tokenEntities, "tokenId").map(el => ({
         tokenId: el.tokenId,
         tokenType: Object.values(TokenType).indexOf(el.template!.contract!.contractType!),
         token: el.template?.contract?.address,
@@ -69,7 +70,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     async (values: IMergeDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const price = sortArrObj(values.tokenEntities, { sortBy: "tokenId" }).map(el =>
+      const price = arrayComparator(values.tokenEntities, "tokenId").map(el =>
         convertTemplateToTokenTypeAsset(el.template),
       );
 

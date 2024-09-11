@@ -4,11 +4,11 @@ import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import { comparator } from "@gemunion/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ICraftSearchDto, ICraftSignDto, ICraftCountDto, ICraftCountResult } from "@framework/types";
 import { CraftStatus, ModuleType, SettingsKeys, TemplateStatus, TokenType } from "@framework/types";
 
-import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
@@ -184,7 +184,7 @@ export class CraftService {
       verifyingContract,
       account,
       params,
-      craftEntity.item.components.sort(sorter("id")).map(component => ({
+      craftEntity.item.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:
@@ -193,7 +193,7 @@ export class CraftService {
             : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
-      craftEntity.price.components.sort(sorter("id")).map(component => ({
+      craftEntity.price.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

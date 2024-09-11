@@ -6,11 +6,11 @@ import { Contract } from "ethers";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { comparator } from "@gemunion/utils";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { DurationUnit, IMysteryBox, IStakingRule, TokenType } from "@framework/types";
 
 import { StakingRuleUploadDialog } from "./upload-dialog";
-import { sorter } from "../../../../../utils/sorter";
 import StakingSetRulesABI from "@framework/abis/json/Staking/setRules.json";
 
 export interface IStakingRuleCreateButtonProps {
@@ -35,7 +35,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
   // MODULE:MYSTERYBOX
   const { fn } = useApiCall(
     (api, data: { templateIds: Array<number> }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+       
       return api.fetchJson({
         url: "/mystery/boxes",
         data,
@@ -46,7 +46,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
 
   const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
     const stakingRule = {
-      deposit: rule.deposit?.components.sort(sorter("templateId")).map(component => ({
+      deposit: rule.deposit?.components.sort(comparator("templateId")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId || 0,

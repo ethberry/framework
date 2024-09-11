@@ -2,11 +2,11 @@ import { BadRequestException, ForbiddenException, Injectable } from "@nestjs/com
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import { comparator } from "@gemunion/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 import type { IMysteryBoxSignDto } from "@framework/types";
 
-import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
@@ -73,7 +73,7 @@ export class MysterySignService {
       account,
       params,
       [
-        ...mysteryBoxEntity.content.components.sort(sorter("id")).map(component => ({
+        ...mysteryBoxEntity.content.components.sort(comparator("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract.address,
           // tokenId: (component.templateId || 0).toString(), // suppression types check with 0
@@ -90,7 +90,7 @@ export class MysterySignService {
           amount: "1",
         },
       ],
-      mysteryBoxEntity.template.price.components.sort(sorter("id")).map(component => ({
+      mysteryBoxEntity.template.price.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

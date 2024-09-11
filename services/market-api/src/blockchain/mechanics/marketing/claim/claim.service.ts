@@ -4,6 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
 import type { ISignatureParams } from "@gemunion/types-blockchain";
+import { comparator } from "@gemunion/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
@@ -13,7 +14,6 @@ import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { sorter } from "../../../../common/utils/sorter";
 
 @Injectable()
 export class ClaimService {
@@ -197,7 +197,7 @@ export class ClaimService {
       params,
       claimEntity.item.components
         .slice()
-        .sort(sorter("id"))
+        .sort(comparator("id"))
         .map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract.address,

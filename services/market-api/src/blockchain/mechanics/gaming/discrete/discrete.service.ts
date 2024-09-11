@@ -4,6 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import { comparator } from "@gemunion/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IDiscreteAutocompleteDto, IDiscreteFindOneDto, IDiscreteSignDto } from "@framework/types";
 import {
@@ -15,7 +16,6 @@ import {
   TokenType,
 } from "@framework/types";
 
-import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -152,7 +152,7 @@ export class DiscreteService {
         tokenId: tokenEntity.tokenId.toString(),
         amount: "1",
       },
-      discreteEntity.price.components.sort(sorter("id")).map(component => ({
+      discreteEntity.price.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         // tokenId: (component.templateId || 0).toString(),

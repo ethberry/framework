@@ -4,11 +4,11 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import { comparator } from "@gemunion/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IDismantleSearchDto, IDismantleSignDto } from "@framework/types";
 import { DismantleStatus, DismantleStrategy, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
-import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
@@ -185,7 +185,7 @@ export class DismantleService {
       account,
       params,
       // ITEM to get after dismantle
-      dismantleEntity.item.components.sort(sorter("id")).map(component => ({
+      dismantleEntity.item.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:
@@ -201,7 +201,7 @@ export class DismantleService {
       })),
       // PRICE token to dismantle
       [
-        dismantleEntity.price.components.sort(sorter("id")).map(component => ({
+        dismantleEntity.price.components.sort(comparator("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract.address,
           tokenId: tokenEntity.tokenId,

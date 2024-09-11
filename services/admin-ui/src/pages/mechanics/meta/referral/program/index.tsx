@@ -3,11 +3,11 @@ import { FC, Fragment, useCallback, useEffect, useState } from "react";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
+import { comparator } from "@gemunion/utils";
 import type { IPaginationResult } from "@gemunion/types-collection";
 import type { IReferralProgram, IReferralProgramCreateDto, IReferralProgramUpdateDto, IUser } from "@framework/types";
 import { ReferralProgramStatus } from "@framework/types";
 
-import { sorter } from "../../../../../utils/sorter";
 import { ReferralProgramForm } from "./form";
 import { getEmptyProgramLevel } from "./form/levels";
 import { StatusSwitch } from "./status";
@@ -48,7 +48,7 @@ export const ReferralProgram: FC = () => {
   const handleSubmit = useCallback(
     async (values: IReferralProgramCreateDto, form: any): Promise<void> => {
       const filteredLevels = values.levels
-        .sort(sorter("level"))
+        .sort(comparator("level"))
         .map((lev, indx) => ({ level: indx, share: lev.share }));
       // CREATE OR UPDATE
       if (initialValues?.levels.length === 0) {

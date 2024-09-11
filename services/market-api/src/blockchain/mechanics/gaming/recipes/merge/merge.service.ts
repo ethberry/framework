@@ -4,12 +4,12 @@ import { Brackets, FindOneOptions, FindOptionsWhere, FindManyOptions, In, Reposi
 import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import { comparator } from "@gemunion/utils";
 import { defaultChainId } from "@framework/constants";
 import type { IMergeSearchDto, IMergeSignDto } from "@framework/types";
 import { MergeStatus, ModuleType, SettingsKeys, TemplateStatus, TokenType } from "@framework/types";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 
-import { sorter } from "../../../../../common/utils/sorter";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
@@ -208,7 +208,7 @@ export class MergeService {
       account,
       params,
       // ITEM to get after merge
-      mergeEntity.item.components.sort(sorter("id")).map(component => ({
+      mergeEntity.item.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:
@@ -218,7 +218,7 @@ export class MergeService {
         amount: "1",
       })),
       // PRICE token to merge
-      tokenEntities.sort(sorter("tokenId")).map(tokenEntity => ({
+      tokenEntities.sort(comparator("tokenId")).map(tokenEntity => ({
         tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId,

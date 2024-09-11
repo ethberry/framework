@@ -4,6 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import { comparator } from "@gemunion/utils";
 import { defaultChainId } from "@framework/constants";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
@@ -13,7 +14,6 @@ import { AssetPromoEntity } from "./promo.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
-import { sorter } from "../../../../common/utils/sorter";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { MysteryBoxEntity } from "../../marketing/mystery/box/box.entity";
@@ -215,7 +215,7 @@ export class AssetPromoService {
           account,
           params,
           [
-            ...assetPromoEntity.box!.content.components.sort(sorter("id")).map(component => ({
+            ...assetPromoEntity.box!.content.components.sort(comparator("id")).map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract.address,
               // tokenId: component.templateId || 0,
@@ -225,14 +225,14 @@ export class AssetPromoService {
                   : (component.templateId || 0).toString(),
               amount: component.amount,
             })),
-            assetPromoEntity.item?.components.sort(sorter("id")).map(component => ({
+            assetPromoEntity.item?.components.sort(comparator("id")).map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract.address,
               tokenId: (component.templateId || 0).toString(), // suppression types check with 0
               amount: component.amount,
             }))[0],
           ],
-          assetPromoEntity.price.components.sort(sorter("id")).map(component => ({
+          assetPromoEntity.price.components.sort(comparator("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract.address,
             tokenId: component.template.tokens[0].tokenId,
@@ -243,13 +243,13 @@ export class AssetPromoService {
           verifyingContract,
           account,
           params,
-          assetPromoEntity.item.components.sort(sorter("id")).map(component => ({
+          assetPromoEntity.item.components.sort(comparator("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract.address,
             tokenId: (component.templateId || 0).toString(), // suppression types check with 0
             amount: component.amount,
           }))[0],
-          assetPromoEntity.price.components.sort(sorter("id")).map(component => ({
+          assetPromoEntity.price.components.sort(comparator("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract.address,
             tokenId: component.template.tokens[0].tokenId,
