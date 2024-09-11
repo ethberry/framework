@@ -7,7 +7,6 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
-    "@gemunion/traits-v6": "1.0.25",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "3.3.24",
     "@gemunion/constants": "0.13.1",
@@ -23,7 +22,9 @@
     "@gemunion/nest-js-module-winston-logdna": "3.1.15",
     "@gemunion/nest-js-utils": "4.2.13",
     "@gemunion/nest-js-validators": "4.1.2",
+    "@gemunion/traits-v6": "1.0.25",
     "@gemunion/types-collection": "1.5.17",
+    "@gemunion/utils-eth": "1.1.23",
     "@golevelup/nestjs-discovery": "4.0.1",
     "@golevelup/nestjs-modules": "0.7.1",
     "@nestjs/axios": "3.0.3",

@@ -1,8 +1,9 @@
 import { LoggerService } from "@nestjs/common";
 import { Contract, JsonRpcProvider, stripZerosLeft, toUtf8String } from "ethers";
 
+import { recursivelyDecodeResult } from "@gemunion/utils-eth";
+
 import { blockAwait } from "./blockAwait";
-import { recursivelyDecodeResult } from "./decodeResult";
 
 export const getMetadata = async function (
   tokenId: string,

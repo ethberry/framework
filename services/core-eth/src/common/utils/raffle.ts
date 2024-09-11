@@ -1,8 +1,7 @@
 import { Contract, JsonRpcProvider } from "ethers";
 
+import { recursivelyDecodeResult } from "@gemunion/utils-eth";
 import type { IRaffleCurrentRound } from "@framework/types";
-
-import { recursivelyDecodeResult } from "./decodeResult";
 
 export const getCurrentRaffleRound = async function (
   address: string,
