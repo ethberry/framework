@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@framework/types": "0.0.1",
+    "@gemunion/types-collection": "1.5.17",
     "@mui/material": "6.0.2",
     "ethers": "5.7.2",
     "react": "18.3.1"

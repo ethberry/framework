@@ -26,7 +26,7 @@ export const Product: FC = () => {
   const fetchProduct = async (): Promise<void> => {
     return api
       .fetchJson({
-        url: `/products/${id as string}`,
+        url: `/products/${id!}`,
       })
       .then((json: IProduct) => {
         setProduct(json);

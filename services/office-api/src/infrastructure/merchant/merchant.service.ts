@@ -44,7 +44,7 @@ export class MerchantService {
       );
     }
 
-    if (merchantStatus && merchantStatus.length) {
+    if (merchantStatus?.length) {
       if (merchantStatus.length === 1) {
         queryBuilder.andWhere("merchant.merchantStatus = :merchantStatus", { merchantStatus: merchantStatus[0] });
       } else {

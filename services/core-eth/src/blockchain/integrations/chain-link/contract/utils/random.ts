@@ -22,8 +22,6 @@ export const callRandom = async function (
   const generatedRandomBytes = randomBytes(32);
   const randomness = BigInt("0x" + Buffer.from(generatedRandomBytes).toString("hex"));
 
-  console.log("randomness", randomness);
-
   const block = await provider.provider?.getBlock("latest");
   // hexlify(toUtf8Bytes('<YOUR_STRING>'));
 
@@ -59,9 +57,6 @@ export const callRandom = async function (
     sender,
     extraArgs,
   };
-
-  console.log("proof", proof);
-  console.log("rndReq", rndReq);
 
   const contract = new Contract(vrfAddr, VrfV2Sol.abi, provider);
   const trx = await contract.fulfillRandomWords(

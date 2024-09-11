@@ -11,7 +11,7 @@ export interface ITokenMetadataView {
 export const getFilteredAttributes = (metadata: Record<string, any>) =>
   Object.entries(metadata).reduce(
     (memo, [key, value]) => {
-      switch (key) {
+      switch (key as TokenMetadata) {
         // MODULE:GRADE
         case TokenMetadata.LEVEL:
           Object.assign(memo, { [key]: value });

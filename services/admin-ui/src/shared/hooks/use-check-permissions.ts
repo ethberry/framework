@@ -14,7 +14,7 @@ export const useCheckPermissions = () => {
 
   const checkPermissions = useCallback(async (value: IAccessControl) => {
     const { address, account } = value;
-    return fn(void 0, { account, address });
+    return fn(void 0, { account, address }) as Promise<IAccessControl>;
   }, []);
 
   return { checkPermissions };

@@ -15,7 +15,7 @@ export interface ISelectInputProps {
 export const SelectInput: FC<ISelectInputProps> = props => {
   const { disabledOptions = [], name, options = [], prefix } = props;
 
-  const suffix = name.split(".").pop() as string;
+  const suffix = name.split(".").pop()!;
 
   const { testId } = useTestId();
   const testIdProps = testId ? { "data-testid": `${testId}-${name}` } : {};

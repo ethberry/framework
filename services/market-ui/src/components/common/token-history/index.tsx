@@ -81,7 +81,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       headerName: formatMessage({ id: "form.labels.tx" }),
       sortable: false,
       renderCell: (params: GridCellParams<any, string>) => {
-        return <TxHashLink hash={params.value as string} length={18} />;
+        return <TxHashLink hash={params.value!} length={18} />;
       },
       flex: 1.2,
     },

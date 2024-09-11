@@ -7,10 +7,10 @@ import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Add, Delete } from "@mui/icons-material";
 
-export type ParameterValue = {
+export interface IParameterValue {
   id: string;
   parameterValue: string;
-};
+}
 
 export interface IParameterValuesInput {
   name?: string;
@@ -30,12 +30,12 @@ export const ParameterValuesInput: FC<IParameterValuesInput> = props => {
     return null;
   }
 
-  const values: ParameterValue[] = fields.map(
+  const values: IParameterValue[] = fields.map(
     (field, index) =>
       ({
         ...field,
         ...watchFields[index],
-      }) as ParameterValue,
+      }) as IParameterValue,
   );
 
   const handleOptionAdd = (): (() => void) => (): void => {
@@ -61,7 +61,7 @@ export const ParameterValuesInput: FC<IParameterValuesInput> = props => {
         </Tooltip>
       </Box>
 
-      {values?.map((p: ParameterValue, i: number) => (
+      {values?.map((p: IParameterValue, i: number) => (
         <Box key={p.id} mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box flex={1}>
             <Paper sx={{ p: 2, display: "flex", alignItems: "stretch", flex: 1, flexDirection: "column" }}>

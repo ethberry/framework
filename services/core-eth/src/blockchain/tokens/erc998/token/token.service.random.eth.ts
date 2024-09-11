@@ -176,13 +176,7 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
   public async exchangeNotify(historyId: number) {
     const history = await this.eventHistoryService.findOneWithRelations({ id: historyId });
     // it must work for exchange purchase random
-    if (
-      history &&
-      history.parent &&
-      history.parent.parent &&
-      history.parent.parent.parent &&
-      history.parent.parent.parent.eventType === ContractEventType.Purchase
-    ) {
+    if (history?.parent?.parent?.parent?.eventType === ContractEventType.Purchase) {
       const exchangeEvent = history.parent.parent.parent;
       const eventData = exchangeEvent.eventData as unknown as IExchangePurchaseEvent;
       const exchangeAssetHistory = await this.assetService.findAll(
@@ -192,7 +186,7 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
 
       await this.notificatorService.purchaseRandom({
         account: eventData.account.toLowerCase(),
-        item: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.ITEM)[0],
+        item: exchangeAssetHistory.find(history => history.exchangeType === ExchangeType.ITEM)!,
         price: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.PRICE),
         transactionHash: exchangeEvent.transactionHash,
       });

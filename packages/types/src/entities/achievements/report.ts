@@ -1,4 +1,4 @@
-export type IAchievementItemReport = {
+export interface IAchievementItemReport {
   achievementRuleId: number;
   count: number;
-};
+}

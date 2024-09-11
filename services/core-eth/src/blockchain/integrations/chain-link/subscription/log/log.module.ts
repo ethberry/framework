@@ -50,7 +50,7 @@ import { keccak256It } from "../../contract/utils";
             topics,
           },
           block: {
-            fromBlock: vrfCoordinator && vrfCoordinator.fromBlock ? vrfCoordinator.fromBlock : startingBlock,
+            fromBlock: vrfCoordinator?.fromBlock || startingBlock,
             cron,
             debug: nodeEnv === NodeEnv.development,
           },

@@ -12,7 +12,7 @@ export interface ITokenUserMetadataView {
 export const TokenUserMetadataView: FC<ITokenUserMetadataView> = props => {
   const { metadata } = props;
 
-  if (!metadata || !metadata.USER || metadata.USER === constants.AddressZero) {
+  if (!metadata?.USER || metadata.USER === constants.AddressZero) {
     return null;
   }
 

@@ -35,8 +35,7 @@ export class PonziReportService {
   public async export(dto: IPonziReportSearchDto, userEntity: UserEntity): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    const [list] = await this.search(rest as IPonziReportSearchDto, userEntity);
+    const [list] = await this.search(rest, userEntity);
 
     const headers = ["id", "account", "createdAt"];
 

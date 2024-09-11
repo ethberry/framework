@@ -189,7 +189,7 @@ export class AchievementRuleService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    if (item && item.components.length) {
+    if (item?.components.length) {
       // clean templateId if any == 0
       const itemNew: IAssetDto = {
         components: item.components.map(comp =>

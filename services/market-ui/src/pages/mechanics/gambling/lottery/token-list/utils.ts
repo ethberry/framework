@@ -11,8 +11,8 @@ export const decodeNumbersToArr = (numberStr: string, len = 36): Array<boolean> 
 export const decodeNumbers = (numberStr: string): string => {
   const arr = [];
   const uint8Arr = utils.arrayify(BigNumber.from(numberStr));
-  for (let i = 0; i < uint8Arr.length; i++) {
-    arr.push(uint8Arr[i]);
+  for (const item of uint8Arr) {
+    arr.push(item);
   }
   return arr.join(", ");
 };
@@ -39,7 +39,9 @@ export const getWinners = (tokenNumbers: Array<boolean>, roundNumbers: Array<boo
 
 export const getSelectedNumbers = (tokenNumbers: boolean[]): number[] =>
   tokenNumbers.reduceRight((acc: number[], cell: boolean, i: number) => {
-    cell && acc.push(i + 1);
+    if (cell) {
+      acc.push(i + 1);
+    }
     return acc;
   }, []);
 

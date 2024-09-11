@@ -25,6 +25,8 @@
     "@gemunion/nest-js-module-winston-logdna": "3.1.14",
     "@gemunion/nest-js-utils": "4.2.13",
     "@gemunion/nest-js-validators": "4.1.1",
+    "@gemunion/types-blockchain": "1.3.0",
+    "@gemunion/types-blockchain": "1.3.0",
     "@gemunion/types-collection": "1.5.17",
     "@liaoliaots/nestjs-redis": "9.0.5",
     "@liaoliaots/nestjs-redis-health": "9.0.4",
@@ -48,7 +50,8 @@
     "reflect-metadata": "0.2.2",
     "ts-mixer": "6.0.4",
     "typeorm": "0.3.20",
-    "typeorm-naming-strategies": "4.1.0"
+    "typeorm-naming-strategies": "4.1.0",
+    "uuid": "10.0.0"
   },
   "description": "HTTP API for interaction with game server",
   "devDependencies": {
@@ -57,17 +60,7 @@
     "@nestjs/testing": "10.4.1",
     "@types/node": "20.16.5",
     "@types/uuid": "10.0.0",
-    "@typescript-eslint/eslint-plugin": "8.4.0",
-    "@typescript-eslint/parser": "8.4.0",
     "date-fns": "3.6.0",
-    "eslint": "8.57.0",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-config-standard": "17.1.0",
-    "eslint-import-resolver-typescript": "3.6.3",
-    "eslint-plugin-import": "2.30.0",
-    "eslint-plugin-n": "16.6.2",
-    "eslint-plugin-prettier": "5.2.1",
-    "eslint-plugin-promise": "6.6.0",
     "rimraf": "6.0.1",
     "tsc-watch": "6.2.0",
     "typescript": "5.5.4"

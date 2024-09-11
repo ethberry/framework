@@ -81,7 +81,7 @@ export const MyTransactions: FC = () => {
       headerName: formatMessage({ id: "form.labels.tx" }),
       sortable: false,
       renderCell: (params: GridRenderCellParams<GridValidRowModel, string, IEventHistory, GridTreeNodeWithRender>) => {
-        return <TxHashLink hash={params.value as string} />;
+        return <TxHashLink hash={params.value!} />;
       },
       flex: 1,
       minWidth: 180,

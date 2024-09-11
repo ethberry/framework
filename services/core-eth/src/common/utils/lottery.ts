@@ -15,8 +15,8 @@ export const getLotteryNumbersArr = (selected: Array<number>) => {
 export const getBytesNumbersArr = (selected = ""): Array<number> => {
   const arrStr = toBeArray(selected);
   const arr = [];
-  for (let i = 0; i < arrStr.length; i++) {
-    arr.push(Number(arrStr[i]));
+  for (const item of arrStr) {
+    arr.push(Number(item));
   }
   return arr;
 };

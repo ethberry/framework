@@ -21,7 +21,15 @@ export interface IRaffleReleaseButtonProps {
 }
 
 export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
-  const { className, disabled, round, onRefreshPage = () => {}, variant } = props;
+  const {
+    className,
+    disabled,
+    round,
+    onRefreshPage = () => {
+      /* empty */
+    },
+    variant,
+  } = props;
 
   const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, round.contract?.id);
 
@@ -31,7 +39,7 @@ export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
       LotteryRandomReleaseFundsABI,
       web3Context.provider?.getSigner(),
     );
-    return contract.releaseFunds(round.roundId) as Promise<void>;
+    return contract.releaseFunds(round.roundId);
   });
 
   const handleRelease = (): (() => Promise<void>) => {

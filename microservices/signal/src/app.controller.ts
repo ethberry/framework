@@ -7,7 +7,9 @@ import { Public } from "@gemunion/nest-js-utils";
 export class AppController {
   @Get("/")
   @Redirect("/swagger", 301)
-  public redirect(): void {}
+  public redirect(): void {
+    // empty
+  }
 
   @Get("/version")
   public version(): any {

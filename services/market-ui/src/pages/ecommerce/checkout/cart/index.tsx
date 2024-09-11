@@ -18,7 +18,7 @@ export const Cart: FC = () => {
         <FormattedMessage id="pages.checkout.products" />
       </Typography>
       <List disablePadding={true}>
-        {cart && cart.items && cart.items.length ? (
+        {cart?.items?.length ? (
           cart.items.map(item => (
             <StyledListItem key={item.product.id}>
               <ListItemText

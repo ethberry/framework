@@ -95,7 +95,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <AddressLink address={balance?.at(0)?.account} length={42} />
               </TableCell>
             </TableRow>
-            {template?.contract?.contractFeatures.includes(ContractFeatures.RENTABLE) && metadata && metadata.USER ? (
+            {template?.contract?.contractFeatures.includes(ContractFeatures.RENTABLE) && metadata?.USER ? (
               <TokenUserMetadataView metadata={metadata} />
             ) : null}
             <TableRow>

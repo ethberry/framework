@@ -38,7 +38,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
               {name}
             </Link>
             {` - `}
-            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}/view`}>
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId!}/view`}>
               #{tokenId}
             </Link>
           </StyledDataViewAddressLinkWrapper>
@@ -50,7 +50,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
               {name}
             </Link>
             {` - `}
-            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}/view`}>
+            <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId!}/view`}>
               #{tokenId}
             </Link>
           </StyledDataViewAddressLinkWrapper>

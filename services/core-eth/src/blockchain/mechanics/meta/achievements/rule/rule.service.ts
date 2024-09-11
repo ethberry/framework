@@ -108,8 +108,8 @@ export class AchievementsRuleService {
     // do not check AccessControlEventType's events
     // TODO rename CM's events args account -> addr
     if (
-      !(<any>Object).values(ContractManagerEventType).includes(eventType) &&
-      !(<any>Object).values(AccessControlEventType).includes(eventType)
+      !Object.values(ContractManagerEventType).includes(eventType as any) &&
+      !Object.values(AccessControlEventType).includes(eventType as any)
     ) {
       if (eventData && "account" in eventData) {
         const wallet = eventData.account;
@@ -205,7 +205,7 @@ export class AchievementsRuleService {
         templateId: token.template.id,
       });
       // if event.parent.tokenEntity
-    } else if (parent && parent.token) {
+    } else if (parent?.token) {
       eventTokenAsset.push({
         tokenType: parent.token.template.contract.contractType || TokenType.NATIVE,
         contract: parent.token.template.contract.address,

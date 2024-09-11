@@ -66,7 +66,7 @@ export class PonziDepositService {
       }
     }
 
-    if (deposit && deposit.tokenType) {
+    if (deposit?.tokenType) {
       if (deposit.tokenType.length === 1) {
         queryBuilder.andWhere("deposit_contract.contractType = :depositTokenType", {
           depositTokenType: deposit.tokenType[0],
@@ -78,7 +78,7 @@ export class PonziDepositService {
       }
     }
 
-    if (reward && reward.tokenType) {
+    if (reward?.tokenType) {
       if (reward.tokenType.length === 1) {
         queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
           rewardTokenType: reward.tokenType[0],

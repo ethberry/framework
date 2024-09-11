@@ -79,7 +79,7 @@ export class ReferralProgramService {
   public async update(dto: IReferralProgramUpdateDto, userEntity: UserEntity): Promise<ReferralProgramEntity[]> {
     const { levels, referralProgramStatus } = dto;
 
-    if (levels && levels.length) {
+    if (levels?.length) {
       // REMOVE OLD
       await this.deleteProgram(userEntity.merchantId);
       // CREATE NEW

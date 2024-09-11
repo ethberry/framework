@@ -53,7 +53,7 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.parents" />
               </TableCell>
               <TableCell align="right">
-                {children && children.length ? (
+                {children?.length ? (
                   <>
                     {/* <Typography variant="body1" color="textSecondary"> */}
                     {/*  <Link */}

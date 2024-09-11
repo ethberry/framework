@@ -6,7 +6,8 @@ export class ChainIdPipe implements PipeTransform<string> {
     try {
       BigInt(value);
       return Number(value);
-    } catch (_e) {
+    } catch (e) {
+      void e;
       throw new BadRequestException("Validation failed (ChainId is expected)");
     }
   }
