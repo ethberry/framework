@@ -61,7 +61,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 101},
+        ${process.env.NODE_ENV === NodeEnv.production ? 121 : 101},
         '${contractManagerGemunionAddress}',
         '${chainId}',
         'CONTRACT MANAGER',
@@ -78,7 +78,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 201},
+        ${process.env.NODE_ENV === NodeEnv.production ? 122 : 201},
         '${contractManagerAddressBinance}',
         56,
         'CONTRACT MANAGER (BNB)',
@@ -95,7 +95,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 301},
+        ${process.env.NODE_ENV === NodeEnv.production ? 123 : 301},
         '${contractManagerAddressMainnet}',
         1,
         'CONTRACT MANAGER (ETH)',
@@ -112,7 +112,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 401},
+        ${process.env.NODE_ENV === NodeEnv.production ? 124 : 401},
         '${contractManagerAddressPolygon}',
         137,
         'CONTRACT MANAGER (MATIC)',
@@ -129,7 +129,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 501},
+        ${process.env.NODE_ENV === NodeEnv.production ? 125 : 501},
         '${contractManagerAddressBinanceTest}',
         97,
         'CONTRACT MANAGER (tBNB)',
@@ -146,7 +146,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 601},
+        ${process.env.NODE_ENV === NodeEnv.production ? 126 : 601},
         '${contractManagerAddressPolygonTest}',
         80002,
         'CONTRACT MANAGER (tMATIC)',

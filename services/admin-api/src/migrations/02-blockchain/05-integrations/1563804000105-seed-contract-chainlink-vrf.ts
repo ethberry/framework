@@ -71,7 +71,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         created_at,
         updated_at
       ) VALUES (
-        107,
+        ${process.env.NODE_ENV === NodeEnv.production ? 131 : 103},
         '${vrfAddress}',
         '${chainId}',
         'VRF COORDINATOR (BESU)',
@@ -92,7 +92,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        207,
+        ${process.env.NODE_ENV === NodeEnv.production ? 132 : 203},
         '${vrfAddressB}',
         56,
         'VRF COORDINATOR (BNB)',
@@ -113,7 +113,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        307,
+        ${process.env.NODE_ENV === NodeEnv.production ? 133 : 303},
         '0x271682deb8c4e0901d1a1550ad2e64d568e69909',
         1,
         'VRF COORDINATOR (ETH)',
@@ -134,7 +134,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        407,
+        ${process.env.NODE_ENV === NodeEnv.production ? 134 : 403},
         '${vrfAddressP}',
         137,
         'VRF COORDINATOR (MATIC)',
@@ -155,7 +155,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        507,
+        ${process.env.NODE_ENV === NodeEnv.production ? 135 : 503},
         '${vrfAddressBt}',
         97,
         'VRF COORDINATOR (tBNB)',
@@ -176,7 +176,7 @@ export class SeedContractChainLinkVrfAt1563804000105 implements MigrationInterfa
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        607,
+        ${process.env.NODE_ENV === NodeEnv.production ? 136 : 603},
         '${vrfAddressPa}',
         8002,
         'VRF COORDINATOR (AMOY)',

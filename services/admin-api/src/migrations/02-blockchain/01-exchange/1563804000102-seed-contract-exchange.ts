@@ -62,7 +62,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 102},
+        ${process.env.NODE_ENV === NodeEnv.production ? 111 : 102},
         '${exchangeGemunionAddress}',
         '${chainId}',
         'EXCHANGE (BESU)',
@@ -80,7 +80,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 202},
+        ${process.env.NODE_ENV === NodeEnv.production ? 112 : 202},
         '${exchangeAddressBinance}',
         56,
         'EXCHANGE (BNB)',
@@ -98,7 +98,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 302},
+        ${process.env.NODE_ENV === NodeEnv.production ? 113 : 302},
         '${exchangeAddressMainnet}',
         1,
         'EXCHANGE (ETH)',
@@ -116,7 +116,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 402},
+        ${process.env.NODE_ENV === NodeEnv.production ? 114 : 402},
         '${exchangeAddressPolygon}',
         137,
         'EXCHANGE (MATIC)',
@@ -134,7 +134,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 502},
+        ${process.env.NODE_ENV === NodeEnv.production ? 115 : 502},
         '${exchangeAddressBinanceTest}',
         97,
         'EXCHANGE (tBNB)',
@@ -152,7 +152,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 602},
+        ${process.env.NODE_ENV === NodeEnv.production ? 116 : 602},
         '${exchangeAddressPolygonAmoy}',
         80002,
         'EXCHANGE (tMATIC)',

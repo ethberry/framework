@@ -229,11 +229,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    if (process.env.NODE_ENV === NodeEnv.production || process.env.NODE_ENV === NodeEnv.test) {
-      return;
-    }
-
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 50000, true);`);
+    await queryRunner.query(
+      `SELECT setval('${ns}.contract_id_seq', ${process.env.NODE_ENV === NodeEnv.production ? 500 : 50000}, true);`,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

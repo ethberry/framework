@@ -104,7 +104,7 @@ export class SeedContractErc20LinkAt1563804000124 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 41 : 40218},
+        ${process.env.NODE_ENV === NodeEnv.production ? 44 : 40218},
         '0xb0897686c545045aFc77CF20eC7A532E3120E0F1',
         137,
         'LINK',
