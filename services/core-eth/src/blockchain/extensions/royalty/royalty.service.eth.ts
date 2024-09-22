@@ -40,7 +40,7 @@ export class RoyaltyServiceEth {
 
     await contractEntity.save();
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -66,7 +66,7 @@ export class RoyaltyServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

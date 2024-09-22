@@ -106,7 +106,6 @@ export class EventHistoryService {
     event: ILogEvent<TContractEventData>,
     context: Log,
     tokenId?: number,
-    contractId?: number,
   ): Promise<EventHistoryEntity> {
     this.loggerService.log(JSON.stringify(event, null, "\t"), EventHistoryService.name);
     this.loggerService.log(JSON.stringify(context, null, "\t"), EventHistoryService.name);
@@ -116,16 +115,13 @@ export class EventHistoryService {
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
-    if (!contractId) {
-      const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
 
-      if (!parentContractEntity) {
-        throw new NotFoundException("contractNotFound");
-      }
-      contractId = parentContractEntity.id;
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
-    await this.contractService.updateLastBlockById(contractId, parseInt(blockNumber.toString(), 16));
+    await this.contractService.updateLastBlockById(contractEntity.id, parseInt(blockNumber.toString(), 16));
 
     const contractEventEntity = await this.create({
       address,
@@ -133,7 +129,7 @@ export class EventHistoryService {
       eventType: name as ContractEventType,
       eventData: args,
       tokenId: tokenId || null,
-      contractId,
+      contractId: contractEntity.id,
       chainId,
     });
 

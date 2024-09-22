@@ -182,7 +182,7 @@ export class RaffleRoundServiceEth {
     if (!raffleRoundEntity) {
       throw new NotFoundException("roundNotFound");
     }
-    await this.eventHistoryService.updateHistory(event, context, void 0, raffleRoundEntity.contractId);
+    await this.eventHistoryService.updateHistory(event, context);
 
     Object.assign(raffleRoundEntity, {
       endTimestamp: new Date(Number(endTimestamp) * 1000).toISOString(),

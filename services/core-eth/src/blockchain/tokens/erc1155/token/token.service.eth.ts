@@ -136,20 +136,20 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     const { name } = event;
     const { address, transactionHash } = context;
 
-    const parentContractEntity = await this.contractService.findOne(
+    const contractEntity = await this.contractService.findOne(
       { address: address.toLowerCase() },
       { relations: { merchant: true } },
     );
 
-    if (!parentContractEntity) {
+    if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, parentContractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
-        account: parentContractEntity.merchant.wallet.toLowerCase(),
+        account: contractEntity.merchant.wallet.toLowerCase(),
         transactionHash,
         transactionType: name,
       })

@@ -53,7 +53,7 @@ export class ReferralServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    const historyEntity = await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    const historyEntity = await this.eventHistoryService.updateHistory(event, context);
 
     const { parentId } = historyEntity;
 

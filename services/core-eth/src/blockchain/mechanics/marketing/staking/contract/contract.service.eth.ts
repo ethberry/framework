@@ -64,7 +64,7 @@ export class StakingContractServiceEth {
     );
 
     if (penaltyEntity) {
-      await this.eventHistoryService.updateHistory(event, context, void 0, penaltyEntity.stakingId);
+      await this.eventHistoryService.updateHistory(event, context);
       // remove withdrawn balance from existing penalty asset
       const oldAssetEntity = penaltyEntity.penalty;
       await this.assetService.updateAsset(oldAssetEntity, {

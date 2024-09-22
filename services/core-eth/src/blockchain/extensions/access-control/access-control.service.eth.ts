@@ -61,7 +61,7 @@ export class AccessControlServiceEth {
       ],
     });
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const contractManagerEntity = await this.contractService.findOne({
@@ -112,7 +112,7 @@ export class AccessControlServiceEth {
       ],
     });
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     if (role === AccessControlRoleHash.MINTER_ROLE.toString()) {
       const systemContractEntity = await this.contractService.findOne({ address: account.toLowerCase() });
@@ -172,7 +172,7 @@ export class AccessControlServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const contractManagerEntity = await this.contractService.findOne({
@@ -228,7 +228,7 @@ export class AccessControlServiceEth {
       role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
     });
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

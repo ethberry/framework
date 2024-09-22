@@ -160,12 +160,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("token998NotFound");
     }
 
-    await this.eventHistoryService.updateHistory(
-      event,
-      context,
-      erc998TokenEntity.id,
-      erc998TokenEntity.template.contractId,
-    );
+    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
     const tokenEntity = await this.tokenService.getToken(
       Number(childTokenId).toString(),
@@ -211,12 +206,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("token998NotFound");
     }
 
-    await this.eventHistoryService.updateHistory(
-      event,
-      context,
-      erc998TokenEntity.id,
-      erc998TokenEntity.template.contractId,
-    );
+    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
     const promises = childTokenIds.map(async (childTokenId, i) => {
       const childTokenEntity = await this.tokenService.getToken(
@@ -356,7 +346,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, parentContractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const childContractEntity = await this.contractService.findOne({ address: addr.toLowerCase() });
 
@@ -395,7 +385,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, parentContractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const childContractEntity = await this.contractService.findOne({ address: addr.toLowerCase() });
 
@@ -434,7 +424,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, parentContractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const childContractEntity = await this.contractService.findOne({ address: addr.toLowerCase() });
 

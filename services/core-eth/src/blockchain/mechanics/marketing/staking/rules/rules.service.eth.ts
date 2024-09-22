@@ -53,7 +53,7 @@ export class StakingRulesServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = { components: [] };

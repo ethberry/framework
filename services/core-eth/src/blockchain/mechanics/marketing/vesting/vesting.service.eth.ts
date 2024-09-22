@@ -49,7 +49,7 @@ export class VestingServiceEth {
       throw new NotFoundException("vestingNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, vestingEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const contractEntity = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
 
@@ -89,7 +89,7 @@ export class VestingServiceEth {
       throw new NotFoundException("vestingNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, vestingEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     // get NATIVE token
     const tokenEntity = await this.tokenService.getToken("0", ZeroAddress.toLowerCase(), chainId);
@@ -126,7 +126,7 @@ export class VestingServiceEth {
       throw new NotFoundException("vestingNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, vestingEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     // get NATIVE token
     const tokenEntity = await this.tokenService.getToken("0", ZeroAddress, chainId);

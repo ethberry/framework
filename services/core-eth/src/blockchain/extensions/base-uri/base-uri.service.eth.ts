@@ -46,7 +46,7 @@ export class BaseUriServiceEth {
       await this.tokenService.updateBatchURI(contractEntity.id, contractEntity.address, baseTokenURI.toLowerCase());
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

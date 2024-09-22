@@ -161,7 +161,7 @@ export class StakingDepositServiceEth {
       throw new NotFoundException("stakingDepositNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, stakingDepositEntity.stakingRule.contractId);
+    await this.eventHistoryService.updateHistory(event, context);
 
     // Deactivate current deposit
     Object.assign(stakingDepositEntity, {
@@ -208,7 +208,7 @@ export class StakingDepositServiceEth {
       throw new NotFoundException("stakingDepositNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, stakingDepositEntity.stakingRule.contractId);
+    await this.eventHistoryService.updateHistory(event, context);
 
     // WE DO NOT CHANGE DEPOSIT STATUS HERE, IT WILL BE SET TO 'CANCELED' IN WITHDRAW EVENT
 
@@ -289,7 +289,7 @@ export class StakingDepositServiceEth {
       throw new NotFoundException("stakingDepositNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, stakingDepositEntity.stakingRule.contractId);
+    await this.eventHistoryService.updateHistory(event, context);
 
     // FIND EXISTING PENALTY
     const penaltyEntity = await this.penaltyService.findOne(

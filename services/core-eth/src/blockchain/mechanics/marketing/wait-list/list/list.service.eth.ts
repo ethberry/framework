@@ -54,7 +54,7 @@ export class WaitListListServiceEth {
       throw new NotFoundException("waitListNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, waitListListEntity.contractId);
+    await this.eventHistoryService.updateHistory(event, context);
 
     Object.assign(waitListListEntity, {
       root,

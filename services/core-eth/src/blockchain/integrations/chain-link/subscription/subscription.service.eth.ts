@@ -72,7 +72,7 @@ export class ChainLinkSubscriptionServiceEth {
     // IF it is our contract
     if (contractEntity) {
       await this.contractService.updateParameter({ id: contractEntity.id }, "isConsumer", "true");
-      await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+      await this.eventHistoryService.updateHistory(event, context);
       await this.signalClientProxy
         .emit(SignalEventType.TRANSACTION_HASH, {
           account: contractEntity.merchant.wallet.toLowerCase(),
@@ -101,7 +101,7 @@ export class ChainLinkSubscriptionServiceEth {
     }
 
     await this.contractService.updateParameter({ id: contractEntity.id }, "vrfSubId", subId);
-    await this.eventHistoryService.updateHistory(event, context, void 0, contractEntity.id);
+    await this.eventHistoryService.updateHistory(event, context);
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: contractEntity.merchant.wallet.toLowerCase(),

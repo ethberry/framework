@@ -141,7 +141,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
       }
-      await this.eventHistoryService.updateHistory(event, context, void 0, templateEntity.contract.id);
+      await this.eventHistoryService.updateHistory(event, context);
 
       const description = JSON.parse(templateEntity.contract.description);
       const batchSize = description.batchSize ? Number(description.batchSize) : 0;
@@ -213,12 +213,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     Object.assign(erc721TokenEntity.metadata, { [toUtf8String(stripZerosLeft(attribute))]: value });
     await erc721TokenEntity.save();
 
-    await this.eventHistoryService.updateHistory(
-      event,
-      context,
-      erc721TokenEntity.id,
-      erc721TokenEntity.template.contractId,
-    );
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
