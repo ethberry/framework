@@ -39,7 +39,6 @@
   "description": "Cron microservice",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
-    "@gemunion/eslint-config": "4.0.6",
     "@nestjs/testing": "10.4.1",
     "@types/node": "20.16.5",
     "rimraf": "6.0.1",
