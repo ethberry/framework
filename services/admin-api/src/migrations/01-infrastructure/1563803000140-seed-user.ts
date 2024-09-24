@@ -72,7 +72,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'trejgun@gemunion.io',
+        'trejgun@gmail.com',
         'SbE0QAb34lhB1bBwoa62MpZW1qn1',
         'CTAPbIu_MABP',
         '${avatarWhiteUrl}',

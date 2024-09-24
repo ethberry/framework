@@ -1,6 +1,6 @@
 {
   "author": {
-    "email": "trejgun@gemunion.io",
+    "email": "trejgun@gmail.com",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
@@ -29,7 +29,7 @@
     "@gemunion/nest-js-module-request-logger": "3.0.31",
     "@gemunion/nest-js-module-secret-manager-gcp": "1.1.48",
     "@gemunion/nest-js-module-throttler": "7.0.5",
-    "@gemunion/nest-js-module-typeorm-debug": "3.0.46",
+    "@gemunion/nest-js-module-typeorm": "3.0.46",
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.49",
     "@gemunion/nest-js-module-wallet-connect": "3.1.49",
     "@gemunion/nest-js-module-winston-logdna": "3.1.16",

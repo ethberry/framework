@@ -27,7 +27,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'trejgun@gemunion.io',
+        'trejgun@gmail.com',
         'GEMUNION',
         '${simpleFormatting}',
         '+62 (812) 3919-8760',
