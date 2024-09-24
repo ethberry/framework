@@ -33,7 +33,7 @@ export class EmailController {
   async feedback(@Payload() payload: IPayload): Promise<any> {
     return this.mailjetService.sendTemplate({
       template: 4921119,
-      to: ["trejgun@gemunion.io"],
+      to: ["trejgun@gmail.com"],
       data: {
         displayName: payload.user.displayName,
         text: payload.feedback.text,
