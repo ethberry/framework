@@ -80,7 +80,7 @@
     "zxcvbn": "4.4.2"
   },
   "devDependencies": {
-    "@gemunion/cross-env": "0.0.4",
+    "@gemunion/cross-env": "0.0.5",
     "@nestjs/testing": "10.4.4",
     "@types/archiver": "6.0.2",
     "@types/async": "3.2.24",

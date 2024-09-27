@@ -100,7 +100,7 @@
   },
   "description": "app",
   "devDependencies": {
-    "@gemunion/cross-env": "0.0.4",
+    "@gemunion/cross-env": "0.0.5",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.15",
     "@types/d3": "7.4.3",
     "@types/dotenv-webpack": "7.0.7",

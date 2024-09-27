@@ -101,7 +101,7 @@
   },
   "description": "app",
   "devDependencies": {
-    "@gemunion/cross-env": "0.0.4",
+    "@gemunion/cross-env": "0.0.5",
     "@gemunion/types-coin-market-cap": "0.1.11",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.15",
     "@types/dotenv-webpack": "7.0.7",
