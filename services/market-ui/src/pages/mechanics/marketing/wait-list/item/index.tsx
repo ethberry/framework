@@ -4,8 +4,8 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CollectionActions, useCollection } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 

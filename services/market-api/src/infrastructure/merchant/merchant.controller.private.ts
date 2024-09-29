@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantService } from "./merchant.service";

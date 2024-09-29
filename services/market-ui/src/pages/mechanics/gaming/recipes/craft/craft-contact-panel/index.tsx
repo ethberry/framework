@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 import type { IContract, ICraftCountResult } from "@framework/types";
 
 export interface ICraftContactPanelProps {

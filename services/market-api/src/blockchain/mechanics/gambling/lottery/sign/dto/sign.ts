@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, MaxLength, MinLength, Validate } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { ReferrerOptionalDto } from "@ethberry/nest-js-validators";
 import { ILotterySignDto } from "@framework/types";
 
 import { LotteryTicketRule } from "./rule";

@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "type
 
 import { ns } from "@framework/constants";
 import { DurationUnit, IStakingRule, StakingRuleStatus } from "@framework/types";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { StakingDepositEntity } from "../deposit/deposit.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";

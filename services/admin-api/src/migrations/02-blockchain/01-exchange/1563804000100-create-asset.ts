@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export class CreateAsset1563804000100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

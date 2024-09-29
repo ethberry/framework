@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { getText } from "@gemunion/draft-js-utils";
+import { getText } from "@ethberry/draft-js-utils";
 
-import { PinataFirebaseService } from "@gemunion/nest-js-module-pinata-firebase";
+import { PinataFirebaseService } from "@ethberry/nest-js-module-pinata-firebase";
 
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";

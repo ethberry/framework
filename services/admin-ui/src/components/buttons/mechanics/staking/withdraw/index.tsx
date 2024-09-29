@@ -3,7 +3,7 @@ import { RequestQuote } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { AccessControlRoleType, TokenType } from "@framework/types";

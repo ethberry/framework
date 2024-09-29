@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { ClaimStatus, ClaimType, IClaim } from "@framework/types";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";

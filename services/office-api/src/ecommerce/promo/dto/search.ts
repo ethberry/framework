@@ -1,4 +1,4 @@
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 
 import type { IProductPromoSearchDto } from "../interfaces";
 

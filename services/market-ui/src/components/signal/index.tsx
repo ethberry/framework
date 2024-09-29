@@ -3,10 +3,10 @@ import { useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
 
-import { useApi } from "@gemunion/provider-api-firebase";
-import { useUser } from "@gemunion/provider-user";
-import { useAppDispatch } from "@gemunion/redux";
-import { collectionActions } from "@gemunion/provider-collection";
+import { useApi } from "@ethberry/provider-api-firebase";
+import { useUser } from "@ethberry/provider-user";
+import { useAppDispatch } from "@ethberry/redux";
+import { collectionActions } from "@ethberry/provider-collection";
 import type { IUser } from "@framework/types";
 import { ContractEventType, SignalEventType } from "@framework/types";
 

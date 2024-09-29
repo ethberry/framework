@@ -1,7 +1,7 @@
 import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor } from "@ethberry/nest-js-utils";
 
 import { PonziLeaderboardService } from "./leaderboard.service";
 import { PonziLeaderboardSearchDto } from "./dto";

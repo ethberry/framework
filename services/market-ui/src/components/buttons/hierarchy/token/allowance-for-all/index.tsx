@@ -6,8 +6,8 @@ import { Contract } from "ethers";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
-import { InputType } from "@gemunion/types-collection";
+import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
+import { InputType } from "@ethberry/types-collection";
 
 import ERC1155SimpleSetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";
 

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import { NodeEnv, wallet } from "@gemunion/constants";
+import { NodeEnv, wallet } from "@ethberry/constants";
 import { ns } from "@framework/constants";
 
 export class SeedBalanceErc20UsdcAt1563804020425 implements MigrationInterface {

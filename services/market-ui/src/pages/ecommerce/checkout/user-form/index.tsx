@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { FormWrapper } from "@gemunion/mui-form";
-import { useApiCall } from "@gemunion/react-hooks";
+import { FormWrapper } from "@ethberry/mui-form";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { AddressSelectInput } from "../../../../components/inputs/address-select";
 import { validationSchema } from "./validation";

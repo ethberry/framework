@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 import { Exclude } from "class-transformer";
 
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { IDiscrete } from "@framework/types";
 import { DiscreteStatus, DiscreteStrategy } from "@framework/types";
 import { ns } from "@framework/constants";

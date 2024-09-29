@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, TokenStatus, TokenType } from "@framework/types";
 

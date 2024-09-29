@@ -13,7 +13,7 @@ import {
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { AddressStatus } from "@framework/types";
-import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { AddressEntity } from "../../ecommerce/address/address.entity";
 import { AddressService } from "../../ecommerce/address/address.service";

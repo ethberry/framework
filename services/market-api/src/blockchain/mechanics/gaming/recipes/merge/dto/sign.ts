@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ArrayNotEmpty, IsArray, IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { ReferrerOptionalDto } from "@ethberry/nest-js-validators";
 import type { IMergeSignDto } from "@framework/types";
 
 export class MergeSignDto extends Mixin(ReferrerOptionalDto) implements IMergeSignDto {

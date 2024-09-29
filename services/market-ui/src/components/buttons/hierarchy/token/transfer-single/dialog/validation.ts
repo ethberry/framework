@@ -1,6 +1,6 @@
 import { object } from "yup";
 
-import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
+import { addressValidationSchema, bigNumberValidationSchema } from "@ethberry/yup-rules-eth";
 
 export const validationSchema = object().shape({
   account: addressValidationSchema,

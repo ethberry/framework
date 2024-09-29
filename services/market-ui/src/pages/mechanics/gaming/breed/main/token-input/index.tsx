@@ -2,7 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import type { IToken } from "@framework/types";
 
 import { formatTokenTitle } from "../../../../../../utils/token";

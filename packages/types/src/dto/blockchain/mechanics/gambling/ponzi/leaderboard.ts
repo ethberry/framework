@@ -1,6 +1,6 @@
-import { InputType } from "@gemunion/types-collection";
-import type { IPaginationDto } from "@gemunion/types-collection";
-import type { TokenType } from "@gemunion/types-blockchain";
+import { InputType } from "@ethberry/types-collection";
+import type { IPaginationDto } from "@ethberry/types-collection";
+import type { TokenType } from "@ethberry/types-blockchain";
 
 export interface IPonziLeaderboardItemSearchDto {
   tokenType: TokenType;

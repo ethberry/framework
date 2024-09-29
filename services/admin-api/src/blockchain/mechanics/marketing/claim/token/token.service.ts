@@ -12,7 +12,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 
-import type { ISignatureParams } from "@gemunion/types-blockchain";
+import type { ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type {
   IClaimCreateDto,

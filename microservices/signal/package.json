@@ -5,30 +5,30 @@
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/ethberry/framework"
   },
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/collection": "3.3.25",
-    "@gemunion/constants": "0.13.1",
-    "@gemunion/draft-js-utils": "1.2.50",
-    "@gemunion/nest-js-guards": "3.1.20",
-    "@gemunion/nest-js-guards-ws": "3.0.30",
-    "@gemunion/nest-js-module-helmet": "4.0.53",
-    "@gemunion/nest-js-module-license": "4.0.41",
-    "@gemunion/nest-js-module-passport": "3.0.53",
-    "@gemunion/nest-js-module-request-logger": "3.0.31",
-    "@gemunion/nest-js-module-throttler": "7.0.5",
-    "@gemunion/nest-js-module-typeorm": "3.0.46",
-    "@gemunion/nest-js-module-typeorm-logger": "3.0.30",
-    "@gemunion/nest-js-module-typeorm-postgres": "1.0.49",
-    "@gemunion/nest-js-module-winston-logdna": "3.1.16",
-    "@gemunion/nest-js-utils": "4.2.15",
-    "@gemunion/nest-js-utils-ws": "3.0.29",
-    "@gemunion/nest-js-validators": "4.1.4",
-    "@gemunion/types-collection": "1.5.17",
-    "@gemunion/types-jwt": "0.4.5",
+    "@ethberry/collection": "3.3.25",
+    "@ethberry/constants": "0.13.1",
+    "@ethberry/draft-js-utils": "1.2.50",
+    "@ethberry/nest-js-guards": "3.1.20",
+    "@ethberry/nest-js-guards-ws": "3.0.30",
+    "@ethberry/nest-js-module-helmet": "4.0.53",
+    "@ethberry/nest-js-module-license": "4.0.41",
+    "@ethberry/nest-js-module-passport": "3.0.53",
+    "@ethberry/nest-js-module-request-logger": "3.0.31",
+    "@ethberry/nest-js-module-throttler": "7.0.5",
+    "@ethberry/nest-js-module-typeorm": "3.0.46",
+    "@ethberry/nest-js-module-typeorm-logger": "3.0.30",
+    "@ethberry/nest-js-module-typeorm-postgres": "1.0.49",
+    "@ethberry/nest-js-module-winston-logdna": "3.1.16",
+    "@ethberry/nest-js-utils": "4.2.15",
+    "@ethberry/nest-js-utils-ws": "3.0.29",
+    "@ethberry/nest-js-validators": "4.1.4",
+    "@ethberry/types-collection": "1.5.17",
+    "@ethberry/types-jwt": "0.4.5",
     "@liaoliaots/nestjs-redis": "9.0.5",
     "@liaoliaots/nestjs-redis-health": "9.0.4",
     "@nestjs/axios": "3.0.3",
@@ -72,7 +72,7 @@
   },
   "description": "Websocket API responsible for notification about transaction status",
   "devDependencies": {
-    "@gemunion/cross-env": "0.0.4",
+    "@ethberry/cross-env": "0.0.4",
     "@nestjs/testing": "10.4.4",
     "@types/express": "4.17.21",
     "@types/jest": "29.5.13",
@@ -96,7 +96,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/ethberry/framework"
   },
   "scripts": {
     "build": "tsc",

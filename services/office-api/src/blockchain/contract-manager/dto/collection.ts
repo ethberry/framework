@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min, MinLength } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@gemunion/constants";
+import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@ethberry/constants";
 import type { ICollectionContractDeployDto } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
 

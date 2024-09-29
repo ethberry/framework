@@ -5,7 +5,7 @@ import { CardActionArea, CardActions, CardContent, CardHeader, Grid, Typography 
 import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia, StyledTemplateItemCard } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 

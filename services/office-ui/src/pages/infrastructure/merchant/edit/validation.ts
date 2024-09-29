@@ -1,8 +1,8 @@
 import { mixed, object } from "yup";
 
-import { draftValidationSchema, titleValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
-import { emailValidationSchema } from "@gemunion/yup-rules/dist/email";
-import { addressValidationSchema } from "@gemunion/yup-rules-eth";
+import { draftValidationSchema, titleValidationSchema, urlValidationSchema } from "@ethberry/yup-rules";
+import { emailValidationSchema } from "@ethberry/yup-rules/dist/email";
+import { addressValidationSchema } from "@ethberry/yup-rules-eth";
 
 import { MerchantStatus, RatePlanType } from "@framework/types";
 

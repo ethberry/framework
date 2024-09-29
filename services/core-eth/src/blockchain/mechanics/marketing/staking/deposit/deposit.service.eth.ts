@@ -3,7 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Any } from "typeorm";
 
 import { Log } from "ethers";
-import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IStakingDepositWithdrawEvent,
   IStakingDepositFinishEvent,

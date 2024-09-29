@@ -5,7 +5,7 @@ import { Help } from "@mui/icons-material";
 
 import { formatItem } from "@framework/exchange";
 import { IAchievementItemReport, IAchievementRule } from "@framework/types";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 
 import { StyledPopoverWrapper, StyledTable } from "./styled";
 

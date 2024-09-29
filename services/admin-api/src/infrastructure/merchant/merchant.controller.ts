@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Put } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantService } from "./merchant.service";

@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { ComboEntityInput } from "@gemunion/mui-inputs-entity";
+import { ComboEntityInput } from "@ethberry/mui-inputs-entity";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 export interface IAllowanceContractInputProps {

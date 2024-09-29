@@ -1,7 +1,7 @@
 import { forwardRef, Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ethersRpcProvider } from "@gemunion/nest-js-module-ethers-gcp";
+import { ethersRpcProvider } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { signalServiceProvider } from "../../../../common/providers";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";

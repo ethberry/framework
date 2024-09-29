@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 import { ns } from "@framework/constants";
 
 export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {

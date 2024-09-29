@@ -2,8 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsString, MaxLength, MinLength } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@gemunion/constants";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@ethberry/constants";
+import { IsBigInt } from "@ethberry/nest-js-validators";
 import type { IErc20TokenDeployDto } from "@framework/types";
 import { Erc20ContractTemplates } from "@framework/types";
 

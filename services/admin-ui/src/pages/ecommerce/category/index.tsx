@@ -5,10 +5,10 @@ import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ICategory } from "@framework/types";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 
 import { emptyCategory } from "../../../components/common/interfaces";
 import { EditCategoryDialog } from "./edit";

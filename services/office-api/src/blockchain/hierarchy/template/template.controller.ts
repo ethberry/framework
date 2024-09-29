@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 
 import { TemplateAutocompleteDto } from "./dto";
 import { TemplateEntity } from "./template.entity";

@@ -39,11 +39,11 @@ jobs:
 
       - name: Authenticate Registry & Configure Git User
         run: |
-          echo "@gemunion:registry=https://npm.pkg.github.com/" >> .npmrc
+          echo "@ethberry:registry=https://npm.pkg.github.com/" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=$GITHUBTOKEN" >> .npmrc
           git update-index --assume-unchanged .npmrc
-          npx npm-cli-login -u $GITHUBUSER -p $GITHUBTOKEN -e $GITHUBEMAIL -r https://npm.pkg.github.com -s @gemunion --config-path="./"
-          git config --global user.name '@gemunion'
+          npx npm-cli-login -u $GITHUBUSER -p $GITHUBTOKEN -e $GITHUBEMAIL -r https://npm.pkg.github.com -s @ethberry --config-path="./"
+          git config --global user.name '@ethberry'
           git config --global user.email $GITHUBEMAIL
         env:
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
@@ -54,7 +54,7 @@ jobs:
         run: npm whoami --registry=https://npm.pkg.github.com/
 
       - name: Checkout framework-contracts
-        run: git clone https://github.com/Gemunion/framework-contracts.git
+        run: git clone https://github.com/ethberry/framework-contracts.git
 
       - name: Install Packages
         run: npm i
@@ -68,13 +68,13 @@ jobs:
           BUSINESS_TYPE: B2B
           POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/framework-test'
           CHAIN_ID: 10001
-          GEMUNION_API_KEY: ${{ secrets.GEMUNION_API_KEY }}
+          ETHBERRY_API_KEY: ${{ secrets.ETHBERRY_API_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           PRIVATE_KEY1: ${{ secrets.PRIVATE_KEY }}
           PRIVATE_KEY2: ${{ secrets.PRIVATE_KEY }}
           PRIVATE_KEY3: ${{ secrets.PRIVATE_KEY }}
-          GEMUNION_PRIVATE_KEY_STAGE: ${{ secrets.PRIVATE_KEY }}
-          GEMUNION_PRIVATE_KEY_PROD: ${{ secrets.PRIVATE_KEY }}
+          ETHBERRY_PRIVATE_KEY_STAGE: ${{ secrets.PRIVATE_KEY }}
+          ETHBERRY_PRIVATE_KEY_PROD: ${{ secrets.PRIVATE_KEY }}
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
   cloudbuild-deploy:

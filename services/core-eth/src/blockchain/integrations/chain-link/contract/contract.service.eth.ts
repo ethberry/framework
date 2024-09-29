@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
 
-import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import { ModuleType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 

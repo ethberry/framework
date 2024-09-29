@@ -1,4 +1,4 @@
-import type { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@ethberry/types-collection";
 
 import type { IStakingRule } from "./rule";
 import { IAsset } from "../../../exchange/asset";

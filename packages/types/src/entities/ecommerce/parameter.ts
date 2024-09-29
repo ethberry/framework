@@ -1,4 +1,4 @@
-import type { IIdBase } from "@gemunion/types-collection";
+import type { IIdBase } from "@ethberry/types-collection";
 
 export enum ProductColor {
   RED = "RED",

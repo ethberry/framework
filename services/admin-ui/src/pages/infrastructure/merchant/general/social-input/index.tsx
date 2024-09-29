@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Paper } from "@mui/material";
 
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { TextInput } from "@ethberry/mui-inputs-core";
 
 export interface ISocialInputProps {
   name: string;

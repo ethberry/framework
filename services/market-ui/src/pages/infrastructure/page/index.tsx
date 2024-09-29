@@ -5,10 +5,10 @@ import { useIntl } from "react-intl";
 import { Navigate, useParams } from "react-router";
 
 import type { IPage } from "@framework/types";
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { RichTextDisplay } from "@gemunion/mui-rte";
-import { ApiError } from "@gemunion/provider-api-firebase";
-import { useApiCall } from "@gemunion/react-hooks";
+import { PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { RichTextDisplay } from "@ethberry/mui-rte";
+import { ApiError } from "@ethberry/provider-api-firebase";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { emptyPage } from "../../../components/common/interfaces";
 import { StyledContentWrapper } from "./styled";

@@ -4,10 +4,10 @@ import { Button, Grid, Typography } from "@mui/material";
 import { Filter1, Filter2, Filter3, Filter4, FilterList } from "@mui/icons-material";
 import { DataGrid, GridCellParams, useGridApiContext } from "@mui/x-data-grid";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
-import { AddressLink } from "@gemunion/mui-scanner";
-import { InputType } from "@gemunion/types-collection";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
+import { AddressLink } from "@ethberry/mui-scanner";
+import { InputType } from "@ethberry/types-collection";
 import { formatEther } from "@framework/exchange";
 import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
 import { StakingLeaderboardRank, TokenType } from "@framework/types";

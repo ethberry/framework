@@ -2,8 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchableDto } from "@gemunion/collection";
-import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
+import { SearchableDto } from "@ethberry/collection";
+import { NotNativeDto, SemiCoinDto } from "@ethberry/nest-js-validators";
 
 import type { ILootBoxCreateDto } from "../interfaces";
 

@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 
 import ERC20ApproveABI from "@framework/abis/json/ERC20Simple/approve.json";
 import ERC721ERC998ERC1155SetApprovalForAllABI from "@framework/abis/json/ERC1155Simple/setApprovalForAll.json";

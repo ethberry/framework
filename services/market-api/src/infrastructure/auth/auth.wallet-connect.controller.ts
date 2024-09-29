@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
-import { Public } from "@gemunion/nest-js-utils";
-import type { IFirebaseToken } from "@gemunion/nest-js-module-wallet-connect";
-import { WalletConnectDto } from "@gemunion/nest-js-module-wallet-connect";
+import { Public } from "@ethberry/nest-js-utils";
+import type { IFirebaseToken } from "@ethberry/nest-js-module-wallet-connect";
+import { WalletConnectDto } from "@ethberry/nest-js-module-wallet-connect";
 
 import { AuthWalletConnectService } from "./auth.wallet-connect.service";
 

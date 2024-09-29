@@ -4,7 +4,7 @@ import { Contract } from "ethers";
 
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 
 import ERC721WrapperUnpackABI from "@framework/abis/json/ERC721Wrapper/unpack.json";
 

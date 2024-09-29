@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
 import type { ICollectionUploadDto } from "@framework/types";
 
 import { validationSchema } from "./validation";

@@ -2,8 +2,8 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
-import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
+import { ethersRpcProvider, ethersSignerProvider } from "@ethberry/nest-js-module-ethers-gcp";
+import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 
 import { RatePlanModule } from "../../infrastructure/rate-plan/rate-plan.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";

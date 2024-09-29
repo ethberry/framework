@@ -2,8 +2,8 @@ import { forwardRef, Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 
-import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
-import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
+import { ethersRpcProvider, ethersSignerProvider } from "@ethberry/nest-js-module-ethers-gcp";
+import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 
 import { NotificatorModule } from "../../../../../game/notificator/notificator.module";
 import { EventHistoryModule } from "../../../../event-history/event-history.module";

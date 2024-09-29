@@ -6,8 +6,8 @@ import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
 import * as Plot from "@observablehq/plot";
 import { BigNumber } from "ethers";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
 import type { IReferralReportSearchDto, IToken } from "@framework/types";
 
 import { ReferralReportSearchForm } from "./form";

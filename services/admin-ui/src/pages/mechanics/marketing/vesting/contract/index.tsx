@@ -3,11 +3,11 @@ import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { SelectInput } from "@gemunion/mui-inputs-core";
-import { CollectionActions, useCollection } from "@gemunion/provider-collection";
-import { AddressLink } from "@gemunion/mui-scanner";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { SelectInput } from "@ethberry/mui-inputs-core";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
+import { AddressLink } from "@ethberry/mui-scanner";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 import { TokenType, VestingContractFeatures } from "@framework/types";

@@ -1,4 +1,4 @@
-import type { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@ethberry/types-collection";
 import type { IMerchant } from "../../../../infrastructure";
 
 export enum ReferralProgramStatus {

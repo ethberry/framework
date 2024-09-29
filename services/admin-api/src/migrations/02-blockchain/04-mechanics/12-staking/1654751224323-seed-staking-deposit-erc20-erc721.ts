@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
-import { wallets, NodeEnv } from "@gemunion/constants";
+import { wallets, NodeEnv } from "@ethberry/constants";
 import { ns } from "@framework/constants";
 
 export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationInterface {

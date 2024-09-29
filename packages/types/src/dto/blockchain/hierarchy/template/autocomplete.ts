@@ -1,4 +1,4 @@
-import type { TokenType } from "@gemunion/types-blockchain";
+import type { TokenType } from "@ethberry/types-blockchain";
 
 import { ContractFeatures, ModuleType, TemplateStatus } from "../../../../entities";
 

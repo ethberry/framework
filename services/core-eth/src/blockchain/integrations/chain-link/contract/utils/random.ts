@@ -1,6 +1,6 @@
 import { Contract, randomBytes, Wallet, ZeroAddress } from "ethers";
 
-import VrfV2Sol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2-plus/contracts/mocks/VRFCoordinatorV2Plus.sol/VRFCoordinatorV2PlusMock.json";
+import VrfV2Sol from "@framework/core-contracts/artifacts/@ethberry/contracts-chain-link-v2-plus/contracts/mocks/VRFCoordinatorV2Plus.sol/VRFCoordinatorV2PlusMock.json";
 
 export interface IVrfRandomWordsFulfill {
   requestId: string;

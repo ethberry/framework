@@ -3,9 +3,9 @@ import { IsEmail, IsOptional, IsString, MaxLength, ValidateNested } from "class-
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { emailMaxLength } from "@gemunion/constants";
-import { SearchableOptionalDto } from "@gemunion/collection";
-import { WalletOptionalDto } from "@gemunion/nest-js-validators";
+import { emailMaxLength } from "@ethberry/constants";
+import { SearchableOptionalDto } from "@ethberry/collection";
+import { WalletOptionalDto } from "@ethberry/nest-js-validators";
 
 import type { IMerchantUpdateDto } from "../interfaces";
 import { MerchantSocialDto } from "./social";

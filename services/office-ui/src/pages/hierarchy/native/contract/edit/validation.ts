@@ -5,7 +5,7 @@ import {
   draftValidationSchema,
   symbolValidationSchema,
   titleValidationSchema,
-} from "@gemunion/yup-rules";
+} from "@ethberry/yup-rules";
 
 export const validationSchema = object().shape({
   symbol: symbolValidationSchema,

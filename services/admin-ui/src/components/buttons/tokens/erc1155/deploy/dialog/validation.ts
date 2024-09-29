@@ -1,6 +1,6 @@
 import { object } from "yup";
 
-import { currencyValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
+import { currencyValidationSchema, urlValidationSchema } from "@ethberry/yup-rules";
 
 export const validationSchema = object().shape({
   baseTokenURI: urlValidationSchema,

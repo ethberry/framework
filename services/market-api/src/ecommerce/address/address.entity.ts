@@ -3,8 +3,8 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { ns } from "@framework/constants";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
-import { EnabledCountries } from "@gemunion/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { EnabledCountries } from "@ethberry/constants";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 

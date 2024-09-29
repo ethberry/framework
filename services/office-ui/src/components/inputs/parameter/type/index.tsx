@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { ParameterType } from "@framework/types";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 
 export interface IParameterTypeInput {
   name?: string;

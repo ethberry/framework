@@ -2,8 +2,8 @@ import { ChangeEvent, FC, useState } from "react";
 import { Alert } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 import { TokenType } from "@framework/types";
 
 import { CommonContractInput } from "../../../../../../../components/inputs/common-contract";

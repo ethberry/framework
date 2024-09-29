@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { NodeEnv, wallets } from "@gemunion/constants";
+import { simpleFormatting } from "@ethberry/draft-js-utils";
+import { NodeEnv, wallets } from "@ethberry/constants";
 import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedMerchant1563803000120 implements MigrationInterface {

@@ -2,8 +2,8 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TokenType } from "@gemunion/types-blockchain";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { TokenType } from "@ethberry/types-blockchain";
 import type { IToken } from "@framework/types";
 
 import { formatTokenTitle } from "../../../../utils/token";

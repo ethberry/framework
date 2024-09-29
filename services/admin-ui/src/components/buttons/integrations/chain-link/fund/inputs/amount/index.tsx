@@ -3,7 +3,7 @@ import { useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { Box, FormHelperText } from "@mui/material";
 
-import { EthInput } from "@gemunion/mui-inputs-mask";
+import { EthInput } from "@ethberry/mui-inputs-mask";
 
 export interface ITokenInputProps {
   name?: string;

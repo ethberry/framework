@@ -4,8 +4,8 @@ import { ConfigService } from "@nestjs/config";
 
 import { Log } from "ethers";
 
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IAssetDto, IStakingRuleCreateEvent, IStakingRuleUpdateEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType, StakingRuleStatus } from "@framework/types";
 import { testChainId } from "@framework/constants";

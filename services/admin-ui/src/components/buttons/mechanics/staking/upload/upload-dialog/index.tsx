@@ -3,11 +3,11 @@ import { FormattedMessage } from "react-intl";
 
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { CheckboxInput, NumberInput } from "@ethberry/mui-inputs-core";
 import type { IStakingRule } from "@framework/types";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import { ModuleType } from "@framework/types";
 
 import { DurationInput } from "../../../../../inputs/duration";

@@ -2,10 +2,10 @@ import { FC, Fragment } from "react";
 import { Grid, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { RichTextDisplay } from "@gemunion/mui-rte";
-import { useCollection } from "@gemunion/provider-collection";
-import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
+import { RichTextDisplay } from "@ethberry/mui-rte";
+import { useCollection } from "@ethberry/provider-collection";
+import { emptyStateString } from "@ethberry/draft-js-utils";
 import { formatItem } from "@framework/exchange";
 import type { ITemplate, IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";

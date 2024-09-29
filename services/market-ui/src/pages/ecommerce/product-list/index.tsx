@@ -4,11 +4,11 @@ import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
-import type { ISearchDto } from "@gemunion/types-collection";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IProduct } from "@framework/types";
 

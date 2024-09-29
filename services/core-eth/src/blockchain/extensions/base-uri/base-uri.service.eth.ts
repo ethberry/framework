@@ -3,7 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import { IBaseURIUpdateEvent, RmqProviderType, SignalEventType, ModuleType } from "@framework/types";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";

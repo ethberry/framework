@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, MaxLength } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { emailMaxLength } from "@gemunion/constants";
+import { emailMaxLength } from "@ethberry/constants";
 import type { IInvitationCreateDto } from "@framework/types";
 
 export class InvitationCreateDto implements IInvitationCreateDto {

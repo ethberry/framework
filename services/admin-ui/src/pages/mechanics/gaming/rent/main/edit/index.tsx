@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import { ContractFeatures, IRent, RentRuleStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";

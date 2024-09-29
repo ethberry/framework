@@ -13,7 +13,7 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@ethberry/nest-js-utils";
 
 import { UserService } from "./user.service";
 import { UserEntity } from "./user.entity";

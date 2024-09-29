@@ -3,9 +3,9 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@m
 import { FormattedMessage, useIntl } from "react-intl";
 import { format } from "date-fns";
 
-import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { RichTextDisplay } from "@gemunion/mui-rte";
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { humanReadableDateTimeFormat } from "@ethberry/constants";
+import { RichTextDisplay } from "@ethberry/mui-rte";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
 import { formatItem, formatPenalty } from "@framework/exchange";
 import type { IStakingDeposit } from "@framework/types";
 

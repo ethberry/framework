@@ -1,8 +1,8 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { useApiCall } from "@gemunion/react-hooks";
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
+import { PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 import { formatItem } from "@framework/exchange";
 import type { IContract, ILotteryRound } from "@framework/types";
 

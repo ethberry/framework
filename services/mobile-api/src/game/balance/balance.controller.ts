@@ -1,7 +1,7 @@
 import { Controller, Get, HttpCode, HttpStatus, Post, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { BalanceService } from "./balance.service";

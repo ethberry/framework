@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { wallets } from "@gemunion/constants";
+import { wallets } from "@ethberry/constants";
 import { ModuleType, TokenType } from "@framework/types";
 
 import {

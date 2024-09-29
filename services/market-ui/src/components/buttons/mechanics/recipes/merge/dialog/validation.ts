@@ -1,6 +1,6 @@
 import { array, number, object } from "yup";
 
-import { tokenAssetValidationSchema } from "@gemunion/mui-inputs-asset";
+import { tokenAssetValidationSchema } from "@ethberry/mui-inputs-asset";
 
 function findAllDuplicateIndices<T>(array: T[]): number[] {
   const seen = new Set<T>();

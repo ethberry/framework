@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany
 import type { IProduct } from "@framework/types";
 import { ProductStatus } from "@framework/types";
 import { ns } from "@framework/constants";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { MerchantEntity } from "../../infrastructure/merchant/merchant.entity";
 import { CategoryEntity } from "../category/category.entity";

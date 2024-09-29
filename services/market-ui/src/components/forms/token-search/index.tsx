@@ -1,10 +1,10 @@
 import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
 import { ContractFeatures, ITokenSearchDto, ModuleType, TokenMetadata, TokenRarity, TokenType } from "@framework/types";
-import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 
 interface ITokenSearchFormProps {
   onSubmit: (values: ITokenSearchDto) => Promise<void>;

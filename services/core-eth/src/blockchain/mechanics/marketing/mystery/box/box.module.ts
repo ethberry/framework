@@ -2,7 +2,7 @@ import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ethersRpcProvider } from "@gemunion/nest-js-module-ethers-gcp";
+import { ethersRpcProvider } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { MysteryBoxEntity } from "./box.entity";
 import { MysteryBoxService } from "./box.service";

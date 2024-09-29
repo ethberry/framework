@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 

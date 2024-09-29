@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { ChainIdDto } from "@gemunion/nest-js-validators";
+import { ChainIdDto } from "@ethberry/nest-js-validators";
 import type { ISystemContractSearchDto } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
 

@@ -5,12 +5,12 @@
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/framework/issues"
+    "url": "https://github.com/ethberry/framework/issues"
   },
   "devDependencies": {
     "@framework/types": "0.0.1",
-    "@gemunion/types-collection": "1.5.17",
-    "@gemunion/utils": "1.5.0",
+    "@ethberry/types-collection": "1.5.17",
+    "@ethberry/utils": "1.5.0",
     "@mui/material": "6.1.1",
     "ethers": "5.7.2",
     "react": "18.3.1"
@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/ethberry/framework"
   },
   "scripts": {
     "build": "tsc",

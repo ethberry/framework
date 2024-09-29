@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Allow, IsArray, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@ethberry/nest-js-validators";
 
 import { ClaimCreateDto } from "../../../claim/template/dto";
 import type { ICollectionUploadDto, ITokenUploadDto } from "../interfaces";

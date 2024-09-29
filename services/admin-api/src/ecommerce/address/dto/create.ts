@@ -1,4 +1,4 @@
-import { EnabledCountries } from "@gemunion/constants";
+import { EnabledCountries } from "@ethberry/constants";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsBoolean, IsEnum, IsInt, IsString } from "class-validator";

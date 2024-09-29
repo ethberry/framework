@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 
-import { INetwork } from "@gemunion/types-blockchain";
-import { Public } from "@gemunion/nest-js-utils";
+import { INetwork } from "@ethberry/types-blockchain";
+import { Public } from "@ethberry/nest-js-utils";
 
 import { NetworkService } from "./network.service";
 

@@ -4,10 +4,10 @@ import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
 import { DeepPartial } from "typeorm";
 
-import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
+import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 
-import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyStateString } from "@ethberry/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
 import type {
   IContractManagerCollectionDeployedEvent,

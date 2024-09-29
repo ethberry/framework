@@ -6,12 +6,12 @@ import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { useSnackbar } from "notistack";
 import { v4 } from "uuid";
 
-import type { IMetamaskDto } from "@gemunion/types-jwt";
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import { phrase } from "@gemunion/constants";
-import { useUser } from "@gemunion/provider-user";
-import { useApiCall } from "@gemunion/react-hooks";
-import { ApiError } from "@gemunion/provider-api-firebase";
+import type { IMetamaskDto } from "@ethberry/types-jwt";
+import { useMetamask } from "@ethberry/react-hooks-eth";
+import { phrase } from "@ethberry/constants";
+import { useUser } from "@ethberry/provider-user";
+import { useApiCall } from "@ethberry/react-hooks";
+import { ApiError } from "@ethberry/provider-api-firebase";
 import type { IUser } from "@framework/types";
 
 export const AttachWalletButton: FC = () => {

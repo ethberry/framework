@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Wallet } from "ethers";
 
-import type { ISignatureAsset, ISignatureParams } from "@gemunion/types-blockchain";
-import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ISignatureAsset, ISignatureParams } from "@ethberry/types-blockchain";
+import { ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IContract } from "@framework/types";
 
 @Injectable()

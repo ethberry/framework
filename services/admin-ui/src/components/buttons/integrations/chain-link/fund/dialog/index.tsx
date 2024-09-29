@@ -2,9 +2,9 @@ import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { useMetamaskValue, useSystemContract } from "@gemunion/react-hooks-eth";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { useMetamaskValue, useSystemContract } from "@ethberry/react-hooks-eth";
+import { TextInput } from "@ethberry/mui-inputs-core";
 import { formatEther } from "@framework/exchange";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";

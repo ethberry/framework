@@ -4,10 +4,10 @@ import { Web3ContextType } from "@web3-react/core";
 import { ListItemText } from "@mui/material";
 import { PriceChange } from "@mui/icons-material";
 
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import { useApiCall } from "@gemunion/react-hooks";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
+import { useMetamask } from "@ethberry/react-hooks-eth";
+import { useApiCall } from "@ethberry/react-hooks";
 import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAssetComponent, IStakingPenalty } from "@framework/types";

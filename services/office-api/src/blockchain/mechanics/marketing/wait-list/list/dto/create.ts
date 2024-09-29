@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsBoolean, IsInt, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchableDto } from "@gemunion/collection";
+import { SearchableDto } from "@ethberry/collection";
 import type { IWaitListListCreateDto } from "@framework/types";
 
-import { SemiCoinDto } from "@gemunion/nest-js-validators";
+import { SemiCoinDto } from "@ethberry/nest-js-validators";
 
 export class WaitListListCreateDto extends SearchableDto implements IWaitListListCreateDto {
   @ApiProperty({

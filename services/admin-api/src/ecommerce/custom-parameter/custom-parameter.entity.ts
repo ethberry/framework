@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne } from "typ
 import { ns } from "@framework/constants";
 import type { ICustomParameter } from "@framework/types";
 import { ParameterType } from "@framework/types";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { ProductItemEntity } from "../product-item/product-item.entity";
 import { UserEntity } from "../../infrastructure/user/user.entity";

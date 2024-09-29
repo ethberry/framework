@@ -6,8 +6,8 @@ import { FormattedMessage } from "react-intl";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IPonziDeposit, IPonziDepositSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 
 import { PonziRewardComplexButton } from "../../../../../components/buttons";
 import { PonziDepositSearchForm } from "./form";

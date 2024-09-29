@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Put, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor } from "@ethberry/nest-js-utils";
 
 import { PhotoService } from "./photo.service";
 import { PhotoEntity } from "./photo.entity";

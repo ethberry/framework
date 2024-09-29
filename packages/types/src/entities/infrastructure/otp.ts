@@ -1,4 +1,4 @@
-import type { IUuidDateBase } from "@gemunion/types-collection";
+import type { IUuidDateBase } from "@ethberry/types-collection";
 
 import type { IUser } from "./user";
 

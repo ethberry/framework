@@ -3,9 +3,9 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { MuiSortDto, PaginationDto } from "@gemunion/collection";
+import { MuiSortDto, PaginationDto } from "@ethberry/collection";
 import { ContractEventType } from "@framework/types";
-import type { IDateBase } from "@gemunion/types-collection";
+import type { IDateBase } from "@ethberry/types-collection";
 
 export class EventHistorySearchDto2 extends Mixin(PaginationDto, MuiSortDto<IDateBase>) {
   @ApiPropertyOptional({

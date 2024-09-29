@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
 export interface ITemplateInputProps {

@@ -3,7 +3,7 @@ import { StopCircleOutlined } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType } from "@framework/types";

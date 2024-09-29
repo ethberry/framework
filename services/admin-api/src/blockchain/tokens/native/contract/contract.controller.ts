@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { NativeContractService } from "./contract.service";
 import { NativeContractCreateDto, NativeContractUpdateDto } from "./dto";

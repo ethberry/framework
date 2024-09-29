@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { AccountOptionalDto, SemiNftDto } from "@gemunion/nest-js-validators";
+import { AccountOptionalDto, SemiNftDto } from "@ethberry/nest-js-validators";
 import type { IClaimUpdateDto } from "@framework/types";
 
 export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {

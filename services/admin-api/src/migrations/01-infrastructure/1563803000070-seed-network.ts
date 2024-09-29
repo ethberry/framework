@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 import { networks, ns } from "@framework/constants";
 
 export class SeedNetwork1563803000070 implements MigrationInterface {

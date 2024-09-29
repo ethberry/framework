@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@ethberry/types-collection";
 
 import { RentEntity } from "./rent.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";

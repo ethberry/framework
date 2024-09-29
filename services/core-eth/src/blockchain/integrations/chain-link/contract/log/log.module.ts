@@ -4,11 +4,11 @@ import { CronExpression } from "@nestjs/schedule";
 import { toBeHex, zeroPadValue } from "ethers";
 import { IsNull, Not } from "typeorm";
 
-import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
-import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
+import type { IModuleOptions } from "@ethberry/nest-js-module-ethers-gcp";
+import { EthersContractModule } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { ModuleType } from "@framework/types";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 import { ABI, ChainLinkEventSignatures, ChainLinkType } from "../../interfaces";
 import { ChainLinkLogService } from "./log.service";

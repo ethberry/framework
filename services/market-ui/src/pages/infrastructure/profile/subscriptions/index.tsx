@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Grid, Typography } from "@mui/material";
 
-import { PageHeader } from "@gemunion/mui-page-layout";
+import { PageHeader } from "@ethberry/mui-page-layout";
 
 import { ITabPanelProps } from "../interfaces";
 

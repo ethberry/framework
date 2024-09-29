@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { NumberInput } from "@gemunion/mui-inputs-core";
+import { NumberInput } from "@ethberry/mui-inputs-core";
 import { IAsset } from "@framework/types";
 
 export interface IMaxInputProps {

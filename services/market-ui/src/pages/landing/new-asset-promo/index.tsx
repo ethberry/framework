@@ -2,9 +2,9 @@ import { FC, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 
 import type { IAssetPromo } from "@framework/types";
-import type { IPaginationResult } from "@gemunion/types-collection";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
+import type { IPaginationResult } from "@ethberry/types-collection";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { MultiCarouselAssetPromo } from "../multi-carousel-asset-promo";
 

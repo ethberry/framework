@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { MysteryBoxStatus } from "@framework/types";
 
 import type { IMysteryBoxUpdateDto } from "../interfaces";
-import { SemiCoinDto, NftDto } from "@gemunion/nest-js-validators";
+import { SemiCoinDto, NftDto } from "@ethberry/nest-js-validators";
 
 export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {
   @ApiPropertyOptional()

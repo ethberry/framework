@@ -9,7 +9,7 @@ import {
   emailMaxLength,
   EnabledCountries,
   EnabledGenders,
-} from "@gemunion/constants";
+} from "@ethberry/constants";
 import { EnabledLanguages } from "@framework/constants";
 import type { IUserCommonDto } from "@framework/types";
 

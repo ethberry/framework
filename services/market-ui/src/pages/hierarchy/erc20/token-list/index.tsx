@@ -3,9 +3,9 @@ import { Grid } from "@mui/material";
 
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IToken, ITokenSearchDto } from "@framework/types";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
 
 import { Erc20CoinsListItem } from "./item";
 

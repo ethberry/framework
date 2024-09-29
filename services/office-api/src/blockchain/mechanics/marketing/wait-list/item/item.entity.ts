@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import { ns } from "@framework/constants";
 import type { IWaitListItem } from "@framework/types";
 import { WaitListItemStatus } from "@framework/types";

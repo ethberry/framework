@@ -9,12 +9,12 @@ import { formatItem } from "@framework/exchange";
 import { StyledListWrapper } from "@framework/styled";
 import type { IReferralEvents, IReferralRewardShare, IReferralReportSearchDto } from "@framework/types";
 import { ClaimStatus } from "@framework/types";
-import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { AddressLink } from "@gemunion/mui-scanner";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
-import { useCollection, collectionActions } from "@gemunion/provider-collection";
-import { useAppDispatch } from "@gemunion/redux";
+import { humanReadableDateTimeFormat } from "@ethberry/constants";
+import { AddressLink } from "@ethberry/mui-scanner";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
+import { useCollection, collectionActions } from "@ethberry/provider-collection";
+import { useAppDispatch } from "@ethberry/redux";
 
 export interface IReferralRewardSearchDto extends IReferralReportSearchDto {
   merchantIds: Array<number>;

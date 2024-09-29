@@ -5,10 +5,10 @@ import { Button, SvgIcon } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
-import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-import { MetaMaskIcon } from "@gemunion/mui-icons";
-import { useAppSelector } from "@gemunion/redux";
-import { TConnectors, walletSelectors } from "@gemunion/provider-wallet";
+import { useMetamaskValue } from "@ethberry/react-hooks-eth";
+import { MetaMaskIcon } from "@ethberry/mui-icons";
+import { useAppSelector } from "@ethberry/redux";
+import { TConnectors, walletSelectors } from "@ethberry/provider-wallet";
 
 interface IErc20AddToMetamaskButtonProps {
   token: IToken;

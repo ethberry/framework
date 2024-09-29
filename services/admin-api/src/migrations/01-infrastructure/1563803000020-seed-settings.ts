@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { loremIpsum, NodeEnv } from "@gemunion/constants";
+import { loremIpsum, NodeEnv } from "@ethberry/constants";
 import { ns } from "@framework/constants";
 
 export class SeedSettings1563803000020 implements MigrationInterface {

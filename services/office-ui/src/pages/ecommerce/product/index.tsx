@@ -6,14 +6,14 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IProduct } from "@framework/types";
 import { ProductStatus } from "@framework/types";
-import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import type { ISearchDto } from "@gemunion/types-collection";
+import { SelectInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
 
 import { EditProductDialog } from "./edit";
 

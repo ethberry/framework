@@ -2,9 +2,9 @@ import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
-import type { IPaginationResult } from "@gemunion/types-collection";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
+import type { IPaginationResult } from "@ethberry/types-collection";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
 import type { ITemplate } from "@framework/types";
 import { TokenType } from "@framework/types";
 

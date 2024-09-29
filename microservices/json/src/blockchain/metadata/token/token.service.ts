@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 
-import { getText } from "@gemunion/draft-js-utils";
-import { decodeTraits } from "@gemunion/traits-v6";
+import { getText } from "@ethberry/draft-js-utils";
+import { decodeTraits } from "@ethberry/traits-v6";
 import { TokenMetadata, TokenRarity } from "@framework/types";
 import type { IOpenSeaTokenMetadata, IOpenSeaMetadataAttribute } from "@framework/types";
 

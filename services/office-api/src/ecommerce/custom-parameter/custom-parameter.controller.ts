@@ -14,8 +14,8 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { SearchDto } from "@gemunion/collection";
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { SearchDto } from "@ethberry/collection";
+import { PaginationInterceptor } from "@ethberry/nest-js-utils";
 
 import { CustomParameterCreateDto, CustomParameterUpdateDto } from "./dto";
 import { CustomParameterService } from "./custom-parameter.service";

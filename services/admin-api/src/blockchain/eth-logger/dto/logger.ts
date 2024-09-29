@@ -3,7 +3,7 @@ import { IsEnum, IsInt, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AddressDto, ChainIdDto } from "@gemunion/nest-js-validators";
+import { AddressDto, ChainIdDto } from "@ethberry/nest-js-validators";
 import { ListenerType } from "@framework/types";
 
 import { IEthLoggerInOutDto } from "../interfaces";

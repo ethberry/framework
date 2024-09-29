@@ -2,11 +2,11 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { DateInput } from "@gemunion/mui-inputs-picker";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { DateInput } from "@ethberry/mui-inputs-picker";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import type { IAchievementRule } from "@framework/types";
 import { AchievementRuleStatus, ContractFeatures, ContractStatus } from "@framework/types";
 

@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { ITemplate } from "@framework/types";
 import { TemplateStatus } from "@framework/types";
 

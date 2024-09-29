@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { formatDuration, intervalToDuration } from "date-fns";
 
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 import { IAssetPromo } from "@framework/types";
 
 import { PromoPurchaseButton } from "../../../../components/buttons";

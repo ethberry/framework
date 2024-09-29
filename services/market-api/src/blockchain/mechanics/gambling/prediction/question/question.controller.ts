@@ -1,8 +1,8 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
+import { NotFoundInterceptor, PaginationInterceptor } from "@ethberry/nest-js-utils";
+import { SearchDto } from "@ethberry/collection";
 
 import { PredictionQuestionService } from "./question.service";
 import { PredictionQuestionEntity } from "./question.entity";

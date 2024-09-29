@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEthereumAddress, IsString } from "class-validator";
-// import { IsBigInt } from "@gemunion/nest-js-validators";
+// import { IsBigInt } from "@ethberry/nest-js-validators";
 
 import type { IWalletContractDeployDto } from "@framework/types";
 

@@ -4,7 +4,7 @@ import { matchPath, useLocation } from "react-router";
 import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import { NavLink as RouterNavLink } from "react-router-dom";
 
-import { useUser } from "@gemunion/provider-user";
+import { useUser } from "@ethberry/provider-user";
 import type { IUser } from "@framework/types";
 
 export const Sections: FC = () => {

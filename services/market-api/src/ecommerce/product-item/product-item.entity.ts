@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne 
 
 import type { IProductItem } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { AssetEntity } from "../../blockchain/exchange/asset/asset.entity";
 import { OrderItemEntity } from "../order-item/order-item.entity";

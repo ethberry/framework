@@ -1,6 +1,6 @@
 import { Controller, Get, Param, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, Public } from "@ethberry/nest-js-utils";
 
 import { PageService } from "./page.service";
 import { PageEntity } from "./page.entity";

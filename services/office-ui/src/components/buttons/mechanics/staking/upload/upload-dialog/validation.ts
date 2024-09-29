@@ -1,7 +1,7 @@
 import { object, number, boolean, mixed } from "yup";
 
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
-import { dbIdValidationSchema } from "@gemunion/yup-rules";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
+import { dbIdValidationSchema } from "@ethberry/yup-rules";
 
 import { DurationUnit } from "@framework/types";
 

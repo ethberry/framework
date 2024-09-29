@@ -7,7 +7,7 @@ import {
   TypeOrmHealthIndicator,
 } from "@nestjs/terminus";
 
-import { Public } from "@gemunion/nest-js-utils";
+import { Public } from "@ethberry/nest-js-utils";
 
 @Public()
 @Controller("/health")

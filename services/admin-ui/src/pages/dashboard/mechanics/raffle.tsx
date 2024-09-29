@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
 import { ChainLinkV2SupportedChains } from "@framework/types";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export const RaffleSection: FC = () => {
   const { chainId = 0 } = useWeb3React();

@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { EntityInput, IEntityInputProps } from "@gemunion/mui-inputs-entity";
+import { EntityInput, IEntityInputProps } from "@ethberry/mui-inputs-entity";
 
 export interface ISearchMerchantContractsInputProps extends Partial<IEntityInputProps> {
   name: string;

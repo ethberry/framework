@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { FormWrapper } from "@ethberry/mui-form";
 import type { IReferralProgramCreateDto } from "@framework/types";
 
 import { ReferralProgramLevelsInput } from "./levels";

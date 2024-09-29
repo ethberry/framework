@@ -4,7 +4,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, stripZerosLeft, toUtf8String, ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { testChainId } from "@framework/constants";
 import type { IERC721ConsecutiveTransfer, IERC721TokenTransferEvent, ILevelUp } from "@framework/types";

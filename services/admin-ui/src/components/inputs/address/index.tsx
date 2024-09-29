@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Paper } from "@mui/material";
 
-import { EnabledCountries } from "@gemunion/constants";
-import { SelectInput, SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
-import { useLicense } from "@gemunion/provider-license";
+import { EnabledCountries } from "@ethberry/constants";
+import { SelectInput, SwitchInput, TextInput } from "@ethberry/mui-inputs-core";
+import { useLicense } from "@ethberry/provider-license";
 
 export interface IAddressInputProps {
   outlined?: boolean;

@@ -1,5 +1,5 @@
-import type { IPaginationDto, InputType } from "@gemunion/types-collection";
-import type { TokenType } from "@gemunion/types-blockchain";
+import type { IPaginationDto, InputType } from "@ethberry/types-collection";
+import type { TokenType } from "@ethberry/types-blockchain";
 
 export interface IStakingLeaderboardItemSearchDto {
   tokenType: TokenType;

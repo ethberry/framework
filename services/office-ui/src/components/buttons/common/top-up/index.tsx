@@ -3,8 +3,8 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, constants, Contract } from "ethers";
 
-import { getEmptyToken } from "@gemunion/mui-inputs-asset";
-import { useAllowance, useMetamask } from "@gemunion/react-hooks-eth";
+import { getEmptyToken } from "@ethberry/mui-inputs-asset";
+import { useAllowance, useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetComponent, IContract } from "@framework/types";
 import { convertDatabaseAssetToTokenTypeAsset } from "@framework/exchange";

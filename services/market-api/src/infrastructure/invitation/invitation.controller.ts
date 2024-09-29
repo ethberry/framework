@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe } from "@nestjs/common";
 
-import { Public } from "@gemunion/nest-js-utils";
+import { Public } from "@ethberry/nest-js-utils";
 
 import { InvitationService } from "./invitation.service";
 

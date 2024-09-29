@@ -6,7 +6,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { SystemModuleType } from "@framework/types";
 import type { IContract } from "@framework/types";
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
 import ERC677TransferAndCallABI from "@framework/abis/json/ERC677/transferAndCall.json";

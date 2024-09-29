@@ -13,8 +13,8 @@ import {
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { PaginationDto } from "@gemunion/collection";
-import { AccountOptionalDto, IsBeforeDate } from "@gemunion/nest-js-validators";
+import { PaginationDto } from "@ethberry/collection";
+import { AccountOptionalDto, IsBeforeDate } from "@ethberry/nest-js-validators";
 import type { IPonziReportItemSearchDto, IPonziReportSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
 

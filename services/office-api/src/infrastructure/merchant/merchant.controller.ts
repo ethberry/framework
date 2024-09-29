@@ -13,7 +13,7 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { MerchantService } from "./merchant.service";
 import { MerchantEntity } from "./merchant.entity";

@@ -1,5 +1,5 @@
 import { parseEther, JsonRpcProvider, Wallet } from "ethers";
-import { TokenType } from "@gemunion/types-blockchain";
+import { TokenType } from "@ethberry/types-blockchain";
 
 export interface IPricesFees {
   listing_profit: string;
@@ -19,7 +19,7 @@ export enum ItemType {
 }
 export const conduitKey = "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000";
 
-// TODO import { ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
+// TODO import { ethersSignerProvider } from "@ethberry/nest-js-module-ethers-gcp";
 export const getOpenSeaSigner = (chainId: number): Wallet => {
   // TODO get correct RPC URL from our DB by chainId
   const provider = new JsonRpcProvider(chainId === 11155111 ? "https://rpc.sepolia.org" : "https://rpc.sepolia.org");

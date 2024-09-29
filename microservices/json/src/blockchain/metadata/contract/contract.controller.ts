@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from "@nestjs/common";
 
-import { AddressPipe, ApiAddress, ApiChainId, ChainIdPipe, Public } from "@gemunion/nest-js-utils";
+import { AddressPipe, ApiAddress, ApiChainId, ChainIdPipe, Public } from "@ethberry/nest-js-utils";
 import type { IOpenSeaContractMetadata } from "@framework/types";
 
 import { MetadataContractService } from "./contract.service";

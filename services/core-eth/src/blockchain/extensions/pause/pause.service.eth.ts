@@ -4,7 +4,7 @@ import { ClientProxy } from "@nestjs/microservices";
 
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IPausedEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 import { testChainId } from "@framework/constants";

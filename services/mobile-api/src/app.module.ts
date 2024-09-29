@@ -4,15 +4,15 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
-import { HttpExceptionFilter, HttpValidationPipe } from "@gemunion/nest-js-utils";
-import { FirebaseHttpGuard } from "@gemunion/nest-js-guards";
-import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
-import { HelmetModule } from "@gemunion/nest-js-module-helmet";
-import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
+import { HttpExceptionFilter, HttpValidationPipe } from "@ethberry/nest-js-utils";
+import { FirebaseHttpGuard } from "@ethberry/nest-js-guards";
+import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
+import { HelmetModule } from "@ethberry/nest-js-module-helmet";
+import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
 import { RedisProviderType } from "@framework/types";
-import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@gemunion/nest-js-module-throttler";
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@ethberry/nest-js-module-throttler";
+import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { LicenseModule } from "@ethberry/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";

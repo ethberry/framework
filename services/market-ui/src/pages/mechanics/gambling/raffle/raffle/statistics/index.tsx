@@ -6,9 +6,9 @@ import { ArrowBack, ArrowForward, LastPage } from "@mui/icons-material";
 import { format, parseISO } from "date-fns";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { useApiCall } from "@gemunion/react-hooks";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { humanReadableDateTimeFormat } from "@ethberry/constants";
+import { useApiCall } from "@ethberry/react-hooks";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
 import type { IContract } from "@framework/types";
 
 import { emptyRaffleRound, IRaffleRoundStatistic } from "../../../../../../components/common/interfaces";

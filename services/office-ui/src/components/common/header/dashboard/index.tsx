@@ -5,7 +5,7 @@ import { NavLink as RouterNavLink } from "react-router-dom";
 import { useIntl } from "react-intl";
 
 import type { IUser } from "@framework/types";
-import { useUser } from "@gemunion/provider-user";
+import { useUser } from "@ethberry/provider-user";
 
 export const DashboardButton: FC = () => {
   const { formatMessage } = useIntl();

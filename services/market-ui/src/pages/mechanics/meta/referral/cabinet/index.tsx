@@ -4,8 +4,8 @@ import { Button, Grid } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { useClipboard } from "use-clipboard-copy";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useWallet } from "@gemunion/provider-wallet";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useWallet } from "@ethberry/provider-wallet";
 
 import { StyledTextField } from "./styled";
 

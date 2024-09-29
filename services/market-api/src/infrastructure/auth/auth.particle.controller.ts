@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
-import { Public } from "@gemunion/nest-js-utils";
-import type { IFirebaseToken } from "@gemunion/nest-js-module-particle";
-import { ParticleDto } from "@gemunion/nest-js-module-particle";
+import { Public } from "@ethberry/nest-js-utils";
+import type { IFirebaseToken } from "@ethberry/nest-js-module-particle";
+import { ParticleDto } from "@ethberry/nest-js-module-particle";
 
 import { AuthParticleService } from "./auth.particle.service";
 

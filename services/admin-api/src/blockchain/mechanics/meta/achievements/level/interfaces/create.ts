@@ -1,4 +1,4 @@
-import type { ISearchableDto } from "@gemunion/types-collection";
+import type { ISearchableDto } from "@ethberry/types-collection";
 import { IAssetDto } from "@framework/types";
 
 export interface IAchievementLevelCreateDto extends ISearchableDto {

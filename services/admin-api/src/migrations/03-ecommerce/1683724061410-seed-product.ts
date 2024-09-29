@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { rawStateString } from "@gemunion/draft-js-utils";
+import { rawStateString } from "@ethberry/draft-js-utils";
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export class SeedProduct1683724061410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

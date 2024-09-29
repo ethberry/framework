@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { StakingDepositStatus } from "@framework/types";
 import type { IStakingDeposit } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 
 import StakingReceiveRewardABI from "@framework/abis/json/Staking/receiveReward.json";
 

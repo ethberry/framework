@@ -4,8 +4,8 @@ import { Grid, IconButton, List, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { NumberInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { NumberInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import { StyledListItem } from "@framework/styled";
 import type { IOrder, IOrderItem, IProductItem } from "@framework/types";
 

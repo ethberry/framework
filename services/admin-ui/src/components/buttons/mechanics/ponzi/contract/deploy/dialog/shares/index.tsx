@@ -4,7 +4,7 @@ import { Add, Delete } from "@mui/icons-material";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@ethberry/mui-inputs-core";
 
 import { emptyShare } from "./empty";
 

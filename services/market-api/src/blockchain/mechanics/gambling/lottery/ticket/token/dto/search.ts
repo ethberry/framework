@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@ethberry/collection";
 
 import type { ILotteryTicketTokenSearchDto } from "@framework/types";
 

@@ -2,8 +2,8 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
-import { wallet, NodeEnv } from "@gemunion/constants";
-import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { wallet, NodeEnv } from "@ethberry/constants";
+import { simpleFormatting } from "@ethberry/draft-js-utils";
 import { imagePath, ns, testChainId } from "@framework/constants";
 
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {

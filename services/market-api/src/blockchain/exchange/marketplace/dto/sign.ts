@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { IsBigInt, ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { IsBigInt, ReferrerOptionalDto } from "@ethberry/nest-js-validators";
 import type { ITemplateSignDto } from "@framework/types";
 
 export class TemplateSignDto extends Mixin(ReferrerOptionalDto) implements ITemplateSignDto {

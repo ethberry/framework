@@ -3,7 +3,7 @@ import { IsEnum, IsInt, Min, Validate, ValidateIf } from "class-validator";
 import { Transform } from "class-transformer";
 import { decorate } from "ts-mixer";
 
-import { AddressDto, ForbidEnumValues, IsBigInt } from "@gemunion/nest-js-validators";
+import { AddressDto, ForbidEnumValues, IsBigInt } from "@ethberry/nest-js-validators";
 import type { IBlockChainAssetDto, IBlockChainAssetTemplateDto, IBlockChainAssetTokenDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 

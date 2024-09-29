@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ChainIdDto, CoinDto, IsBigInt, ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { AccountDto, ChainIdDto, CoinDto, IsBigInt, ReferrerOptionalDto } from "@ethberry/nest-js-validators";
 
 import type { ITokenSellDto } from "../interfaces";
 

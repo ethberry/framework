@@ -1,6 +1,6 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@ethberry/nest-js-utils";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";

@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { formatEther } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { IToken } from "@framework/types";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 
 import { OpenSeaSellButton } from "../../../../../components/buttons";
 

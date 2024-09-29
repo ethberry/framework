@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested, IsInt, IsEnum, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { NotNativeDto, NftDto } from "@gemunion/nest-js-validators";
+import { NotNativeDto, NftDto } from "@ethberry/nest-js-validators";
 import { DismantleStrategy } from "@framework/types";
 
 import type { IDismantleCreateDto } from "../interfaces";

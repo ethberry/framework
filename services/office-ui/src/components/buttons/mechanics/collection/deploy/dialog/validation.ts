@@ -5,7 +5,7 @@ import {
   titleValidationSchema,
   currencyValidationSchema,
   urlValidationSchema,
-} from "@gemunion/yup-rules";
+} from "@ethberry/yup-rules";
 
 export const validationSchema = object().shape({
   name: titleValidationSchema,

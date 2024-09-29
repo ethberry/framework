@@ -1,9 +1,9 @@
 import { FC, Fragment } from "react";
 import { Grid } from "@mui/material";
 
-import type { ISearchDto } from "@gemunion/types-collection";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 

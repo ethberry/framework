@@ -5,10 +5,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
-import { useUser } from "@gemunion/provider-user";
+import { useUser } from "@ethberry/provider-user";
 import type { IUser } from "@framework/types";
 import { ChainLinkV2SupportedChains, RatePlanType } from "@framework/types";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export const MysterySection: FC = () => {
   const { profile } = useUser<IUser>();

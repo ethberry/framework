@@ -6,11 +6,11 @@ import { FormattedMessage } from "react-intl";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { ICraft, ICraftSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { useCollection } from "@gemunion/provider-collection";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TokenType } from "@gemunion/types-blockchain";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { useCollection } from "@ethberry/provider-collection";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { TokenType } from "@ethberry/types-blockchain";
 
 import { CraftItem } from "./item";
 

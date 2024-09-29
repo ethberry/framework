@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
 
 import type { IComposition } from "@framework/types";
 

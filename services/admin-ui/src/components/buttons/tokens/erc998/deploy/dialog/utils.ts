@@ -1,6 +1,6 @@
 import { ChainLinkV2SupportedChains, Erc998ContractTemplates } from "@framework/types";
-import { NodeEnv } from "@gemunion/constants";
-import { Networks } from "@gemunion/types-blockchain";
+import { NodeEnv } from "@ethberry/constants";
+import { Networks } from "@ethberry/types-blockchain";
 
 export const isTemplateDisabled = (chainId: number) => {
   const disabledTemplates = [];

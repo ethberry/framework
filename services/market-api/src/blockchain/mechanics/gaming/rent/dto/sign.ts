@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { ReferrerDto } from "@gemunion/nest-js-validators";
+import { ReferrerDto } from "@ethberry/nest-js-validators";
 import type { IRentSignDto } from "@framework/types";
 
 export class RentSignDto extends Mixin(ReferrerDto) implements IRentSignDto {

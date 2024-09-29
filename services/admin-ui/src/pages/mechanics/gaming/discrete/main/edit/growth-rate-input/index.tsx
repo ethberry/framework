@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
 import { DiscreteStrategy } from "@framework/types";
 
 export interface IAddressInputProps {

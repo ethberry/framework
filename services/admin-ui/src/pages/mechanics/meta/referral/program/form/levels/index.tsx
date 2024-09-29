@@ -5,9 +5,9 @@ import { Add, Delete } from "@mui/icons-material";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 import type { IReferralProgram, IUser } from "@framework/types";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { useUser } from "@gemunion/provider-user";
-import { useDeepCompareEffect } from "@gemunion/react-hooks";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
+import { useUser } from "@ethberry/provider-user";
+import { useDeepCompareEffect } from "@ethberry/react-hooks";
 
 export type TReferralProgram = IReferralProgram & {
   id: string;

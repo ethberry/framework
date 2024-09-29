@@ -4,15 +4,15 @@ import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 
-import { TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useUser } from "@gemunion/provider-user";
-import { ApiError, useApi } from "@gemunion/provider-api-firebase";
-import { FormWrapper } from "@gemunion/mui-form";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { TextInput } from "@ethberry/mui-inputs-core";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useUser } from "@ethberry/provider-user";
+import { ApiError, useApi } from "@ethberry/provider-api-firebase";
+import { FormWrapper } from "@ethberry/mui-form";
+import { AvatarInput } from "@ethberry/mui-inputs-image-firebase";
 import type { IMerchant, IUser } from "@framework/types";
-import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyStateString } from "@ethberry/draft-js-utils";
 
 import { validationSchema } from "./validation";
 import { SocialInput } from "./social-input";

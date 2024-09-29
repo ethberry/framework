@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, Public, User } from "@gemunion/nest-js-utils";
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import { NotFoundInterceptor, Public, User } from "@ethberry/nest-js-utils";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 
 import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 import { DiscreteAutocompleteDto, DiscreteSignDto, DiscreteFindOneDto } from "./dto";

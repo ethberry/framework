@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
 import { Erc1155ContractTemplates, IContract, IErc1155ContractDeployDto } from "@framework/types";
 
 import { RoyaltyInput } from "../../../../../inputs/royalty";

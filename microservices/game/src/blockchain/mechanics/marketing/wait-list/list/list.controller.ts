@@ -1,8 +1,8 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
+import { SearchDto } from "@ethberry/collection";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { WaitListListService } from "./list.service";

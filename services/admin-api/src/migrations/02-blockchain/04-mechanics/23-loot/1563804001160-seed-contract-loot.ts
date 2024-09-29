@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
-import { baseTokenURI } from "@gemunion/contracts-constants";
-import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { baseTokenURI } from "@ethberry/contracts-constants";
+import { simpleFormatting } from "@ethberry/draft-js-utils";
 import { dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export class SeedContractLootAt1563804001160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

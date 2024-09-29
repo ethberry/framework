@@ -3,13 +3,13 @@ import { AppBar, Hidden } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { companyName, EnabledLanguages } from "@framework/constants";
-import { Localization } from "@gemunion/provider-localization";
-import { Theme } from "@gemunion/provider-theme";
-import { WalletButton, NetworkButton } from "@gemunion/provider-wallet";
-import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
-import { ParticleLoginButton } from "@gemunion/login-button-particle";
-import { WalletConnectLoginButton } from "@gemunion/login-button-wallet-connect";
-import { FirebaseLogin } from "@gemunion/firebase-login";
+import { Localization } from "@ethberry/provider-localization";
+import { Theme } from "@ethberry/provider-theme";
+import { WalletButton, NetworkButton } from "@ethberry/provider-wallet";
+import { MetamaskLoginButton } from "@ethberry/login-button-metamask";
+import { ParticleLoginButton } from "@ethberry/login-button-particle";
+import { WalletConnectLoginButton } from "@ethberry/login-button-wallet-connect";
+import { FirebaseLogin } from "@ethberry/firebase-login";
 
 import { DashboardButton } from "./dashboard";
 import { Sections } from "./sections";

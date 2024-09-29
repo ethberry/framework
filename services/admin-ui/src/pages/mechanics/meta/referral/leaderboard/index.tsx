@@ -3,10 +3,10 @@ import { useIntl } from "react-intl";
 import { Grid } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { AddressLink } from "@gemunion/mui-scanner";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { AddressLink } from "@ethberry/mui-scanner";
 import { formatEther } from "@framework/exchange";
 import type { IReferralLeaderboard } from "@framework/types";
 

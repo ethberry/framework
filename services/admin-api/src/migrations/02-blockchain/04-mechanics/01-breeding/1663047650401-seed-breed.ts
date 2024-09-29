@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export class SeedBreed1663047650401 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

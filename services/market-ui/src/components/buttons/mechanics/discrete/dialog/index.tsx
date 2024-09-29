@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormDialog } from "@ethberry/mui-dialog-form";
 
 import { validationSchema } from "./validation";
 import { AttributeInput } from "./attribute-input";

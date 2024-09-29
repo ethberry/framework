@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";

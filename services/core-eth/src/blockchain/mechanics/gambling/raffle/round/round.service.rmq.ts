@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Contract, JsonRpcProvider, Wallet } from "ethers";
 
-import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IRaffleScheduleUpdateRmq } from "@framework/types";
 
 import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";

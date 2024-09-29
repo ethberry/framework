@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@ethberry/collection";
 
 import type { IPonziDepositItemSearchDto, IPonziDepositSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";

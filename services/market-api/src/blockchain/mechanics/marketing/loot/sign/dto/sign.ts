@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { ReferrerOptionalDto } from "@ethberry/nest-js-validators";
 import type { ILootBoxSignDto } from "@framework/types";
 
 export class LootBoxSignDto extends Mixin(ReferrerOptionalDto) implements ILootBoxSignDto {

@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 
 import { ChainLinkContractService } from "./contract.service";
 import { ContractAutocompleteDto } from "../../../hierarchy/contract/dto";

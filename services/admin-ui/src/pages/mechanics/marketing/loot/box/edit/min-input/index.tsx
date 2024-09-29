@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { useFormContext, useWatch, UseFormTrigger } from "react-hook-form";
 
-import { NumberInput } from "@gemunion/mui-inputs-core";
+import { NumberInput } from "@ethberry/mui-inputs-core";
 
 export interface IMinInputProps {
   name?: string;

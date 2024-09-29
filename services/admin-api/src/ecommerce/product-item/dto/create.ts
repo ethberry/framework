@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, IsString, MaxLength, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { CoinDto } from "@gemunion/nest-js-validators";
+import { CoinDto } from "@ethberry/nest-js-validators";
 import type { IPhoto } from "@framework/types";
 
 import type { IProductItemCreateDto } from "../interfaces";

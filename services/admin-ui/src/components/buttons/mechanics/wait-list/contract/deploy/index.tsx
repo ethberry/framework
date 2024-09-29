@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Add } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
 
-import { useDeploy } from "@gemunion/react-hooks-eth";
-import { useUser } from "@gemunion/provider-user";
+import { useDeploy } from "@ethberry/react-hooks-eth";
+import { useUser } from "@ethberry/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IWaitListContractDeployDto } from "@framework/types";
 import WaitListFactoryFacetDeployWaitListABI from "@framework/abis/json/WaitListFactoryFacet/deployWaitList.json";

@@ -2,8 +2,8 @@ import { FC, Fragment, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import * as Plot from "@observablehq/plot";
 
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { BaseCoins, TargetCoins } from "../../rates/enums";
 

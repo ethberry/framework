@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 import type { IPageSearchDto } from "@framework/types";
 import { PageStatus } from "@framework/types";
 

@@ -3,9 +3,9 @@ import { Button, Grid, Link } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import type { IPaginationResult } from "@gemunion/types-collection";
-import { useApiCall } from "@gemunion/react-hooks";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import type { IPaginationResult } from "@ethberry/types-collection";
+import { useApiCall } from "@ethberry/react-hooks";
 import type { IRatePlan } from "@framework/types";
 import { RatePlanType, TokenType } from "@framework/types";
 

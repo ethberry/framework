@@ -5,8 +5,8 @@ import {
   draftValidationSchema,
   symbolValidationSchema,
   titleValidationSchema,
-} from "@gemunion/yup-rules";
-import { addressValidationSchema } from "@gemunion/yup-rules-eth";
+} from "@ethberry/yup-rules";
+import { addressValidationSchema } from "@ethberry/yup-rules-eth";
 
 export const editValidationSchema = object().shape({
   title: titleValidationSchema,

@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { DateTimeInput } from "@gemunion/mui-inputs-picker";
-import { SwitchInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
+import { DateTimeInput } from "@ethberry/mui-inputs-picker";
+import { SwitchInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import type { IStakingChartSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 

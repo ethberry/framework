@@ -3,9 +3,9 @@ import { ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
 import { addDays } from "date-fns";
 
-import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { wallet } from "@gemunion/constants";
-import { baseTokenURI } from "@gemunion/contracts-constants";
+import { simpleFormatting } from "@ethberry/draft-js-utils";
+import { wallet } from "@ethberry/constants";
+import { baseTokenURI } from "@ethberry/contracts-constants";
 import type {
   IAsset,
   IAssetComponent,

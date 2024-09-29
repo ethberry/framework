@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { FormWrapper } from "@gemunion/mui-form";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
-import { useApiCall } from "@gemunion/react-hooks";
-import { loremIpsum } from "@gemunion/constants";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { FormWrapper } from "@ethberry/mui-form";
+import { NumberInput, TextInput } from "@ethberry/mui-inputs-core";
+import { useApiCall } from "@ethberry/react-hooks";
+import { loremIpsum } from "@ethberry/constants";
 import { SettingsKeys } from "@framework/types";
 
 const emptySettings = {

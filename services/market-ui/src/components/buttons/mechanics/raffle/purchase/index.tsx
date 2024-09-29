@@ -3,10 +3,10 @@ import { Web3ContextType } from "@web3-react/core";
 import { Casino } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { useAppSelector } from "@gemunion/redux";
-import { walletSelectors } from "@gemunion/provider-wallet";
+import type { IServerSignature } from "@ethberry/types-blockchain";
+import { useAllowance, useMetamask, useServerSignature } from "@ethberry/react-hooks-eth";
+import { useAppSelector } from "@ethberry/redux";
+import { walletSelectors } from "@ethberry/provider-wallet";
 import {
   convertDatabaseAssetToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,

@@ -3,10 +3,10 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ScheduleModule } from "@nestjs/schedule";
 import { WinstonModule } from "nest-winston";
 
-import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
-import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
+import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
+import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
+import { LicenseModule } from "@ethberry/nest-js-module-license";
+import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
 
 import ormconfig from "./ormconfig";
 

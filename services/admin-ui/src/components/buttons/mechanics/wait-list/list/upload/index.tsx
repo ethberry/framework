@@ -4,7 +4,7 @@ import { CloudUploadOutlined } from "@mui/icons-material";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { ContractStatus } from "@framework/types";
 import type { IWaitListList } from "@framework/types";
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { WaitListUploadDialog } from "./dialog";
 import type { IWaitListUploadDto } from "./dialog/file-input";

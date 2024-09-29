@@ -1,8 +1,8 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { app } from "firebase-admin";
 
-import type { IParticleDto, IFirebaseToken } from "@gemunion/nest-js-module-particle";
-import { ParticleService } from "@gemunion/nest-js-module-particle";
+import type { IParticleDto, IFirebaseToken } from "@ethberry/nest-js-module-particle";
+import { ParticleService } from "@ethberry/nest-js-module-particle";
 import { UserRole } from "@framework/types";
 
 import { UserService } from "../user/user.service";

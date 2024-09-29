@@ -3,8 +3,8 @@ import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 
 import type { IContract } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { InputType } from "@gemunion/types-collection";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { InputType } from "@ethberry/types-collection";
 
 import { AllowanceContractInput } from "../../../../../inputs/allowance-contract";
 import { validationSchema } from "./validation";

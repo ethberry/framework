@@ -3,8 +3,8 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
+import { useMetamask } from "@ethberry/react-hooks-eth";
+import type { ITemplateAsset, ITemplateAssetComponent } from "@ethberry/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, TemplateStatus, TokenType } from "@framework/types";

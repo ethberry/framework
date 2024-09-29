@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { ChainIdDto } from "@gemunion/nest-js-validators";
+import { ChainIdDto } from "@ethberry/nest-js-validators";
 import { ContractFeatures, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import type { ITemplateAutocompleteDto } from "@framework/types";
 

@@ -6,10 +6,10 @@ import { stringify } from "qs";
 
 import { ListAction, ListActions, StyledListItem } from "@framework/styled";
 import type { IParameter } from "@framework/types";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 
 import { emptyParameter } from "../../../components/common/interfaces";
 import { uniqueBy } from "../../../utils/uniqueBy";

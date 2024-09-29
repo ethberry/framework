@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 
 import { getEventTypeByContractModule } from "./utils";
 

@@ -4,7 +4,7 @@ import { Transform, Type } from "class-transformer";
 
 import type { IDiscreteUpdateDto } from "@framework/types";
 import { DiscreteStatus, DiscreteStrategy } from "@framework/types";
-import { SemiCoinDto } from "@gemunion/nest-js-validators";
+import { SemiCoinDto } from "@ethberry/nest-js-validators";
 
 export class DiscreteUpdateDto implements IDiscreteUpdateDto {
   @ApiPropertyOptional({

@@ -3,8 +3,8 @@ import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log, Wallet } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
-import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
+import { ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 import {
   IRafflePrizeEvent,
   IRaffleReleaseEvent,

@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import { ethersRpcProvider } from "@gemunion/nest-js-module-ethers-gcp";
+import { ethersRpcProvider } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { WrapperServiceEth } from "./wrapper.service.eth";
 import { WrapperControllerEth } from "./wrapper.controller.eth";

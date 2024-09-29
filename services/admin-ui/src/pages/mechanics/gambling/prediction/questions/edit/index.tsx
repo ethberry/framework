@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { NumberInput, SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import type { IPredictionQuestion } from "@framework/types";
 import { PredictionQuestionStatus, TokenType, ModuleType, ContractStatus } from "@framework/types";
 

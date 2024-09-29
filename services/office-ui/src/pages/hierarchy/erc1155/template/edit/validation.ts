@@ -5,9 +5,9 @@ import {
   draftValidationSchema,
   titleValidationSchema,
   urlValidationSchema,
-} from "@gemunion/yup-rules";
-import { bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
+} from "@ethberry/yup-rules";
+import { bigNumberValidationSchema } from "@ethberry/yup-rules-eth";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
 
 export const validationSchema = object().shape({
   title: titleValidationSchema,

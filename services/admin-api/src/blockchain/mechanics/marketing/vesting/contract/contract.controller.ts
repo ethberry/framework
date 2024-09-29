@@ -1,7 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@ethberry/nest-js-utils";
 
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { VestingService } from "./contract.service";

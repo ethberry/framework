@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
-import type { IPaginationDto } from "@gemunion/types-collection";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
+import type { IPaginationDto } from "@ethberry/types-collection";
 
 export enum ContractEventType {
   WaitListRewardClaimed = "WaitListRewardClaimed", // +

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import type { IRaffleTicketTokenSearchDto } from "@framework/types";
 
 interface IRaffleTokenSearchFormProps {

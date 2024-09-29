@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 
-import { Protected } from "@gemunion/common-pages";
+import { Protected } from "@ethberry/common-pages";
 
 import { IndexWrapper } from "../../../index-wrapper";
 import { LotterySection } from "../../../dashboard/mechanics/lottery";

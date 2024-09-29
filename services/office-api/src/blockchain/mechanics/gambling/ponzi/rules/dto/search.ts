@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 import type { IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
 import { PonziRuleStatus, TokenType } from "@framework/types";
 

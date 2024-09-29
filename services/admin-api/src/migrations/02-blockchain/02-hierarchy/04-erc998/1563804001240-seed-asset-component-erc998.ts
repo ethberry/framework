@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

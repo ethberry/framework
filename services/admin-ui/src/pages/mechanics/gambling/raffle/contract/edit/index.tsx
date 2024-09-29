@@ -2,10 +2,10 @@ import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Alert, Typography } from "@mui/material";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { AvatarInput } from "@ethberry/mui-inputs-image-firebase";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";

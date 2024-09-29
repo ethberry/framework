@@ -3,8 +3,8 @@ import { Add } from "@mui/icons-material";
 import { Contract, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { useDeploy } from "@gemunion/react-hooks-eth";
-import { useUser } from "@gemunion/provider-user";
+import { useDeploy } from "@ethberry/react-hooks-eth";
+import { useUser } from "@ethberry/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILootContractDeployDto, IUser, IContract } from "@framework/types";
 import { LootContractTemplates } from "@framework/types";

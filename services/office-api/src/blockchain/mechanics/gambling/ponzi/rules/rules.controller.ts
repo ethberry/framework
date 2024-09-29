@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { SearchableDto } from "@gemunion/collection";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
+import { SearchableDto } from "@ethberry/collection";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { PonziRulesService } from "./rules.service";

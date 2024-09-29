@@ -1,5 +1,5 @@
-import { InputType } from "@gemunion/types-collection";
-import type { ISearchable } from "@gemunion/types-collection";
+import { InputType } from "@ethberry/types-collection";
+import type { ISearchable } from "@ethberry/types-collection";
 
 import type { IAchievementLevel } from "./level";
 import { ContractEventType } from "../blockchain";

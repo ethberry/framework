@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { NumberInput, TextInput } from "@ethberry/mui-inputs-core";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import type { IAchievementLevel } from "@framework/types";
 
 import { validationSchema } from "./validation";

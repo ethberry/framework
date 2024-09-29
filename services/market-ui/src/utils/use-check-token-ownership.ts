@@ -1,4 +1,4 @@
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 
 export interface ITokenOwnershipData {
   account: string;

@@ -3,9 +3,9 @@ import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import { useAppSelector } from "@gemunion/redux";
-import { walletSelectors } from "@gemunion/provider-wallet";
+import { useMetamask } from "@ethberry/react-hooks-eth";
+import { useAppSelector } from "@ethberry/redux";
+import { walletSelectors } from "@ethberry/provider-wallet";
 import { getEthPrice } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IPonziRule } from "@framework/types";

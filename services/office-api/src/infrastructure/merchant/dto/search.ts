@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 import type { IMerchantSearchDto } from "@framework/types";
 import { MerchantStatus } from "@framework/types";
 

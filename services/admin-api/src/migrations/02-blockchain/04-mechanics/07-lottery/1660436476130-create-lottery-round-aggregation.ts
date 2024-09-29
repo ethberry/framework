@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 import { ns } from "@framework/constants";
 
 export class CreateLotteryRoundAggregationAt1660436476130 implements MigrationInterface {

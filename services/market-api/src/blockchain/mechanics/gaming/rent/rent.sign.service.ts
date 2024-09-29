@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
-import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
-import { comparator } from "@gemunion/utils";
+import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
+import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IRentSignDto } from "@framework/types";

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
 import { ParameterType } from "@framework/types";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { TextInput } from "@ethberry/mui-inputs-core";
 
 export interface IParameterValuesInput {
   name?: string;

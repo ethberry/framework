@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { NftDto, SemiCoinDto } from "@gemunion/nest-js-validators";
+import { NftDto, SemiCoinDto } from "@ethberry/nest-js-validators";
 import { MysteryBoxStatus } from "@framework/types";
 
 import type { IMysteryBoxUpdateDto } from "../interfaces";

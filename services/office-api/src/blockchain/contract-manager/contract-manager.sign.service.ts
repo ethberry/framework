@@ -1,8 +1,8 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { hexlify, randomBytes, Wallet } from "ethers";
 
-import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import { ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 import type {
   ICollectionContractDeployDto,
   IErc1155ContractDeployDto,

@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
-import { Public } from "@gemunion/nest-js-utils";
-import type { IFirebaseToken } from "@gemunion/nest-js-module-metamask";
-import { MetamaskDto } from "@gemunion/nest-js-module-metamask";
+import { Public } from "@ethberry/nest-js-utils";
+import type { IFirebaseToken } from "@ethberry/nest-js-module-metamask";
+import { MetamaskDto } from "@ethberry/nest-js-module-metamask";
 
 import { AuthMetamaskService } from "./auth.metamask.service";
 

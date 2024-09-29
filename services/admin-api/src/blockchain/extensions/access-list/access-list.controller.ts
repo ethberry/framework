@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { AddressPipe, ApiAddress } from "@gemunion/nest-js-utils";
+import { AddressPipe, ApiAddress } from "@ethberry/nest-js-utils";
 
 import { AccessListService } from "./access-list.service";
 import { AccessListEntity } from "./access-list.entity";

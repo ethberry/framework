@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import { IAssetPromo } from "@framework/types";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 
 import { PromoPurchaseButton } from "../../../../../../components/buttons";
 

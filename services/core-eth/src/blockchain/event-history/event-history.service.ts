@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
   ContractEventType,
   ExchangeEventType,

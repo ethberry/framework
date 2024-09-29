@@ -9,11 +9,11 @@ import { enqueueSnackbar } from "notistack";
 
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralReportSearchDto, IReferralTree } from "@framework/types";
-import { useAppSelector } from "@gemunion/redux";
-import { walletSelectors, useWallet } from "@gemunion/provider-wallet";
-import { AddressLink } from "@gemunion/mui-scanner";
-import { useCollection } from "@gemunion/provider-collection";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { useAppSelector } from "@ethberry/redux";
+import { walletSelectors, useWallet } from "@ethberry/provider-wallet";
+import { AddressLink } from "@ethberry/mui-scanner";
+import { useCollection } from "@ethberry/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 
 import { calculateDepth, emptyRefProgram, getRefLevelShare } from "../../../../../utils/referral";
 import type { IRefProgramsLevels } from "../../../../../utils/referral";

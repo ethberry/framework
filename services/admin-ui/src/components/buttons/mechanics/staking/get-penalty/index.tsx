@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { formatEther } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
-import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { useMetamaskValue } from "@ethberry/react-hooks-eth";
 
 import StakingGetPenaltyABI from "@framework/abis/json/Staking/getPenalty.json";
 

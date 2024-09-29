@@ -2,14 +2,14 @@ import { FC, Fragment } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { TextInput, StaticInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { useUser } from "@gemunion/provider-user";
-import { ApiError, useApi } from "@gemunion/provider-api-firebase";
-import { FormWrapper } from "@gemunion/mui-form";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { TextInput, StaticInput } from "@ethberry/mui-inputs-core";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { useUser } from "@ethberry/provider-user";
+import { ApiError, useApi } from "@ethberry/provider-api-firebase";
+import { FormWrapper } from "@ethberry/mui-form";
+import { AvatarInput } from "@ethberry/mui-inputs-image-firebase";
 import type { IMerchant, IUser } from "@framework/types";
-import { PageHeader } from "@gemunion/mui-page-layout";
+import { PageHeader } from "@ethberry/mui-page-layout";
 
 import { ITabPanelProps } from "../tabs";
 import { validationSchema } from "./validation";

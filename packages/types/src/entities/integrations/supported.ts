@@ -1,5 +1,5 @@
 export enum GemunionSupportedChains {
-  GEMUNION = 10000,
+  ETHBERRY = 10000,
   GEMUNION_BESU = 10001,
 
   ETHEREUM = 1,

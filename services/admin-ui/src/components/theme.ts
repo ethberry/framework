@@ -1,4 +1,4 @@
-import { IThemeProviderProps } from "@gemunion/provider-theme";
+import { IThemeProviderProps } from "@ethberry/provider-theme";
 
 export const themeProps: IThemeProviderProps = {
   options: {

@@ -2,10 +2,10 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 
 import type { ICategory } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { TextInput } from "@ethberry/mui-inputs-core";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 
 import { validationSchema } from "./validation";
 

@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { DateInput } from "@gemunion/mui-inputs-picker";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { DateInput } from "@ethberry/mui-inputs-picker";
 
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import { ContractStatus, IAsset, ModuleType, TokenType } from "@framework/types";
 import { StyledAlert } from "@framework/styled";
 

@@ -1,4 +1,4 @@
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 declare global {
   namespace NodeJS {
@@ -8,12 +8,12 @@ declare global {
       HOST: string;
       BE_URL: string;
       JSON_URL: string;
-      GEMUNION_API_KEY: string;
+      ETHBERRY_API_KEY: string;
       ACCOUNT: string;
       CONTRACT_MANAGER_ADDR: string;
       EXCHANGE_ADDR: string;
       STAKING_ADDR: string;
-      CHAIN_ID_GEMUNION_BESU: string;
+      CHAIN_ID_ETHBERRY_BESU: string;
       WAIT_LIST_ADDR: string;
       LOTTERY_ADDR: string;
 

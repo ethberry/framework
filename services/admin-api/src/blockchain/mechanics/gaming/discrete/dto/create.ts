@@ -12,7 +12,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 
-import { ForbidEnumValues, SemiCoinDto } from "@gemunion/nest-js-validators";
+import { ForbidEnumValues, SemiCoinDto } from "@ethberry/nest-js-validators";
 import { DiscreteStrategy, ProtectedAttribute } from "@framework/types";
 import type { IDiscreteCreateDto } from "@framework/types";
 

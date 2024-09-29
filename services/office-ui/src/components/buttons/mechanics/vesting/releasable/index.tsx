@@ -7,7 +7,7 @@ import { formatEther } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
-import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { useMetamaskValue } from "@ethberry/react-hooks-eth";
 
 import VestingReleasableABI from "@framework/abis/json/Vesting/releasable.json";
 

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
 import { IAccessControl } from "@framework/types";
 import { ListItemProvider, StyledListWrapper } from "@framework/styled";
 

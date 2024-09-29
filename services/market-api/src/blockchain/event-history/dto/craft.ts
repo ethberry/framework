@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Mixin } from "ts-mixer";
 
-import { PaginationDto } from "@gemunion/collection";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { PaginationDto } from "@ethberry/collection";
+import { IsBigInt } from "@ethberry/nest-js-validators";
 
 import { IEventHistoryCraftSearchDto } from "../interfaces";
 

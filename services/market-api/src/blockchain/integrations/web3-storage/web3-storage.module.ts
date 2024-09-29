@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import type { IWeb3StorageOptions } from "@gemunion/nest-js-module-web3-storage-firebase";
-import { Web3StorageFirebaseModule } from "@gemunion/nest-js-module-web3-storage-firebase";
+import type { IWeb3StorageOptions } from "@ethberry/nest-js-module-web3-storage-firebase";
+import { Web3StorageFirebaseModule } from "@ethberry/nest-js-module-web3-storage-firebase";
 
 import { Web3StorageService } from "./web3-storage.service";
 import { Web3StorageController } from "./web3-storage.controller";

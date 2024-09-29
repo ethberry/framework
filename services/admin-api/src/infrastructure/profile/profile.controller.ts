@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Put, Res } f
 import { ApiBearerAuth } from "@nestjs/swagger";
 import type { Response } from "express";
 
-import { Public, User } from "@gemunion/nest-js-utils";
-import { MetamaskDto } from "@gemunion/nest-js-module-metamask";
+import { Public, User } from "@ethberry/nest-js-utils";
+import { MetamaskDto } from "@ethberry/nest-js-module-metamask";
 
 import { ProfileService } from "./profile.service";
 import { UserEntity } from "../user/user.entity";

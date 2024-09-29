@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
-import { Protected } from "@gemunion/common-pages";
+import { Protected } from "@ethberry/common-pages";
 
 import { CoinMarketCap } from "./rates";
 

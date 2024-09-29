@@ -1,9 +1,9 @@
 import { Logger, Module } from "@nestjs/common";
 import admin from "firebase-admin";
 
-import { MetamaskModule } from "@gemunion/nest-js-module-metamask";
-import { ParticleModule } from "@gemunion/nest-js-module-particle";
-import { PassportInitialize } from "@gemunion/nest-js-module-passport";
+import { MetamaskModule } from "@ethberry/nest-js-module-metamask";
+import { ParticleModule } from "@ethberry/nest-js-module-particle";
+import { PassportInitialize } from "@ethberry/nest-js-module-passport";
 
 import { UserModule } from "../user/user.module";
 import { APP_PROVIDER } from "./auth.constants";

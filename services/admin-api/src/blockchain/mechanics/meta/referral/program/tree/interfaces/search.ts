@@ -1,4 +1,4 @@
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
 
 export interface IReferralTreeSearchDto extends ISearchDto {
   wallet: string;

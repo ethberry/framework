@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { getText } from "@gemunion/draft-js-utils";
+import { getText } from "@ethberry/draft-js-utils";
 
-import { InfuraFirebaseService } from "@gemunion/nest-js-module-infura-firebase";
+import { InfuraFirebaseService } from "@ethberry/nest-js-module-infura-firebase";
 
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";

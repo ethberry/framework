@@ -1,6 +1,6 @@
 import { mixed, object } from "yup";
 
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
 import { MergeStatus } from "@framework/types";
 
 export const validationSchema = object().shape({

@@ -4,14 +4,14 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
-import { ApiKeyGuard } from "@gemunion/nest-js-guards";
-import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
-import { HelmetModule } from "@gemunion/nest-js-module-helmet";
-import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
-import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@gemunion/nest-js-module-throttler";
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-import { CACHE_STORE, GemunionCacheModule, CacheInterceptor } from "@gemunion/nest-js-module-cache";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { ApiKeyGuard } from "@ethberry/nest-js-guards";
+import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
+import { HelmetModule } from "@ethberry/nest-js-module-helmet";
+import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
+import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@ethberry/nest-js-module-throttler";
+import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { CACHE_STORE, GemunionCacheModule, CacheInterceptor } from "@ethberry/nest-js-module-cache";
+import { LicenseModule } from "@ethberry/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";

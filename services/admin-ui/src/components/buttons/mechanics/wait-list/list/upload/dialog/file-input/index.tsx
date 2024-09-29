@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import csv2json from "csvtojson";
 import { v4 } from "uuid";
 
-import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
+import { FileInput as AbstractFileInput } from "@ethberry/mui-inputs-file";
 
 import { CsvContentView } from "../../../../../../../tables/csv-content";
 import { claimsValidationSchema } from "../validation";

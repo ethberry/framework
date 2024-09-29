@@ -1,7 +1,7 @@
 import { array, mixed, number, object, string } from "yup";
 
 import { ParameterType } from "@framework/types";
-import { reISO8601 } from "@gemunion/constants";
+import { reISO8601 } from "@ethberry/constants";
 
 export const validationSchema = object().shape({
   parameterName: string().required("form.validations.valueMissing"),

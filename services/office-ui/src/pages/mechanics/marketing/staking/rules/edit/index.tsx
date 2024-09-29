@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-// import { FormWatcher } from "@gemunion/mui-form";
+// import { FormWatcher } from "@ethberry/mui-form";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { CheckboxInput, NumberInput, SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { AvatarInput } from "@ethberry/mui-inputs-image-firebase";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import { ModuleType, StakingRuleStatus } from "@framework/types";
 import type { IStakingRule } from "@framework/types";
 

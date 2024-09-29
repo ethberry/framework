@@ -1,16 +1,16 @@
 import { FC, PropsWithChildren } from "react";
 import { SnackbarProvider } from "notistack";
 
-import { ApiProviderFirebase } from "@gemunion/provider-api-firebase";
-import { UserProviderFirebase } from "@gemunion/provider-user-firebase";
-import { collectionSlice } from "@gemunion/provider-collection";
-import { ThemeProvider, layoutSlice } from "@gemunion/provider-theme";
-import { LicenseProvider } from "@gemunion/provider-license";
-import { LocalizationProvider, localizationSlice } from "@gemunion/provider-localization";
-import { PopupProvider } from "@gemunion/provider-popup";
-import { WalletProvider, walletSlice } from "@gemunion/provider-wallet";
-import { PickerProvider } from "@gemunion/provider-picker";
-import { ReduxProvider, createStore } from "@gemunion/redux";
+import { ApiProviderFirebase } from "@ethberry/provider-api-firebase";
+import { UserProviderFirebase } from "@ethberry/provider-user-firebase";
+import { collectionSlice } from "@ethberry/provider-collection";
+import { ThemeProvider, layoutSlice } from "@ethberry/provider-theme";
+import { LicenseProvider } from "@ethberry/provider-license";
+import { LocalizationProvider, localizationSlice } from "@ethberry/provider-localization";
+import { PopupProvider } from "@ethberry/provider-popup";
+import { WalletProvider, walletSlice } from "@ethberry/provider-wallet";
+import { PickerProvider } from "@ethberry/provider-picker";
+import { ReduxProvider, createStore } from "@ethberry/redux";
 import { i18n } from "@framework/localization-office-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
 

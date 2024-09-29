@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormDialog } from "@ethberry/mui-dialog-form";
 import type { IContract } from "@framework/types";
 import { PonziContractTemplates } from "@framework/types";
 

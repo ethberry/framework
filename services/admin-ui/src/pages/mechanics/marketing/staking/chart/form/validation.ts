@@ -1,6 +1,6 @@
 import { number, object, string } from "yup";
 
-import { reISO8601 } from "@gemunion/constants";
+import { reISO8601 } from "@ethberry/constants";
 
 export const validationSchema = object().shape({
   contractId: number().min(1, "form.validations.rangeUnderflow").required("form.validations.valueMissing"),

@@ -7,9 +7,9 @@ import { convertDatabaseAssetToTokenTypeAsset, getEthPrice } from "@framework/ex
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IStakingRule } from "@framework/types";
 import { StakingRuleStatus } from "@framework/types";
-import { useAllowance, useMetamask } from "@gemunion/react-hooks-eth";
-import { useAppSelector } from "@gemunion/redux";
-import { walletSelectors } from "@gemunion/provider-wallet";
+import { useAllowance, useMetamask } from "@ethberry/react-hooks-eth";
+import { useAppSelector } from "@ethberry/redux";
+import { walletSelectors } from "@ethberry/provider-wallet";
 
 import StakingDepositABI from "@framework/abis/json/Staking/deposit.json";
 

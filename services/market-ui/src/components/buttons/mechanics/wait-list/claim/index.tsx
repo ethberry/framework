@@ -3,8 +3,8 @@ import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useApiCall } from "@gemunion/react-hooks";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useApiCall } from "@ethberry/react-hooks";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListItem } from "@framework/types";
 

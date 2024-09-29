@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
-import { DeployableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { DeployableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { IEventHistory, TContractEventData } from "@framework/types";
 import { ContractEventType } from "@framework/types";
 import { ns } from "@framework/constants";

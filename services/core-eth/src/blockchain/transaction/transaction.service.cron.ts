@@ -8,7 +8,7 @@ import { LessThan } from "typeorm";
 
 import { DiscoveryService } from "@golevelup/nestjs-discovery";
 
-import { ETHERS_RPC } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_RPC } from "@ethberry/nest-js-module-ethers-gcp";
 import { testChainId } from "@framework/constants";
 import { ContractType, TransactionStatus } from "@framework/types";
 import { delayMs, getBlockNumber, getHandlerByPattern, getTransactionReceipt } from "../../common/utils";

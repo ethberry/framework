@@ -6,9 +6,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 
 import { emptyAddress } from "../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../utils/address";

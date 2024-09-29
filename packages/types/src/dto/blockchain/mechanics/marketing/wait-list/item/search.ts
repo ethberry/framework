@@ -1,4 +1,4 @@
-import type { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@ethberry/types-collection";
 
 export interface IWaitListItemSearchDto extends IPaginationDto {
   listIds: Array<number>;

@@ -2,9 +2,9 @@ import { FC } from "react";
 import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
 import type { IPredictionQuestion, IPredictionQuestionSearchDto } from "@framework/types";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 

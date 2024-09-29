@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { ZeroAddress, ZeroHash } from "ethers";
 
-import { wallets, NodeEnv } from "@gemunion/constants";
+import { wallets, NodeEnv } from "@ethberry/constants";
 import { ns } from "@framework/constants";
 
 export class SeedEventHistoryMysteryErc721UnpackAt1687580606330 implements MigrationInterface {

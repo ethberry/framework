@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne, OneToMany } from "typeorm";
 
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { ns } from "@framework/constants";
 import { IReferralEvents } from "@framework/types";

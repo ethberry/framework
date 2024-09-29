@@ -2,9 +2,9 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsISO8601, IsOptional, IsString, ValidateIf, IsArray, IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import type { ISearchDto } from "@gemunion/types-collection";
-import { SearchDto } from "@gemunion/collection";
-import { IsBeforeDate } from "@gemunion/nest-js-validators";
+import type { ISearchDto } from "@ethberry/types-collection";
+import { SearchDto } from "@ethberry/collection";
+import { IsBeforeDate } from "@ethberry/nest-js-validators";
 // import { IReferralClaimSearchDto } from "@framework/types";
 
 export interface IReferralClaimSearchDto extends ISearchDto {

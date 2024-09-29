@@ -1,5 +1,5 @@
-import { EnabledCountries } from "@gemunion/constants";
-import type { IIdDateBase } from "@gemunion/types-collection";
+import { EnabledCountries } from "@ethberry/constants";
+import type { IIdDateBase } from "@ethberry/types-collection";
 
 import type { IUser } from "../infrastructure";
 

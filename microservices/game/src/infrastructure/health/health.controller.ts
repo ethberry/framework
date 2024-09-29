@@ -9,8 +9,8 @@ import {
 import { RedisManager } from "@liaoliaots/nestjs-redis";
 import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis-health";
 
-import { Public } from "@gemunion/nest-js-utils";
-import { SkipThrottle, THROTTLE_STORE } from "@gemunion/nest-js-module-throttler";
+import { Public } from "@ethberry/nest-js-utils";
+import { SkipThrottle, THROTTLE_STORE } from "@ethberry/nest-js-module-throttler";
 
 @Public()
 @SkipThrottle({ default: true })

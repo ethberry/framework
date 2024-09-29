@@ -3,7 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import { IERC721TokenTransferEvent, RmqProviderType, SignalEventType, TokenStatus } from "@framework/types";
 import { testChainId } from "@framework/constants";
 

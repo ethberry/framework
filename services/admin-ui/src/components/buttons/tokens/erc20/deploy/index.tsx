@@ -2,8 +2,8 @@ import { FC, Fragment } from "react";
 import { Add } from "@mui/icons-material";
 import { constants, Contract, utils } from "ethers";
 
-import { useDeploy } from "@gemunion/react-hooks-eth";
-import { useUser } from "@gemunion/provider-user";
+import { useDeploy } from "@ethberry/react-hooks-eth";
+import { useUser } from "@ethberry/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IErc20TokenDeployDto, IUser } from "@framework/types";
 import { Erc20ContractTemplates } from "@framework/types";

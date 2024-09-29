@@ -2,8 +2,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsOptional, IsString, IsUrl, Validate } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { SearchableOptionalDto } from "@gemunion/collection";
-import { ForbidEnumValues } from "@gemunion/nest-js-validators";
+import { SearchableOptionalDto } from "@ethberry/collection";
+import { ForbidEnumValues } from "@ethberry/nest-js-validators";
 import { ContractStatus } from "@framework/types";
 
 import type { IContractUpdateDto } from "../interfaces";

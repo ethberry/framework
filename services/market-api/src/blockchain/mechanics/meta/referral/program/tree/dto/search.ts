@@ -3,7 +3,7 @@ import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 
 import { IReferralTreeSearchDto } from "../interfaces";
 

@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
-import { FormWrapper } from "@gemunion/mui-form";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
+import { FormWrapper } from "@ethberry/mui-form";
 import { TokenType } from "@framework/types";
 
 import { TokenInput } from "../../../../components/inputs/token";

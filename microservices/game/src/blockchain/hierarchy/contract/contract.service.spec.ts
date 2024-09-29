@@ -3,9 +3,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ForbiddenException, Logger, NotFoundException } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
-import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
+import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { LicenseModule } from "@ethberry/nest-js-module-license";
+import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 
 import ormconfig from "../../../ormconfig";

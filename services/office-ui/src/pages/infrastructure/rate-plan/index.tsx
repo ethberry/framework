@@ -3,9 +3,9 @@ import { Grid, Tab, Tabs } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
 import { useIntl } from "react-intl";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
-import type { IPaginationResult } from "@gemunion/types-collection";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
+import type { IPaginationResult } from "@ethberry/types-collection";
 import type { IRatePlan } from "@framework/types";
 import { RatePlanType } from "@framework/types";
 

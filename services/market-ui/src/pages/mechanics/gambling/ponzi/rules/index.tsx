@@ -3,12 +3,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
-import { SelectInput } from "@gemunion/mui-inputs-core";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { SelectInput } from "@ethberry/mui-inputs-core";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import { emptyPrice } from "@ethberry/mui-inputs-asset";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IPonziRule, IPonziRuleItemSearchDto, IPonziRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";

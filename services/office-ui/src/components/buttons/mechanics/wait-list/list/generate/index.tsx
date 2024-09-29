@@ -3,8 +3,8 @@ import { Settings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
-import { useApiCall } from "@gemunion/react-hooks";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useApiCall } from "@ethberry/react-hooks";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IWaitListList } from "@framework/types";
 import { AccessControlRoleType, ContractStatus, TokenType } from "@framework/types";

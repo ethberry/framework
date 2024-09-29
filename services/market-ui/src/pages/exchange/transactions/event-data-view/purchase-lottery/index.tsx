@@ -9,7 +9,7 @@ import {
   IExchangePurchaseLotteryEvent,
   TContractEventData,
 } from "@framework/types";
-import { byte32ToBool36Array } from "@gemunion/traits-v5";
+import { byte32ToBool36Array } from "@ethberry/traits-v5";
 
 import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import {

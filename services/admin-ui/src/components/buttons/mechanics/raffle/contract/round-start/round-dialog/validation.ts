@@ -1,8 +1,8 @@
 import { number, object } from "yup";
 
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
-import { addressValidationSchema } from "@gemunion/yup-rules-eth";
-import { dbIdValidationSchema } from "@gemunion/yup-rules";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
+import { addressValidationSchema } from "@ethberry/yup-rules-eth";
+import { dbIdValidationSchema } from "@ethberry/yup-rules";
 
 export const validationSchema = object().shape({
   contractId: dbIdValidationSchema,

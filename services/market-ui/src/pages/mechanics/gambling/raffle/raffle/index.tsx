@@ -2,10 +2,10 @@ import { FC, Fragment } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { RichTextDisplay } from "@gemunion/mui-rte";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { useCollection } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
+import { RichTextDisplay } from "@ethberry/mui-rte";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import { useCollection } from "@ethberry/provider-collection";
 import { StyledAvatar } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 

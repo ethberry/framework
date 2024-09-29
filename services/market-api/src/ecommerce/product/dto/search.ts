@@ -3,7 +3,7 @@ import { Type } from "class-transformer";
 import { IsInt, IsOptional, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { SearchDto, SortDto } from "@gemunion/collection";
+import { SearchDto, SortDto } from "@ethberry/collection";
 import type { IProduct } from "@framework/types";
 
 import type { IProductSearchDto } from "../interfaces";

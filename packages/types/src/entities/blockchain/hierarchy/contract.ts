@@ -1,5 +1,5 @@
-import type { ISearchable } from "@gemunion/types-collection";
-import type { IDeployable, TokenType } from "@gemunion/types-blockchain";
+import type { ISearchable } from "@ethberry/types-collection";
+import type { IDeployable, TokenType } from "@ethberry/types-blockchain";
 
 import type { IEventHistory } from "../event-history";
 

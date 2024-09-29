@@ -6,9 +6,9 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IReferralTree } from "@framework/types";
-import { AddressLink } from "@gemunion/mui-scanner";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
+import { AddressLink } from "@ethberry/mui-scanner";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
 
 import type { IReferralTreeSearchDto } from "./form";
 import { ReferralTreeSearchForm } from "./form";

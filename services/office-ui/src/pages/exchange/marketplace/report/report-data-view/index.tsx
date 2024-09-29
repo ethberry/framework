@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { formatPriceHistory } from "@framework/exchange";
 import { ContractEventType, IExchangePurchaseEvent, IMarketplaceReport } from "@framework/types";
-import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
+import { AddressLink, TxHashLink } from "@ethberry/mui-scanner";
 
 export interface IMarketplaceReportDataViewProps {
   row: IMarketplaceReport;

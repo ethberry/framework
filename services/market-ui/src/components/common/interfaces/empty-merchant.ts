@@ -1,4 +1,4 @@
-import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyStateString } from "@ethberry/draft-js-utils";
 import type { IMerchant } from "@framework/types";
 import { MerchantStatus, RatePlanType } from "@framework/types";
 

@@ -3,8 +3,8 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";

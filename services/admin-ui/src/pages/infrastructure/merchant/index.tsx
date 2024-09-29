@@ -3,7 +3,7 @@ import { Tab, Tabs } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 
-import { PageHeader } from "@gemunion/mui-page-layout";
+import { PageHeader } from "@ethberry/mui-page-layout";
 
 import { MerchantTabs } from "./tabs";
 import { MerchantGeneral } from "./general";

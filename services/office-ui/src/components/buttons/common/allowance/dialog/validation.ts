@@ -1,7 +1,7 @@
 import { number, object } from "yup";
 
-import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
-import { dbIdValidationSchema } from "@gemunion/yup-rules";
+import { addressValidationSchema, bigNumberValidationSchema } from "@ethberry/yup-rules-eth";
+import { dbIdValidationSchema } from "@ethberry/yup-rules";
 
 export const validationSchema = object().shape({
   amount: bigNumberValidationSchema

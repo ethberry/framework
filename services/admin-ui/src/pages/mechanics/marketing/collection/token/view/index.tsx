@@ -2,9 +2,9 @@ import { FC } from "react";
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { RichTextDisplay } from "@gemunion/mui-rte";
-import { AddressLink } from "@gemunion/mui-scanner";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
+import { RichTextDisplay } from "@ethberry/mui-rte";
+import { AddressLink } from "@ethberry/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
 import { shouldShowAttributes, TokenAttributesView } from "../../../../../hierarchy/metadata";

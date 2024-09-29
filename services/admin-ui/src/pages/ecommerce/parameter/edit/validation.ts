@@ -1,6 +1,6 @@
 import { mixed, object, string } from "yup";
 
-import { reISO8601 } from "@gemunion/constants";
+import { reISO8601 } from "@ethberry/constants";
 import { ParameterType } from "@framework/types";
 
 export const validationSchema = object().shape({

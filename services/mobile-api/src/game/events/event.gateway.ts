@@ -2,8 +2,8 @@ import { Inject, Logger, LoggerService, UseGuards, UseInterceptors, UsePipes } f
 import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, WebSocketGateway } from "@nestjs/websockets";
 import { Socket } from "socket.io";
 
-import { WsValidationPipe } from "@gemunion/nest-js-utils-ws";
-import { FirebaseWsGuard } from "@gemunion/nest-js-guards-ws";
+import { WsValidationPipe } from "@ethberry/nest-js-utils-ws";
+import { FirebaseWsGuard } from "@ethberry/nest-js-guards-ws";
 
 import { SessionInterceptor } from "../../common/interceptors/session.ws";
 

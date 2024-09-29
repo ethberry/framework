@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import type { INftStorageOptions } from "@gemunion/nest-js-module-nft-storage-firebase";
-import { NftStorageFirebaseModule } from "@gemunion/nest-js-module-nft-storage-firebase";
+import type { INftStorageOptions } from "@ethberry/nest-js-module-nft-storage-firebase";
+import { NftStorageFirebaseModule } from "@ethberry/nest-js-module-nft-storage-firebase";
 
 import { NftstorageService } from "./nft-storage.service";
 import { NftStorageController } from "./nft-storage.controller";

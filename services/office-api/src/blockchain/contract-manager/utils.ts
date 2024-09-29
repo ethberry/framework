@@ -1,8 +1,8 @@
 import { NotFoundException } from "@nestjs/common";
 
-import { Networks } from "@gemunion/types-blockchain";
+import { Networks } from "@ethberry/types-blockchain";
 import { ChainLinkV2SupportedChains } from "@framework/types";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export const chainIdToSuffix = (chainId: bigint | number) => {
   switch (chainId) {

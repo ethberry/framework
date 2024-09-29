@@ -1,7 +1,7 @@
 import { array, object } from "yup";
 
-import { addressValidationSchema } from "@gemunion/yup-rules-eth";
-import { dbIdValidationSchema } from "@gemunion/yup-rules";
+import { addressValidationSchema } from "@ethberry/yup-rules-eth";
+import { dbIdValidationSchema } from "@ethberry/yup-rules";
 
 export const claimValidationSchema = object().shape({
   account: addressValidationSchema,

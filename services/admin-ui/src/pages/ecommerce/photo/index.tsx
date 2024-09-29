@@ -5,9 +5,9 @@ import { Clear, Done } from "@mui/icons-material";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IPhoto } from "@framework/types";
 import { PhotoStatus } from "@framework/types";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
-import { useCollection } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
+import { useCollection } from "@ethberry/provider-collection";
 
 export const Photo: FC = () => {
   const { rows, fetch, isLoading } = useCollection<IPhoto>({

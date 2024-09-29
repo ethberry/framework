@@ -6,7 +6,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDto } from "./dialog";
 import VRFCoordinatorV2PlusMockAddConsumerABI from "@framework/abis/json/VRFCoordinatorV2PlusMock/addConsumer.json";

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Put, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor } from "@ethberry/nest-js-utils";
 import { RatePlanService } from "./rate-plan.service";
 import { RatePlanEntity } from "./rate-plan.entity";
 import { RatePlanUpdateDto } from "./dto";

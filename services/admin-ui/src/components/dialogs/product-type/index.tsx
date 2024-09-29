@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useIntl } from "react-intl";
 
-import { ProductTypeSelection } from "@gemunion/license-pages";
+import { ProductTypeSelection } from "@ethberry/license-pages";
 
 export interface IUpgradeProductTypeDialogProps {
   onClose: () => void;

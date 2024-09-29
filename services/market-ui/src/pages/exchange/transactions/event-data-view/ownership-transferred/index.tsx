@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import type { IContract, IOwnershipTransferredEvent, TContractEventData } from "@framework/types";
-import { AddressLink } from "@gemunion/mui-scanner";
+import { AddressLink } from "@ethberry/mui-scanner";
 
 import {
   StyledDataViewAddressLinkWrapper,

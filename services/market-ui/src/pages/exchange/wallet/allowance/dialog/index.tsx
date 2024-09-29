@@ -1,9 +1,9 @@
 import { ChangeEvent, FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormDialog } from "@ethberry/mui-dialog-form";
 import { ContractFeatures, TokenStatus, TokenType } from "@framework/types";
-import type { ITokenAsset } from "@gemunion/mui-inputs-asset";
-import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
+import type { ITokenAsset } from "@ethberry/mui-inputs-asset";
+import { TokenAssetInput } from "@ethberry/mui-inputs-asset";
 
 import { CommonContractInput } from "../../../../../components/inputs/common-contract";
 import { validationSchema } from "./validation";

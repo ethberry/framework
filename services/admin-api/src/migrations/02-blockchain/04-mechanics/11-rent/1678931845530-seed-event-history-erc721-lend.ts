@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther, ZeroHash } from "ethers";
 import { subDays } from "date-fns";
 
-import { wallets, NodeEnv } from "@gemunion/constants";
+import { wallets, NodeEnv } from "@ethberry/constants";
 import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc721LendAt1678931845530 implements MigrationInterface {

@@ -1,8 +1,8 @@
 import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
-import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
-import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
+import { ethersRpcProvider, ethersSignerProvider } from "@ethberry/nest-js-module-ethers-gcp";
+import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 
 import { EventHistoryModule } from "../../../../event-history/event-history.module";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";

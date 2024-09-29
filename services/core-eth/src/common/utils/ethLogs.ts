@@ -17,7 +17,7 @@ import {
   WaitListEventType,
   PonziEventType,
 } from "@framework/types";
-// import { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+// import { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 
 export const keccak256It = function (value: string): string {
   return keccak256(toUtf8Bytes(value));

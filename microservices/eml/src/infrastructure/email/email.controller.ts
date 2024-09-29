@@ -3,7 +3,7 @@ import { EventPattern, Payload } from "@nestjs/microservices";
 import { formatUnits } from "ethers";
 
 import { EmailType } from "@framework/types";
-import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
+import { IEmailResult, MailjetService } from "@ethberry/nest-js-module-mailjet";
 
 import type {
   IDummyPayload,

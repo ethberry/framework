@@ -14,10 +14,10 @@ import { useWeb3React } from "@web3-react/core";
 import { format, parseISO } from "date-fns";
 import { stringify } from "qs";
 
-import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { TxHashLink } from "@gemunion/mui-scanner";
-import { useCollection } from "@gemunion/provider-collection";
+import { humanReadableDateTimeFormat } from "@ethberry/constants";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { TxHashLink } from "@ethberry/mui-scanner";
+import { useCollection } from "@ethberry/provider-collection";
 import type { IEventHistory, IExchangeLendEvent } from "@framework/types";
 import { ContractEventType } from "@framework/types";
 

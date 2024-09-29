@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import admin from "firebase-admin";
 
-import { PassportInitialize } from "@gemunion/nest-js-module-passport";
+import { PassportInitialize } from "@ethberry/nest-js-module-passport";
 
 import { UserModule } from "../user/user.module";
 import { FirebaseStrategy, FirebaseWsStrategy } from "./strategies";

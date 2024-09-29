@@ -2,9 +2,9 @@ import { FC, Fragment } from "react";
 import { ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IOtp } from "@framework/types";
 

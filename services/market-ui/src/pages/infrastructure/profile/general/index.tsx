@@ -3,14 +3,14 @@ import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
-import { FormWrapper } from "@gemunion/mui-form";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { useUser } from "@gemunion/provider-user";
-import { useApiCall } from "@gemunion/react-hooks";
-import { useAppDispatch } from "@gemunion/redux";
-import { setLanguage } from "@gemunion/provider-localization";
+import { EnabledCountries, EnabledGenders } from "@ethberry/constants";
+import { FormWrapper } from "@ethberry/mui-form";
+import { AvatarInput } from "@ethberry/mui-inputs-image-firebase";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { useUser } from "@ethberry/provider-user";
+import { useApiCall } from "@ethberry/react-hooks";
+import { useAppDispatch } from "@ethberry/redux";
+import { setLanguage } from "@ethberry/provider-localization";
 import { EnabledLanguages } from "@framework/constants";
 import type { IUser } from "@framework/types";
 

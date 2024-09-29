@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 
 import { DispenserUploadButton } from "../../../../../components/buttons";
 import { AllowanceButton } from "./allowance";

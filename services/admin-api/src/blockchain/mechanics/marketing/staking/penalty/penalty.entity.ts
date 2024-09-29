@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IStakingPenalty } from "@framework/types";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 

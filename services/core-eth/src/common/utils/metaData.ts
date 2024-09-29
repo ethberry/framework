@@ -1,7 +1,7 @@
 import { LoggerService } from "@nestjs/common";
 import { Contract, JsonRpcProvider, stripZerosLeft, toUtf8String } from "ethers";
 
-import { recursivelyDecodeResult } from "@gemunion/utils-eth";
+import { recursivelyDecodeResult } from "@ethberry/utils-eth";
 
 import { blockAwait } from "./blockAwait";
 

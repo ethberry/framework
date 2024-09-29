@@ -2,8 +2,8 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { AllTypesDto, IsBeforeDate } from "@gemunion/nest-js-validators";
-import { SearchableDto } from "@gemunion/collection";
+import { AllTypesDto, IsBeforeDate } from "@ethberry/nest-js-validators";
+import { SearchableDto } from "@ethberry/collection";
 import { AchievementRuleStatus, ContractEventType } from "@framework/types";
 
 import { IAchievementRuleCreateDto } from "../interfaces";

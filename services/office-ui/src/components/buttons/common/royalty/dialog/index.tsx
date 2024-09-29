@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
 

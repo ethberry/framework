@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { ManageHistory } from "@mui/icons-material";
 
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { BusinessType, CronExpression, IContract } from "@framework/types";
 

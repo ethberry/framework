@@ -4,8 +4,8 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addSeconds, formatDistance } from "date-fns";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IStakingDeposit, IStakingDepositSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";

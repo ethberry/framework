@@ -5,7 +5,7 @@ import { CardActions, CardContent, Grid } from "@mui/material";
 
 import type { IToken } from "@framework/types";
 import { OpenSea16SupportedChains } from "@framework/types";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 import { StyledCard, StyledToolbar, StyledTypography } from "../common-token-panel/styled";
 import { OpenSeaSellButton } from "../../../../../components/buttons";

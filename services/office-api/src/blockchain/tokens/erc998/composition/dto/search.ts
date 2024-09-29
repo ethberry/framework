@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 import type { ICompositionSearchDto } from "@framework/types";
 
 export class CompositionSearchDto extends SearchDto implements ICompositionSearchDto {

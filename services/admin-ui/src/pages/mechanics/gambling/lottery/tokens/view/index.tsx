@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { AddressLink } from "@gemunion/mui-scanner";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
+import { AddressLink } from "@ethberry/mui-scanner";
 
 import type { ILotteryToken } from "@framework/types";
 

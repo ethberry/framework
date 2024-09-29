@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { FormWrapper } from "@ethberry/mui-form";
 import type { IRatePlan } from "@framework/types";
-import { NumberInput, StaticInput } from "@gemunion/mui-inputs-core";
-import { useApiCall } from "@gemunion/react-hooks";
+import { NumberInput, StaticInput } from "@ethberry/mui-inputs-core";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { validationSchema } from "../profile/general/validation";
 

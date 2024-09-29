@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
 import type { Response } from "express";
 import archiver from "archiver";
 
-import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { MarketplaceService } from "./marketplace.service";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";

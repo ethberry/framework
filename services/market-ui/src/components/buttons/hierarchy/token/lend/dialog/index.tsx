@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { TextInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { DateTimeInput } from "@ethberry/mui-inputs-picker";
 
 import { validationSchema } from "./validation";
 

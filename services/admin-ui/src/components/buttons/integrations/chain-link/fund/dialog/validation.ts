@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-import { bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
+import { bigNumberValidationSchema } from "@ethberry/yup-rules-eth";
 
 export const validationSchema = object().shape({
   subscriptionId: string().required("form.validations.valueMissing"),

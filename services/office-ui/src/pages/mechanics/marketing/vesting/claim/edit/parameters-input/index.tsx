@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Paper } from "@mui/material";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
-import { DateInput } from "@gemunion/mui-inputs-picker";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { NumberInput, TextInput } from "@ethberry/mui-inputs-core";
+import { DateInput } from "@ethberry/mui-inputs-picker";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
 
 export interface IVestingParametersInputProps {
   prefix: string;

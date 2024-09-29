@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { AddressPipe, NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { AddressPipe, NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { BalanceService } from "./balance.service";

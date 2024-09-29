@@ -2,11 +2,11 @@ import { FC } from "react";
 import { Alert, Box } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SwitchInput, TextInput } from "@ethberry/mui-inputs-core";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import { IWaitListList, TokenType, ContractStatus, ModuleType } from "@framework/types";
 
 import { validationSchema } from "./validation";

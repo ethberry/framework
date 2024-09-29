@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
-import { PaymentRequiredException } from "@gemunion/nest-js-utils";
+import { PaymentRequiredException } from "@ethberry/nest-js-utils";
 import { BusinessType, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";

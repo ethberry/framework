@@ -14,7 +14,7 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@ethberry/nest-js-utils";
 
 import { PageService } from "./page.service";
 import { PageEntity } from "./page.entity";

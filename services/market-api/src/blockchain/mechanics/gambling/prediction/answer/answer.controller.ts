@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { PredictionAnswerService } from "./answer.service";

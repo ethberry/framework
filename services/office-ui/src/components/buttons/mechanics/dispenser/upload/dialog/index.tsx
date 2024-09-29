@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Box } from "@mui/material";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
 
 import { validationSchema } from "./validation";
 import type { IDispenserUploadDto } from "./file-input";

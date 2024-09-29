@@ -3,11 +3,11 @@ import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import type { ISearchDto } from "@gemunion/types-collection";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { useCollection } from "@gemunion/provider-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { useCollection } from "@ethberry/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract } from "@framework/types";
 

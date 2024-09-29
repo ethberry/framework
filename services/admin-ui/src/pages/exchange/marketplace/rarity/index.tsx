@@ -17,10 +17,10 @@ import { useLocation, useNavigate } from "react-router";
 import { stringify } from "qs";
 import { Link as RouterLink } from "react-router-dom";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
 import { TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { MarketplaceRaritySearchForm } from "./form";
 

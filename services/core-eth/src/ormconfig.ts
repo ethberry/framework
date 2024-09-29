@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-// import { NodeEnv } from "@gemunion/constants";
+// import { NodeEnv } from "@ethberry/constants";
 
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";

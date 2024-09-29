@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 

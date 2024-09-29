@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SwitchInput } from "@gemunion/mui-inputs-core";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
+import { SwitchInput } from "@ethberry/mui-inputs-core";
 import type { IStakingLeaderboardSearchDto } from "@framework/types";
 
 import { SearchContractInput } from "../../../../../../components/inputs/search-contract";

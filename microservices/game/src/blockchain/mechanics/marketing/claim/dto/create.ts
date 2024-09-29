@@ -3,7 +3,7 @@ import { IsEnum, IsISO8601, IsString, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto, ChainIdDto, NotNativeDto } from "@gemunion/nest-js-validators";
+import { AccountDto, ChainIdDto, NotNativeDto } from "@ethberry/nest-js-validators";
 import { ClaimType, IClaimCreateDto } from "@framework/types";
 
 export class ClaimItemCreateDto extends Mixin(AccountDto, ChainIdDto) implements IClaimCreateDto {

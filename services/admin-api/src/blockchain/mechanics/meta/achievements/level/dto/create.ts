@@ -2,8 +2,8 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, Max, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchableDto } from "@gemunion/collection";
-import { AllTypesDto } from "@gemunion/nest-js-validators";
+import { SearchableDto } from "@ethberry/collection";
+import { AllTypesDto } from "@ethberry/nest-js-validators";
 
 import { IAchievementLevelCreateDto } from "../interfaces";
 

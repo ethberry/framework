@@ -1,10 +1,10 @@
 import { FC, Fragment, useCallback, useEffect, useState } from "react";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
-import { useUser } from "@gemunion/provider-user";
-import { comparator } from "@gemunion/utils";
-import type { IPaginationResult } from "@gemunion/types-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
+import { useUser } from "@ethberry/provider-user";
+import { comparator } from "@ethberry/utils";
+import type { IPaginationResult } from "@ethberry/types-collection";
 import type { IReferralProgram, IReferralProgramCreateDto, IReferralProgramUpdateDto, IUser } from "@framework/types";
 import { ReferralProgramStatus } from "@framework/types";
 

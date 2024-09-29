@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 import type { IPredictionAnswerSearchDto } from "@framework/types";
 
 export class PredictionQuestionSearchDto extends SearchDto implements IPredictionAnswerSearchDto {

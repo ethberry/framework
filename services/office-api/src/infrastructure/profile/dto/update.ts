@@ -1,6 +1,6 @@
 import { Mixin } from "ts-mixer";
 
-import { ChainIdOptionalDto } from "@gemunion/nest-js-validators";
+import { ChainIdOptionalDto } from "@ethberry/nest-js-validators";
 
 import type { IProfileUpdateDto } from "../interfaces";
 import { UserCommonDto } from "../../../common/dto";

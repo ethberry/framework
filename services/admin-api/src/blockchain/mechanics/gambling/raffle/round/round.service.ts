@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@ethberry/types-collection";
 
 import { RaffleRoundEntity } from "./round.entity";
 

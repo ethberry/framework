@@ -6,9 +6,9 @@ import { useNavigate } from "react-router";
 import { useWeb3React } from "@web3-react/core";
 
 import type { IProductPromo } from "@framework/types";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
-import type { IPaginationResult } from "@gemunion/types-collection";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
+import type { IPaginationResult } from "@ethberry/types-collection";
 
 import { Root, StyledImage, StyledMobileStepper } from "./styled";
 

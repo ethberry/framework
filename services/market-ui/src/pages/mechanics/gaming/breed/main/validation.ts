@@ -1,7 +1,7 @@
 import { mixed, object, string } from "yup";
 
-import { reEthAddress } from "@gemunion/constants";
-import { dbIdValidationSchema } from "@gemunion/yup-rules";
+import { reEthAddress } from "@ethberry/constants";
+import { dbIdValidationSchema } from "@ethberry/yup-rules";
 import { TokenType } from "@framework/types";
 
 export const validationSchema = object().shape({

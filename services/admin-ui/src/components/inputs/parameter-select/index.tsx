@@ -5,7 +5,7 @@ import { Add, Delete } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import type { IParameter } from "@framework/types";
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { uniqueBy } from "../../../utils/uniqueBy";
 import { getEmptyParameter } from "./empty";

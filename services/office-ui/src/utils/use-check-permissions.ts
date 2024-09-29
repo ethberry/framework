@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 import { AccessControlRoleType } from "@framework/types";
 
 export interface IAccessControl {

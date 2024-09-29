@@ -1,6 +1,6 @@
 import { array, mixed, number, object } from "yup";
 
-import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
+import { addressValidationSchema, bigNumberValidationSchema } from "@ethberry/yup-rules-eth";
 import { TokenType } from "@framework/types";
 
 export const rowValidationSchema = object().shape({

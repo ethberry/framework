@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@ethberry/nest-js-utils";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";

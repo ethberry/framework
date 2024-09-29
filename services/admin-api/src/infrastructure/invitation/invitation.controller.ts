@@ -12,7 +12,7 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../user/user.entity";
 import { OtpEntity } from "../otp/otp.entity";

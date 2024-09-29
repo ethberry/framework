@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 import { InputAdornment } from "@mui/material";
 
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
 import { DismantleStrategy } from "@framework/types";
 
 export interface IAddressInputProps {

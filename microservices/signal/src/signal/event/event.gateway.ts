@@ -13,10 +13,10 @@ import {
 import { Server, Socket } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
 
-import { User } from "@gemunion/nest-js-utils";
-import { WsValidationPipe } from "@gemunion/nest-js-utils-ws";
-import { FirebaseWsGuard } from "@gemunion/nest-js-guards-ws";
-import { NodeEnv } from "@gemunion/constants";
+import { User } from "@ethberry/nest-js-utils";
+import { WsValidationPipe } from "@ethberry/nest-js-utils-ws";
+import { FirebaseWsGuard } from "@ethberry/nest-js-guards-ws";
+import { NodeEnv } from "@ethberry/constants";
 import { SignalEventType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";

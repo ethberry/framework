@@ -5,11 +5,11 @@ import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IProductPromo } from "@framework/types";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import type { ISearchDto } from "@gemunion/types-collection";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
 
 import { emptyPromo } from "../../../components/common/interfaces";
 import { EditPromoDialog } from "./edit";

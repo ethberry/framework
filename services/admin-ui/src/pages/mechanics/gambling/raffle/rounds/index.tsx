@@ -3,9 +3,9 @@ import { Grid, ListItemText } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import type { ISearchDto } from "@gemunion/types-collection";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IRaffleRound } from "@framework/types";
 import { ContractStatus } from "@framework/types";

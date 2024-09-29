@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 
 export const LootBoxInput: FC = () => {
   const contractId = useWatch({ name: "contractId" });

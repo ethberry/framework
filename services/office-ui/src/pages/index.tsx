@@ -2,11 +2,11 @@ import { FC } from "react";
 import { Navigate } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { Error, Landing, Message, Protected } from "@gemunion/common-pages";
-import { FirebaseLogin } from "@gemunion/firebase-login";
-import { MetamaskLoginButton } from "@gemunion/login-button-metamask";
-import { ParticleLoginButton } from "@gemunion/login-button-particle";
-import { WalletConnectLoginButton } from "@gemunion/login-button-wallet-connect";
+import { Error, Landing, Message, Protected } from "@ethberry/common-pages";
+import { FirebaseLogin } from "@ethberry/firebase-login";
+import { MetamaskLoginButton } from "@ethberry/login-button-metamask";
+import { ParticleLoginButton } from "@ethberry/login-button-particle";
+import { WalletConnectLoginButton } from "@ethberry/login-button-wallet-connect";
 
 import { Layout } from "../components/common/layout";
 import { Dashboard } from "./dashboard";

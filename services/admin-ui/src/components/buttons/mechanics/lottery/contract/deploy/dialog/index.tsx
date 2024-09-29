@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Alert } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { NumberInput } from "@ethberry/mui-inputs-core";
 import type { IContract, ILotteryConfigDto } from "@framework/types";
 
 import { validationSchema } from "./validation";

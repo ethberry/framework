@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import { useWatch } from "react-hook-form";
 
-import { CheckboxInput, PasswordInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, PasswordInput, TextInput } from "@ethberry/mui-inputs-core";
 
 import { StyledPaper } from "./styled";
 

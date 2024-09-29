@@ -2,9 +2,9 @@ import { ChangeEvent, FC, useCallback } from "react";
 import { Grid } from "@mui/material";
 
 import { ContractFeatures, ContractStatus, IAsset, ModuleType, TokenType } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput } from "@gemunion/mui-inputs-core";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { NumberInput } from "@ethberry/mui-inputs-core";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 
 import { CommonContractInput } from "../../../../../../inputs/common-contract";
 import { validationSchema } from "./validation";

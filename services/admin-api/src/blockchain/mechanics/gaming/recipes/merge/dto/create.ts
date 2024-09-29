@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { NftDto } from "@gemunion/nest-js-validators";
+import { NftDto } from "@ethberry/nest-js-validators";
 import { MergeStatus } from "@framework/types";
 
 import type { IMergeCreateDto } from "../interfaces";

@@ -7,10 +7,10 @@ import { DateRange } from "@mui/x-date-pickers-pro";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IOrder } from "@framework/types";
 import { OrderStatus } from "@framework/types";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import type { IPaginationDto } from "@gemunion/types-collection";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import type { IPaginationDto } from "@ethberry/types-collection";
 
 import { emptyOrder } from "../../../components/common/interfaces";
 import { EditOrderDialog } from "./edit";

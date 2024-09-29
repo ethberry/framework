@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "type
 import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { IPredictionQuestion } from "@framework/types";
 import { PredictionQuestionResult, PredictionQuestionStatus } from "@framework/types";
 

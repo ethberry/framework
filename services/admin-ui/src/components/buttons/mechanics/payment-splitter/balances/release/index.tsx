@@ -5,11 +5,11 @@ import { FormattedMessage } from "react-intl";
 import { ListItemText, Typography } from "@mui/material";
 import { CurrencyExchange } from "@mui/icons-material";
 
-import { useUser } from "@gemunion/provider-user";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import { useApiCall } from "@gemunion/react-hooks";
+import { useUser } from "@ethberry/provider-user";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
+import { useMetamask } from "@ethberry/react-hooks-eth";
+import { useApiCall } from "@ethberry/react-hooks";
 import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IContract, IBalance, IUser } from "@framework/types";

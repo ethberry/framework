@@ -3,8 +3,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { PlayCircleOutline } from "@mui/icons-material";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { useMetamask } from "@ethberry/react-hooks-eth";
+import { emptyItem, emptyPrice } from "@ethberry/mui-inputs-asset";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, TokenType } from "@framework/types";

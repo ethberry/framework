@@ -1,4 +1,4 @@
-import type { IDeployable } from "@gemunion/types-blockchain";
+import type { IDeployable } from "@ethberry/types-blockchain";
 
 import type { IAssetComponentHistory } from "../exchange/asset-component-history";
 import type { IToken } from "../hierarchy/token";

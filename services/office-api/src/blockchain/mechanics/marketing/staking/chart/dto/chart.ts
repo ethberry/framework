@@ -2,8 +2,8 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { PaginationDto } from "@gemunion/collection";
-import { IsBeforeDate } from "@gemunion/nest-js-validators";
+import { PaginationDto } from "@ethberry/collection";
+import { IsBeforeDate } from "@ethberry/nest-js-validators";
 import type { IStakingChartItemSearchDto, IStakingChartSearchDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 

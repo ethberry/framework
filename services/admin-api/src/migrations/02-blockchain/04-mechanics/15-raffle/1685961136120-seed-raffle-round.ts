@@ -3,7 +3,7 @@ import { WeiPerEther } from "ethers";
 import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

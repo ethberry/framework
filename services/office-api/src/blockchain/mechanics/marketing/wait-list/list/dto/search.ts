@@ -3,8 +3,8 @@ import { IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
-import { AccountOptionalDto } from "@gemunion/nest-js-validators";
+import { SearchDto } from "@ethberry/collection";
+import { AccountOptionalDto } from "@ethberry/nest-js-validators";
 import type { IWaitListListSearchDto } from "@framework/types";
 
 export class WaitListListSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements IWaitListListSearchDto {

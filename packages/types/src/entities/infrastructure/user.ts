@@ -1,5 +1,5 @@
-import type { IIdDateBase } from "@gemunion/types-collection";
-import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
+import type { IIdDateBase } from "@ethberry/types-collection";
+import { EnabledCountries, EnabledGenders } from "@ethberry/constants";
 import { EnabledLanguages } from "@framework/constants";
 
 import type { IAddress } from "../ecommerce";

@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { AccountOptionalDto, SemiNftDto } from "@gemunion/nest-js-validators";
+import { AccountOptionalDto, SemiNftDto } from "@ethberry/nest-js-validators";
 import type { IClaimUpdateDto } from "@framework/types";
 import { ClaimType } from "@framework/types";
 

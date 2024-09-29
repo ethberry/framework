@@ -2,11 +2,11 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
 
-import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
-import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
-import type { IMailjetOptions } from "@gemunion/nest-js-module-mailjet";
-import { MailjetModule } from "@gemunion/nest-js-module-mailjet";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
+import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
+import type { IMailjetOptions } from "@ethberry/nest-js-module-mailjet";
+import { MailjetModule } from "@ethberry/nest-js-module-mailjet";
+import { LicenseModule } from "@ethberry/nest-js-module-license";
 import { companyName } from "@framework/constants";
 
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";

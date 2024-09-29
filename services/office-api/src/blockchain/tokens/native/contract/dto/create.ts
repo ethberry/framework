@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, MaxLength, Min, MinLength } from "class-validator";
 
-import { SearchableDto } from "@gemunion/collection";
+import { SearchableDto } from "@ethberry/collection";
 import { INativeContractCreateDto } from "@framework/types";
-import { symbolMaxLength, symbolMinLength } from "@gemunion/constants";
+import { symbolMaxLength, symbolMinLength } from "@ethberry/constants";
 
 export class NativeContractCreateDto extends SearchableDto implements INativeContractCreateDto {
   @ApiProperty()

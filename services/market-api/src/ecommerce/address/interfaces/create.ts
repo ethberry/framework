@@ -1,4 +1,4 @@
-import { EnabledCountries } from "@gemunion/constants";
+import { EnabledCountries } from "@ethberry/constants";
 
 export interface IAddressCreateDto {
   addressLine1: string;

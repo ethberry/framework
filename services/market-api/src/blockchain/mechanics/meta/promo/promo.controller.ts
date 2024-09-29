@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 
-import { PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import { PaginationInterceptor, Public, User } from "@ethberry/nest-js-utils";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetPromoService } from "./promo.service";

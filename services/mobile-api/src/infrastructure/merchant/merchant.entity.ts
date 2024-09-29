@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from "typeorm";
 
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { IMerchant, IMerchantSocial } from "@framework/types";
 import { MerchantStatus, RatePlanType } from "@framework/types";
 import { ns } from "@framework/constants";

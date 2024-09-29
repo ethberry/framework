@@ -2,8 +2,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateIf } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
-import { IsBeforeDate } from "@gemunion/nest-js-validators";
+import { SearchDto } from "@ethberry/collection";
+import { IsBeforeDate } from "@ethberry/nest-js-validators";
 import type { IMarketplaceReportSearchDto } from "@framework/types";
 
 export class MarketplaceReportSearchDto extends SearchDto implements IMarketplaceReportSearchDto {

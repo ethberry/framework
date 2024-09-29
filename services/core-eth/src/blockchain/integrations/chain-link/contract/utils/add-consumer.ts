@@ -1,6 +1,6 @@
 import { ethers, Wallet } from "ethers";
 
-import VrfSol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2-plus/contracts/mocks/VRFCoordinatorV2Plus.sol/VRFCoordinatorV2PlusMock.json";
+import VrfSol from "@framework/core-contracts/artifacts/@ethberry/contracts-chain-link-v2-plus/contracts/mocks/VRFCoordinatorV2Plus.sol/VRFCoordinatorV2PlusMock.json";
 
 export const addConsumer = async function (
   vrfAddr: string,

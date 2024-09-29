@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { ITransaction } from "@framework/types";
 import { ContractType, TransactionStatus } from "@framework/types";
 import { ns } from "@framework/constants";

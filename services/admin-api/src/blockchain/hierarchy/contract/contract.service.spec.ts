@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Logger } from "@nestjs/common";
 
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { LicenseModule } from "@ethberry/nest-js-module-license";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import ormconfig from "../../../ormconfig";

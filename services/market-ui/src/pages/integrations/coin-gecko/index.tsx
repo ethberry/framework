@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { CoinGeckoProvider } from "@gemunion/provider-coingecko";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { CoinGeckoProvider } from "@ethberry/provider-coingecko";
 import { Rates } from "./rates";
 import { BaseCoins } from "./enums";
 

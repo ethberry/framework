@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsOptional, Validate } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { ForbidEnumValues } from "@gemunion/nest-js-validators";
+import { ForbidEnumValues } from "@ethberry/nest-js-validators";
 import { MerchantStatus, RatePlanType } from "@framework/types";
 
 import type { IMerchantUpdateDto } from "../interfaces";

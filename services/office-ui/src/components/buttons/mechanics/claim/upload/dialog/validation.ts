@@ -1,7 +1,7 @@
 import { array, mixed, number, object, string } from "yup";
 
-import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
-import { reISO8601 } from "@gemunion/constants";
+import { addressValidationSchema, bigNumberValidationSchema } from "@ethberry/yup-rules-eth";
+import { reISO8601 } from "@ethberry/constants";
 import { TokenType } from "@framework/types";
 
 export const claimValidationSchema = object().shape({

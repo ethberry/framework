@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { DurationUnit, IPonziRule, PonziRuleStatus } from "@framework/types";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { PonziDepositEntity } from "../deposit/deposit.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";

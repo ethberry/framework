@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import type { ICollectionContractDeployDto } from "@framework/types";
 import { CollectionContractTemplates } from "@framework/types";
-import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@gemunion/constants";
+import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@ethberry/constants";
 
 export class Erc721CollectionDeployDto implements ICollectionContractDeployDto {
   @ApiProperty({

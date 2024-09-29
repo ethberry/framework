@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 import type { IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 

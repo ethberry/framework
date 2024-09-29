@@ -1,4 +1,4 @@
-import { PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@ethberry/collection";
 import { IVestingSearchDto, VestingContractFeatures } from "@framework/types";
 
 export class VestingSearchDto extends PaginationDto implements IVestingSearchDto {

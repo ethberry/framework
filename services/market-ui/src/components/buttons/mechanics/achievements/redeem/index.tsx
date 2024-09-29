@@ -3,10 +3,10 @@ import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils, constants } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
-import { useAppSelector } from "@gemunion/redux";
-import { walletSelectors } from "@gemunion/provider-wallet";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import type { IServerSignature } from "@ethberry/types-blockchain";
+import { useAppSelector } from "@ethberry/redux";
+import { walletSelectors } from "@ethberry/provider-wallet";
+import { useMetamask, useServerSignature } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAchievementItemReport, IAchievementRule, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";

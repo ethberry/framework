@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
-import { wallet, NodeEnv } from "@gemunion/constants";
-import { baseTokenURI } from "@gemunion/contracts-constants";
-import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { wallet, NodeEnv } from "@ethberry/constants";
+import { baseTokenURI } from "@ethberry/contracts-constants";
+import { simpleFormatting } from "@ethberry/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractPaymentSplitterAt1697876719370 implements MigrationInterface {

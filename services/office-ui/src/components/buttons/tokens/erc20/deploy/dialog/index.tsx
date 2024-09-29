@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { EthInput } from "@gemunion/mui-inputs-mask";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { EthInput } from "@ethberry/mui-inputs-mask";
 import { Erc20ContractTemplates, IContract, IErc20TokenDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";

@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
-import { MsValidationPipe } from "@gemunion/nest-js-utils-ms";
+import { MsValidationPipe } from "@ethberry/nest-js-utils-ms";
 
 import { AppModule } from "./app.module";
 

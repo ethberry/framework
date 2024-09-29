@@ -14,7 +14,7 @@ import {
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { AddressStatus } from "@framework/types";
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor } from "@ethberry/nest-js-utils";
 
 import { AddressService } from "./address.service";
 import { AddressEntity } from "./address.entity";

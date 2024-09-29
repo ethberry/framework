@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import { IBalance } from "@framework/types";
 
 import { TokenEntity } from "../token/token.entity";

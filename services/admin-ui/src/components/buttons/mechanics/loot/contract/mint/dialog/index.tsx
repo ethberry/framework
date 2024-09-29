@@ -2,9 +2,9 @@ import { FC } from "react";
 
 import type { ILootBox } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { TextInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 
 import { LootBoxInput } from "../../../../../../inputs/loot";
 import { BoxContent } from "../../../box-content";

@@ -10,7 +10,7 @@ import {
   createSchema,
   createTokenTypesEnum,
   installExtensionUUID,
-} from "@gemunion/nest-js-module-typeorm-postgres";
+} from "@ethberry/nest-js-module-typeorm-postgres";
 
 /* infrastructure */
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";

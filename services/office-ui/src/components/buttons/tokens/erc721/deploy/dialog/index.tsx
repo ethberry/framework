@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { useWeb3React } from "@web3-react/core";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
 import { Erc721ContractTemplates, IContract, IErc721ContractDeployDto } from "@framework/types";
 
 import { RoyaltyInput } from "../../../../../inputs/royalty";

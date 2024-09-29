@@ -7,7 +7,7 @@ import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 import { AppModule } from "./app.module";
 import { RedisIoAdapter } from "./common/adapters/redis-io";

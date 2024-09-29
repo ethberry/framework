@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractService } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { ModuleType } from "@framework/types";
 import { testChainId } from "@framework/constants";

@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
-import { EthInput } from "@gemunion/mui-inputs-mask";
+import { EthInput } from "@ethberry/mui-inputs-mask";
 
 interface ITemplateSearchFormProps {
   onSubmit: (values: ITemplateSearchDto) => Promise<void>;

@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { v4 } from "uuid";
 import csv2json from "csvtojson";
 
-import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
+import { FileInput as AbstractFileInput } from "@ethberry/mui-inputs-file";
 import type { ICollectionRowDto, ICollectionUploadDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";

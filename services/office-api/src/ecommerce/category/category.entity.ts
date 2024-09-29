@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typeorm";
 
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { ICategory } from "@framework/types";
 import { ns } from "@framework/constants";
 

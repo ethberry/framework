@@ -1,4 +1,4 @@
-import type { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@ethberry/types-collection";
 
 export enum AccessControlRoleType {
   DEFAULT_ADMIN_ROLE = "DEFAULT_ADMIN_ROLE",

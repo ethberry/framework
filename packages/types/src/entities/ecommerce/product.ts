@@ -1,4 +1,4 @@
-import type { ISearchable } from "@gemunion/types-collection";
+import type { ISearchable } from "@ethberry/types-collection";
 
 import type { ICategory } from "./category";
 import type { IMerchant } from "../infrastructure";

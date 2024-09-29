@@ -4,9 +4,9 @@ import { Logger } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WeiPerEther } from "ethers";
 
-import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
+import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { LicenseModule } from "@ethberry/nest-js-module-license";
 import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 import { DiscreteStrategy } from "@framework/types";
 

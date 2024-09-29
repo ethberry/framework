@@ -3,9 +3,9 @@ import { ListItemText } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
 import { addMonths, formatDistance } from "date-fns";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import { AddressLink } from "@gemunion/mui-scanner";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { AddressLink } from "@ethberry/mui-scanner";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 

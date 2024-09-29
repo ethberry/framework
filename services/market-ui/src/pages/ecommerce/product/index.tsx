@@ -6,9 +6,9 @@ import { useParams } from "react-router";
 
 import { formatItem } from "@framework/exchange";
 import type { IProduct } from "@framework/types";
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ApiError, useApi } from "@gemunion/provider-api-firebase";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
+import { ApiError, useApi } from "@ethberry/provider-api-firebase";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 
 import { Carousel } from "./carousel";
 import { StyledPaper } from "./styled";

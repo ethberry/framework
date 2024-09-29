@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { EthInput } from "@gemunion/mui-inputs-mask";
+import { EthInput } from "@ethberry/mui-inputs-mask";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormDialog } from "@ethberry/mui-dialog-form";
 import { validationSchema } from "./validation";
 
 export interface IAllowanceDto {

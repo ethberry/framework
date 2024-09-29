@@ -6,9 +6,9 @@ import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
 import * as Plot from "@observablehq/plot";
 import { utils } from "ethers";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
-import { InputType } from "@gemunion/types-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
+import { InputType } from "@ethberry/types-collection";
 import { StyledEmptyWrapper } from "@framework/styled";
 import type { IPonziChartSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";

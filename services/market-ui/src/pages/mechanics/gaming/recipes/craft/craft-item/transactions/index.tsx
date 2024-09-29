@@ -9,10 +9,10 @@ import {
 } from "@mui/x-data-grid-premium";
 import { format, parseISO } from "date-fns";
 
-import { defaultItemsPerPage, humanReadableDateTimeFormat } from "@gemunion/constants";
-import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
-import { useApiCall } from "@gemunion/react-hooks";
-import { IHandleChangePaginationModelProps } from "@gemunion/provider-collection";
+import { defaultItemsPerPage, humanReadableDateTimeFormat } from "@ethberry/constants";
+import { AddressLink, TxHashLink } from "@ethberry/mui-scanner";
+import { useApiCall } from "@ethberry/react-hooks";
+import { IHandleChangePaginationModelProps } from "@ethberry/provider-collection";
 import type { ICraft, IEventHistory } from "@framework/types";
 
 import { EventDataView } from "../../../../../../exchange/transactions/event-data-view";

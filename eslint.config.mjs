@@ -1,4 +1,4 @@
-import typescriptRules from "@gemunion/eslint-config/presets/tsx.mjs";
+import typescriptRules from "@ethberry/eslint-config/presets/tsx.mjs";
 
 // DON'T ADD ANY RULES!
 // FIX YOUR SHIT!!!

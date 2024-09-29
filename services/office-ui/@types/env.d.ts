@@ -1,4 +1,4 @@
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 declare global {
   namespace NodeJS {

@@ -1,7 +1,7 @@
 import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { TokenAutocompleteDto, TokenSearchDto } from "./dto";

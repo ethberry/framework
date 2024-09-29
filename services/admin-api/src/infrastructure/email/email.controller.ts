@@ -1,7 +1,7 @@
 import { Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 import { EmailType } from "@framework/types";
 
 import { EmailService } from "./email.service";

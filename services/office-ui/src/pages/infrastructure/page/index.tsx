@@ -5,10 +5,10 @@ import { Add, Create, Delete } from "@mui/icons-material";
 
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IPage, IPageSearchDto } from "@framework/types";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { emptyStateString } from "@ethberry/draft-js-utils";
 
 import { PageEditDialog } from "./edit";
 

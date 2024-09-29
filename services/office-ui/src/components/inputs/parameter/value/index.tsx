@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 import { ParameterType } from "@framework/types";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { TextInput } from "@ethberry/mui-inputs-core";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Add, Delete } from "@mui/icons-material";

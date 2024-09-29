@@ -1,7 +1,7 @@
 import { mixed, number, object, string } from "yup";
 
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
-import { dbIdValidationSchema } from "@gemunion/yup-rules";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
+import { dbIdValidationSchema } from "@ethberry/yup-rules";
 import { DiscreteStatus, DiscreteStrategy } from "@framework/types";
 
 export const validationSchema = object().shape({

@@ -4,7 +4,7 @@ import { BarChart, FormatListNumberedRtl, SportsScore } from "@mui/icons-materia
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export const AchievementsSection: FC = () => {
   const isProd = process.env.NODE_ENV === NodeEnv.production;

@@ -2,9 +2,9 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import type { IStakingDepositSearchDto } from "@framework/types";
 import { ModuleType, StakingDepositStatus, TokenType } from "@framework/types";
 

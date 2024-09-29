@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { concat, encodeBytes32String, hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
-import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ContractFeatures, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IBreedSignDto } from "@framework/types";

@@ -1,5 +1,5 @@
 import { FC, Fragment, PropsWithChildren } from "react";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 
 export interface IIndexWrapperProps {
   index: string;

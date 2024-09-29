@@ -6,7 +6,7 @@ import { enqueueSnackbar } from "notistack";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { ClaimType } from "@framework/types";
 import type { IClaim, IClaimTemplateUploadDto } from "@framework/types";
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { ClaimUploadDialog } from "./dialog";
 

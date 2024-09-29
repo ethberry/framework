@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Put, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ReferralProgramCreateDto, ReferralProgramUpdateDto } from "./dto";

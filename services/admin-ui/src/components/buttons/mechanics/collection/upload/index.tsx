@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { PaidOutlined } from "@mui/icons-material";
 
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ICollectionUploadDto, IContract } from "@framework/types";
 

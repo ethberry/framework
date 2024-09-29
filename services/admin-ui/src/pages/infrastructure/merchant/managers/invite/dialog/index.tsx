@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { TextInput } from "@ethberry/mui-inputs-core";
 import type { IInvitationCreateDto } from "@framework/types";
 
 import { validationSchema } from "./validation";

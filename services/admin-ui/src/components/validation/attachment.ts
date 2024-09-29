@@ -1,5 +1,5 @@
 import { object, string } from "yup";
-import { titleValidationSchema } from "@gemunion/yup-rules";
+import { titleValidationSchema } from "@ethberry/yup-rules";
 
 export const attachmentValidationSchema = object().shape({
   title: titleValidationSchema,

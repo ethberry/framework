@@ -1,9 +1,9 @@
 import { FC, Fragment } from "react";
 
-import { FormWrapper } from "@gemunion/mui-form";
-import { TextArea } from "@gemunion/mui-inputs-core";
-import { useApiCall } from "@gemunion/react-hooks";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { FormWrapper } from "@ethberry/mui-form";
+import { TextArea } from "@ethberry/mui-inputs-core";
+import { useApiCall } from "@ethberry/react-hooks";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 
 import { validationSchema } from "./validation";
 

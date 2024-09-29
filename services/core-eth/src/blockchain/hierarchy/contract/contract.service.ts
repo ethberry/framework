@@ -12,7 +12,7 @@ import {
   UpdateResult,
 } from "typeorm";
 
-import { wallet } from "@gemunion/constants";
+import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 

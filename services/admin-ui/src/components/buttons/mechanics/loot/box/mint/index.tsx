@@ -3,7 +3,7 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILootBox } from "@framework/types";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";

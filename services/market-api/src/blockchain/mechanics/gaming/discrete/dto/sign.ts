@@ -3,7 +3,7 @@ import { IsInt, IsString, Matches, MaxLength, Min } from "class-validator";
 import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { ReferrerOptionalDto } from "@gemunion/nest-js-validators";
+import { ReferrerOptionalDto } from "@ethberry/nest-js-validators";
 import type { IDiscreteSignDto } from "@framework/types";
 
 export class DiscreteSignDto extends Mixin(ReferrerOptionalDto) implements IDiscreteSignDto {

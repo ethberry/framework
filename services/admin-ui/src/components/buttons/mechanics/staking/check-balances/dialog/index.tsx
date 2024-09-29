@@ -2,9 +2,9 @@ import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemText, ListSubheader } from "@mui/material";
 
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { useApiCall } from "@gemunion/react-hooks";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
+import { useApiCall } from "@ethberry/react-hooks";
 import { formatEther } from "@framework/exchange";
 import { ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IContract, IToken } from "@framework/types";

@@ -5,10 +5,10 @@ import { Skeleton } from "@mui/lab";
 
 import { StyledAvatar } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { RichTextDisplay } from "@gemunion/mui-rte";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { useApiCall } from "@gemunion/react-hooks";
+import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
+import { RichTextDisplay } from "@ethberry/mui-rte";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { MysteryBoxList } from "../box-list";
 

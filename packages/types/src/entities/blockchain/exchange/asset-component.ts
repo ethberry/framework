@@ -1,5 +1,5 @@
-import type { IIdBase } from "@gemunion/types-collection";
-import type { TokenType } from "@gemunion/types-blockchain";
+import type { IIdBase } from "@ethberry/types-collection";
+import type { TokenType } from "@ethberry/types-blockchain";
 
 import type { IContract } from "../hierarchy/contract";
 import type { ITemplate } from "../hierarchy/template";

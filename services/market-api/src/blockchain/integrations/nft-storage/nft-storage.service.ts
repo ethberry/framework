@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { getText } from "@gemunion/draft-js-utils";
+import { getText } from "@ethberry/draft-js-utils";
 
-import { NftStorageFirebaseService } from "@gemunion/nest-js-module-nft-storage-firebase";
+import { NftStorageFirebaseService } from "@ethberry/nest-js-module-nft-storage-firebase";
 
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";

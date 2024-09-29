@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsISO8601, IsString, ValidateNested } from "class-vali
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto } from "@gemunion/nest-js-validators";
+import { AccountDto } from "@ethberry/nest-js-validators";
 import { ClaimType } from "@framework/types";
 import type { IClaimTokenRowDto, IClaimTokenUploadDto } from "@framework/types";
 

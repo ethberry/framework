@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository, DeleteResult } from "typeorm";
 
-import type { ISearchableDto } from "@gemunion/types-collection";
+import type { ISearchableDto } from "@ethberry/types-collection";
 import type { IPonziRuleSearchDto } from "@framework/types";
 import { PonziRuleStatus } from "@framework/types";
 

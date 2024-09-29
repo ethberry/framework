@@ -1,5 +1,5 @@
 import { BusinessType } from "@framework/types";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 declare global {
   namespace NodeJS {
@@ -9,8 +9,8 @@ declare global {
       HOST: string;
       BE_URL: string;
       JSON_URL: string;
-      GEMUNION_API_KEY: string;
-      GEMUNION_URL: string;
+      ETHBERRY_API_KEY: string;
+      ETHBERRY_URL: string;
       SIGNAL_URL: string;
       BUSINESS_TYPE: BusinessType;
       ACCOUNT: string;

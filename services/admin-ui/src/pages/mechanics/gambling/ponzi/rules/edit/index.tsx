@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { CheckboxInput, NumberInput, TextInput } from "@ethberry/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { RichTextEditor } from "@ethberry/mui-inputs-draft";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import { ContractStatus, IPonziRule, ModuleType } from "@framework/types";
 
 import { DurationInput } from "../../../../../../components/inputs/duration";

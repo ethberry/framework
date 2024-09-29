@@ -2,7 +2,7 @@ import { Column, Entity } from "typeorm";
 
 import { AccessControlRoleType, IAccessControl } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 @Entity({ schema: ns, name: "access_control" })
 export class AccessControlEntity extends IdDateBaseEntity implements IAccessControl {

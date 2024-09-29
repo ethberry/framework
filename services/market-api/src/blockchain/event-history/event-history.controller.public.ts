@@ -1,6 +1,6 @@
 import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 
-import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, Public } from "@ethberry/nest-js-utils";
 
 import { EventHistoryCraftSearchDto, EventHistoryTokenSearchDto } from "./dto";
 import { EventHistoryService } from "./event-history.service";

@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 
 import { ContractFeatures, TokenType } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormDialog } from "@ethberry/mui-dialog-form";
 
 import { AmountInput } from "./amount-input";
 import { validationSchema } from "./validation";

@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-import { EnabledCountries } from "@gemunion/constants";
+import { EnabledCountries } from "@ethberry/constants";
 
 export const validationSchema = object().shape({
   addressLine1: string().required("form.validations.valueMissing"),

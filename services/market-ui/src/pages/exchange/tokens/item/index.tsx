@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardHeader, Grid } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import { ModuleType } from "@framework/types";
 import type { IToken } from "@framework/types";

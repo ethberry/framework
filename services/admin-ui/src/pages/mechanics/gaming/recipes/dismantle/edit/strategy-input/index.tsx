@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 import { ContractFeatures, DismantleStrategy } from "@framework/types";
 
 export interface IAddressInputProps {

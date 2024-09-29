@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { constants } from "ethers";
 import { TableCell, TableRow } from "@mui/material";
 
-import { AddressLink } from "@gemunion/mui-scanner";
+import { AddressLink } from "@ethberry/mui-scanner";
 
 export interface ITokenUserMetadataView {
   metadata: any;

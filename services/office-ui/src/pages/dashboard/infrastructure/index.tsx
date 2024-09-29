@@ -5,7 +5,7 @@ import { Email, MenuBook, PeopleAlt, Settings, SignalCellularAlt, Storefront } f
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { useUser } from "@gemunion/provider-user";
+import { useUser } from "@ethberry/provider-user";
 import { IUser, UserRole } from "@framework/types";
 
 export const AdminSection: FC = () => {

@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 import { stringify } from "qs";
 
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
+import { PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 

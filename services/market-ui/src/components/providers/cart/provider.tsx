@@ -3,7 +3,7 @@ import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
 import type { IProduct } from "@framework/types";
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import { CartContext, ICartItem } from "./context";
 

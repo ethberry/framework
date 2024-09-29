@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import { ModuleType, TokenType } from "@framework/types";
 
 export interface ITemplateInputProps {

@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, Matches } from "class-validator";
 
-import { SearchableDto } from "@gemunion/collection";
+import { SearchableDto } from "@ethberry/collection";
 
 import type { IPageCreateDto } from "../interfaces";
 

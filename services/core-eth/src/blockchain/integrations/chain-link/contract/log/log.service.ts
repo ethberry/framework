@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { toBeHex, zeroPadValue } from "ethers";
 
-import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
+import { EthersContractService } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { testChainId } from "@framework/constants";
 import { ModuleType } from "@framework/types";

@@ -5,8 +5,8 @@ import { addSeconds, formatDistance } from "date-fns";
 
 import { formatItem, formatPenalty } from "@framework/exchange";
 import { DurationUnit, IAsset } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SwitchInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SwitchInput } from "@ethberry/mui-inputs-core";
 
 import { normalizeDuration } from "../../../utils/time";
 import { validationSchema } from "./validation";

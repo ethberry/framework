@@ -4,8 +4,8 @@ import { IsArray, IsBoolean, IsEnum, IsInt, IsOptional, IsString, Matches, Min }
 
 import type { IOrderSearchDto } from "@framework/types";
 import { OrderStatus } from "@framework/types";
-import { reDateRange } from "@gemunion/constants";
-import { SearchDto } from "@gemunion/collection";
+import { reDateRange } from "@ethberry/constants";
+import { SearchDto } from "@ethberry/collection";
 
 export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
   @ApiPropertyOptional()

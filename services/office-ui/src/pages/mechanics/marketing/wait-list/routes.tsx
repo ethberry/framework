@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 
-import { Protected } from "@gemunion/common-pages";
+import { Protected } from "@ethberry/common-pages";
 
 import { WaitListSection } from "../../../dashboard/mechanics/wait-list";
 import { IndexWrapper } from "../../../index-wrapper";

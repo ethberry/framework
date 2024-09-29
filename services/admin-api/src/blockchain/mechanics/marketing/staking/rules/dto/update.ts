@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsOptional, IsString, IsUrl } from "class-validator";
 
-import { SearchableOptionalDto } from "@gemunion/collection";
+import { SearchableOptionalDto } from "@ethberry/collection";
 
 import type { IStakingRuleUpdateDto } from "../interfaces";
 

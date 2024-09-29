@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { NodeEnv, wallets } from "@gemunion/constants";
+import { NodeEnv, wallets } from "@ethberry/constants";
 import { ns } from "@framework/constants";
 
 export class SeedAccessListErc998At1653616447340 implements MigrationInterface {

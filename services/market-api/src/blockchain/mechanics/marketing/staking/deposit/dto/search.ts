@@ -4,7 +4,7 @@ import { IsArray, IsBoolean, IsEnum, IsInt, IsOptional, Min, ValidateNested } fr
 
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 
 import type { IStakingDepositItemSearchDto, IStakingDepositSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";

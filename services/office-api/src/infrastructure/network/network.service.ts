@@ -2,7 +2,7 @@ import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { INetwork } from "@gemunion/types-blockchain";
+import { INetwork } from "@ethberry/types-blockchain";
 
 import { NetworkEntity } from "./network.entity";
 

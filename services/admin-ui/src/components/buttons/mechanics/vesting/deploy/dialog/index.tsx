@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { DateInput } from "@gemunion/mui-inputs-picker";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { NumberInput, SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { DateInput } from "@ethberry/mui-inputs-picker";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
 import type { IContract, IVestingContractDeployDto } from "@framework/types";
 import { VestingContractTemplates } from "@framework/types";
 

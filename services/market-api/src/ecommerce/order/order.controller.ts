@@ -15,7 +15,7 @@ import {
 import { Request, Response } from "express";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { OrderService } from "./order.service";
 import { OrderEntity } from "./order.entity";

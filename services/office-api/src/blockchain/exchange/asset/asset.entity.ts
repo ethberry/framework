@@ -1,6 +1,6 @@
 import { Entity, OneToMany } from "typeorm";
 
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import { ns } from "@framework/constants";
 import type { IAsset } from "@framework/types";
 

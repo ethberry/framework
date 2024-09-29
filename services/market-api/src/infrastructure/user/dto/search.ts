@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { IUserSearchDto, UserRole, UserStatus } from "@framework/types";
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 
 export class UserSearchDto extends SearchDto implements IUserSearchDto {
   @ApiPropertyOptional({

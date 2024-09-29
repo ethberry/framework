@@ -2,8 +2,8 @@ import { FC, Fragment, useState } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
-import { useAllowance, useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import { useAllowance, useMetamask, useServerSignature } from "@ethberry/react-hooks-eth";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 import {
   convertDatabaseAssetToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,

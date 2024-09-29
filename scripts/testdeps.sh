@@ -10,4 +10,4 @@ else
     exit 1;
 fi
 
-#    "testdeps": "sh scripts/testdeps.sh node_modules/@gemunion/*/node_modules"
+#    "testdeps": "sh scripts/testdeps.sh node_modules/@ethberry/*/node_modules"

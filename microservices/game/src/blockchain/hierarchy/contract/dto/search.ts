@@ -3,8 +3,8 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { ChainIdDto } from "@gemunion/nest-js-validators";
-import { SearchDto } from "@gemunion/collection";
+import { ChainIdDto } from "@ethberry/nest-js-validators";
+import { SearchDto } from "@ethberry/collection";
 import type { IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus } from "@framework/types";
 

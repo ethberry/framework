@@ -4,9 +4,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { formatItem, formatPenalty } from "@framework/exchange";
 import type { IStakingDeposit, IStakingRule } from "@framework/types";
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { RichTextDisplay } from "@gemunion/mui-rte";
-import { AddressLink } from "@gemunion/mui-scanner";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
+import { RichTextDisplay } from "@ethberry/mui-rte";
+import { AddressLink } from "@ethberry/mui-scanner";
 
 import { normalizeDuration } from "../../../../../../utils/time";
 import { StakingDepositStatus } from "@framework/types";

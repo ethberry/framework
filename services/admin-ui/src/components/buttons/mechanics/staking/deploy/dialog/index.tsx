@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 import { StakingContractTemplates } from "@framework/types";
 import type { IContract, IStakingContractDeployDto } from "@framework/types";
 

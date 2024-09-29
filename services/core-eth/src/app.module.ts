@@ -4,12 +4,12 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ScheduleModule } from "@nestjs/schedule";
 import { WinstonModule } from "nest-winston";
 
-import { HttpExceptionFilter } from "@gemunion/nest-js-utils";
-import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
-import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
+import { HttpExceptionFilter } from "@ethberry/nest-js-utils";
+import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
+import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
+import { LicenseModule } from "@ethberry/nest-js-module-license";
+import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";

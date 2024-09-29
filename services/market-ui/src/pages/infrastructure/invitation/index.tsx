@@ -2,8 +2,8 @@ import { FC, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { useApiCall } from "@gemunion/react-hooks";
-import { useUser } from "@gemunion/provider-user";
+import { useApiCall } from "@ethberry/react-hooks";
+import { useUser } from "@ethberry/provider-user";
 import { StyledAlert } from "@framework/styled";
 import type { IUser } from "@framework/types";
 

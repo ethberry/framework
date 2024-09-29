@@ -1,8 +1,8 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
-import { PaginationDto } from "@gemunion/collection";
+import { NotFoundInterceptor, PaginationInterceptor } from "@ethberry/nest-js-utils";
+import { PaginationDto } from "@ethberry/collection";
 
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";

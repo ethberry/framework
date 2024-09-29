@@ -1,7 +1,7 @@
 import { array, mixed, number, object, string } from "yup";
 
 import { ParameterType, ProductParameters } from "@framework/types";
-import { reISO8601 } from "@gemunion/constants";
+import { reISO8601 } from "@ethberry/constants";
 
 const parameterValidationSchema = object().shape({
   parameterName: mixed<ProductParameters>()

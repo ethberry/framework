@@ -3,8 +3,8 @@ import { FormattedMessage } from "react-intl";
 import { List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Mail } from "@mui/icons-material";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
 import { EmailType } from "@framework/types";
 
 export const Email: FC = () => {

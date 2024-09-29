@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
-import { PaymentRequiredException } from "@gemunion/nest-js-utils";
+import { PaymentRequiredException } from "@ethberry/nest-js-utils";
 import { IContractManagerSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import type { IContractManagerCreateDto } from "./interfaces";

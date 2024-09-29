@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { TextInput } from "@ethberry/mui-inputs-core";
 
 export interface ISelectInputProps {
   name?: string;

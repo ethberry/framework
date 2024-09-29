@@ -1,8 +1,8 @@
 import { object, string } from "yup";
 
-import { addressValidationSchema } from "@gemunion/yup-rules-eth";
-import { reISO8601 } from "@gemunion/constants";
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
+import { addressValidationSchema } from "@ethberry/yup-rules-eth";
+import { reISO8601 } from "@ethberry/constants";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
 
 export const validationSchema = object().shape({
   account: addressValidationSchema,

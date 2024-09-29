@@ -2,9 +2,9 @@ import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 
 import type { IPredictionQuestion } from "@framework/types";
 import { PredictionQuestionResult } from "@framework/types";

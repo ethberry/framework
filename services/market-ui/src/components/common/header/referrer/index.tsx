@@ -4,8 +4,8 @@ import { Link } from "@mui/icons-material";
 import { useSearchParams } from "react-router-dom";
 import { constants } from "ethers";
 
-import { useAppDispatch, useAppSelector } from "@gemunion/redux";
-import { walletSelectors, walletActions } from "@gemunion/provider-wallet";
+import { useAppDispatch, useAppSelector } from "@ethberry/redux";
+import { walletSelectors, walletActions } from "@ethberry/provider-wallet";
 
 export const Referrer: FC = () => {
   const [searchParams] = useSearchParams();

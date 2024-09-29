@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { IContract } from "@framework/types";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 
 interface ILootContractListItemProps {
   contract: IContract;

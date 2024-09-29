@@ -1,4 +1,4 @@
-import type { IIdBase } from "@gemunion/types-collection";
+import type { IIdBase } from "@ethberry/types-collection";
 
 import type { IToken } from "../hierarchy/token";
 import type { IContract } from "../hierarchy/contract";

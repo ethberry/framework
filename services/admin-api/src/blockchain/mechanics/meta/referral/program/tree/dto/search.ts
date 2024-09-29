@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, IsString } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 
 import { IReferralTreeSearchDto } from "../interfaces";
 

@@ -6,10 +6,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAddress } from "@framework/types";
 import { AddressStatus } from "@framework/types";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import type { IPaginationDto } from "@gemunion/types-collection";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import type { IPaginationDto } from "@ethberry/types-collection";
 
 import { emptyAddress } from "../../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../../utils/address";

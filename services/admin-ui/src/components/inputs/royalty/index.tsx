@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { Erc1155ContractTemplates, Erc721ContractTemplates } from "@framework/types";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
 
 export interface IRoyaltyInputProps {
   name?: string;

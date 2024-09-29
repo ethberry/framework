@@ -1,8 +1,8 @@
 import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { EntityInput, IAutocompleteOption } from "@gemunion/mui-inputs-entity";
-import { useUser } from "@gemunion/provider-user";
+import { EntityInput, IAutocompleteOption } from "@ethberry/mui-inputs-entity";
+import { useUser } from "@ethberry/provider-user";
 import { IUser } from "@framework/types";
 
 export const VrfSubInput: FC = () => {

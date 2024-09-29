@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { imageUrl, ns } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export class SeedPhoto1683724061810 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 
-import { ErrorBoundary } from "@gemunion/mui-page-layout";
+import { ErrorBoundary } from "@ethberry/mui-page-layout";
 
 import { Header } from "../header";
 import { Root, StyledContainer } from "./styled";

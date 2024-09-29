@@ -1,7 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
+import { NotFoundInterceptor, PaginationInterceptor, Public } from "@ethberry/nest-js-utils";
+import { SearchDto } from "@ethberry/collection";
 
 import { MerchantService } from "./merchant.service";
 import { MerchantEntity } from "./merchant.entity";

@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import type { IDiscrete } from "@framework/types";
 import { ContractFeatures, ContractStatus, DiscreteStatus, DiscreteStrategy, TokenType } from "@framework/types";
 

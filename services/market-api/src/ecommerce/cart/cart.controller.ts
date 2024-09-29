@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Put } from "@nestjs/common";
 
-import { Public, User } from "@gemunion/nest-js-utils";
+import { Public, User } from "@ethberry/nest-js-utils";
 
 import { CartItemCreateDto } from "../cart-item/dto";
 import { CartUpdateDto } from "./dto";

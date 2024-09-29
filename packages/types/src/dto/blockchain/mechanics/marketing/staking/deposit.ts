@@ -1,5 +1,5 @@
-import type { IPaginationDto } from "@gemunion/types-collection";
-import type { TokenType } from "@gemunion/types-blockchain";
+import type { IPaginationDto } from "@ethberry/types-collection";
+import type { TokenType } from "@ethberry/types-blockchain";
 
 import { StakingDepositStatus } from "../../../../../entities";
 

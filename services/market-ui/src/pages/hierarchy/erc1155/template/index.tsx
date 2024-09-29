@@ -1,10 +1,10 @@
 import { FC, Fragment } from "react";
 import { Grid } from "@mui/material";
 
-import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { RichTextDisplay } from "@gemunion/mui-rte";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { useCollection } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
+import { RichTextDisplay } from "@ethberry/mui-rte";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import { useCollection } from "@ethberry/provider-collection";
 import type { ITemplate } from "@framework/types";
 
 import { CraftTemplatePanel } from "../../../mechanics/gaming/recipes/craft/craft-template-panel";

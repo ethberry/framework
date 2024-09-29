@@ -1,8 +1,8 @@
 import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor } from "@ethberry/nest-js-utils";
 
-import { PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@ethberry/collection";
 import { PayeesService } from "./payees.service";
 import { PayeesEntity } from "./payees.entity";
 

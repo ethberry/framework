@@ -1,11 +1,11 @@
 import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
 import type { ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 
 import { TemplateInput } from "./template-input";
 

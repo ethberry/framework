@@ -11,7 +11,7 @@
     "nx": "19.8.0"
   },
   "devDependencies": {
-    "@gemunion/eslint-config": "5.0.1",
+    "@ethberry/eslint-config": "5.0.1",
     "@types/node": "20.16.5",
     "@types/react": "18.3.8",
     "husky": "4.3.8",
@@ -27,7 +27,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/ethberry/framework"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency 1 --hoist --ignore-scripts",

@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
-import type { ICmcQuote } from "@gemunion/types-coin-market-cap";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
+import type { ICmcQuote } from "@ethberry/types-coin-market-cap";
 
 import { BaseCoins, TargetCoins } from "./enums";
 

@@ -7,13 +7,13 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/nest-js-module-license": "4.0.41",
-    "@gemunion/nest-js-module-request-logger": "3.0.31",
-    "@gemunion/nest-js-module-typeorm": "3.0.46",
-    "@gemunion/nest-js-module-typeorm-postgres": "1.0.49",
-    "@gemunion/nest-js-module-winston-logdna": "3.1.16",
-    "@gemunion/nest-js-utils-ms": "3.0.30",
-    "@gemunion/nest-js-validators": "4.1.4",
+    "@ethberry/nest-js-module-license": "4.0.41",
+    "@ethberry/nest-js-module-request-logger": "3.0.31",
+    "@ethberry/nest-js-module-typeorm": "3.0.46",
+    "@ethberry/nest-js-module-typeorm-postgres": "1.0.49",
+    "@ethberry/nest-js-module-winston-logdna": "3.1.16",
+    "@ethberry/nest-js-utils-ms": "3.0.30",
+    "@ethberry/nest-js-validators": "4.1.4",
     "@nestjs/common": "10.4.4",
     "@nestjs/config": "3.2.3",
     "@nestjs/core": "10.4.4",
@@ -38,7 +38,7 @@
   },
   "description": "Cron microservice",
   "devDependencies": {
-    "@gemunion/cross-env": "0.0.4",
+    "@ethberry/cross-env": "0.0.4",
     "@nestjs/testing": "10.4.4",
     "@types/node": "20.16.5",
     "rimraf": "6.0.1",
@@ -53,7 +53,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/ethberry/framework"
   },
   "scripts": {
     "build": "tsc",

@@ -3,8 +3,8 @@ import { IsEnum, IsInt, IsOptional, Min, ValidateNested, IsISO8601, IsString } f
 import { Transform, Type } from "class-transformer";
 
 import { AchievementRuleStatus, ContractEventType } from "@framework/types";
-import { IsBeforeDate, AllTypesDto } from "@gemunion/nest-js-validators";
-import { SearchableDto } from "@gemunion/collection";
+import { IsBeforeDate, AllTypesDto } from "@ethberry/nest-js-validators";
+import { SearchableDto } from "@ethberry/collection";
 
 import { IAchievementRuleCreateDto } from "../interfaces";
 

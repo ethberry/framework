@@ -1,4 +1,4 @@
-import { titleValidationSchema } from "@gemunion/yup-rules";
+import { titleValidationSchema } from "@ethberry/yup-rules";
 import { object, string } from "yup";
 
 export const validationSchema = object().shape({

@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import type { ILootContractDeployDto } from "@framework/types";
 import { LootContractTemplates } from "@framework/types";
-import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@gemunion/constants";
+import { symbolMaxLength, symbolMinLength, titleMaxLength, titleMinLength } from "@ethberry/constants";
 
 export class LootContractDeployDto implements ILootContractDeployDto {
   @ApiProperty({

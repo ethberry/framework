@@ -4,7 +4,7 @@ import { BarChart, Grade, Hive, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { useUser } from "@gemunion/provider-user";
+import { useUser } from "@ethberry/provider-user";
 import type { IUser } from "@framework/types";
 import { UserRole } from "@framework/types";
 

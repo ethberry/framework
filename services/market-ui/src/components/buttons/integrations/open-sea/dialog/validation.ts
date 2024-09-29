@@ -1,6 +1,6 @@
 import { object, string } from "yup";
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
-import { reISO8601 } from "@gemunion/constants";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
+import { reISO8601 } from "@ethberry/constants";
 
 export const validationSchema = object().shape({
   price: templateAssetValidationSchema,

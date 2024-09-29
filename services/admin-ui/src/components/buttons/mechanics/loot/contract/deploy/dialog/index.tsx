@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { CurrencyInput } from "@ethberry/mui-inputs-mask";
 import { LootContractTemplates } from "@framework/types";
 import type { IContract, ILootContractDeployDto } from "@framework/types";
 

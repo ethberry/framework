@@ -2,9 +2,9 @@ import { v4 } from "uuid";
 import { ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
 
-import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseTokenURI } from "@gemunion/contracts-constants";
-import { wallet } from "@gemunion/constants";
+import { simpleFormatting } from "@ethberry/draft-js-utils";
+import { baseTokenURI } from "@ethberry/contracts-constants";
+import { wallet } from "@ethberry/constants";
 import type { IContract, IUser } from "@framework/types";
 import {
   ContractStatus,

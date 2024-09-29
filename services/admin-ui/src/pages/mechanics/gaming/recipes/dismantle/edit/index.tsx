@@ -2,9 +2,9 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import type { IDismantle } from "@framework/types";
 import { ContractStatus, DismantleStatus, ModuleType, TokenType } from "@framework/types";
 

@@ -1,10 +1,10 @@
 import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
 import type { ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
 
 import { SearchMerchantInput } from "../../inputs/search-merchant";
 import { SearchMerchantContractsInput } from "../../inputs/search-merchant-contracts";

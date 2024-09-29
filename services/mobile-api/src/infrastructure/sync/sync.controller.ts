@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor } from "@ethberry/nest-js-utils";
 import { IBalance } from "@framework/types";
 
 import { SyncService } from "./sync.service";

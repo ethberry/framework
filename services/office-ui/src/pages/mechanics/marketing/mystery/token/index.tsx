@@ -6,9 +6,9 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useUser } from "@gemunion/provider-user";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useUser } from "@ethberry/provider-user";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { Erc721TokenViewDialog } from "../../../../hierarchy/erc721/token/view";

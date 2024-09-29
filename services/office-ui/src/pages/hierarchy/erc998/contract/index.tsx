@@ -4,10 +4,10 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CollectionActions, useCollection } from "@gemunion/provider-collection";
-import { useUser } from "@gemunion/provider-user";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
+import { useUser } from "@ethberry/provider-user";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto, IUser } from "@framework/types";
 import { ContractStatus, Erc998ContractFeatures } from "@framework/types";

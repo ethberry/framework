@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 import type { IPromoSearchDto } from "@framework/types";
 
 export class PromoSearchDto extends SearchDto implements IPromoSearchDto {

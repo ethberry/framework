@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { EthInput } from "@gemunion/mui-inputs-mask";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { EthInput } from "@ethberry/mui-inputs-mask";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import { ModuleType, TokenType } from "@framework/types";
 import type { IMysteryBoxSearchDto } from "@framework/types";
 

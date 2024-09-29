@@ -2,8 +2,8 @@ import { FC, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { ParameterType } from "@framework/types";
-import { NumberInput } from "@gemunion/mui-inputs-core";
-import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { NumberInput } from "@ethberry/mui-inputs-core";
+import { DateTimeInput } from "@ethberry/mui-inputs-picker";
 
 export interface IParameterMinValueInput {
   name?: string;

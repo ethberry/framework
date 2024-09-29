@@ -1,6 +1,6 @@
 import { Backup } from "@mui/icons-material";
 
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 

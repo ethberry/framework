@@ -1,7 +1,7 @@
 import { mixed, object } from "yup";
 
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
-import { dbIdValidationSchema, draftValidationSchema, titleValidationSchema } from "@gemunion/yup-rules";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
+import { dbIdValidationSchema, draftValidationSchema, titleValidationSchema } from "@ethberry/yup-rules";
 import { StakingRuleStatus } from "@framework/types";
 
 // TODO validate imageURL if exist (db table has default value)

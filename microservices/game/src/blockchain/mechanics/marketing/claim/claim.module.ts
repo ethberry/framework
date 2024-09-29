@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
+import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 
 import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 import { MerchantModule } from "../../../../infrastructure/merchant/merchant.module";

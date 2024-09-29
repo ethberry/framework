@@ -2,10 +2,10 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, Max, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchableDto } from "@gemunion/collection";
+import { SearchableDto } from "@ethberry/collection";
 
 import { IAchievementLevelUpdateDto } from "../interfaces";
-import { AllTypesDto } from "@gemunion/nest-js-validators";
+import { AllTypesDto } from "@ethberry/nest-js-validators";
 
 export class AddressUpdateDto extends SearchableDto implements IAchievementLevelUpdateDto {
   @ApiPropertyOptional()

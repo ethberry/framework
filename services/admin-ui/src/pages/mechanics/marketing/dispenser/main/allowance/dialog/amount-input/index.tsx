@@ -3,7 +3,7 @@ import { Alert } from "@mui/material";
 import { useWatch } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-import { EthInput } from "@gemunion/mui-inputs-mask";
+import { EthInput } from "@ethberry/mui-inputs-mask";
 import { TokenType } from "@framework/types";
 
 export const AmountInput: FC = () => {

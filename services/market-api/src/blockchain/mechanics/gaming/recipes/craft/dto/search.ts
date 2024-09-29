@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 import type { CraftStatus, ICraftSearchDto } from "@framework/types";
 
 export class CraftSearchDto extends SearchDto implements ICraftSearchDto {

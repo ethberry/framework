@@ -1,8 +1,8 @@
 import { FC, Fragment, useState } from "react";
 import { DoNotDisturbOn } from "@mui/icons-material";
 
-import { NodeEnv } from "@gemunion/constants";
-import { useApiCall } from "@gemunion/react-hooks";
+import { NodeEnv } from "@ethberry/constants";
+import { useApiCall } from "@ethberry/react-hooks";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";

@@ -3,10 +3,10 @@ import { format, parseISO } from "date-fns";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { SelectInput, StaticInput, TextInput } from "@ethberry/mui-inputs-core";
+import { AvatarInput } from "@ethberry/mui-inputs-image-firebase";
 
-import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
+import { EnabledCountries, EnabledGenders } from "@ethberry/constants";
 import { EnabledLanguages } from "@framework/constants";
 import { UserRole, UserStatus } from "@framework/types";
 

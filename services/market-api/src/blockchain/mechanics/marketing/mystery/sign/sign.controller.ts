@@ -1,11 +1,11 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 
 import { MysteryBoxSignDto } from "./dto";
 import { MysterySignService } from "./sign.service";
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()

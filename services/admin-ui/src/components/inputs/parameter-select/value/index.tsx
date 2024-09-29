@@ -2,8 +2,8 @@ import { FC, useEffect, useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { ParameterType } from "@framework/types";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
-import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { NumberInput, TextInput } from "@ethberry/mui-inputs-core";
+import { DateTimeInput } from "@ethberry/mui-inputs-picker";
 
 import { EnumSelectInput } from "./enum-select";
 import type { IParameterValueInput } from "./interface";

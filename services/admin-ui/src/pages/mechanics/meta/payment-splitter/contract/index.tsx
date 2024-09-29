@@ -3,10 +3,10 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-// import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CollectionActions, useCollection } from "@gemunion/provider-collection";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+// import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";

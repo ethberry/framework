@@ -1,9 +1,9 @@
 import { number, object, string } from "yup";
 
-import { currencyValidationSchema } from "@gemunion/yup-rules";
-import { addressValidationSchema } from "@gemunion/yup-rules-eth";
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
-import { reISO8601 } from "@gemunion/constants";
+import { currencyValidationSchema } from "@ethberry/yup-rules";
+import { addressValidationSchema } from "@ethberry/yup-rules-eth";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
+import { reISO8601 } from "@ethberry/constants";
 
 export const vestingValidationSchema = object().shape({
   owner: addressValidationSchema,

@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { WaitListListService } from "./list.service";

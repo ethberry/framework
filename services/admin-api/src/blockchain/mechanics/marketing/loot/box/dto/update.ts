@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsJSON, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { NotNativeDto, SemiCoinDto } from "@gemunion/nest-js-validators";
+import { NotNativeDto, SemiCoinDto } from "@ethberry/nest-js-validators";
 import { LootBoxStatus } from "@framework/types";
 
 import type { ILootBoxUpdateDto } from "../interfaces";

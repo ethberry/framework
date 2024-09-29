@@ -1,4 +1,4 @@
-import { comparator } from "@gemunion/utils";
+import { comparator } from "@ethberry/utils";
 
 interface IOptionsSortArr {
   sortBy?: string;

@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import type { ISearchDto } from "@gemunion/types-collection";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import type { ISearchDto } from "@ethberry/types-collection";
+import { TextInput } from "@ethberry/mui-inputs-core";
 
 export interface IReferralTreeSearchDto extends ISearchDto {
   referral: string;

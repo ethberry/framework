@@ -1,8 +1,8 @@
 import { mixed, object, string } from "yup";
 
-import { draftValidationSchema, titleValidationSchema } from "@gemunion/yup-rules";
+import { draftValidationSchema, titleValidationSchema } from "@ethberry/yup-rules";
 import { AchievementRuleStatus, ContractEventType } from "@framework/types";
-import { reISO8601 } from "@gemunion/constants";
+import { reISO8601 } from "@ethberry/constants";
 
 export const validationSchema = object().shape({
   title: titleValidationSchema,

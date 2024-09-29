@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { MerchantStatus, RatePlanType } from "@framework/types";
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantEntity } from "./merchant.entity";

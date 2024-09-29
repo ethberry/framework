@@ -1,8 +1,8 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { app } from "firebase-admin";
 
-import type { IWalletConnectDto, IFirebaseToken } from "@gemunion/nest-js-module-wallet-connect";
-import { MetamaskService } from "@gemunion/nest-js-module-metamask";
+import type { IWalletConnectDto, IFirebaseToken } from "@ethberry/nest-js-module-wallet-connect";
+import { MetamaskService } from "@ethberry/nest-js-module-metamask";
 import { UserRole } from "@framework/types";
 
 import { UserService } from "../user/user.service";

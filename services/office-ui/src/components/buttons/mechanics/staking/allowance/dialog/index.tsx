@@ -1,8 +1,8 @@
 import { ChangeEvent, FC } from "react";
 
 import { ContractStatus, Erc721ContractFeatures, ModuleType, TokenType } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 
 import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";

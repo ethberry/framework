@@ -3,7 +3,7 @@ import { useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { TokenType } from "@framework/types";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 
 interface ISearchTokenSelectInputProps {
   prefix: string;

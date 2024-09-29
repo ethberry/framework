@@ -1,8 +1,8 @@
 import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { app } from "firebase-admin";
 
-import type { IMetamaskDto, IFirebaseToken } from "@gemunion/nest-js-module-metamask";
-import { MetamaskService } from "@gemunion/nest-js-module-metamask";
+import type { IMetamaskDto, IFirebaseToken } from "@ethberry/nest-js-module-metamask";
+import { MetamaskService } from "@ethberry/nest-js-module-metamask";
 import { defaultChainId, EnabledLanguages } from "@framework/constants";
 import { UserRole, UserStatus } from "@framework/types";
 

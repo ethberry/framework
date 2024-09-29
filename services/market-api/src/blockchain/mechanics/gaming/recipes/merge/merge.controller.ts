@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { MergeService } from "./merge.service";

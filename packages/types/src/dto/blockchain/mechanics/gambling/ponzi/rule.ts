@@ -1,5 +1,5 @@
-import type { ISearchDto } from "@gemunion/types-collection";
-import type { TokenType } from "@gemunion/types-blockchain";
+import type { ISearchDto } from "@ethberry/types-collection";
+import type { TokenType } from "@ethberry/types-blockchain";
 
 import { PonziRuleStatus } from "../../../../../entities";
 

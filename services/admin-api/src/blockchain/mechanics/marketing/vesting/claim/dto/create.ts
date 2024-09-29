@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { CoinDto } from "@gemunion/nest-js-validators";
+import { CoinDto } from "@ethberry/nest-js-validators";
 import type { IVestingClaimCreateDto } from "@framework/types";
 
 import { VestingClaimContractDeployDto } from "./vesting";

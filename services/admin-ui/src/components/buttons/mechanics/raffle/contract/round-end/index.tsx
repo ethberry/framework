@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 
 import RafflesEndRoundABI from "@framework/abis/json/RaffleRandom/endRound.json";
 

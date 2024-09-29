@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { NodeEnv } from "@gemunion/constants";
+import { simpleFormatting } from "@ethberry/draft-js-utils";
+import { NodeEnv } from "@ethberry/constants";
 import { imagePath, ns } from "@framework/constants";
 
 export class SeedTemplateErc20BusdAt1563804000223 implements MigrationInterface {

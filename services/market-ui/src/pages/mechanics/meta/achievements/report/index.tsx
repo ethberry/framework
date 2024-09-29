@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from "react";
 
 import { Grid } from "@mui/material";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { useApiCall } from "@ethberry/react-hooks";
 import { IAchievementItemReport, IAchievementRule } from "@framework/types";
 
 import { AchievementRedeemButton } from "../../../../../components/buttons";

@@ -3,7 +3,7 @@ import { Tab, Tabs } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { IUser } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormDialog } from "@ethberry/mui-dialog-form";
 
 // import { UserAddresses } from "./adresses";
 import { UserFormTabs } from "./tabs";

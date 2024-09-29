@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { useApiCall } from "@gemunion/react-hooks";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { useApiCall } from "@ethberry/react-hooks";
 
 import type { IPredictionAnswer, IPredictionQuestion } from "@framework/types";
 

@@ -1,4 +1,4 @@
-import type { ISearchDto, ISortDto } from "@gemunion/types-collection";
+import type { ISearchDto, ISortDto } from "@ethberry/types-collection";
 
 import type { IParamsDto } from "../../common";
 import type { IProduct } from "../../../entities";

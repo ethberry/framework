@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { OrderStatus, PhotoStatus, ProductStatus } from "@framework/types";
-import { SortDirection } from "@gemunion/types-collection";
+import { SortDirection } from "@ethberry/types-collection";
 
 import { OrderItemEntity } from "../order-item/order-item.entity";
 import { ProductEntity } from "./product.entity";

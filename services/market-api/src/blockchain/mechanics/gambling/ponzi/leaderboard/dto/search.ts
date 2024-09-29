@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@ethberry/collection";
 import type { IPonziLeaderboardItemSearchDto, IPonziLeaderboardSearchDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 

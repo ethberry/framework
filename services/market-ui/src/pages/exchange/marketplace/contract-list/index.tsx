@@ -3,8 +3,8 @@ import { Grid } from "@mui/material";
 import { useParams } from "react-router";
 import { stringify } from "qs";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
 

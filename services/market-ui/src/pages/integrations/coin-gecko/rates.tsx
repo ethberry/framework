@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Grid, MenuItem, Typography } from "@mui/material";
 
-import { useCoinGecko } from "@gemunion/provider-coingecko";
+import { useCoinGecko } from "@ethberry/provider-coingecko";
 
 import { BaseCoins, TargetCoins } from "./enums";
 import { StyledPaper, StyledSelect, StyledTypography } from "./styled";

@@ -1,6 +1,6 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";

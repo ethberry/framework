@@ -4,12 +4,12 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create } from "@mui/icons-material";
 
-import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { InputType } from "@gemunion/types-collection";
+import { getEmptyTemplate } from "@ethberry/mui-inputs-asset";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import { InputType } from "@ethberry/types-collection";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";

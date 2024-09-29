@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { AddressPipe, ApiAddress, NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
+import { AddressPipe, ApiAddress, NotFoundInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ChainLinkSubscriptionService } from "./subscription.service";

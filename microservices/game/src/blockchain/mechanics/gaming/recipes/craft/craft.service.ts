@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
-import { comparator } from "@gemunion/utils";
+import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
+import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ICraftSearchDto, ICraftSignDto } from "@framework/types";
 import { CraftStatus, ModuleType, SettingsKeys, TokenType } from "@framework/types";

@@ -1,6 +1,6 @@
 import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
 
-import { Public } from "@gemunion/nest-js-utils";
+import { Public } from "@ethberry/nest-js-utils";
 
 import { Web3StorageService } from "./web3-storage.service";
 

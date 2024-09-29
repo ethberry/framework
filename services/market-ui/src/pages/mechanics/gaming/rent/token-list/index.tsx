@@ -4,8 +4,8 @@ import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/provider-collection";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection } from "@ethberry/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
 import { ContractFeatures, IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 

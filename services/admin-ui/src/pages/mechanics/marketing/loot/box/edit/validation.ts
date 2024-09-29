@@ -1,7 +1,7 @@
 import { object, number } from "yup";
 
-import { draftValidationSchema, titleValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
-import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
+import { draftValidationSchema, titleValidationSchema, urlValidationSchema } from "@ethberry/yup-rules";
+import { templateAssetValidationSchema } from "@ethberry/mui-inputs-asset";
 
 export const validationSchema = object().shape({
   title: titleValidationSchema,

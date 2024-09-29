@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { WaitListListEntity } from "./list.entity";

@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
 
-import { INetwork } from "@gemunion/types-blockchain";
+import { INetwork } from "@ethberry/types-blockchain";
 import { ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "network" })

@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { useApiCall } from "@gemunion/react-hooks";
+import { useApiCall } from "@ethberry/react-hooks";
 import { IInvitationCreateDto } from "@framework/types";
 
 import { InviteDialog } from "./dialog";

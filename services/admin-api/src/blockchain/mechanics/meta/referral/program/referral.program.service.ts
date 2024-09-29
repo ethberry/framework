@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { comparator } from "@gemunion/utils";
+import { comparator } from "@ethberry/utils";
 import type { IReferralProgramCreateDto, IReferralProgramUpdateDto } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";

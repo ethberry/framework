@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
-import { PageHeader } from "@gemunion/mui-page-layout";
+import { PageHeader } from "@ethberry/mui-page-layout";
 
 import { Root, StyledDivider } from "./styled";
 

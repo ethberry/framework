@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { DateTimeInput } from "@gemunion/mui-inputs-picker";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { DateTimeInput } from "@ethberry/mui-inputs-picker";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
+import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
 import { IAssetPromo, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";

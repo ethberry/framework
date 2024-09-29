@@ -3,7 +3,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import type { IMerchant, IMerchantSocial } from "@framework/types";
 import { MerchantStatus, RatePlanType } from "@framework/types";
 import { ns } from "@framework/constants";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 
 import { ChainLinkSubscriptionEntity } from "../../blockchain/integrations/chain-link/subscription/subscription.entity";
 import { OrderEntity } from "../../ecommerce/order/order.entity";

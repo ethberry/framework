@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
+import { SearchDto } from "@ethberry/collection";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { DismantleService } from "./dismantle.service";

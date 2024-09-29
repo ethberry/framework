@@ -1,7 +1,7 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress, keccak256, AbiCoder } from "ethers";
 
-import type { IServerSignature, ISignatureParams } from "@gemunion/types-blockchain";
+import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 import type { IMysteryBoxSignDto } from "@framework/types";

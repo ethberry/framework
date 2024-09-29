@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { hexlify } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-blockchain";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 import { SettingsKeys, ClaimType } from "@framework/types";
 
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";

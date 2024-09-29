@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne } from "typeorm";
 
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
+import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
+import { EnabledCountries, EnabledGenders } from "@ethberry/constants";
 import type { IUser } from "@framework/types";
 import { UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages, ns } from "@framework/constants";

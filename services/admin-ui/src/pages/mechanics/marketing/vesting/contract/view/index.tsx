@@ -3,9 +3,9 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@m
 import { FormattedMessage } from "react-intl";
 import { addMonths, format, formatDistance, formatDuration, intervalToDuration, parseISO } from "date-fns";
 
-import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { AddressLink } from "@gemunion/mui-scanner";
+import { humanReadableDateTimeFormat } from "@ethberry/constants";
+import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
+import { AddressLink } from "@ethberry/mui-scanner";
 import type { IContract, IVestingParams } from "@framework/types";
 
 export interface IVestingViewDialogProps {

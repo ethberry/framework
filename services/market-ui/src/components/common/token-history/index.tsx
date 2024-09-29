@@ -4,12 +4,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { DataGridPremiumProps, GridCellParams, GridRowParams } from "@mui/x-data-grid-premium";
 import { format, parseISO } from "date-fns";
 
-import { defaultItemsPerPage } from "@gemunion/constants";
+import { defaultItemsPerPage } from "@ethberry/constants";
 import { IEventHistory, IToken } from "@framework/types";
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { TxHashLink } from "@gemunion/mui-scanner";
-import { useApiCall } from "@gemunion/react-hooks";
-import { IHandleChangePaginationModelProps } from "@gemunion/provider-collection";
+import { ProgressOverlay } from "@ethberry/mui-page-layout";
+import { TxHashLink } from "@ethberry/mui-scanner";
+import { useApiCall } from "@ethberry/react-hooks";
+import { IHandleChangePaginationModelProps } from "@ethberry/provider-collection";
 
 import { EventDataView } from "../../../pages/exchange/transactions/event-data-view";
 import { StyledDataGridPremium, StyledTitle, wrapperMixin } from "./styled";

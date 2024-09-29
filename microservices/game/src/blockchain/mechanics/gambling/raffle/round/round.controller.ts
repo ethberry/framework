@@ -1,7 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";

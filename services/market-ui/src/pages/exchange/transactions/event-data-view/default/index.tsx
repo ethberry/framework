@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { AddressLink } from "@gemunion/mui-scanner";
+import { AddressLink } from "@ethberry/mui-scanner";
 import { TContractEventData } from "@framework/types";
 
 import {

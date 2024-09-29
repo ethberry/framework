@@ -5,7 +5,7 @@
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/framework/issues"
+    "url": "https://github.com/ethberry/framework/issues"
   },
   "dependencies": {},
   "description": "constants for validation on FE and BE",
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/ethberry/framework"
   },
   "scripts": {
     "build": "tsc",

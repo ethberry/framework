@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { SearchableEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { IAchievementRule } from "@framework/types";
 import { AchievementRuleStatus, ContractEventType } from "@framework/types";
 import { ns } from "@framework/constants";

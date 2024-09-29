@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { formatItem } from "@framework/exchange";
 import type { IMerge, IMergeSignDto, IToken } from "@framework/types";
-import { FormDialog } from "@gemunion/mui-dialog-form";
+import { FormDialog } from "@ethberry/mui-dialog-form";
 
 import { TokenMergeInput } from "../../../../../inputs/merge-token";
 import { Root, StyledCard, StyledCardContent, StyledCardWrapper } from "./styled";

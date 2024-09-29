@@ -1,9 +1,9 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { ZeroAddress } from "ethers";
 
-import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { simpleFormatting } from "@ethberry/draft-js-utils";
 import { ns, testChainId, imagePath } from "@framework/constants";
-import { NodeEnv } from "@gemunion/constants";
+import { NodeEnv } from "@ethberry/constants";
 
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

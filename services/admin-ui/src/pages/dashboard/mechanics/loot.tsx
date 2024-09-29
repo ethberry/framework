@@ -5,8 +5,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
-import { useUser } from "@gemunion/provider-user";
-import { NodeEnv } from "@gemunion/constants";
+import { useUser } from "@ethberry/provider-user";
+import { NodeEnv } from "@ethberry/constants";
 import type { IUser } from "@framework/types";
 import { BusinessType, ChainLinkV2SupportedChains, RatePlanType } from "@framework/types";
 

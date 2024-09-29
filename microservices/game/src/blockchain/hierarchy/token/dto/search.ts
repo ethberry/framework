@@ -3,8 +3,8 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-v
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
-import { AccountDto, ChainIdDto } from "@gemunion/nest-js-validators";
+import { SearchDto } from "@ethberry/collection";
+import { AccountDto, ChainIdDto } from "@ethberry/nest-js-validators";
 import type { ITokenMetadataSearchDto, ITokenSearchDto } from "@framework/types";
 import { TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
 

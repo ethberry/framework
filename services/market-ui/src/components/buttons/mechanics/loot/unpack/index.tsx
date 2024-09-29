@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IToken } from "@framework/types";
 import { ModuleType, TokenStatus } from "@framework/types";

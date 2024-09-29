@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ethersRpcProvider } from "@gemunion/nest-js-module-ethers-gcp";
+import { ethersRpcProvider } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { BalanceModule } from "../../../../hierarchy/balance/balance.module";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";

@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EthInput } from "@gemunion/mui-inputs-mask";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { EthInput } from "@ethberry/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
 

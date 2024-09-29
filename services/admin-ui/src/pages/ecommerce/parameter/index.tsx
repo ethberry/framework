@@ -3,11 +3,11 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 
-import type { ISearchDto } from "@gemunion/types-collection";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection, CollectionActions } from "@gemunion/provider-collection";
+import type { ISearchDto } from "@ethberry/types-collection";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
+import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IParameter } from "@framework/types";
 

@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import type { IToken } from "@framework/types";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { RichTextDisplay } from "@ethberry/mui-rte";
 
 import { Erc20AddToMetamaskButton } from "../../../../../components/buttons";
 import { InfoPopover } from "../../../../../components/popover";

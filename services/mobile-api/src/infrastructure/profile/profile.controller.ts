@@ -2,7 +2,7 @@ import { Body, Controller, Get, HttpStatus, Put, Res } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import type { Response } from "express";
 
-import { Public, User } from "@gemunion/nest-js-utils";
+import { Public, User } from "@ethberry/nest-js-utils";
 
 import { ProfileService } from "./profile.service";
 import { UserEntity } from "../user/user.entity";

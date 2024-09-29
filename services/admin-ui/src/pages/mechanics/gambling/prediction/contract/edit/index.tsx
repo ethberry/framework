@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
+import { AvatarInput } from "@ethberry/mui-inputs-image-firebase";
 
 import { ContractStatus, IContract } from "@framework/types";
 

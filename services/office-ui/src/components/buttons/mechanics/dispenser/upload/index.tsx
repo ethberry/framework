@@ -3,7 +3,7 @@ import { Add } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract } from "ethers";
 
-import { useMetamask, useSystemContract } from "@gemunion/react-hooks-eth";
+import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";

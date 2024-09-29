@@ -3,7 +3,7 @@ import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/
 import { useIntl } from "react-intl";
 import { Controller, get, useFormContext, useWatch } from "react-hook-form";
 
-import { useTestId } from "@gemunion/provider-test-id";
+import { useTestId } from "@ethberry/provider-test-id";
 
 export interface ISelectInputProps {
   name: string;

@@ -1,7 +1,7 @@
 import { Controller, Post, HttpCode } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 
 import { ReferralClaimService } from "./referral.claim.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";

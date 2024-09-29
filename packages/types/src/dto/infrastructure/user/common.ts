@@ -1,5 +1,5 @@
 import { EnabledLanguages } from "@framework/constants";
-import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
+import { EnabledCountries, EnabledGenders } from "@ethberry/constants";
 
 export interface IUserCommonDto {
   displayName?: string;

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { User } from "@ethberry/nest-js-utils";
 
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
 import { WaitListItemService } from "./item.service";

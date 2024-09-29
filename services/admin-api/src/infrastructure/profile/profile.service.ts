@@ -2,8 +2,8 @@ import { BadRequestException, ConflictException, Inject, Injectable, Logger, Log
 import { Not } from "typeorm";
 import { app } from "firebase-admin";
 
-import type { IMetamaskDto } from "@gemunion/nest-js-module-metamask";
-import { MetamaskService } from "@gemunion/nest-js-module-metamask";
+import type { IMetamaskDto } from "@ethberry/nest-js-module-metamask";
+import { MetamaskService } from "@ethberry/nest-js-module-metamask";
 import { UserStatus } from "@framework/types";
 
 import { UserEntity } from "../user/user.entity";

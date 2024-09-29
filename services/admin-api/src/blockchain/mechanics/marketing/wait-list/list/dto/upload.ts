@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { AccountDto } from "@gemunion/nest-js-validators";
+import { AccountDto } from "@ethberry/nest-js-validators";
 
 import type { IWaitListRow, IWaitListUploadDto } from "../interfaces";
 

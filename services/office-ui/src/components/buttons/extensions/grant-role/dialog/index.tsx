@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@ethberry/mui-dialog-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 
-import { ComboEntityInput } from "@gemunion/mui-inputs-entity";
+import { ComboEntityInput } from "@ethberry/mui-inputs-entity";
 import { AccessControlRoleType } from "@framework/types";
 
 import { validationSchema } from "./validation";

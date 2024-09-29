@@ -3,8 +3,8 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { PaginationDto } from "@gemunion/collection";
-import { AccountOptionalDto } from "@gemunion/nest-js-validators";
+import { PaginationDto } from "@ethberry/collection";
+import { AccountOptionalDto } from "@ethberry/nest-js-validators";
 import type { IVestingSearchDto } from "@framework/types";
 import { VestingContractFeatures } from "@framework/types";
 

@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
-import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { AutoSave, FormWrapper } from "@ethberry/mui-form";
+import { SelectInput } from "@ethberry/mui-inputs-core";
 import type { IPonziDepositSearchDto } from "@framework/types";
 import { PonziDepositStatus, TokenType } from "@framework/types";
 

@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SemiCoinDto } from "@gemunion/nest-js-validators";
+import { SemiCoinDto } from "@ethberry/nest-js-validators";
 import { DiscreteStatus, DiscreteStrategy } from "@framework/types";
 import type { IDiscreteUpdateDto } from "@framework/types";
 

@@ -3,7 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IExchangeDiscreteEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";

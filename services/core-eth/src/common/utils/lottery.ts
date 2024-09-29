@@ -1,6 +1,6 @@
 import { Contract, JsonRpcProvider, toBeArray } from "ethers";
 
-import { recursivelyDecodeResult } from "@gemunion/utils-eth";
+import { recursivelyDecodeResult } from "@ethberry/utils-eth";
 import type { ILotteryCurrentRound } from "@framework/types";
 
 export const getLotteryNumbersArr = (selected: Array<number>) => {

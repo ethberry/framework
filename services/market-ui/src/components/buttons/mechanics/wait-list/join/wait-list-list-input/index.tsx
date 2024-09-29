@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 
 export interface IAttributeInputProps {
   name: string;

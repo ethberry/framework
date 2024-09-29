@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-import { ButtonToolbar } from "@gemunion/mui-page-layout";
+import { ButtonToolbar } from "@ethberry/mui-page-layout";
 
 import { CartContext } from "../../../../components/providers/cart";
 

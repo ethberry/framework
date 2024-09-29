@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsISO8601, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsBeforeDate, CoinDto, SemiNftDto } from "@gemunion/nest-js-validators";
+import { IsBeforeDate, CoinDto, SemiNftDto } from "@ethberry/nest-js-validators";
 
 import { IAssetPromoCreateDto } from "../interfaces";
 

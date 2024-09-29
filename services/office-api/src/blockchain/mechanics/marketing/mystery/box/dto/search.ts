@@ -2,10 +2,10 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@ethberry/collection";
 import type { IMysteryBoxSearchDto } from "@framework/types";
 import { MysteryBoxStatus } from "@framework/types";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@ethberry/nest-js-validators";
 
 export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchDto {
   @ApiPropertyOptional({

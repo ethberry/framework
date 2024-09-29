@@ -8,7 +8,7 @@ import {
   BigIntPipe,
   ChainIdPipe,
   Public,
-} from "@gemunion/nest-js-utils";
+} from "@ethberry/nest-js-utils";
 import type { IOpenSeaTokenMetadata } from "@framework/types";
 
 import { MetadataTokenService } from "./token.service";

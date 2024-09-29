@@ -2,8 +2,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { SearchDto } from "@ethberry/collection";
+import { IsBigInt } from "@ethberry/nest-js-validators";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 

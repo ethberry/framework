@@ -3,7 +3,7 @@ import { InputAdornment } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { DurationUnit } from "@framework/types";
-import { NumberInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput } from "@ethberry/mui-inputs-core";
 
 import { formatDuration, normalizeDuration } from "../../../utils/time";
 

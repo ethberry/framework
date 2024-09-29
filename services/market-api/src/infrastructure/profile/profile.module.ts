@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import admin from "firebase-admin";
 
-import { MetamaskModule } from "@gemunion/nest-js-module-metamask";
+import { MetamaskModule } from "@ethberry/nest-js-module-metamask";
 
 import { AddressModule } from "../../ecommerce/address/address.module";
 import { UserModule } from "../user/user.module";
