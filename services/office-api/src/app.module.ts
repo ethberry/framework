@@ -9,8 +9,8 @@ import { FirebaseHttpGuard } from "@ethberry/nest-js-guards";
 import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
 import { HelmetModule } from "@ethberry/nest-js-module-helmet";
 import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
-import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@ethberry/nest-js-module-throttler";
-import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { EthBerryThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@ethberry/nest-js-module-throttler";
+import { EthBerryTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@ethberry/nest-js-module-license";
 import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 
@@ -47,10 +47,11 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
       imports: [ConfigModule],
       useClass: WinstonConfigService,
     }),
-    GemunionTypeormModule.forRoot(ormconfig),
+    EthBerryTypeormModule.forRoot(ormconfig),
     RedisModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
+      // @ts-ignore
       useFactory: (configService: ConfigService): RedisModuleOptions => {
         const redisThrottleUrl = configService.get<string>("REDIS_THROTTLE_URL", "redis://127.0.0.1:6379/2");
         return {
@@ -70,7 +71,7 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
-        return configService.get<string>("GEMUNION_API_KEY", "");
+        return configService.get<string>("ETHBERRY_API_KEY", "");
       },
     }),
     SecretManagerModule.forRootAsync(SecretManagerModule, {
@@ -83,7 +84,7 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
       },
     }),
     RequestLoggerModule,
-    GemunionThrottlerModule,
+    EthBerryThrottlerModule,
     BlockchainModule,
     InfrastructureModule,
   ],

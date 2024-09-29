@@ -22,10 +22,10 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
       return "Arbitrum";
     case Networks.ARBITRUM_SEPOLIA:
       return "ArbitrumSepolia";
-    case Networks.GEMUNION:
-      return "Gemunion";
-    case Networks.GEMUNION_BESU:
-      return "GemunionBesu";
+    case Networks.ETHBERRY:
+      return "Ethberry";
+    case Networks.ETHBERRY_BESU:
+      return "EthberryBesu";
     default:
       return "";
   }

@@ -26,7 +26,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
 
     const contractManagerGemunionAddress = process.env.CONTRACT_MANAGER_ADDR;
     const contractManagerAddressBinance = process.env.CONTRACT_MANAGER_ADDR_BINANCE;

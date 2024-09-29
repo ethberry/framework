@@ -23,7 +23,7 @@ export class SeedContractLotteryTicketAt1563804000180 implements MigrationInterf
 
     const currentDateTime = new Date().toISOString();
     const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_TICKET_ADDR;
-    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

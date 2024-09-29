@@ -36,7 +36,7 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
-        return configService.get<string>("GEMUNION_API_KEY", "");
+        return configService.get<string>("ETHBERRY_API_KEY", "");
       },
     }),
     RequestLoggerModule,

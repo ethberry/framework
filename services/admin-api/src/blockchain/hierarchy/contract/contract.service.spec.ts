@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Logger } from "@nestjs/common";
 
-import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { EthBerryTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@ethberry/nest-js-module-license";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -29,10 +29,10 @@ describe("ContractService", () => {
           imports: [ConfigModule],
           inject: [ConfigService],
           useFactory: (configService: ConfigService): string => {
-            return configService.get<string>("GEMUNION_API_KEY", "");
+            return configService.get<string>("ETHBERRY_API_KEY", "");
           },
         }),
-        GemunionTypeormModule.forRoot(ormconfig),
+        EthBerryTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([MerchantEntity, UserEntity, ContractEntity]),
         ContractSeedModule,
       ],

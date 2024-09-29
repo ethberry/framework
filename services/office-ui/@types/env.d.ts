@@ -8,7 +8,7 @@ declare global {
       HOST: string;
       BE_URL: string;
       JSON_URL: string;
-      GEMUNION_API_KEY: string;
+      ETHBERRY_API_KEY: string;
       ACCOUNT: string;
       // these addresses should be related to chainId
       LINK_ADDR: string;

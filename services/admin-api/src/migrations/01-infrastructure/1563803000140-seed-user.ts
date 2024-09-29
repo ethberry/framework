@@ -10,7 +10,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.user (

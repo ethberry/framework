@@ -22,7 +22,7 @@ export class SeedContractErc20LinkAt1563804000124 implements MigrationInterface 
 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
     const linkAddr = process.env.LINK_ADDR;
     const linkImgUrl = `${imagePath}/chainlink.png`;
 

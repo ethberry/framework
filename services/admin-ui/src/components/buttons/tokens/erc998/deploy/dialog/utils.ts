@@ -6,7 +6,7 @@ export const isTemplateDisabled = (chainId: number) => {
   const disabledTemplates = [];
 
   // These templates have too long code so can be deployed only on private network
-  if (!(chainId === Number(Networks.GEMUNION) || chainId === Number(Networks.GEMUNION_BESU))) {
+  if (!(chainId === Number(Networks.ETHBERRY) || chainId === Number(Networks.ETHBERRY_BESU))) {
     disabledTemplates.push(
       Erc998ContractTemplates.ERC20OWNER,
       Erc998ContractTemplates.ERC1155OWNER,

@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WeiPerEther } from "ethers";
 
 import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
-import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { EthBerryTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@ethberry/nest-js-module-license";
 import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 import { DiscreteStrategy } from "@framework/types";
@@ -30,10 +30,10 @@ describe("DiscreteService", () => {
           imports: [ConfigModule],
           inject: [ConfigService],
           useFactory: (configService: ConfigService): string => {
-            return configService.get<string>("GEMUNION_API_KEY", "");
+            return configService.get<string>("ETHBERRY_API_KEY", "");
           },
         }),
-        GemunionTypeormModule.forRoot(ormconfig),
+        EthBerryTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([DiscreteEntity]),
         SecretManagerModule.forRootAsync(SecretManagerModule, {
           imports: [ConfigModule],

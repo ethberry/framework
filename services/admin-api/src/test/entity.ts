@@ -23,7 +23,7 @@ import { MerchantEntity } from "../infrastructure/merchant/merchant.entity";
 export const generateTestMerchant = (data: Partial<IMerchant> = {}): DeepPartial<MerchantEntity> => {
   return Object.assign(
     {
-      title: "GEMUNION",
+      title: "ETHBERRY",
       description: simpleFormatting,
       email: `trejgun+${v4()}@gmail.com`,
       imageUrl,

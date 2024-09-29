@@ -8,7 +8,7 @@ declare global {
       HOST: string;
       BE_URL: string;
       MARKET_FE_URL: string;
-      GEMUNION_API_KEY: string;
+      ETHBERRY_API_KEY: string;
       ACCOUNT: string;
     }
   }

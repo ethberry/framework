@@ -1,6 +1,6 @@
 import type { IAssetComponent, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
-import { sorter } from "./sorter";
+import { comparator } from "@ethberry/utils";
 import { BigNumber, BigNumberish } from "ethers";
 
 interface IOptions {
@@ -18,7 +18,7 @@ export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[],
 
   return components
     .slice()
-    .sort(sorter(sortBy))
+    .sort(comparator(sortBy))
     .map(item => {
       let tokenId;
       if (item?.contract?.contractType === TokenType.NATIVE || item?.contract?.contractType === TokenType.ERC20) {

@@ -21,7 +21,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const waitListAddr = process.env.WAIT_LIST_ADDR;
 

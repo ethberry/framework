@@ -9,7 +9,7 @@ import { SettingsEntity } from "./settings.entity";
 @Module({
   imports: [TypeOrmModule.forFeature([SettingsEntity])],
   providers: [SettingsService],
-  // GEMUNION_BUSINESS_MODEL:B2C
+  // ETHBERRY_BUSINESS_MODEL:B2C
   // controllers: [SettingsController],
   exports: [SettingsService],
 })

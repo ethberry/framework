@@ -8,9 +8,9 @@ import { ApiKeyGuard } from "@ethberry/nest-js-guards";
 import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
 import { HelmetModule } from "@ethberry/nest-js-module-helmet";
 import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
-import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@ethberry/nest-js-module-throttler";
-import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
-import { CACHE_STORE, GemunionCacheModule, CacheInterceptor } from "@ethberry/nest-js-module-cache";
+import { EthBerryThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@ethberry/nest-js-module-throttler";
+import { EthBerryTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { CACHE_STORE, EthBerryCacheModule, CacheInterceptor } from "@ethberry/nest-js-module-cache";
 import { LicenseModule } from "@ethberry/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
@@ -41,10 +41,11 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
       imports: [ConfigModule],
       useClass: WinstonConfigService,
     }),
-    GemunionTypeormModule.forRoot(ormconfig),
+    EthBerryTypeormModule.forRoot(ormconfig),
     RedisModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
+      // @ts-ignore
       useFactory: (configService: ConfigService): RedisModuleOptions => {
         const redisThrottleUrl = configService.get<string>("REDIS_THROTTLE_URL", "redis://127.0.0.1:6379/2");
         const redisCacheUrl = configService.get<string>("REDIS_CACHE_URL", "redis://127.0.0.1:6379/15");
@@ -69,12 +70,12 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
-        return configService.get<string>("GEMUNION_API_KEY", "");
+        return configService.get<string>("ETHBERRY_API_KEY", "");
       },
     }),
     RequestLoggerModule,
-    GemunionThrottlerModule,
-    GemunionCacheModule,
+    EthBerryThrottlerModule,
+    EthBerryCacheModule,
     BlockchainModule,
     InfrastructureModule,
   ],

@@ -26,7 +26,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
     const vestingAddress = process.env.VESTING_ADDR;
     const vestingGradedAddress = process.env.VESTING_GRADED_ADDR;
     const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR;
-    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const vestingImgUrl = `${imagePath}/hourglass.png`;
 

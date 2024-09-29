@@ -11,7 +11,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
     }
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.merchant (
@@ -28,7 +28,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         updated_at
       ) VALUES (
         'trejgun@gmail.com',
-        'GEMUNION',
+        'ETHBERRY',
         '${simpleFormatting}',
         '+62 (812) 3919-8760',
         '${imageUrl}',

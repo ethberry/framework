@@ -10,8 +10,8 @@ import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
 import { HelmetModule } from "@ethberry/nest-js-module-helmet";
 import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
 import { RedisProviderType } from "@framework/types";
-import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@ethberry/nest-js-module-throttler";
-import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { EthBerryThrottlerModule, THROTTLE_STORE, ThrottlerBehindProxyGuard } from "@ethberry/nest-js-module-throttler";
+import { EthBerryTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@ethberry/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
@@ -48,10 +48,11 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
       imports: [ConfigModule],
       useClass: WinstonConfigService,
     }),
-    GemunionTypeormModule.forRoot(ormconfig),
+    EthBerryTypeormModule.forRoot(ormconfig),
     RedisModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
+      // @ts-ignore
       useFactory: (configService: ConfigService): RedisModuleOptions => {
         const redisStorageUrl = configService.get<string>("REDIS_STORAGE_URL", "redis://127.0.0.1:6379/4");
         const redisThrottleUrl = configService.get<string>("REDIS_THROTTLE_URL", "redis://127.0.0.1:6379/2");
@@ -76,11 +77,11 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
-        return configService.get<string>("GEMUNION_API_KEY", "");
+        return configService.get<string>("ETHBERRY_API_KEY", "");
       },
     }),
     RequestLoggerModule,
-    GemunionThrottlerModule,
+    EthBerryThrottlerModule,
     InfrastructureModule,
     GameModule,
     BlockchainModule,

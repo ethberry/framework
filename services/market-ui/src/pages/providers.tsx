@@ -22,7 +22,7 @@ export const Providers: FC<PropsWithChildren> = props => {
   return (
     <ReduxProvider store={createStore([layoutSlice, localizationSlice, walletSlice, collectionSlice])}>
       <ApiProviderFirebase baseUrl={process.env.BE_URL} storageName={ns}>
-        <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
+        <LicenseProvider licenseKey={process.env.ETHBERRY_API_KEY}>
           <UserProviderFirebase>
             <ThemeProvider {...themeProps}>
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>

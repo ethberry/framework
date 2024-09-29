@@ -39,7 +39,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
     const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR;
     const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR;
     const erc721ContractRentableAddress = process.env.ERC721_RENTABLE_ADDR;
-    const chainId = process.env.CHAIN_ID_GEMUNION || process.env.CHAIN_ID_GEMUNION_BESU || testChainId;
+    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

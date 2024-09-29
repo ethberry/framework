@@ -6,7 +6,7 @@ import { WinstonModule } from "nest-winston";
 import { WinstonConfigService } from "@ethberry/nest-js-module-winston-logdna";
 import { RequestLoggerModule } from "@ethberry/nest-js-module-request-logger";
 import { LicenseModule } from "@ethberry/nest-js-module-license";
-import { GemunionTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
+import { EthBerryTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
 
 import ormconfig from "./ormconfig";
 
@@ -22,12 +22,12 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
       imports: [ConfigModule],
       useClass: WinstonConfigService,
     }),
-    GemunionTypeormModule.forRoot(ormconfig),
+    EthBerryTypeormModule.forRoot(ormconfig),
     LicenseModule.forRootAsync(LicenseModule, {
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
-        return configService.get<string>("GEMUNION_API_KEY", "");
+        return configService.get<string>("ETHBERRY_API_KEY", "");
       },
     }),
     ScheduleModule.forRoot(),
