@@ -40,7 +40,7 @@
     "@ethberry/mui-inputs-mask": "6.0.6",
     "@ethberry/mui-inputs-picker": "8.0.4",
     "@ethberry/mui-page-layout": "3.0.4",
-    "@ethberry/mui-rte": "3.0.5",
+    "@ethberry/mui-rte": "4.0.14",
     "@ethberry/mui-scanner": "2.0.7",
     "@ethberry/popup": "1.0.64",
     "@ethberry/provider-api-firebase": "2.0.90",

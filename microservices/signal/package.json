@@ -20,7 +20,7 @@
     "@ethberry/nest-js-module-passport": "3.0.54",
     "@ethberry/nest-js-module-request-logger": "3.0.32",
     "@ethberry/nest-js-module-throttler": "7.0.6",
-    "@ethberry/nest-js-module-typeorm": "3.0.46",
+    "@ethberry/nest-js-module-typeorm": "4.0.46",
     "@ethberry/nest-js-module-typeorm-logger": "3.0.31",
     "@ethberry/nest-js-module-typeorm-postgres": "1.0.50",
     "@ethberry/nest-js-module-winston-logdna": "3.1.17",
