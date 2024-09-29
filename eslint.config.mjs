@@ -18,10 +18,10 @@ export default [
     languageOptions: {
       parserOptions: {
         project: [
-          "./tsconfig.test.json",
-          "./packages/*/tsconfig.test.json",
-          "./services/*/tsconfig.test.json",
-          "./microservices/*/tsconfig.test.json"
+          "./tsconfig.eslint.json",
+          "./packages/*/tsconfig.eslint.json",
+          "./services/*/tsconfig.eslint.json",
+          "./microservices/*/tsconfig.eslint.json"
         ],
         tsconfigRootDir: import.meta.dirname
       },

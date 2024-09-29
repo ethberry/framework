@@ -34,7 +34,6 @@ export const PonziRuleCreateButton: FC<IPonziRuleCreateButtonProps> = props => {
   // MODULE:MYSTERYBOX
   const { fn } = useApiCall(
     (api, data: { templateIds: Array<number> }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return api.fetchJson({
         url: "/mystery/boxes",
         data,
