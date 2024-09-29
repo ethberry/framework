@@ -20,7 +20,7 @@
     "@ethberry/nest-js-module-winston-logdna": "3.1.17",
     "@ethberry/nest-js-utils": "4.2.16",
     "@ethberry/traits-v6": "1.0.27",
-    "@liaoliaots/nestjs-redis": "9.0.5",
+    "@liaoliaots/nestjs-redis": "10.0.0",
     "@liaoliaots/nestjs-redis-health": "9.0.4",
     "@nestjs/cache-manager": "2.2.2",
     "@nestjs/common": "10.4.4",
