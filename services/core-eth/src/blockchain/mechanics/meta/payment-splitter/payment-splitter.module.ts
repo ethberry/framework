@@ -1,8 +1,21 @@
-import { Module } from "@nestjs/common";
+import { Module, OnModuleInit } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 
-import { PaymentSplitterLogModule } from "./log/log.module";
+import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
+
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { PaymentSplitterServiceLog } from "./payment-splitter.service.log";
 
 @Module({
-  imports: [PaymentSplitterLogModule],
+  imports: [ConfigModule, ContractModule, EthersModule.deferred()],
+  providers: [PaymentSplitterServiceLog],
+  controllers: [],
+  exports: [PaymentSplitterServiceLog],
 })
-export class PaymentSplitterModule {}
+export class PaymentSplitterModule implements OnModuleInit {
+  constructor(private readonly paymentSplitterServiceLog: PaymentSplitterServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.paymentSplitterServiceLog.updateRegistry();
+  }
+}

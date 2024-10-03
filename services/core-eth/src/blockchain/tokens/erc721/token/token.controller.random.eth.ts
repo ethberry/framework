@@ -3,14 +3,13 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type {
-  IERC721ConsecutiveTransfer,
+import {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
 } from "@framework/types";
-import { ContractEventType, ContractType, ILevelUp } from "@framework/types";
+import { Erc721EventType, DiscreteEventType, ContractType, ILevelUp } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
 import { Erc721TokenRandomServiceEth } from "./token.service.random.eth";
@@ -25,31 +24,17 @@ export class Erc721TokenRandomControllerEth extends Erc721TokenControllerEth {
     super(erc721TokenServiceEth);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.Transfer })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: Erc721EventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenRandomServiceEth.transfer(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.MintRandom })
-  public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenRandomServiceEth.mintRandom(event, context);
-  }
-
-  // TODO use 721 common controller?
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.ConsecutiveTransfer })
-  public consecutiveTransfer(
-    @Payload() event: ILogEvent<IERC721ConsecutiveTransfer>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.erc721TokenServiceEth.consecutiveTransfer(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.Approval })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: Erc721EventType.Approval })
   public approval(@Payload() event: ILogEvent<IERC721TokenApproveEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.approval(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.ApprovalForAll })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: Erc721EventType.ApprovalForAll })
   public approvalForAll(
     @Payload() event: ILogEvent<IERC721TokenApprovedForAllEvent>,
     @Ctx() context: Log,
@@ -57,7 +42,12 @@ export class Erc721TokenRandomControllerEth extends Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.LevelUp })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: Erc721EventType.MintRandom })
+  public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
+    return this.erc721TokenRandomServiceEth.mintRandom(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: DiscreteEventType.LevelUp })
   public levelUp(@Payload() event: ILogEvent<ILevelUp>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.levelUp(event, context);
   }

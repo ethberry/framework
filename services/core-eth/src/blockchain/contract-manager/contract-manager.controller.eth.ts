@@ -98,7 +98,7 @@ export class ContractManagerControllerEth {
     @Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>,
     @Ctx() ctx: Log,
   ): Promise<void> {
-    return this.contractManagerServiceEth.mysteryBox(event, ctx);
+    return this.contractManagerServiceEth.mystery(event, ctx);
   }
 
   @EventPattern({
@@ -106,7 +106,7 @@ export class ContractManagerControllerEth {
     eventName: ContractManagerEventType.LootBoxDeployed,
   })
   public lootbox(@Payload() event: ILogEvent<IContractManagerLootTokenDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.lootBox(event, ctx);
+    return this.contractManagerServiceEth.loot(event, ctx);
   }
 
   @EventPattern({

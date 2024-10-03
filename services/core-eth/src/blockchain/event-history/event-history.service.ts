@@ -6,16 +6,21 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
-  ContractEventType,
+  ChainLinkEventType,
+  Erc1155EventType,
+  Erc20EventType,
+  Erc4907EventType,
+  Erc721EventType,
   ExchangeEventType,
   IERC721TokenMintRandomEvent,
+  ReferralProgramEventType,
   StakingEventType,
   TContractEventData,
+  type TContractEventType,
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { AchievementsRuleService } from "../mechanics/meta/achievements/rule/rule.service";
-import { ChainLinkEventType } from "../integrations/chain-link/interfaces";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { EventHistoryEntity } from "./event-history.entity";
 
@@ -126,7 +131,7 @@ export class EventHistoryService {
     const contractEventEntity = await this.create({
       address,
       transactionHash,
-      eventType: name as ContractEventType,
+      eventType: name as TContractEventType,
       eventData: args,
       tokenId: tokenId || null,
       contractId: contractEntity.id,
@@ -145,7 +150,7 @@ export class EventHistoryService {
     const { id, eventType, transactionHash, eventData } = contractEventEntity;
 
     // RANDOM
-    if (eventType === ContractEventType.RandomWordsRequested) {
+    if (eventType === ChainLinkEventType.RandomWordsRequested) {
       const parentEvent = await this.findOne({
         transactionHash,
         eventType: In([
@@ -164,7 +169,7 @@ export class EventHistoryService {
       }
     }
 
-    if (eventType === ContractEventType.MintRandom) {
+    if (eventType === Erc721EventType.MintRandom) {
       const data = eventData as IERC721TokenMintRandomEvent;
       const requestId = data.requestId;
       const parentEvent = await this.findByRandomRequest(requestId.toString());
@@ -178,10 +183,11 @@ export class EventHistoryService {
 
     // TRANSFER
     if (
-      eventType === ContractEventType.Transfer ||
-      eventType === ContractEventType.TransferSingle ||
-      eventType === ContractEventType.TransferBatch ||
-      eventType === ContractEventType.ReferralEvent
+      eventType === Erc20EventType.Transfer ||
+      eventType === Erc721EventType.Transfer ||
+      eventType === Erc1155EventType.TransferSingle ||
+      eventType === Erc1155EventType.TransferBatch ||
+      eventType === ReferralProgramEventType.ReferralEvent
     ) {
       const parentEvent = await this.findOne({
         transactionHash,
@@ -196,7 +202,7 @@ export class EventHistoryService {
           ExchangeEventType.Lend,
           ExchangeEventType.PurchaseLottery,
           ExchangeEventType.PurchaseRaffle,
-          ContractEventType.MintRandom,
+          Erc721EventType.MintRandom,
           StakingEventType.DepositStart,
           StakingEventType.DepositFinish,
         ]),
@@ -211,7 +217,7 @@ export class EventHistoryService {
     }
 
     // MODULE:RENTABLE
-    if (eventType === ContractEventType.UpdateUser) {
+    if (eventType === Erc4907EventType.UpdateUser) {
       const parentEvent = await this.findOne({
         transactionHash,
         eventType: In([ExchangeEventType.Lend]),

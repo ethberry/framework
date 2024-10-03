@@ -7,7 +7,7 @@ import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IOwnershipTransferredEvent,
   IVestingERC20ReleasedEvent,
-  IVestingEtherReceivedEvent,
+  IVestingPaymentReceivedEvent,
   IVestingEtherReleasedEvent,
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
@@ -109,7 +109,7 @@ export class VestingServiceEth {
       .toPromise();
   }
 
-  public async ethReceived(event: ILogEvent<IVestingEtherReceivedEvent>, context: Log): Promise<void> {
+  public async ethReceived(event: ILogEvent<IVestingPaymentReceivedEvent>, context: Log): Promise<void> {
     const {
       name,
       args: { amount },

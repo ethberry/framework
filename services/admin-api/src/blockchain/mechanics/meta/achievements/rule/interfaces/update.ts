@@ -1,10 +1,10 @@
-import { AchievementRuleStatus, ContractEventType, IAssetDto } from "@framework/types";
+import { AchievementRuleStatus, TContractEventType, IAssetDto } from "@framework/types";
 
 export interface IAchievementRuleUpdateDto {
   title: string;
   description: string;
   achievementStatus: AchievementRuleStatus;
-  eventType: ContractEventType;
+  eventType: TContractEventType;
   item: IAssetDto;
   startTimestamp: string;
   endTimestamp: string;

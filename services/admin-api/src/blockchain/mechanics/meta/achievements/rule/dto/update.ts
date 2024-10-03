@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 
 import { SearchableDto } from "@ethberry/collection";
 import { AllTypesDto, IsBeforeDate } from "@ethberry/nest-js-validators";
-import { AchievementRuleStatus, ContractEventType } from "@framework/types";
+import { AchievementRuleStatus, TContractEventType } from "@framework/types";
 
 import { IAchievementRuleUpdateDto } from "../interfaces";
 
@@ -16,8 +16,8 @@ export class AchievementRuleUpdateDto extends SearchableDto implements IAchievem
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsEnum(ContractEventType, { message: "badInput" })
-  public eventType: ContractEventType;
+  @IsString({ message: "typeMismatch" })
+  public eventType: TContractEventType;
 
   @ApiPropertyOptional({
     minimum: 1,

@@ -8,9 +8,8 @@ import type {
   IVrfSubscriptionCreatedEvent,
   IVrfSubscriptionSetEvent,
 } from "@framework/types";
-import { ContractEventType, ContractType } from "@framework/types";
+import { ChainLinkEventType, ChainLinkType, ContractType } from "@framework/types";
 
-import { ChainLinkEventType, ChainLinkType } from "../interfaces";
 import { ChainLinkSubscriptionServiceEth } from "./subscription.service.eth";
 
 @Controller()
@@ -34,11 +33,11 @@ export class ChainLinkSubscriptionControllerEth {
   }
 
   @EventPattern([
-    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ContractEventType.VrfSubscriptionSet },
-    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ContractEventType.VrfSubscriptionSet },
-    { contractType: ContractType.LOTTERY, eventName: ContractEventType.VrfSubscriptionSet },
-    { contractType: ContractType.RAFFLE, eventName: ContractEventType.VrfSubscriptionSet },
-    { contractType: ContractType.LOOT, eventName: ContractEventType.VrfSubscriptionSet },
+    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: ChainLinkEventType.VrfSubscriptionSet },
+    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: ChainLinkEventType.VrfSubscriptionSet },
+    { contractType: ContractType.LOTTERY, eventName: ChainLinkEventType.VrfSubscriptionSet },
+    { contractType: ContractType.RAFFLE, eventName: ChainLinkEventType.VrfSubscriptionSet },
+    { contractType: ContractType.LOOT, eventName: ChainLinkEventType.VrfSubscriptionSet },
   ])
   public setSubscription(@Payload() event: ILogEvent<IVrfSubscriptionSetEvent>, @Ctx() context: Log): Promise<void> {
     return this.chainLinkServiceEth.setVrfSubscription(event, context);

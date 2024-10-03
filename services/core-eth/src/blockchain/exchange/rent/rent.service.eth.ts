@@ -4,7 +4,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IExchangeLendEvent } from "@framework/types";
+import type { IExchangeRentableEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
@@ -19,7 +19,7 @@ export class ExchangeRentServiceEth {
     private readonly eventHistoryService: EventHistoryService,
   ) {}
 
-  public async rent(event: ILogEvent<IExchangeLendEvent>, context: Log): Promise<void> {
+  public async rent(event: ILogEvent<IExchangeRentableEvent>, context: Log): Promise<void> {
     const {
       name,
       args: { account },

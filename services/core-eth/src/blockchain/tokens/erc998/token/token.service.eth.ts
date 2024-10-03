@@ -28,7 +28,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { ABI } from "../../erc721/token/log/interfaces";
+import { Erc721ABI } from "../../erc721/token/interfaces";
 import { Erc998CompositionService } from "../composition/composition.service";
 
 @Injectable()
@@ -65,7 +65,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       const metadata = await getMetadata(
         Number(tokenId).toString(),
         address,
-        ABI,
+        Erc721ABI,
         this.jsonRpcProvider,
         this.loggerService,
       );

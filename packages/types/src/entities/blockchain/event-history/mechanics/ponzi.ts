@@ -8,11 +8,16 @@ export enum PonziEventType {
   StakingFinish = "StakingFinish",
   WithdrawToken = "WithdrawToken",
   FinalizedToken = "FinalizedToken",
-  // MODULE:WALLET
-  PayeeAdded = "PayeeAdded",
-  PaymentReleased = "PaymentReleased",
-  ERC20PaymentReleased = "ERC20PaymentReleased",
-  PaymentReceived = "PaymentReceived",
+}
+
+export enum PonziEventSignature {
+  RuleCreatedP = "RuleCreatedP",
+  RuleUpdated = "RuleUpdated",
+  StakingStart = "StakingStart",
+  StakingWithdraw = "StakingWithdraw",
+  StakingFinish = "StakingFinish",
+  WithdrawToken = "WithdrawToken",
+  FinalizedToken = "FinalizedToken",
 }
 
 export interface IWithdrawTokenEvent {

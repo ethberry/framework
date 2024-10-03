@@ -3,12 +3,11 @@ import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
 
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { ModuleType } from "@framework/types";
+import { IVrfRandomWordsRequestedEvent, ModuleType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import type { IChainLinkRandomWordsRequestedEvent } from "../interfaces";
 import { callRandom } from "./utils";
 
 @Injectable()
@@ -25,7 +24,7 @@ export class ChainLinkContractServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
   ) {}
 
-  public async randomRequest(event: ILogEvent<IChainLinkRandomWordsRequestedEvent>, context: Log): Promise<void> {
+  public async randomRequest(event: ILogEvent<IVrfRandomWordsRequestedEvent>, context: Log): Promise<void> {
     const {
       args: { requestId, sender, subId, callbackGasLimit, numWords, extraArgs, keyHash },
     } = event;

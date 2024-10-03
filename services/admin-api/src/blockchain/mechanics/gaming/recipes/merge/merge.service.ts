@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
+import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ContractEventType, MergeStatus, IMergeSearchDto, TemplateStatus } from "@framework/types";
+import { ExchangeEventType, IMergeSearchDto, MergeStatus, TemplateStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
@@ -170,7 +170,7 @@ export class MergeService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    const count = await this.eventHistoryService.countEventsByType(ContractEventType.Merge, mergeEntity.id);
+    const count = await this.eventHistoryService.countEventsByType(ExchangeEventType.Merge, mergeEntity.id);
 
     if (count) {
       Object.assign(mergeEntity, { mergeStatus: MergeStatus.INACTIVE });

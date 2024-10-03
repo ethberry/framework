@@ -1,7 +1,7 @@
 import type { IAssetItem } from "./common";
 
 // event Lend(address from, address to, uint64 expires, uint8 lendType, Asset[] items, Asset[] price);
-export interface IExchangeLendEvent {
+export interface IExchangeRentableEvent {
   account: string;
   to: string;
   expires: string;
@@ -10,7 +10,7 @@ export interface IExchangeLendEvent {
   price: Array<IAssetItem>;
 }
 
-export interface IExchangeLendManyEvent {
+export interface IExchangeRentableManyEvent {
   account: string;
   to: string;
   expires: string;

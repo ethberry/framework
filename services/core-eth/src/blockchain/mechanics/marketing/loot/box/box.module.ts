@@ -2,11 +2,10 @@ import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ethersRpcProvider } from "@ethberry/nest-js-module-ethers-gcp";
+import { ethersRpcProvider, EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { LootBoxEntity } from "./box.entity";
 import { LootBoxService } from "./box.service";
-import { LootLogModule } from "./log/log.module";
 import { LootBoxControllerEth } from "./box.controller.eth";
 import { LootBoxServiceEth } from "./box.service.eth";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
@@ -17,6 +16,7 @@ import { EventHistoryModule } from "../../../../event-history/event-history.modu
 import { AssetModule } from "../../../../exchange/asset/asset.module";
 import { NotificatorModule } from "../../../../../game/notificator/notificator.module";
 import { signalServiceProvider } from "../../../../../common/providers";
+import { LootBoxServiceLog } from "./box.service.log";
 
 @Module({
   imports: [
@@ -24,15 +24,15 @@ import { signalServiceProvider } from "../../../../../common/providers";
     TokenModule,
     AssetModule,
     BalanceModule,
-    LootLogModule,
     TemplateModule,
     EventHistoryModule,
     ContractModule,
     NotificatorModule,
+    EthersModule.deferred(),
     TypeOrmModule.forFeature([LootBoxEntity]),
   ],
-  providers: [Logger, signalServiceProvider, LootBoxService, LootBoxServiceEth, ethersRpcProvider],
+  providers: [Logger, signalServiceProvider, LootBoxService, LootBoxServiceLog, LootBoxServiceEth, ethersRpcProvider],
   controllers: [LootBoxControllerEth],
-  exports: [LootBoxService, LootBoxServiceEth],
+  exports: [LootBoxService, LootBoxServiceLog, LootBoxServiceEth],
 })
 export class LootBoxModule {}

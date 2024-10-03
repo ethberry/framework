@@ -2,14 +2,14 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
 
-import { ContractEventType, CraftStatus, ICraftSearchDto, TemplateStatus } from "@framework/types";
+import { CraftStatus, ICraftSearchDto, TemplateStatus, ExchangeEventType } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
-import { CraftEntity } from "./craft.entity";
-import type { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import type { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
+import { CraftEntity } from "./craft.entity";
 
 @Injectable()
 export class CraftService {
@@ -177,7 +177,7 @@ export class CraftService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    const count = await this.eventHistoryService.countEventsByType(ContractEventType.Craft, craftEntity.id);
+    const count = await this.eventHistoryService.countEventsByType(ExchangeEventType.Craft, craftEntity.id);
 
     if (count) {
       Object.assign(craftEntity, { craftStatus: CraftStatus.INACTIVE });

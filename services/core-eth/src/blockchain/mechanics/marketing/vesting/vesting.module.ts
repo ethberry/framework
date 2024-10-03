@@ -1,6 +1,9 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
+import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
+
+import { signalServiceProvider } from "../../../../common/providers";
 import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
@@ -8,12 +11,20 @@ import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { VestingControllerEth } from "./vesting.controller.eth";
 import { VestingServiceEth } from "./vesting.service.eth";
-import { signalServiceProvider } from "../../../../common/providers";
+import { VestingServiceLog } from "./vesting.service.log";
 
 @Module({
-  imports: [ConfigModule, EventHistoryModule, ContractModule, TokenModule, BalanceModule, NotificatorModule],
-  providers: [VestingServiceEth, signalServiceProvider],
+  imports: [
+    ConfigModule,
+    EthersModule.deferred(),
+    EventHistoryModule,
+    ContractModule,
+    TokenModule,
+    BalanceModule,
+    NotificatorModule,
+  ],
+  providers: [signalServiceProvider, VestingServiceLog, VestingServiceEth],
   controllers: [VestingControllerEth],
-  exports: [VestingServiceEth],
+  exports: [VestingServiceLog, VestingServiceEth],
 })
 export class VestingModule {}

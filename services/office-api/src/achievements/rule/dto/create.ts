@@ -1,10 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsOptional, Min, ValidateNested, IsISO8601, IsString } from "class-validator";
+import { IsEnum, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { AchievementRuleStatus, ContractEventType } from "@framework/types";
-import { IsBeforeDate, AllTypesDto } from "@ethberry/nest-js-validators";
+import { AllTypesDto, IsBeforeDate } from "@ethberry/nest-js-validators";
 import { SearchableDto } from "@ethberry/collection";
+import { AchievementRuleStatus, TContractEventType } from "@framework/types";
 
 import { IAchievementRuleCreateDto } from "../interfaces";
 
@@ -26,8 +26,8 @@ export class AchievementRuleCreateDto extends SearchableDto implements IAchievem
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsEnum(ContractEventType, { message: "badInput" })
-  public eventType: ContractEventType;
+  @IsString({ message: "typeMismatch" })
+  public eventType: TContractEventType;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

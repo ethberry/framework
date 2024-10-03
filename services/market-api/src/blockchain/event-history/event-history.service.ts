@@ -2,8 +2,15 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IErc1155TokenApprovalForAllEvent } from "@framework/types";
-import { ContractEventType } from "@framework/types";
+import {
+  AccessControlEventType,
+  Erc1155EventType,
+  Erc20EventType,
+  ExchangeEventType,
+  IErc1155TokenApprovalForAllEvent,
+  MysteryEventType,
+  WaitListEventType,
+} from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractEntity } from "../hierarchy/contract/contract.entity";
@@ -65,7 +72,7 @@ export class EventHistoryService {
     queryBuilder.leftJoinAndSelect("asset_token.template", "asset_template");
     queryBuilder.leftJoinAndSelect("asset_template.contract", "asset_contract");
 
-    queryBuilder.andWhere("history.eventType = :eventType", { eventType: ContractEventType.Craft });
+    queryBuilder.andWhere("history.eventType = :eventType", { eventType: ExchangeEventType.Craft });
     queryBuilder.andWhere("history.event_data->>'externalId' = :externalId", { externalId: craftId });
 
     queryBuilder.skip(skip);
@@ -122,7 +129,7 @@ export class EventHistoryService {
         /* HIERARCHY 0xx */
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType001", { eventType001: ContractEventType.Transfer });
+            qb1.andWhere("history.event_type = :eventType001", { eventType001: Erc20EventType.Transfer }); // Erc721EventType is identical
             qb1.andWhere(
               new Brackets(qb2 => {
                 qb2.andWhere("LOWER(history.event_data->>'from') = :wallet", { wallet });
@@ -133,7 +140,7 @@ export class EventHistoryService {
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType002", { eventType002: ContractEventType.TransferSingle });
+            qb1.andWhere("history.event_type = :eventType002", { eventType002: Erc1155EventType.TransferSingle });
             qb1.andWhere(
               new Brackets(qb2 => {
                 qb2.andWhere("LOWER(history.event_data->>'from') = :wallet", { wallet });
@@ -144,7 +151,7 @@ export class EventHistoryService {
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType003", { eventType003: ContractEventType.TransferBatch });
+            qb1.andWhere("history.event_type = :eventType003", { eventType003: Erc1155EventType.TransferBatch });
             qb1.andWhere(
               new Brackets(qb2 => {
                 qb2.andWhere("LOWER(history.event_data->>'from') = :wallet", { wallet });
@@ -155,8 +162,8 @@ export class EventHistoryService {
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType013", {
-              eventType013: ContractEventType.OwnershipTransferred,
+            qb1.andWhere("history.event_type = :eventType010", {
+              eventType010: AccessControlEventType.OwnershipTransferred,
             });
             qb1.andWhere(
               new Brackets(qb2 => {
@@ -166,41 +173,67 @@ export class EventHistoryService {
             );
           }),
         );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType011", {
+              eventType011: AccessControlEventType.RoleGranted,
+            });
+            qb1.andWhere(
+              new Brackets(qb2 => {
+                qb2.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
+                qb2.orWhere("LOWER(history.event_data->>'sender') = :wallet", { wallet });
+              }),
+            );
+          }),
+        );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType012", {
+              eventType012: AccessControlEventType.RoleRevoked,
+            });
+            qb1.andWhere(
+              new Brackets(qb2 => {
+                qb2.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
+                qb2.orWhere("LOWER(history.event_data->>'sender') = :wallet", { wallet });
+              }),
+            );
+          }),
+        );
 
         /* EXCHANGE 1xx */
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType101", { eventType101: ContractEventType.Purchase });
+            qb1.andWhere("history.event_type = :eventType101", { eventType101: ExchangeEventType.Purchase });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType102", { eventType102: ContractEventType.PurchaseRaffle });
+            qb1.andWhere("history.event_type = :eventType102", { eventType102: ExchangeEventType.PurchaseRaffle });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType103", { eventType103: ContractEventType.PurchaseLottery });
+            qb1.andWhere("history.event_type = :eventType103", { eventType103: ExchangeEventType.PurchaseLottery });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType104", { eventType104: ContractEventType.PurchaseMysteryBox });
+            qb1.andWhere("history.event_type = :eventType104", { eventType104: ExchangeEventType.PurchaseMysteryBox });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType105", { eventType105: ContractEventType.PurchaseLootBox });
+            qb1.andWhere("history.event_type = :eventType105", { eventType105: ExchangeEventType.PurchaseLootBox });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType106", { eventType106: ContractEventType.Upgrade });
+            qb1.andWhere("history.event_type = :eventType106", { eventType106: ExchangeEventType.Upgrade });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
@@ -208,25 +241,25 @@ export class EventHistoryService {
         /* EXCHANGE 2xx */
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType201", { eventType201: ContractEventType.Claim });
+            qb1.andWhere("history.event_type = :eventType201", { eventType201: ExchangeEventType.Claim });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType202", { eventType202: ContractEventType.Craft });
+            qb1.andWhere("history.event_type = :eventType202", { eventType202: ExchangeEventType.Craft });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType203", { eventType203: ContractEventType.Dismantle });
+            qb1.andWhere("history.event_type = :eventType203", { eventType203: ExchangeEventType.Dismantle });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType204", { eventType204: ContractEventType.Merge });
+            qb1.andWhere("history.event_type = :eventType204", { eventType204: ExchangeEventType.Merge });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
@@ -247,14 +280,14 @@ export class EventHistoryService {
         qb.orWhere(
           new Brackets(qb1 => {
             qb1.andWhere("history.event_type = :eventType301", {
-              eventType301: ContractEventType.WaitListRewardClaimed,
+              eventType301: WaitListEventType.WaitListRewardClaimed,
             });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType302", { eventType302: ContractEventType.UnpackMysteryBox });
+            qb1.andWhere("history.event_type = :eventType302", { eventType302: MysteryEventType.UnpackMysteryBox });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
@@ -283,7 +316,7 @@ export class EventHistoryService {
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
-    queryBuilder.where({ address: contract, eventType: ContractEventType.ApprovalForAll });
+    queryBuilder.where({ address: contract, eventType: Erc1155EventType.ApprovalForAll }); // erc721 is identical
 
     queryBuilder.andWhere("history.event_data->>'account' = :account", { account });
     queryBuilder.addOrderBy("history.updatedAt", "DESC");

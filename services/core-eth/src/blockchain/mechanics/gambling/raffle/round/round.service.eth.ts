@@ -1,11 +1,11 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
-import { Log, Wallet } from "ethers";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 import {
+  EmailType,
   IRafflePrizeEvent,
   IRaffleReleaseEvent,
   IRaffleRoundEndedEvent,
@@ -14,7 +14,6 @@ import {
   RmqProviderType,
   SignalEventType,
   TokenType,
-  EmailType,
 } from "@framework/types";
 
 import { RaffleRoundService } from "./round.service";
@@ -31,8 +30,6 @@ export class RaffleRoundServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    @Inject(ETHERS_SIGNER)
-    private readonly ethersSignerProvider: Wallet,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     @Inject(RmqProviderType.EML_SERVICE)

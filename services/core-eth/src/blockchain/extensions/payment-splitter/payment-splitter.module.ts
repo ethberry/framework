@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { EventHistoryModule } from "../../event-history/event-history.module";
@@ -12,7 +12,7 @@ import { PayeeModule } from "./payee/payee.module";
 @Module({
   imports: [EventHistoryModule, ConfigModule, ContractModule, TokenModule, BalanceModule, PayeeModule],
   controllers: [PaymentSplitterControllerEth],
-  providers: [Logger, PaymentSplitterServiceEth],
+  providers: [PaymentSplitterServiceEth],
   exports: [PaymentSplitterServiceEth],
 })
 export class PaymentSplitterModule {}

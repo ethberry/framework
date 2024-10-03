@@ -30,7 +30,7 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
         },
         {
           name: "event_type",
-          type: `${ns}.event_history_event_enum`,
+          type: "varchar",
           isNullable: true,
         },
         {

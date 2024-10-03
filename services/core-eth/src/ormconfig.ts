@@ -1,8 +1,6 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-// import { NodeEnv } from "@ethberry/constants";
-
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
@@ -49,6 +47,7 @@ import { ReferralTreeEntity } from "./blockchain/mechanics/meta/referral/program
 import { ReferralProgramEntity } from "./blockchain/mechanics/meta/referral/program/referral.program.entity";
 import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/referral.claim.entity";
 import { ReferralRewardShareEntity } from "./blockchain/mechanics/meta/referral/reward/share/referral.reward.share.entity";
+import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -57,8 +56,9 @@ const config: PostgresConnectionOptions = {
   entities: [
     UserEntity,
     MerchantEntity,
-    ChainLinkSubscriptionEntity,
+    SettingsEntity,
     // Blockchain
+    ChainLinkSubscriptionEntity,
     // exchange
     TransactionEntity,
     EventHistoryEntity,
@@ -101,7 +101,6 @@ const config: PostgresConnectionOptions = {
     ReferralProgramEntity,
     ReferralClaimEntity,
     ReferralRewardShareEntity,
-    /* achievements */
     AchievementItemEntity,
     AchievementLevelEntity,
     AchievementRuleEntity,

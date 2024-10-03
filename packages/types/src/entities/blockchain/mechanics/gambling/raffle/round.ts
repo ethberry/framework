@@ -3,7 +3,7 @@ import type { IIdDateBase } from "@ethberry/types-collection";
 import type { IAsset } from "../../../exchange/asset";
 import type { IContract } from "../../../hierarchy/contract";
 import type { IToken } from "../../../hierarchy/token";
-import type { IAssetItem } from "../../../event-history";
+import type { IAssetItem } from "../../../event-history/exchange/common";
 
 export interface IRaffleRound extends IIdDateBase {
   number: string | null; // winner

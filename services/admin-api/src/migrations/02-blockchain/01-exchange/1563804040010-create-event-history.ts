@@ -4,142 +4,6 @@ import { ns, testChainId } from "@framework/constants";
 
 export class CreateEventHistory1563804040010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.event_history_event_enum AS ENUM (
-      --MODULE:ERC20
-       'Approval',
-       'Transfer',
-      --MODULE:ERC721
-       'ApprovalForAll',
-       'DefaultRoyaltyInfo',
-       'MintRandom',
-       'TokenRoyaltyInfo',
-       'ConsecutiveTransfer',
-      --MODULE:ERC998
-       'BatchReceivedChild',
-       'BatchTransferChild',
-       'WhitelistedChild',
-       'UnWhitelistedChild',
-       'ReceivedChild',
-       'TransferChild',
-       'SetMaxChild',
-      --MODULE:ERC1155
-       'TransferBatch',
-       'TransferSingle',
-       'URI',
-      --MODULE:LOTTERY
-       'RoundFinalized',
-       'RoundStarted',
-       'RoundEnded',
-       'PurchaseLottery',
-       'PurchaseRaffle',
-       'Released',
-       'Prize',
-      --MODULE:WRAPPER
-       'UnpackWrapper',
-      --MODULE MYSTERY
-       'UnpackMysteryBox',
-      --MODULE:PAUSE
-       'Paused',
-       'Unpaused',
-      --MODULE:VESTING
-       'EtherReleased',
-       'ERC20Released',
-       'EtherReceived',
-      --MODULE:ACCESS_LIST
-       'Blacklisted',
-       'UnBlacklisted',
-       'Whitelisted',
-       'UnWhitelisted',
-      --MODULE:ACCESS_CONTROL
-       'RoleGranted',
-       'RoleRevoked',
-       'RoleAdminChanged',
-       'DefaultAdminTransferScheduled',
-       'DefaultAdminTransferCanceled',
-       'DefaultAdminDelayChangeScheduled',
-       'DefaultAdminDelayChangeCanceled',
-       'OwnershipTransferred',
-       'OwnershipTransferStarted',
-      --MODULE:STAKING
-       'RuleCreated',
-       'RuleUpdated',
-       'StakingStart',
-       'StakingWithdraw',
-       'StakingFinish',
-       'BalanceWithdraw',
-       'DepositReturn',
-       'DepositPenalty',
-      --MODULE:STAKING
-       'RuleCreatedP',
-      --MODULE:EXCHANGE
-      --MODULE:CORE
-       'Purchase',
-      --MODULE:CLAIM
-       'Claim',
-      --MODULE:CRAFT
-       'Craft',
-       'Dismantle',
-       'Merge',
-      --MODULE:RENTABLE
-       'UpdateUser',
-       'Lend',
-       'LendMany',
-      --MODULE:MYSTERY
-       'PurchaseMysteryBox',
-      --MODULE:GRADE
-       'Upgrade',
-      --MODULE:WAIT_LIST
-       'WaitListRewardSet',
-       'WaitListRewardClaimed',
-      --MODULE:BREEDING
-       'Breed',
-      --MODULE:GRADE
-       'LevelUp',
-       'MetadataUpdate',
-       'BatchMetadataUpdate',
-      --MODULE:PAYMENT_SPLITTER
-       'PayeeAdded',
-       'ERC20PaymentReleased',
-       'PaymentReceived',
-       'PaymentReleased',
-      --MODULE:CHAIN_LINK V2
-       'RandomWordsRequested',
-       'SubscriptionCreated',
-       'SubscriptionConsumerAdded',
-       'VrfSubscriptionSet',
-      --MODULE:ECOMMERCE
-       'EcommercePurchase',
-      --MODULE:REFERRAL
-       'ReferralEvent',       
-       'ReferralProgram',       
-       'ReferralReward',       
-       'ReferralWithdraw',       
-       'ReferralBonus',       
-      --MODULE:CM
-       'VestingDeployed',
-       'ERC20TokenDeployed',
-       'ERC721TokenDeployed',
-       'ERC998TokenDeployed',
-       'ERC1155TokenDeployed',
-       'MysteryBoxDeployed',
-       'CollectionDeployed',
-       'PonziDeployed',
-       'StakingDeployed',
-       'LotteryDeployed',
-       'RaffleDeployed',
-       'WaitListDeployed',
-       -- MODULE:ERC1363
-       'TransferReceived'
-      );
-    `);
-
-    // this enum is not in use because enum is being sorted in order it was created
-    // SELECT enumlabel
-    // FROM pg_catalog.pg_enum
-    // WHERE enumtypid = 'gemunion.event_history_event_enum'::regtype
-    // ORDER BY enumlabel::gemunion.event_history_event_enum
-
     const table = new Table({
       name: `${ns}.event_history`,
       columns: [
@@ -149,6 +13,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           isPrimary: true,
         },
         {
+          // this was an enum, but it is just a pain to keep it updated
           name: "event_type",
           type: "varchar",
         },
@@ -220,6 +85,5 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.event_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.event_history_event_enum;`);
   }
 }

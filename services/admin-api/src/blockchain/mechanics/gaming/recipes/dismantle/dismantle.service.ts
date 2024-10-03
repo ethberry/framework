@@ -1,15 +1,15 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In, DeleteResult } from "typeorm";
+import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ContractEventType, DismantleStatus, IDismantleSearchDto, TemplateStatus } from "@framework/types";
+import { DismantleStatus, ExchangeEventType, IDismantleSearchDto, TemplateStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
-import { DismantleEntity } from "./dismantle.entity";
-import type { IDismantleCreateDto, IDismantleUpdateDto } from "./interfaces";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import type { IDismantleCreateDto, IDismantleUpdateDto } from "./interfaces";
+import { DismantleEntity } from "./dismantle.entity";
 
 @Injectable()
 export class DismantleService {
@@ -166,7 +166,7 @@ export class DismantleService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    const count = await this.eventHistoryService.countEventsByType(ContractEventType.Dismantle, dismantleEntity.id);
+    const count = await this.eventHistoryService.countEventsByType(ExchangeEventType.Dismantle, dismantleEntity.id);
 
     if (count) {
       Object.assign(dismantleEntity, { dismantleStatus: DismantleStatus.INACTIVE });

@@ -8,7 +8,7 @@ import {
   ContractType,
   IOwnershipTransferredEvent,
   IVestingERC20ReleasedEvent,
-  IVestingEtherReceivedEvent,
+  IVestingPaymentReceivedEvent,
   IVestingEtherReleasedEvent,
   VestingEventType,
 } from "@framework/types";
@@ -30,7 +30,7 @@ export class VestingControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.VESTING, eventName: VestingEventType.PaymentReceived })
-  public ethReceived(@Payload() event: ILogEvent<IVestingEtherReceivedEvent>, @Ctx() context: Log): Promise<void> {
+  public ethReceived(@Payload() event: ILogEvent<IVestingPaymentReceivedEvent>, @Ctx() context: Log): Promise<void> {
     return this.vestingServiceEth.ethReceived(event, context);
   }
 

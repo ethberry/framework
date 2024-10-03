@@ -1,4 +1,11 @@
-// event LevelUp(address account, uint256 tokenId, bytes32 attribute, uint256 value);
+export enum DiscreteEventType {
+  LevelUp = "LevelUp",
+}
+
+export enum DiscreteEventSignature {
+  LevelUp = "LevelUp(address,uint256,bytes32,uint256)",
+}
+
 export interface ILevelUp {
   account: string;
   tokenId: string;

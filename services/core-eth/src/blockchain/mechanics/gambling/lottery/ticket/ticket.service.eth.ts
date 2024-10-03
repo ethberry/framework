@@ -8,7 +8,6 @@ import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import { testChainId } from "@framework/constants";
 import { IERC721TokenTransferEvent, RmqProviderType, SignalEventType, TokenStatus } from "@framework/types";
 
-import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../../hierarchy/balance/balance.service";
@@ -16,7 +15,7 @@ import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { getMetadata } from "../../../../../common/utils";
-import { ABI } from "../../../../tokens/erc721/token/log/interfaces";
+import { Erc721ABI } from "../../../../tokens/erc721/token/interfaces";
 
 @Injectable()
 export class LotteryTicketServiceEth {
@@ -29,7 +28,6 @@ export class LotteryTicketServiceEth {
     protected readonly signalClientProxy: ClientProxy,
     private readonly eventHistoryService: EventHistoryService,
     protected readonly assetService: AssetService,
-    private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
@@ -94,7 +92,7 @@ export class LotteryTicketServiceEth {
       throw new NotFoundException("ticketTemplateNotFound");
     }
 
-    const metadata = await getMetadata(tokenId, contract, ABI, this.jsonRpcProvider, this.loggerService);
+    const metadata = await getMetadata(tokenId, contract, Erc721ABI, this.jsonRpcProvider, this.loggerService);
 
     const tokenEntity = await this.tokenService.create({
       tokenId,

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ContractEventType } from "@framework/types";
+import { TContractEventType } from "@framework/types";
 
 import { EventHistoryEntity } from "./event-history.entity";
 
@@ -13,7 +13,7 @@ export class EventHistoryService {
     private readonly eventHistoryEntityRepository: Repository<EventHistoryEntity>,
   ) {}
 
-  public countEventsByType(eventType: ContractEventType, externalId: number): Promise<number> {
+  public countEventsByType(eventType: TContractEventType, externalId: number): Promise<number> {
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
     queryBuilder.andWhere("history.event_type = :eventType", { eventType });
     queryBuilder.andWhere("LOWER(history.event_data->>'externalId') = :externalId", { externalId });

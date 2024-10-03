@@ -1,9 +1,11 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
-import { ethersRpcProvider, ethersSignerProvider } from "@ethberry/nest-js-module-ethers-gcp";
+
+import { ethersRpcProvider, ethersSignerProvider, EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
 import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 
+import { signalServiceProvider, emlServiceProvider } from "../../../../../common/providers";
 import { EventHistoryModule } from "../../../../event-history/event-history.module";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { AssetModule } from "../../../../exchange/asset/asset.module";
@@ -17,7 +19,7 @@ import { RaffleRoundControllerEth } from "./round.controller.eth";
 import { RaffleRoundServiceEth } from "./round.service.eth";
 import { RoundControllerRmq } from "./round.controller.rmq";
 import { RaffleRoundServiceRmq } from "./round.service.rmq";
-import { signalServiceProvider, emlServiceProvider } from "../../../../../common/providers";
+import { RaffleRoundServiceLog } from "./round.service.log";
 
 @Module({
   imports: [
@@ -29,6 +31,7 @@ import { signalServiceProvider, emlServiceProvider } from "../../../../../common
     TokenModule,
     ContractModule,
     EventHistoryModule,
+    EthersModule.deferred(),
     SecretManagerModule.deferred(),
     TypeOrmModule.forFeature([RaffleRoundEntity]),
   ],
@@ -40,9 +43,16 @@ import { signalServiceProvider, emlServiceProvider } from "../../../../../common
     signalServiceProvider,
     emlServiceProvider,
     RaffleRoundService,
+    RaffleRoundServiceLog,
     RaffleRoundServiceEth,
     RaffleRoundServiceRmq,
   ],
-  exports: [RaffleRoundService, RaffleRoundServiceEth, RaffleRoundServiceRmq],
+  exports: [RaffleRoundService, RaffleRoundServiceLog, RaffleRoundServiceEth, RaffleRoundServiceRmq],
 })
-export class RaffleRoundModule {}
+export class RaffleRoundModule implements OnModuleInit {
+  constructor(private readonly raffleRoundServiceLog: RaffleRoundServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.raffleRoundServiceLog.updateRegistry();
+  }
+}

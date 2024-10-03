@@ -3,9 +3,14 @@ import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IERC721TokenMintRandomEvent, IERC721TokenTransferEvent, IExchangePurchaseEvent } from "@framework/types";
 import {
-  ContractEventType,
+  Erc721EventType,
+  ExchangeEventType,
+  IERC721TokenMintRandomEvent,
+  IERC721TokenTransferEvent,
+  IExchangePurchaseEvent,
+} from "@framework/types";
+import {
   ExchangeType,
   RmqProviderType,
   SignalEventType,
@@ -23,7 +28,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { ABI } from "../../erc721/token/log/interfaces";
+import { Erc721ABI } from "../../erc721/token/interfaces";
 
 @Injectable()
 export class Erc998TokenRandomServiceEth extends TokenServiceEth {
@@ -57,7 +62,7 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
       const metadata = await getMetadata(
         Number(tokenId).toString(),
         address,
-        ABI,
+        Erc721ABI,
         this.jsonRpcProvider,
         this.loggerService,
       );
@@ -88,7 +93,7 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
           // update Asset history
           const historyEntity = await this.eventHistoryService.findOne({
             transactionHash,
-            eventType: ContractEventType.MintRandom,
+            eventType: Erc721EventType.MintRandom,
           });
           if (!historyEntity) {
             throw new NotFoundException("historyNotFound");
@@ -176,7 +181,7 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
   public async exchangeNotify(historyId: number) {
     const history = await this.eventHistoryService.findOneWithRelations({ id: historyId });
     // it must work for exchange purchase random
-    if (history?.parent?.parent?.parent?.eventType === ContractEventType.Purchase) {
+    if (history?.parent?.parent?.parent?.eventType === ExchangeEventType.Purchase) {
       const exchangeEvent = history.parent.parent.parent;
       const eventData = exchangeEvent.eventData as unknown as IExchangePurchaseEvent;
       const exchangeAssetHistory = await this.assetService.findAll(

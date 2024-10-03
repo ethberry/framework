@@ -1,3 +1,23 @@
+export enum Erc998EventType {
+  BatchReceivedChild = "BatchReceivedChild",
+  BatchTransferChild = "BatchTransferChild",
+  WhitelistedChild = "WhitelistedChild",
+  UnWhitelistedChild = "UnWhitelistedChild",
+  ReceivedChild = "ReceivedChild",
+  TransferChild = "TransferChild",
+  SetMaxChild = "SetMaxChild",
+}
+
+export enum Erc998EventSignature {
+  BatchReceivedChild = "BatchReceivedChild(address,uint256,address,uint256[],uint256[])",
+  BatchTransferChild = "BatchTransferChild(uint256,address,address,uint256[],uint256[])",
+  WhitelistedChild = "WhitelistedChild(address,uint256)",
+  UnWhitelistedChild = "UnWhitelistedChild(address)",
+  ReceivedChild = "ReceivedChild(address,uint256,address,uint256,uint256)",
+  TransferChild = "TransferChild(uint256,address,address,uint256,uint256)",
+  SetMaxChild = "SetMaxChild(address,uint256)",
+}
+
 // 998
 export interface IErc998TokenWhitelistedChildEvent {
   addr: string;
