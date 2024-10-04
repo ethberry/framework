@@ -1,9 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsString, MaxLength, IsEnum, IsOptional } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsOptional, IsString, MaxLength } from "class-validator";
 
 import { AccountDto } from "@ethberry/nest-js-validators";
-import { ContractEventSignature } from "@framework/types";
 
 import type { ISignalMessageDto } from "../interfaces";
 
@@ -15,7 +13,6 @@ export class MessageDto extends AccountDto implements ISignalMessageDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform(({ value }) => value as ContractEventSignature)
-  @IsEnum(ContractEventSignature, { message: "badInput" })
-  public transactionType: ContractEventSignature;
+  @IsString({ message: "typeMismatch" })
+  public transactionType: string;
 }

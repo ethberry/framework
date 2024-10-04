@@ -61,7 +61,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   useEffect(() => {
     if (account && open) {
       void fn().then((rows: Array<IAccessControlWithRelations>) => {
-        setRows(rows.filter(row => row.account !== account));
+        setRows(rows.filter(row => row.account !== account.toLocaleLowerCase()));
       });
     }
   }, [account, open]);

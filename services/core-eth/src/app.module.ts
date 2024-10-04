@@ -22,6 +22,7 @@ import { DiscoveryModule } from "@golevelup/nestjs-discovery";
 import { CronExpression, SettingsKeys } from "@framework/types";
 import { SettingsModule } from "./infrastructure/settings/settings.module";
 import { SettingsService } from "./infrastructure/settings/settings.service";
+import { OnModuleDestroy } from "@nestjs/common/interfaces/hooks/on-destroy.interface";
 
 @Module({
   providers: [
@@ -83,15 +84,18 @@ import { SettingsService } from "./infrastructure/settings/settings.service";
   ],
   controllers: [AppController],
 })
-export class AppModule implements OnApplicationShutdown {
+export class AppModule implements OnApplicationShutdown, OnModuleDestroy {
   constructor(
     private readonly settingsService: SettingsService,
     private readonly ethersService: EthersService,
   ) {}
 
-  public async onApplicationShutdown(signal: string): Promise<void> {
-    console.info(signal); // e.g. "SIGINT"
+  public async onModuleDestroy(): Promise<void> {
     const lastProcessedBlock = await this.ethersService.getLastBlock();
     await this.settingsService.update(SettingsKeys.STARTING_BLOCK_ETHBERRY_BESU, lastProcessedBlock);
+  }
+
+  public onApplicationShutdown(signal: string): void {
+    console.info(signal); // e.g. "SIGINT"
   }
 }

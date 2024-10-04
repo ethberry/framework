@@ -1,14 +1,9 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-
 import { ClientProxy } from "@nestjs/microservices";
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type {
-  IErc1363TransferReceivedEvent,
-  IErc20TokenApproveEvent,
-  IErc20TokenTransferEvent,
-} from "@framework/types";
+import type { IErc20TokenApproveEvent, IErc20TokenTransferEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
@@ -73,9 +68,5 @@ export class Erc20TokenServiceEth {
         transactionType: name,
       })
       .toPromise();
-  }
-
-  public async transferReceived(event: ILogEvent<IErc1363TransferReceivedEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
   }
 }
