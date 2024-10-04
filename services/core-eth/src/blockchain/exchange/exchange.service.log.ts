@@ -37,40 +37,28 @@ export class ExchangeServiceLog {
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: ExchangeABI,
       eventSignatures: [
-        // MODULE:CORE
         ExchangeEventType.Purchase,
-        // MODULE:RENTABLE
         ExchangeEventType.Lend,
-        // MODULE:CLAIM
+        ExchangeEventType.LendMany,
         ExchangeEventType.Claim,
-        // MODULE:CRAFT
         ExchangeEventType.Craft,
-        // MODULE:MERGE
         ExchangeEventType.Merge,
         ExchangeEventType.Dismantle,
-        // MODULE:MYSTERYBOX
         ExchangeEventType.PurchaseMysteryBox,
-        // MODULE:LOOTBOX
         ExchangeEventType.PurchaseLootBox,
-        // MODULE:REFERRAL
-        ReferralProgramEventType.ReferralEvent,
-        // MODULE:GRADE
         ExchangeEventType.Upgrade,
-        // MODULE:BREEDING
         ExchangeEventType.Breed,
-        // MODULE:LOTTERY
         ExchangeEventType.PurchaseLottery,
-        // MODULE:RAFFLE
         ExchangeEventType.PurchaseRaffle,
-        // MODULE:ACCESS_CONTROL
+        // mechanics
+        ReferralProgramEventType.ReferralEvent,
+        Erc1363EventType.TransferReceived,
+        // extensions
         AccessControlEventType.RoleGranted,
         AccessControlEventType.RoleRevoked,
         AccessControlEventType.RoleAdminChanged,
-        // MODULE:PAUSE
         PausableEventType.Paused,
         PausableEventType.Unpaused,
-        // MODULE:ERC1363
-        Erc1363EventType.TransferReceived,
       ],
     });
   }

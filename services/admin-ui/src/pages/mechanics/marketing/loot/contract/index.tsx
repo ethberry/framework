@@ -16,8 +16,6 @@ import {
   BlacklistButton,
   ChainLinkSetSubscriptionButton,
   ContractAllowanceButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   LootContractDeployButton,
   LootContractMintButton,
@@ -129,8 +127,6 @@ export const LootContract: FC = () => {
               <SetBaseTokenURIButton contract={contract} />
               <TransferButton contract={contract} />
               <ChainLinkSetSubscriptionButton contract={contract} />
-              <EthListenerAddButton contract={contract} />
-              <EthListenerRemoveButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

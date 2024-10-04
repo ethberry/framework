@@ -22,8 +22,6 @@ import {
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import {
   AllowanceButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   ContractMintButton,
   RenounceRoleButton,
@@ -129,8 +127,6 @@ export const NativeContract: FC = () => {
               <AllowanceButton contract={contract} disabled={true} />
               <TransferButton contract={contract} disabled={true} />
               <RoyaltyButton contract={contract} disabled={true} />
-              <EthListenerAddButton contract={contract} disabled={true} />
-              <EthListenerRemoveButton contract={contract} disabled={true} />
             </ListActions>
           </ListItem>
         ))}

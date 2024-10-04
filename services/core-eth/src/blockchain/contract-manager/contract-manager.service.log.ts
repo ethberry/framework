@@ -6,7 +6,7 @@ import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 import { AccessControlEventSignature, ContractManagerEventSignature, ContractType, ModuleType } from "@framework/types";
 import { ContractService } from "../hierarchy/contract/contract.service";
-import { ContractmanagerABI } from "./interfaces";
+import { ContractManagerABI } from "./interfaces";
 
 @Injectable()
 export class ContractManagerServiceLog {
@@ -24,9 +24,9 @@ export class ContractManagerServiceLog {
     });
 
     return this.ethersService.updateRegistry({
-      contractType: ContractType.ERC20_TOKEN,
+      contractType: ContractType.CONTRACT_MANAGER,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: ContractmanagerABI,
+      contractInterface: ContractManagerABI,
       eventSignatures: [
         ContractManagerEventSignature.ERC20TokenDeployed,
         ContractManagerEventSignature.ERC721TokenDeployed,

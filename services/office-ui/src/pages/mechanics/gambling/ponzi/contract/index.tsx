@@ -16,8 +16,6 @@ import { ContractStatus, PonziContractFeatures } from "@framework/types";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 import {
   AllowanceButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   PonziBalanceButton,
   PonziContractDeployButton,
@@ -114,8 +112,6 @@ export const PonziContract: FC = () => {
                 <AllowanceButton contract={contract} />
                 <TopUpButton contract={contract} />
                 <PonziBalanceButton contract={contract} />
-                <EthListenerAddButton contract={contract} />
-                <EthListenerRemoveButton contract={contract} />
               </ListActions>
             </ListItem>
           );

@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 
 import { ContractManagerModule } from "./contract-manager/contract-manager.module";
-import { EthLoggerModule } from "./eth-logger/eth-logger.module";
 import { ExchangeModule } from "./exchange/exchange.module";
 import { ExtensionsModule } from "./extensions/extensions.module";
 import { HierarchyModule } from "./hierarchy/hierarchy.module";
@@ -12,7 +11,6 @@ import { TokensModule } from "./tokens/tokens.module";
 @Module({
   imports: [
     ContractManagerModule,
-    EthLoggerModule,
     ExchangeModule,
     ExtensionsModule,
     HierarchyModule,

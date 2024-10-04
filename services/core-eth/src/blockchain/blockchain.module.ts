@@ -7,7 +7,6 @@ import { HierarchyModule } from "./hierarchy/hierarchy.module";
 import { IntegrationsModule } from "./integrations/integrations.module";
 import { MechanicsModule } from "./mechanics/mechanics.module";
 import { TokensModule } from "./tokens/tokens.module";
-import { TransactionModule } from "./transaction/transaction.module";
 
 @Module({
   imports: [
@@ -18,7 +17,6 @@ import { TransactionModule } from "./transaction/transaction.module";
     IntegrationsModule,
     MechanicsModule,
     TokensModule,
-    TransactionModule,
   ],
 })
 export class BlockchainModule {}

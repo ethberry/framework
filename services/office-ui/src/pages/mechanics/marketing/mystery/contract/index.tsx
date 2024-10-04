@@ -16,8 +16,6 @@ import { ContractStatus, MysteryContractFeatures } from "@framework/types";
 import {
   AllowanceButton,
   BlacklistButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   MysteryContractDeployButton,
   MysteryContractMintButton,
@@ -127,8 +125,6 @@ export const MysteryContract: FC = () => {
                 <AllowanceButton contract={contract} />
                 <RoyaltyButton contract={contract} />
                 <TransferButton contract={contract} />
-                <EthListenerAddButton contract={contract} />
-                <EthListenerRemoveButton contract={contract} />
               </ListActions>
             </ListItem>
           );

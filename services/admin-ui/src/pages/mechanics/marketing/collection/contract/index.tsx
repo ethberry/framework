@@ -16,8 +16,6 @@ import {
   CollectionContractDeployButton,
   CollectionUploadButton,
   ContractAllowanceButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
@@ -122,8 +120,6 @@ export const CollectionContract: FC = () => {
               <UnBlacklistButton contract={contract} />
               <TransferButton contract={contract} />
               <CollectionUploadButton contract={contract} onRefreshPage={handleRefreshPage} />
-              <EthListenerAddButton contract={contract} />
-              <EthListenerRemoveButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

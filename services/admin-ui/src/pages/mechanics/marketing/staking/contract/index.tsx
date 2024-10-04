@@ -13,8 +13,6 @@ import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
 import {
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   PauseButton,
   RenounceRoleButton,
@@ -115,8 +113,6 @@ export const StakingContracts: FC = () => {
               <TopUpButton contract={contract} />
               <StakingWithdrawPenaltyButton contract={contract} />
               <StakingCheckBalanceButton contract={contract} />
-              <EthListenerAddButton contract={contract} />
-              <EthListenerRemoveButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

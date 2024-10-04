@@ -39,7 +39,6 @@ import { RaffleTicketEntity } from "./blockchain/mechanics/gambling/raffle/ticke
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle/dismantle.entity";
 import { CraftEntity } from "./blockchain/mechanics/gaming/recipes/craft/craft.entity";
-import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
 import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/marketing/staking/penalty/penalty.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/meta/referral/reward/referral.reward.entity";
@@ -60,7 +59,6 @@ const config: PostgresConnectionOptions = {
     // Blockchain
     ChainLinkSubscriptionEntity,
     // exchange
-    TransactionEntity,
     EventHistoryEntity,
     AssetEntity,
     AssetComponentEntity,

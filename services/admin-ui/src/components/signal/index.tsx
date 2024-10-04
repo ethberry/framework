@@ -8,7 +8,7 @@ import { useUser } from "@ethberry/provider-user";
 import { useAppDispatch } from "@ethberry/redux";
 import { collectionActions } from "@ethberry/provider-collection";
 import type { IUser } from "@framework/types";
-import { ContractEventSignature, SignalEventType } from "@framework/types";
+import { SignalEventType } from "@framework/types";
 
 import { EventRouteMatch } from "./constants";
 
@@ -24,7 +24,7 @@ export const Signal: FC = () => {
 
   const isUserAuthenticated = user.isAuthenticated();
 
-  const handleEvent = (dto: { transactionHash: string; transactionType?: ContractEventSignature }) => {
+  const handleEvent = (dto: { transactionHash: string; transactionType?: string }) => {
     if (dto.transactionType) {
       enqueueSnackbar(
         formatMessage(
@@ -38,7 +38,7 @@ export const Signal: FC = () => {
 
       const isRouteMatchToEvent =
         Object.keys(EventRouteMatch).includes(dto.transactionType) &&
-        location.pathname.startsWith(EventRouteMatch[dto.transactionType as unknown as keyof typeof EventRouteMatch]!);
+        location.pathname.startsWith(EventRouteMatch[dto.transactionType]!);
 
       if (isRouteMatchToEvent) {
         dispatch(setNeedRefresh(true));

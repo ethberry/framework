@@ -6,15 +6,30 @@ import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
-import { companyName } from "@framework/constants";
+// import { patchBigInt } from "@ethberry/nest-js-module-ethers-gcp";
 import { NodeEnv } from "@ethberry/constants";
+import { companyName } from "@framework/constants";
 
 import { AppModule } from "./app.module";
 
-let app: NestExpressApplication;
+export function patchBigInt() {
+  // https://github.com/GoogleChromeLabs/jsbi/issues/30
+
+  Object.defineProperty(BigInt.prototype, "toJSON", {
+    value: function () {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return this.toString();
+    },
+    configurable: true,
+    enumerable: false,
+    writable: true,
+  });
+}
+
+patchBigInt();
 
 async function bootstrap(): Promise<void> {
-  app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 

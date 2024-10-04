@@ -4,7 +4,7 @@ import { Box, Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { formatPriceHistory } from "@framework/exchange";
-import { ContractEventType, IExchangePurchaseEvent, IMarketplaceReport } from "@framework/types";
+import { ExchangeEventType, IExchangePurchaseEvent, IMarketplaceReport } from "@framework/types";
 import { AddressLink, TxHashLink } from "@ethberry/mui-scanner";
 
 export interface IMarketplaceReportDataViewProps {
@@ -20,7 +20,7 @@ export const MarketplaceReportDataView: FC<IMarketplaceReportDataViewProps> = pr
   const itemAsset = items[0];
 
   switch (eventType) {
-    case ContractEventType.Purchase:
+    case ExchangeEventType.Purchase:
       return (
         <Box sx={{ p: 2.5 }}>
           {/* FROM */}

@@ -15,7 +15,7 @@ import VestingFactoryFacetSol from "@framework/core-contracts/artifacts/contract
 import WaitListFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/WaitListFactoryFacet.sol/WaitListFactoryFacet.json";
 import PaymentSplitterFactoryFacet from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/PaymentSplitterFactoryFacet.sol/PaymentSplitterFactoryFacet.json";
 
-export const ContractmanagerABI = new Interface([
+export const ContractManagerABI = new Interface([
   ...new Set(
     ([] as Array<any>)
       .concat(CollectionFactoryFacetSol.abi)

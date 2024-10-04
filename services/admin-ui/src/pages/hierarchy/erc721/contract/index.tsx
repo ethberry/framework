@@ -18,8 +18,6 @@ import {
   ContractAllowanceButton,
   ContractMintButton,
   Erc721ContractDeployButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
@@ -146,8 +144,6 @@ export const Erc721Contract: FC = () => {
               <RoyaltyButton contract={contract} />
               <SetBaseTokenURIButton contract={contract} />
               <ChainLinkSetSubscriptionButton contract={contract} />
-              <EthListenerAddButton contract={contract} />
-              <EthListenerRemoveButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

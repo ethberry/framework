@@ -13,8 +13,6 @@ import { ContractStatus, IContract, IContractSearchDto, PredictionContractFeatur
 
 import {
   ContractAllowanceButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   PredictionContractDeployButton,
   RenounceRoleButton,
@@ -106,8 +104,6 @@ export const PredictionContract: FC = () => {
               <RevokeRoleButton contract={contract} />
               <RenounceRoleButton contract={contract} />
               <ContractAllowanceButton contract={contract} />
-              <EthListenerAddButton contract={contract} />
-              <EthListenerRemoveButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

@@ -23,8 +23,6 @@ import {
   UnPauseButton,
   AllowanceButton,
   TopUpButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
 } from "../../../../../components/buttons";
 import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { WaitListEditDialog } from "./edit";
@@ -115,8 +113,6 @@ export const WaitListContracts: FC = () => {
                 <UnPauseButton contract={contract} />
                 <AllowanceButton contract={contract} />
                 <TopUpButton contract={contract} />
-                <EthListenerAddButton contract={contract} />
-                <EthListenerRemoveButton contract={contract} />
               </ListActions>
             </ListItem>
           );
