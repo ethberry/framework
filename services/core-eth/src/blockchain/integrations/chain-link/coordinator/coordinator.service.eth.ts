@@ -11,7 +11,7 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 import { callRandom } from "./utils";
 
 @Injectable()
-export class ChainLinkContractServiceEth {
+export class ChainLinkCoordinatorServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
@@ -57,6 +57,6 @@ export class ChainLinkContractServiceEth {
       },
       this.ethersSignerProvider,
     );
-    this.loggerService.log(JSON.stringify(`callRandom ${txr}`, null, "\t"), ChainLinkContractServiceEth.name);
+    this.loggerService.log(JSON.stringify(`callRandom ${txr}`, null, "\t"), ChainLinkCoordinatorServiceEth.name);
   }
 }

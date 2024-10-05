@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { EthersModule, ethersRpcProvider, ethersSignerProvider } from "@ethberry/nest-js-module-ethers-gcp";
@@ -9,10 +9,10 @@ import { MerchantModule } from "../../../../infrastructure/merchant/merchant.mod
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ChainLinkSubscriptionModule } from "../subscription/subscription.module";
-import { ChainLinkContractControllerEth } from "./contract.controller.eth";
-import { ChainLinkContractServiceEth } from "./contract.service.eth";
-import { ChainLinkContractServiceCron } from "./contract.service.cron";
-import { ChainLinkContractServiceLog } from "./contract.service.log";
+import { ChainLinkCoordinatorControllerEth } from "./coordinator.controller.eth";
+import { ChainLinkCoordinatorServiceEth } from "./coordinator.service.eth";
+import { ChainLinkCoordinatorServiceCron } from "./coordinator.service.cron";
+import { ChainLinkCoordinatorServiceLog } from "./coordinator.service.log";
 
 @Module({
   imports: [
@@ -29,11 +29,17 @@ import { ChainLinkContractServiceLog } from "./contract.service.log";
     ethersRpcProvider,
     ethersSignerProvider,
     emlServiceProvider,
-    ChainLinkContractServiceLog,
-    ChainLinkContractServiceEth,
-    ChainLinkContractServiceCron,
+    ChainLinkCoordinatorServiceLog,
+    ChainLinkCoordinatorServiceEth,
+    ChainLinkCoordinatorServiceCron,
   ],
-  controllers: [ChainLinkContractControllerEth],
-  exports: [ChainLinkContractServiceLog, ChainLinkContractServiceEth],
+  controllers: [ChainLinkCoordinatorControllerEth],
+  exports: [ChainLinkCoordinatorServiceLog, ChainLinkCoordinatorServiceEth],
 })
-export class ChainLinkContractModule {}
+export class ChainLinkCoordinatorModule implements OnModuleInit {
+  constructor(protected readonly chainLinkCoordinatorServiceLog: ChainLinkCoordinatorServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.chainLinkCoordinatorServiceLog.updateRegistry();
+  }
+}

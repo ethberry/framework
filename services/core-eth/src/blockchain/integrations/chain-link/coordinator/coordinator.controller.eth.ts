@@ -5,14 +5,14 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import { ChainLinkEventType, ChainLinkType, IVrfRandomWordsRequestedEvent } from "@framework/types";
 
-import { ChainLinkContractServiceEth } from "./contract.service.eth";
+import { ChainLinkCoordinatorServiceEth } from "./coordinator.service.eth";
 
 @Controller()
-export class ChainLinkContractControllerEth {
-  constructor(private readonly chainLinkServiceEth: ChainLinkContractServiceEth) {}
+export class ChainLinkCoordinatorControllerEth {
+  constructor(private readonly chainLinkCoordinatorServiceEth: ChainLinkCoordinatorServiceEth) {}
 
   @EventPattern([{ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.RandomWordsRequested }])
   public randomRequest(@Payload() event: ILogEvent<IVrfRandomWordsRequestedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.chainLinkServiceEth.randomRequest(event, context);
+    return this.chainLinkCoordinatorServiceEth.randomRequest(event, context);
   }
 }

@@ -19,4 +19,4 @@ export const StyledDescription = styled(Typography)(({ theme }) => ({
   ...theme.typography.body2,
   color: theme.palette.text.secondary,
   margin: theme.spacing(1, 0),
-}));
+})) as typeof Typography;

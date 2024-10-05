@@ -13,7 +13,7 @@ import { ChainLinkSubscriptionService } from "../subscription/subscription.servi
 import { VrfABI } from "./interfaces";
 
 @Injectable()
-export class ChainLinkContractServiceLog {
+export class ChainLinkCoordinatorServiceLog {
   constructor(
     protected readonly configService: ConfigService,
     private readonly contractService: ContractService,

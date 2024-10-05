@@ -78,7 +78,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
         onConfirm={handleSetSubscriptionConfirm}
         open={isSetSubscriptionDialogOpen}
         initialValues={{
-          vrfSubId: "0n",
+          vrfSubId: "0",
         }}
       />
     </Fragment>

@@ -25,22 +25,27 @@ export class ChainLinkSubscriptionServiceLog {
     });
 
     return this.ethersService.updateRegistry({
-      contractType: ChainLinkType.VRF,
+      contractType: ChainLinkType.VRF_SUB,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: VrfABI,
-      eventSignatures: [ChainLinkEventSignature.SubscriptionCreated, ChainLinkEventSignature.SubscriptionConsumerAdded],
+      eventSignatures: [
+        ChainLinkEventSignature.SubscriptionCreated,
+        ChainLinkEventSignature.SubscriptionConsumerAdded,
+        ChainLinkEventSignature.SubscriptionConsumerRemoved,
+      ],
     });
   }
 
   public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
     return this.ethersService.updateRegistryAndReadBlock(
       {
-        contractType: ChainLinkType.VRF,
+        contractType: ChainLinkType.VRF_SUB,
         contractAddress: address,
         contractInterface: VrfABI,
         eventSignatures: [
           ChainLinkEventSignature.SubscriptionCreated,
           ChainLinkEventSignature.SubscriptionConsumerAdded,
+          ChainLinkEventSignature.SubscriptionConsumerRemoved,
         ],
       },
       blockNumber,

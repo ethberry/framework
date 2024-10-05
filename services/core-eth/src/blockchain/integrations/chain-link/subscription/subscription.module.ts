@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -33,4 +33,10 @@ import { ChainLinkSubscriptionServiceLog } from "./subsription.service.log";
   ],
   exports: [ChainLinkSubscriptionService, ChainLinkSubscriptionServiceLog, ChainLinkSubscriptionServiceEth],
 })
-export class ChainLinkSubscriptionModule {}
+export class ChainLinkSubscriptionModule implements OnModuleInit {
+  constructor(protected readonly chainLinkSubscriptionServiceLog: ChainLinkSubscriptionServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.chainLinkSubscriptionServiceLog.updateRegistry();
+  }
+}

@@ -15,7 +15,7 @@ import { MerchantService } from "../../../../infrastructure/merchant/merchant.se
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
-export class ChainLinkContractServiceCron {
+export class ChainLinkCoordinatorServiceCron {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
@@ -75,13 +75,13 @@ export class ChainLinkContractServiceCron {
                 .toPromise();
             }
           } catch (e) {
-            this.loggerService.error(e, ChainLinkContractServiceCron.name);
+            this.loggerService.error(e, ChainLinkCoordinatorServiceCron.name);
           }
         }),
       ).then(res =>
         res.forEach(value => {
           if (value.status === "rejected") {
-            this.loggerService.error(value.reason, ChainLinkContractServiceCron.name);
+            this.loggerService.error(value.reason, ChainLinkCoordinatorServiceCron.name);
           }
         }),
       );

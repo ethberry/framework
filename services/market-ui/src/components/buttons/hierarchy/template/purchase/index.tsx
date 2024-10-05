@@ -139,14 +139,12 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
   // Random contract must be registered in Chain-link VRF
   // TODO may-be hide BUY button completely, but it brakes formatting
-  let rndBuyEnabled = true;
-  if (
-    (template.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ||
-      template.contract?.contractFeatures.includes(ContractFeatures.GENES)) &&
-    (!template.contract?.parameters.vrfSubId || !template.contract?.parameters.isConsumer)
-  ) {
-    rndBuyEnabled = false;
-  }
+  const randomRequired =
+    template.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ||
+    template.contract?.contractFeatures.includes(ContractFeatures.GENES);
+  const randomConfigured =
+    !randomRequired ||
+    (randomRequired && template.contract?.parameters.vrfSubId && template.contract?.parameters.isConsumer);
 
   return (
     <Fragment>
@@ -157,7 +155,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         className={className}
         dataTestId="TemplatePurchaseButton"
         disabled={
-          disabled || !rndBuyEnabled || (template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap))
+          disabled || !randomConfigured || (template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap))
         }
         variant={variant}
       />

@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
@@ -6,8 +6,8 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IVrfSubscriptionConsumerAddedEvent,
+  IVrfSubscriptionConsumerRemovedEvent,
   IVrfSubscriptionCreatedEvent,
-  IVrfSubscriptionSetEvent,
 } from "@framework/types";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 import { testChainId } from "@framework/constants";
@@ -20,8 +20,6 @@ import { ChainLinkSubscriptionService } from "./subscription.service";
 @Injectable()
 export class ChainLinkSubscriptionServiceEth {
   constructor(
-    @Inject(Logger)
-    protected readonly loggerService: LoggerService,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     protected readonly configService: ConfigService,
@@ -83,31 +81,30 @@ export class ChainLinkSubscriptionServiceEth {
     }
   }
 
-  public async setVrfSubscription(event: ILogEvent<IVrfSubscriptionSetEvent>, context: Log): Promise<void> {
+  public async consumerRemoved(event: ILogEvent<IVrfSubscriptionConsumerRemovedEvent>, context: Log): Promise<void> {
     const {
       name,
-      args: { subId },
+      args: { consumer },
     } = event;
-    const { address, transactionHash } = context;
-
+    const { transactionHash } = context;
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
     const contractEntity = await this.contractService.findOne(
-      { address: address.toLowerCase(), chainId },
+      { address: consumer.toLowerCase(), chainId },
       { relations: { merchant: true } },
     );
 
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
+    // IF it is our contract
+    if (contractEntity) {
+      await this.contractService.updateParameter({ id: contractEntity.id }, "isConsumer", "false");
+      await this.eventHistoryService.updateHistory(event, context);
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: contractEntity.merchant.wallet.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
     }
-
-    await this.contractService.updateParameter({ id: contractEntity.id }, "vrfSubId", subId);
-    await this.eventHistoryService.updateHistory(event, context);
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: contractEntity.merchant.wallet.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
   }
 }
