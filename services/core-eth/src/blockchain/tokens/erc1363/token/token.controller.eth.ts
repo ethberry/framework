@@ -13,8 +13,13 @@ export class Erc1363TokenControllerEth {
   constructor(private readonly erc1363TokenServiceEth: Erc1363TokenServiceEth) {}
 
   @EventPattern([
+    { contractType: ContractType.LOTTERY, eventName: Erc1363EventType.TransferReceived },
+    { contractType: ContractType.RAFFLE, eventName: Erc1363EventType.TransferReceived },
+    { contractType: ContractType.PREDICTION, eventName: Erc1363EventType.TransferReceived },
+    { contractType: ContractType.PONZI, eventName: Erc1363EventType.TransferReceived },
     { contractType: ContractType.STAKING, eventName: Erc1363EventType.TransferReceived },
     { contractType: ContractType.VESTING, eventName: Erc1363EventType.TransferReceived },
+    { contractType: ContractType.WAIT_LIST, eventName: Erc1363EventType.TransferReceived },
   ])
   public transferReceived(
     @Payload() event: ILogEvent<IErc1363TransferReceivedEvent>,

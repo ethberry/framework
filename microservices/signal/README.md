@@ -13,7 +13,7 @@ cp -rf .env.sample .env.development
 nano .env.development
 ```
 
-obtain gemunion-firebase-key.json from the team
+obtain ethberry-development-firebase.json from the team
 
 ## Start
 

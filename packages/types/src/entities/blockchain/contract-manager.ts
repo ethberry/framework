@@ -21,6 +21,7 @@ export enum ContractType {
   WAIT_LIST = "WAIT_LIST",
   PAYMENT_SPLITTER = "PAYMENT_SPLITTER",
   WRAPPER = "WRAPPER",
+  PREDICTION = "PREDICTION",
 }
 
 export interface IContractManager extends IIdDateBase {

@@ -26,6 +26,7 @@ yarn.lock
 .env.*
 !.env.sample
 
+ethberry-development-firebase.json
 gemunion-firebase-key.json
 halogen-framing-key.json
 /postgres/

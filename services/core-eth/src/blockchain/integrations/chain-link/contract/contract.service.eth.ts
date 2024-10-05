@@ -34,8 +34,8 @@ export class ChainLinkContractServiceEth {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     // DEV ONLY
-    // !!!should work only on Gemunion's BESUs!!!
-    if (chainId !== 10001 && chainId !== 10000) {
+    // !!!should work only on Ethberry's BESUs!!!
+    if (chainId !== 11111 && chainId !== 10000) {
       return;
     }
 

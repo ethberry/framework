@@ -4,7 +4,7 @@ import { populate } from "dotenv";
 
 import { baseTokenURI } from "@ethberry/contracts-constants";
 import { simpleFormatting } from "@ethberry/draft-js-utils";
-import { dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
+import { imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@ethberry/constants";
 
 export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
@@ -73,7 +73,7 @@ export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11102,
-        '${dummyContractAddrs[0]}',
+        '${erc721ContractMysterySimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (inactive)',
         '${simpleFormatting}',
@@ -149,7 +149,7 @@ export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11180,
-        '${dummyContractAddrs[1]}',
+        '${erc721ContractMysterySimpleAddress}',
         '${chainId}',
         'MYSTERY BOX',
         '${simpleFormatting}',
@@ -187,7 +187,7 @@ export class SeedContractMysteryAt1563804001160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         21101,
-        '${dummyContractAddrs[2]}',
+        '${erc721ContractMysterySimpleAddress}',
         56,
         'MYSTERY BOX (BEP)',
         '${simpleFormatting}',

@@ -38,7 +38,7 @@ Then connect to Postgres and manually create `gemunion-development` database
 
 5. Fill up sensitive keys in .env files
 
-6. Obtain gemunion-firebase-key.json
+6. Obtain ethberry-development-firebase.json
 
 ## DEV setup with Docker-compose and Besu blockchain
 

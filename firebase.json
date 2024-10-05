@@ -1,0 +1,9 @@
+{
+  "hosting": {
+    "public": "art",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
