@@ -80,7 +80,7 @@
     "@web3-react/walletconnect-v2": "8.5.1",
     "clsx": "2.1.1",
     "d3": "7.9.0",
-    "date-fns": "3.6.0",
+    "date-fns": "4.1.0",
     "ethers": "5.7.2",
     "firebase": "10.14.0",
     "notistack": "3.0.1",
