@@ -19,7 +19,7 @@
     "@ethberry/nest-js-module-secret-manager-gcp": "1.1.50",
     "@ethberry/nest-js-module-typeorm-debug": "3.0.48",
     "@ethberry/nest-js-module-typeorm-postgres": "1.0.51",
-    "@ethberry/nest-js-module-winston-logdna": "3.1.19",
+    "@ethberry/nest-js-module-winston-logdna": "3.1.20",
     "@ethberry/nest-js-utils": "4.2.17",
     "@ethberry/nest-js-validators": "4.1.6",
     "@ethberry/traits-v6": "1.0.27",
