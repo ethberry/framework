@@ -7,10 +7,10 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@ethberry/nest-js-module-license": "4.0.42",
-    "@ethberry/nest-js-module-mailjet": "4.0.46",
+    "@ethberry/nest-js-module-license": "4.0.43",
+    "@ethberry/nest-js-module-mailjet": "4.0.47",
     "@ethberry/nest-js-module-request-logger": "3.0.32",
-    "@ethberry/nest-js-module-winston-logdna": "3.1.18",
+    "@ethberry/nest-js-module-winston-logdna": "3.1.20",
     "@nestjs/axios": "3.0.3",
     "@nestjs/common": "10.4.4",
     "@nestjs/config": "3.2.3",
