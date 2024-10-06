@@ -15,7 +15,7 @@ export const MerchantListItem: FC<IMerchantListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/marketplace/merchants/${merchant.id}`}>
+      <CardActionArea component={RouterLink} to={`/marketplace/merchants/${merchant.id}/view`}>
         <CardHeader title={merchant.title} />
         <StyledCardMedia image={merchant.imageUrl} title={`${merchant.title}`} />
         <CardContent>
