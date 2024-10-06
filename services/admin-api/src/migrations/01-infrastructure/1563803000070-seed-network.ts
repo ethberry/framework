@@ -20,15 +20,15 @@ export class SeedNetwork1563803000070 implements MigrationInterface {
       ) VALUES ${Object.values(networks)
         .map(network => {
           return `(
-          ${network.chainId},
-          '${network.chainName}',
-          ${network.order},
-          '${JSON.stringify(network.rpcUrls)}',
-          '${JSON.stringify(network.blockExplorerUrls)}',
-          '${JSON.stringify(network.nativeCurrency)}'
-        )`;
+            ${network.chainId},
+            '${network.chainName}',
+            ${network.order},
+            '${JSON.stringify(network.rpcUrls)}',
+            '${JSON.stringify(network.blockExplorerUrls)}',
+            '${JSON.stringify(network.nativeCurrency)}'
+          )`;
         })
-        .join(",")};
+        .join(", ")};
     `);
   }
 

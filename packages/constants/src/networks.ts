@@ -16,7 +16,7 @@ export const networks = {
     },
   },
   "11155111": {
-    order: 9,
+    order: 2,
     chainName: "Ethereum Sepolia",
     chainId: 11155111,
     rpcUrls: ["https://rpc.sepolia.org"],

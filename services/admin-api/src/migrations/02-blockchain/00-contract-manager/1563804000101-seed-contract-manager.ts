@@ -11,7 +11,7 @@ const chainIdToSuffix = (chainId: string | bigint | number) => {
   return Object.keys(Networks)[Object.values(Networks).indexOf(Number(chainId))];
 };
 
-export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
+export class SeedContractManagerAt1563804000101 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     if (process.env.NODE_ENV === NodeEnv.test) {
       return;
@@ -20,14 +20,14 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     populate(
       process.env as any,
       {
-        EXCHANGE_ADDR_ETHBERRY: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ADDR_ETHBERRY_BESU: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ADDR_ETHEREUM: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ADDR_ETHEREUM_SEPOLIA: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ADDR_BINANCE: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ADDR_BINANCE_TEST: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ADDR_POLYGON: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ADDR_POLYGON_AMOY: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_ETHBERRY: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_ETHBERRY_BESU: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_ETHEREUM: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_ETHEREUM_SEPOLIA: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_BINANCE: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_BINANCE_TEST: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_POLYGON: Wallet.createRandom().address.toLowerCase(),
+        CONTRACT_MANAGER_ADDR_POLYGON_AMOY: Wallet.createRandom().address.toLowerCase(),
       },
       process.env as any,
     );
@@ -55,19 +55,19 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
       ) VALUES ${Object.values(networks)
         .map(network => {
           return `(
-            ${network.order}02,
-            '${process.env[`EXCHANGE_ADDR_${chainIdToSuffix(network.chainId)}`]}',
+            ${network.order}01,
+            '${process.env[`CONTRACT_MANAGER_ADDR_${chainIdToSuffix(network.chainId)}`]}',
             ${network.chainId},
-            'EXCHANGE (${chainIdToSuffix(network.chainId)})',
+            'CONTRACT MANAGER (${chainIdToSuffix(network.chainId)})',
             '${simpleFormatting}',
             '',
-            'EXCHANGE',
+            'CONTRACT_MANAGER',
             '',
             '',
             'ACTIVE',
             null,
-            '{WITHDRAW,ALLOWANCE,REFERRAL}',
-            'EXCHANGE',
+            '{ALLOWANCE}',
+            'CONTRACT_MANAGER',
             1,
             '${currentDateTime}',
             '${currentDateTime}'
