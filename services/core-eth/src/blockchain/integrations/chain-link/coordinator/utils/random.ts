@@ -22,48 +22,31 @@ export const callRandom = async function (
   const generatedRandomBytes = randomBytes(32);
   const randomness = BigInt("0x" + Buffer.from(generatedRandomBytes).toString("hex"));
 
-  const block = await provider.provider?.getBlock("latest");
-  // hexlify(toUtf8Bytes('<YOUR_STRING>'));
-
-  // struct Proof {
-  //   uint256[2] pk;
-  //   uint256[2] gamma;
-  //   uint256 c;
-  //   uint256 s;
-  //   uint256 seed;
-  //   address uWitness;
-  //   uint256[2] cGammaWitness;
-  //   uint256[2] sHashWitness;
-  //   uint256 zInv;
-  // }
-
-  const proof = {
-    pk: [0, 0],
-    gamma: [0, 0],
-    c: 0,
-    s: 0,
-    seed: randomness, // random number
-    uWitness: ZeroAddress,
-    cGammaWitness: [0, 0],
-    sHashWitness: [0, 0],
-    zInv: requestId, // requestId
-  };
-
-  const rndReq = {
-    blockNum: block!.number,
-    subId,
-    callbackGasLimit,
-    numWords,
-    sender,
-    extraArgs,
-  };
+  const blockNum = await provider.provider?.getBlockNumber();
 
   const contract = new Contract(vrfAddr, VrfV2Sol.abi, provider);
   const trx = await contract.fulfillRandomWords(
     // Proof
-    proof,
+    {
+      pk: [0, 0],
+      gamma: [0, 0],
+      c: 0,
+      s: 0,
+      seed: randomness, // random number
+      uWitness: ZeroAddress,
+      cGammaWitness: [0, 0],
+      sHashWitness: [0, 0],
+      zInv: requestId, // requestId
+    },
     // RequestCommitmentV2Plus
-    rndReq,
+    {
+      blockNum,
+      subId,
+      callbackGasLimit,
+      numWords,
+      sender,
+      extraArgs,
+    },
     // onlyPremium
     false,
     { gasLimit: 800000 },

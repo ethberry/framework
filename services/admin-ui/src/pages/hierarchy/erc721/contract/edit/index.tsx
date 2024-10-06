@@ -58,6 +58,10 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
     return <UpgradeProductTypeDialog open={rest.open} onClose={rest.onCancel} />;
   }
 
+  const randomRequired =
+    contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES);
+  const randomConfigured = !randomRequired || (randomRequired && parameters.vrfSubId && parameters.isConsumer);
+
   return (
     <FormDialog
       initialValues={fixedValues}
@@ -92,7 +96,7 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       ) : null}
       <AvatarInput name="imageUrl" />
-      {contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES) ? (
+      {!randomConfigured ? (
         <Fragment>
           <Alert severity="warning">
             <Typography>

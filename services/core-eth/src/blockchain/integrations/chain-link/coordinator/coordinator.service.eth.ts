@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
 
@@ -29,8 +29,6 @@ export class ChainLinkCoordinatorServiceEth {
       args: { requestId, sender, subId, callbackGasLimit, numWords, extraArgs, keyHash },
     } = event;
 
-    await this.eventHistoryService.updateHistory(event, context);
-
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     // DEV ONLY
@@ -39,13 +37,19 @@ export class ChainLinkCoordinatorServiceEth {
       return;
     }
 
-    const vrfCoordinator = await this.contractService.findSystemByName({
+    await this.eventHistoryService.updateHistory(event, context);
+
+    const contractEntity = await this.contractService.findOne({
       contractModule: ModuleType.CHAIN_LINK,
       chainId,
     });
 
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
     const txr: string = await callRandom(
-      vrfCoordinator.address[0],
+      contractEntity.address,
       {
         requestId,
         sender,

@@ -16,7 +16,7 @@ import { ChainLinkSubscriptionServiceEth } from "./subscription.service.eth";
 export class ChainLinkSubscriptionControllerEth {
   constructor(private readonly chainLinkSubscriptionServiceEth: ChainLinkSubscriptionServiceEth) {}
 
-  @EventPattern([{ contractType: ChainLinkType.VRF_SUB, eventName: ChainLinkEventType.SubscriptionCreated }])
+  @EventPattern([{ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.SubscriptionCreated }])
   public createSubscription(
     @Payload() event: ILogEvent<IVrfSubscriptionCreatedEvent>,
     @Ctx() context: Log,
@@ -24,7 +24,7 @@ export class ChainLinkSubscriptionControllerEth {
     return this.chainLinkSubscriptionServiceEth.createSubscription(event, context);
   }
 
-  @EventPattern([{ contractType: ChainLinkType.VRF_SUB, eventName: ChainLinkEventType.SubscriptionConsumerAdded }])
+  @EventPattern([{ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.SubscriptionConsumerAdded }])
   public consumerAdd(
     @Payload() event: ILogEvent<IVrfSubscriptionConsumerAddedEvent>,
     @Ctx() context: Log,
@@ -32,7 +32,7 @@ export class ChainLinkSubscriptionControllerEth {
     return this.chainLinkSubscriptionServiceEth.consumerAdd(event, context);
   }
 
-  @EventPattern([{ contractType: ChainLinkType.VRF_SUB, eventName: ChainLinkEventType.SubscriptionConsumerRemoved }])
+  @EventPattern([{ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.SubscriptionConsumerRemoved }])
   public consumerRemoved(
     @Payload() event: ILogEvent<IVrfSubscriptionConsumerRemovedEvent>,
     @Ctx() context: Log,

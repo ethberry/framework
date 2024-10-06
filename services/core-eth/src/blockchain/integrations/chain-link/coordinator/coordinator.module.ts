@@ -8,7 +8,6 @@ import { emlServiceProvider } from "../../../../common/providers";
 import { MerchantModule } from "../../../../infrastructure/merchant/merchant.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { ChainLinkSubscriptionModule } from "../subscription/subscription.module";
 import { ChainLinkCoordinatorControllerEth } from "./coordinator.controller.eth";
 import { ChainLinkCoordinatorServiceEth } from "./coordinator.service.eth";
 import { ChainLinkCoordinatorServiceCron } from "./coordinator.service.cron";
@@ -20,7 +19,6 @@ import { ChainLinkCoordinatorServiceLog } from "./coordinator.service.log";
     ContractModule,
     EventHistoryModule,
     MerchantModule,
-    ChainLinkSubscriptionModule,
     EthersModule.deferred(),
     SecretManagerModule.deferred(),
   ],

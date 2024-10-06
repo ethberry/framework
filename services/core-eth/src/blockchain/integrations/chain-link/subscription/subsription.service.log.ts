@@ -25,7 +25,7 @@ export class ChainLinkSubscriptionServiceLog {
     });
 
     return this.ethersService.updateRegistry({
-      contractType: ChainLinkType.VRF_SUB,
+      contractType: ChainLinkType.VRF,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: VrfABI,
       eventSignatures: [
@@ -39,7 +39,7 @@ export class ChainLinkSubscriptionServiceLog {
   public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
     return this.ethersService.updateRegistryAndReadBlock(
       {
-        contractType: ChainLinkType.VRF_SUB,
+        contractType: ChainLinkType.VRF,
         contractAddress: address,
         contractInterface: VrfABI,
         eventSignatures: [
