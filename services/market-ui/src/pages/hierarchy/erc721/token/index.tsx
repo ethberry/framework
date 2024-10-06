@@ -21,7 +21,7 @@ import { OpenSeaTokenPanel } from "./opensea-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
 
 export const Erc721Token: FC = () => {
-  const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/erc721/tokens",
     empty: {
       metadata: { LEVEL: "0", RARITY: "0", TEMPLATE_ID: "0" },
@@ -57,7 +57,7 @@ export const Erc721Token: FC = () => {
               <CommonTokenPanel token={selected} />
               <RarityTokenPanel token={selected} />
               <DiscreteTokenPanel token={selected} />
-              <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+              <MysteryTokenPanel token={selected} />
               <GenesTokenPanel token={selected} />
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />

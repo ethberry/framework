@@ -3,6 +3,7 @@ import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils, constants } from "ethers";
 
+import { comparator } from "@ethberry/utils";
 import type { IServerSignature } from "@ethberry/types-blockchain";
 import { useAppSelector } from "@ethberry/redux";
 import { walletSelectors } from "@ethberry/provider-wallet";
@@ -12,7 +13,6 @@ import type { IAchievementItemReport, IAchievementRule, IContract } from "@frame
 import { TokenType } from "@framework/types";
 
 import ExchangeClaimFacetClaimABI from "@framework/abis/json/ExchangeClaimFacet/claim.json";
-import { sorter } from "../../../../../utils/sorter";
 
 interface IAchievementRedeemButtonProps {
   achievementRule: IAchievementRule;
@@ -31,7 +31,7 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
   // const redeemableLevels = achievementRule.levels.filter(lvl => lvl.amount <= count.count);
 
   // Level to achieve = lowest not redeemed level
-  const achievementLevel = levelsNotRedeemed.sort(sorter("achievementLevel"))[0];
+  const achievementLevel = levelsNotRedeemed.sort(comparator("achievementLevel"))[0];
   // const achievementLevel = levelsNotRedeemed.reduce((foundLevel, nextLevel) => {
   //   if (nextLevel.amount > count.count && nextLevel.achievementLevel > foundLevel.achievementLevel) {
   //     return nextLevel;

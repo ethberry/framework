@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
+import { useNavigate } from "react-router";
 
 import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -13,20 +14,13 @@ export interface IMysteryUnpackButtonProps {
   className?: string;
   disabled?: boolean;
   token: IToken;
-  onRefreshPage?: () => Promise<void>;
   variant?: ListActionVariant;
 }
 
 export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props => {
-  const {
-    className,
-    disabled,
-    onRefreshPage = () => {
-      /* empty */
-    },
-    token,
-    variant = ListActionVariant.button,
-  } = props;
+  const { className, disabled, token, variant = ListActionVariant.button } = props;
+
+  const navigate = useNavigate();
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -40,7 +34,7 @@ export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props =
   const handleUnpack = (token: IToken): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaFn(token).then(() => {
-        onRefreshPage();
+        navigate("/tokens");
       });
     };
   };

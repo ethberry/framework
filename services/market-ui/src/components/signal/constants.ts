@@ -1,4 +1,5 @@
 export const EventRouteMatch: Partial<Record<string, string>> = {
+  Transfer: "/tokens",
   Claim: "/claim",
   DepositWithdraw: "/staking/deposits",
   Lend: "/rent/tokens",

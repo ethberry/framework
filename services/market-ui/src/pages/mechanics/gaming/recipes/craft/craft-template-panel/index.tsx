@@ -5,6 +5,7 @@ import { Construction } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
+import { comparator } from "@ethberry/utils";
 import { useApiCall } from "@ethberry/react-hooks";
 import { useMetamask, useServerSignature } from "@ethberry/react-hooks-eth";
 import type { IServerSignature } from "@ethberry/types-blockchain";
@@ -18,7 +19,6 @@ import { TokenType } from "@framework/types";
 import CraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
 
 import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
-import { sorter } from "../../../../../../utils/sorter";
 import { StyledTitle, StyledToolbar } from "./styled";
 
 export interface ICraftTemplatePanelProps {
@@ -61,7 +61,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
           receiver: values.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        values.item?.components.sort(sorter("id")).map(component => ({
+        values.item?.components.sort(comparator("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId:
@@ -70,7 +70,7 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
               : (component.templateId || 0).toString(), // suppression types check with 0
           amount: component.amount,
         })),
-        values.price?.components.sort(sorter("id")).map(component => ({
+        values.price?.components.sort(comparator("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,

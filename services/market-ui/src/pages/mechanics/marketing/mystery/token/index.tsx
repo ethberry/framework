@@ -13,7 +13,7 @@ import { MysteryTokenPanel } from "./mystery-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
 
 export const MysteryBoxToken: FC = () => {
-  const { selected, handleRefreshPage, isLoading } = useCollection<IToken>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/mystery/tokens",
     empty: {
       template: {
@@ -45,7 +45,7 @@ export const MysteryBoxToken: FC = () => {
           {selected.templateId ? (
             <>
               <CommonTokenPanel token={selected} />
-              <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+              <MysteryTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>
