@@ -24,11 +24,6 @@ export enum ChainLinkEventSignature {
   VrfSubscriptionSet = "VrfSubscriptionSet(uint256)",
 }
 
-export enum ChainLinkType {
-  VRF = "VRF",
-  VRF_SUB = "VRF_SUB",
-}
-
 export interface IVrfRandomWordsRequestedEvent {
   keyHash: string;
   requestId: string;

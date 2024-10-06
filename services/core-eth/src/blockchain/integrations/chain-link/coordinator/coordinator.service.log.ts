@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { ChainLinkEventSignature, ChainLinkType, ModuleType } from "@framework/types";
+import { ChainLinkEventSignature, ContractType, ModuleType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
@@ -25,7 +25,7 @@ export class ChainLinkCoordinatorServiceLog {
     });
 
     return this.ethersService.updateRegistry({
-      contractType: ChainLinkType.VRF,
+      contractType: ContractType.VRF,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: VrfABI,
       eventSignatures: [ChainLinkEventSignature.RandomWordsRequested],
@@ -35,7 +35,7 @@ export class ChainLinkCoordinatorServiceLog {
   public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
     return this.ethersService.updateRegistryAndReadBlock(
       {
-        contractType: ChainLinkType.VRF,
+        contractType: ContractType.VRF,
         contractAddress: address,
         contractInterface: VrfABI,
         eventSignatures: [],

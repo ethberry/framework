@@ -3,12 +3,12 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type {
+import {
   IVrfSubscriptionConsumerAddedEvent,
   IVrfSubscriptionConsumerRemovedEvent,
   IVrfSubscriptionCreatedEvent,
 } from "@framework/types";
-import { ChainLinkEventType, ChainLinkType } from "@framework/types";
+import { ChainLinkEventType, ContractType } from "@framework/types";
 
 import { ChainLinkSubscriptionServiceEth } from "./subscription.service.eth";
 
@@ -16,7 +16,7 @@ import { ChainLinkSubscriptionServiceEth } from "./subscription.service.eth";
 export class ChainLinkSubscriptionControllerEth {
   constructor(private readonly chainLinkSubscriptionServiceEth: ChainLinkSubscriptionServiceEth) {}
 
-  @EventPattern([{ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.SubscriptionCreated }])
+  @EventPattern([{ contractType: ContractType.VRF, eventName: ChainLinkEventType.SubscriptionCreated }])
   public createSubscription(
     @Payload() event: ILogEvent<IVrfSubscriptionCreatedEvent>,
     @Ctx() context: Log,
@@ -24,7 +24,7 @@ export class ChainLinkSubscriptionControllerEth {
     return this.chainLinkSubscriptionServiceEth.createSubscription(event, context);
   }
 
-  @EventPattern([{ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.SubscriptionConsumerAdded }])
+  @EventPattern([{ contractType: ContractType.VRF, eventName: ChainLinkEventType.SubscriptionConsumerAdded }])
   public consumerAdd(
     @Payload() event: ILogEvent<IVrfSubscriptionConsumerAddedEvent>,
     @Ctx() context: Log,
@@ -32,7 +32,7 @@ export class ChainLinkSubscriptionControllerEth {
     return this.chainLinkSubscriptionServiceEth.consumerAdd(event, context);
   }
 
-  @EventPattern([{ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.SubscriptionConsumerRemoved }])
+  @EventPattern([{ contractType: ContractType.VRF, eventName: ChainLinkEventType.SubscriptionConsumerRemoved }])
   public consumerRemoved(
     @Payload() event: ILogEvent<IVrfSubscriptionConsumerRemovedEvent>,
     @Ctx() context: Log,

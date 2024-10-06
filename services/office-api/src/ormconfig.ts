@@ -3,8 +3,6 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 // import { NodeEnv } from "@ethberry/constants";
 
-// contract-manager
-import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 // hierarchy
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
@@ -64,7 +62,6 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
-    ContractManagerEntity,
     // exchange
     AssetEntity,
     AssetComponentEntity,

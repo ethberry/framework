@@ -5,13 +5,12 @@ import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 import {
-  AccessControlEventType,
+  AccessControlEventSignature,
   ContractType,
-  Erc1363EventType,
-  ExchangeEventType,
+  ExchangeEventSignature,
   ModuleType,
-  PausableEventType,
-  ReferralProgramEventType,
+  PausableEventSignature,
+  ReferralProgramEventSignature,
 } from "@framework/types";
 
 import { ContractService } from "../hierarchy/contract/contract.service";
@@ -37,28 +36,27 @@ export class ExchangeServiceLog {
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: ExchangeABI,
       eventSignatures: [
-        ExchangeEventType.Purchase,
-        ExchangeEventType.Lend,
-        ExchangeEventType.LendMany,
-        ExchangeEventType.Claim,
-        ExchangeEventType.Craft,
-        ExchangeEventType.Merge,
-        ExchangeEventType.Dismantle,
-        ExchangeEventType.PurchaseMysteryBox,
-        ExchangeEventType.PurchaseLootBox,
-        ExchangeEventType.Upgrade,
-        ExchangeEventType.Breed,
-        ExchangeEventType.PurchaseLottery,
-        ExchangeEventType.PurchaseRaffle,
+        ExchangeEventSignature.Purchase,
+        ExchangeEventSignature.Lend,
+        ExchangeEventSignature.LendMany,
+        ExchangeEventSignature.Claim,
+        ExchangeEventSignature.Craft,
+        ExchangeEventSignature.Merge,
+        ExchangeEventSignature.Dismantle,
+        ExchangeEventSignature.PurchaseMysteryBox,
+        ExchangeEventSignature.PurchaseLootBox,
+        ExchangeEventSignature.Upgrade,
+        ExchangeEventSignature.Breed,
+        ExchangeEventSignature.PurchaseLottery,
+        ExchangeEventSignature.PurchaseRaffle,
         // mechanics
-        ReferralProgramEventType.ReferralEvent,
-        Erc1363EventType.TransferReceived,
+        ReferralProgramEventSignature.ReferralEvent,
         // extensions
-        AccessControlEventType.RoleGranted,
-        AccessControlEventType.RoleRevoked,
-        AccessControlEventType.RoleAdminChanged,
-        PausableEventType.Paused,
-        PausableEventType.Unpaused,
+        AccessControlEventSignature.RoleGranted,
+        AccessControlEventSignature.RoleRevoked,
+        AccessControlEventSignature.RoleAdminChanged,
+        PausableEventSignature.Paused,
+        PausableEventSignature.Unpaused,
       ],
     });
   }

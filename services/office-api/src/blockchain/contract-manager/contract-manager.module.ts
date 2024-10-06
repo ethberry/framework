@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ethersRpcProvider, ethersSignerProvider } from "@ethberry/nest-js-module-ethers-gcp";
 import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
@@ -10,16 +9,9 @@ import { ContractModule } from "../hierarchy/contract/contract.module";
 import { ContractManagerController } from "./contract-manager.controller";
 import { ContractManagerSignService } from "./contract-manager.sign.service";
 import { ContractManagerService } from "./contract-manager.service";
-import { ContractManagerEntity } from "./contract-manager.entity";
 
 @Module({
-  imports: [
-    ConfigModule,
-    RatePlanModule,
-    ContractModule,
-    SecretManagerModule.deferred(),
-    TypeOrmModule.forFeature([ContractManagerEntity]),
-  ],
+  imports: [ConfigModule, RatePlanModule, ContractModule, SecretManagerModule.deferred()],
   providers: [ethersRpcProvider, ethersSignerProvider, ContractManagerSignService, ContractManagerService],
   controllers: [ContractManagerController],
   exports: [ContractManagerSignService, ContractManagerService],
