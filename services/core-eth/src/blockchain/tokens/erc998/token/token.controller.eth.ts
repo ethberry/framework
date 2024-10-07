@@ -4,6 +4,9 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
+  ContractType,
+  Erc721EventType,
+  Erc998EventType,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
@@ -14,9 +17,7 @@ import {
   IErc998TokenTransferChildEvent,
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
-  ILevelUp,
 } from "@framework/types";
-import { DiscreteEventType, Erc998EventType, Erc721EventType, ContractType } from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";
 
@@ -93,10 +94,5 @@ export class Erc998TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc998TokenServiceEth.unWhitelistChild(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: DiscreteEventType.LevelUp })
-  public levelUp(@Payload() event: ILogEvent<ILevelUp>, @Ctx() context: Log): Promise<void> {
-    return this.erc998TokenServiceEth.levelUp(event, context);
   }
 }

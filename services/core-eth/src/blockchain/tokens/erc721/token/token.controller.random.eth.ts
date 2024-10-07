@@ -4,12 +4,13 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
+  ContractType,
+  Erc721EventType,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
 } from "@framework/types";
-import { Erc721EventType, DiscreteEventType, ContractType, ILevelUp } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
 import { Erc721TokenRandomServiceEth } from "./token.service.random.eth";
@@ -45,10 +46,5 @@ export class Erc721TokenRandomControllerEth extends Erc721TokenControllerEth {
   @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: Erc721EventType.MintRandom })
   public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenRandomServiceEth.mintRandom(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: DiscreteEventType.LevelUp })
-  public levelUp(@Payload() event: ILogEvent<ILevelUp>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.levelUp(event, context);
   }
 }

@@ -60,7 +60,7 @@ export const CraftItem: FC = () => {
         </Grid>
       </Grid>
 
-      <StyledDescription>
+      <StyledDescription component="div">
         <RichTextDisplay data={selected.item?.components[0].template!.description} />
       </StyledDescription>
 

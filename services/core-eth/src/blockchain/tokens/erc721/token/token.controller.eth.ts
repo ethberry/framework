@@ -4,14 +4,13 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
+  ContractType,
   Erc721EventType,
   IERC721ConsecutiveTransfer,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  ILevelUp,
 } from "@framework/types";
-import { DiscreteEventType, ContractType } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
 
@@ -43,10 +42,5 @@ export class Erc721TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc721TokenServiceEth.consecutiveTransfer(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: DiscreteEventType.LevelUp })
-  public levelUp(@Payload() event: ILogEvent<ILevelUp>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.levelUp(event, context);
   }
 }

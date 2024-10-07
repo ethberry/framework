@@ -33,7 +33,7 @@ export const Erc1155Template: FC = () => {
       <Grid container>
         <Grid item xs={12} sm={9}>
           <StyledImage component="img" src={selected.imageUrl} alt="Gemunion template image" />
-          <StyledDescription>
+          <StyledDescription component="div">
             <RichTextDisplay data={selected.description} />
           </StyledDescription>
         </Grid>

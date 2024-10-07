@@ -54,7 +54,7 @@ export const AssetPromoBanner: FC<IBannerProps> = props => {
       <Grid item xs={12} sm={6}>
         <StyledContent>
           <StyledTitle>{promo.item?.components[0].template?.title}</StyledTitle>
-          <StyledDescription>
+          <StyledDescription component="div">
             <RichTextDisplay data={promo.item?.components[0].template?.description} />
           </StyledDescription>
           <StyledTime>{time}</StyledTime>

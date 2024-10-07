@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
-import { JsonRpcProvider, Log, stripZerosLeft, toUtf8String, ZeroAddress } from "ethers";
+import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
@@ -13,11 +13,9 @@ import type {
   IErc998TokenTransferChildEvent,
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
-  ILevelUp,
 } from "@framework/types";
-import { testChainId } from "@framework/constants";
-
 import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { getMetadata } from "../../../../common/utils";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
@@ -447,35 +445,6 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: parentContractEntity.merchant.wallet,
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
-  }
-
-  public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
-    const {
-      name,
-      args: { tokenId, attribute, value },
-    } = event;
-    const { address, transactionHash } = context;
-
-    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), void 0, true);
-
-    if (!erc998TokenEntity) {
-      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc998TokenServiceEth.name);
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    Object.assign(erc998TokenEntity.metadata, { [toUtf8String(stripZerosLeft(attribute))]: value });
-
-    await erc998TokenEntity.save();
-
-    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: erc998TokenEntity.balance[0].account,
         transactionHash,
         transactionType: name,
       })
