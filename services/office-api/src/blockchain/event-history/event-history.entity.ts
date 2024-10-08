@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "type
 
 import { IdDateBaseEntity } from "@ethberry/nest-js-module-typeorm-postgres";
 import type { IEventHistory, TContractEventData } from "@framework/types";
-import { ContractEventType } from "@framework/types";
+import { TContractEventType } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { AssetComponentHistoryEntity } from "../exchange/asset/asset-component-history.entity";
@@ -17,11 +17,8 @@ export class EventHistoryEntity extends IdDateBaseEntity implements IEventHistor
   @Column({ type: "varchar" })
   public transactionHash: string;
 
-  @Column({
-    type: "enum",
-    enum: ContractEventType,
-  })
-  public eventType: ContractEventType;
+  @Column({ type: "varchar" })
+  public eventType: TContractEventType;
 
   @Column({ type: "json" })
   public eventData: TContractEventData;

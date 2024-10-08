@@ -1,9 +1,9 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
+import { IsArray, IsEnum, IsInt, IsOptional, Min, IsString } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@ethberry/collection";
-import { AchievementRuleStatus, ContractEventType, IAchievementRuleSearchDto, TemplateStatus } from "@framework/types";
+import { AchievementRuleStatus, TContractEventType, IAchievementRuleSearchDto, TemplateStatus } from "@framework/types";
 
 export class AchievementRuleSearchDto extends SearchDto implements IAchievementRuleSearchDto {
   @ApiPropertyOptional({
@@ -38,7 +38,7 @@ export class AchievementRuleSearchDto extends SearchDto implements IAchievementR
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<ContractEventType>)
-  @IsEnum(ContractEventType, { each: true, message: "badInput" })
-  public eventType: Array<ContractEventType>;
+  @Transform(({ value }) => value as Array<string>)
+  @IsString({ each: true, message: "typeMismatch" })
+  public eventType: Array<TContractEventType>;
 }

@@ -3,14 +3,13 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  ContractType,
-  ExchangeEventType,
-  IExchangeErc20PaymentReleasedEvent,
-  IExchangePayeeAddedEvent,
-  IExchangePaymentReceivedEvent,
-  IExchangePaymentReleasedEvent,
+import type {
+  IPaymentSplitterERC20PaymentReleasedEvent,
+  IPaymentSplitterPayeeAddedEvent,
+  IPaymentSplitterPaymentReceivedEvent,
+  IPaymentSplitterPaymentReleasedEvent,
 } from "@framework/types";
+import { ContractType, PaymentSplitterEventType } from "@framework/types";
 
 import { PaymentSplitterServiceEth } from "./payment-splitter.service.eth";
 
@@ -19,82 +18,83 @@ export class PaymentSplitterControllerEth {
   constructor(private readonly paymentSplitterServiceEth: PaymentSplitterServiceEth) {}
 
   @EventPattern([
-    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.PayeeAdded },
-    { contractType: ContractType.PONZI, eventName: ExchangeEventType.PayeeAdded },
-    { contractType: ContractType.PAYMENT_SPLITTER, eventName: ExchangeEventType.PayeeAdded },
+    { contractType: ContractType.EXCHANGE, eventName: PaymentSplitterEventType.PayeeAdded },
+    { contractType: ContractType.PONZI, eventName: PaymentSplitterEventType.PayeeAdded },
+    { contractType: ContractType.PAYMENT_SPLITTER, eventName: PaymentSplitterEventType.PayeeAdded },
   ])
-  public addPayee(@Payload() event: ILogEvent<IExchangePayeeAddedEvent>, @Ctx() context: Log): Promise<void> {
+  public addPayee(@Payload() event: ILogEvent<IPaymentSplitterPayeeAddedEvent>, @Ctx() context: Log): Promise<void> {
     return this.paymentSplitterServiceEth.addPayee(event, context);
   }
 
   @EventPattern([
     {
       contractType: ContractType.PAYMENT_SPLITTER,
-      eventName: ExchangeEventType.PaymentReceived,
+      eventName: PaymentSplitterEventType.PaymentReceived,
     },
     {
       contractType: ContractType.EXCHANGE,
-      eventName: ExchangeEventType.PaymentReceived,
+      eventName: PaymentSplitterEventType.PaymentReceived,
     },
     {
       contractType: ContractType.EXCHANGE,
-      eventName: ExchangeEventType.PaymentReceived,
+      eventName: PaymentSplitterEventType.PaymentReceived,
     },
     {
       contractType: ContractType.PONZI,
-      eventName: ExchangeEventType.PaymentReceived,
+      eventName: PaymentSplitterEventType.PaymentReceived,
     },
     {
       contractType: ContractType.LOTTERY,
-      eventName: ExchangeEventType.PaymentReceived,
+      eventName: PaymentSplitterEventType.PaymentReceived,
     },
     {
       contractType: ContractType.RAFFLE,
-      eventName: ExchangeEventType.PaymentReceived,
+      eventName: PaymentSplitterEventType.PaymentReceived,
     },
   ])
-  public addEth(@Payload() event: ILogEvent<IExchangePaymentReceivedEvent>, @Ctx() context: Log): Promise<void> {
+  public addEth(@Payload() event: ILogEvent<IPaymentSplitterPaymentReceivedEvent>, @Ctx() context: Log): Promise<void> {
     return this.paymentSplitterServiceEth.addEth(event, context);
   }
 
   @EventPattern([
     {
       contractType: ContractType.PAYMENT_SPLITTER,
-      eventName: ExchangeEventType.PaymentReleased,
+      eventName: PaymentSplitterEventType.PaymentReleased,
     },
     {
       contractType: ContractType.EXCHANGE,
-      eventName: ExchangeEventType.PaymentReleased,
+      eventName: PaymentSplitterEventType.PaymentReleased,
     },
     {
       contractType: ContractType.PONZI,
-      eventName: ExchangeEventType.PaymentReleased,
+      eventName: PaymentSplitterEventType.PaymentReleased,
     },
   ])
-  public releaseEth(@Payload() event: ILogEvent<IExchangePaymentReleasedEvent>, @Ctx() context: Log): Promise<void> {
+  public releaseEth(
+    @Payload() event: ILogEvent<IPaymentSplitterPaymentReleasedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
     return this.paymentSplitterServiceEth.releaseEth(event, context);
   }
 
   @EventPattern([
     {
       contractType: ContractType.PAYMENT_SPLITTER,
-      eventName: ExchangeEventType.ERC20PaymentReleased,
+      eventName: PaymentSplitterEventType.ERC20PaymentReleased,
     },
     {
       contractType: ContractType.EXCHANGE,
-      eventName: ExchangeEventType.ERC20PaymentReleased,
+      eventName: PaymentSplitterEventType.ERC20PaymentReleased,
     },
     {
       contractType: ContractType.PONZI,
-      eventName: ExchangeEventType.ERC20PaymentReleased,
+      eventName: PaymentSplitterEventType.ERC20PaymentReleased,
     },
   ])
   public releaseErc20(
-    @Payload() event: ILogEvent<IExchangeErc20PaymentReleasedEvent>,
+    @Payload() event: ILogEvent<IPaymentSplitterERC20PaymentReleasedEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.paymentSplitterServiceEth.releaseErc20(event, context);
   }
-
-  // TODO add dedicated release history table? {from, to, token, amount}
 }

@@ -11,11 +11,10 @@ import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./style
 
 export interface IMysteryTokenPanelProps {
   token: IToken;
-  onRefreshPage: () => Promise<void>;
 }
 
 export const MysteryTokenPanel: FC<IMysteryTokenPanelProps> = props => {
-  const { token, onRefreshPage } = props;
+  const { token } = props;
 
   if (token.template?.contract?.contractModule !== ModuleType.MYSTERY) {
     return null;
@@ -34,7 +33,7 @@ export const MysteryTokenPanel: FC<IMysteryTokenPanelProps> = props => {
       </CardContent>
 
       <CardActions>
-        <MysteryWrapperUnpackButton token={token} onRefreshPage={onRefreshPage} />
+        <MysteryWrapperUnpackButton token={token} />
       </CardActions>
     </StyledCard>
   );

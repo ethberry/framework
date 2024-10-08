@@ -26,7 +26,7 @@ import { TokenService } from "../../../../hierarchy/token/token.service";
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryRoundAggregationService } from "./round.service.aggregation";
-import { LotteryTokenService } from "../ticket/token.service";
+import { LotteryTicketService } from "../ticket/ticket.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 
 @Injectable()
@@ -40,7 +40,7 @@ export class LotteryRoundServiceEth {
     protected readonly emlClientProxy: ClientProxy,
     private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
-    private readonly lotteryTokenService: LotteryTokenService,
+    private readonly lotteryTokenService: LotteryTicketService,
     private readonly lotteryRoundAggregationService: LotteryRoundAggregationService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly templateService: TemplateService,

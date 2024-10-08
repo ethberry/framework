@@ -4,7 +4,7 @@ import { populate } from "dotenv";
 
 import { baseTokenURI } from "@ethberry/contracts-constants";
 import { simpleFormatting } from "@ethberry/draft-js-utils";
-import { dummyContractAddrs, imageUrl, ns, testChainId } from "@framework/constants";
+import { imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@ethberry/constants";
 
 export class SeedContractLootAt1563804001160 implements MigrationInterface {
@@ -73,7 +73,7 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11202,
-        '${dummyContractAddrs[0]}',
+        '${erc721ContractLootPausableAddress}',
         '${chainId}',
         'LOOT BOX (inactive)',
         '${simpleFormatting}',
@@ -149,7 +149,7 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11280,
-        '${dummyContractAddrs[1]}',
+        '${erc721ContractLootSimpleAddress}',
         '${chainId}',
         'LOOT BOX',
         '${simpleFormatting}',
@@ -187,7 +187,7 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         21201,
-        '${dummyContractAddrs[2]}',
+        '${erc721ContractLootSimpleAddress}',
         56,
         'LOOT BOX (BEP)',
         '${simpleFormatting}',

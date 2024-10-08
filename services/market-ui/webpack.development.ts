@@ -90,14 +90,14 @@ const config: Configuration = {
     splitChunks: {
       cacheGroups: {
         vendors: {
-          test: /[\\/]node_modules[\\/]((?!@gemunion|@mui).*)[\\/]/,
+          test: /[\\/]node_modules[\\/]((?!@ethberry|@mui).*)[\\/]/,
           name: "vendors",
           chunks: "all",
           enforce: true,
         },
-        gemunion: {
-          test: /[\\/]node_modules[\\/]@gemunion[\\/]/,
-          name: "gemunion",
+        ethberry: {
+          test: /[\\/]node_modules[\\/]@ethberry[\\/]/,
+          name: "ethberry",
           chunks: "all",
           enforce: true,
         },

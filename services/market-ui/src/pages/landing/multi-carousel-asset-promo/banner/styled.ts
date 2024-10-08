@@ -8,7 +8,7 @@ export const StyledContainer = styled(Grid)(({ theme }) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
-}));
+})) as typeof Grid;
 
 export const StyledImage = styled(Box)(({ theme }) => ({
   margin: "0 auto",
@@ -31,27 +31,27 @@ export const StyledContent = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     paddingRight: 0,
   },
-}));
+})) as typeof Box;
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
   ...theme.typography.h3,
   [theme.breakpoints.down("sm")]: {
     ...theme.typography.h4,
   },
-}));
+})) as typeof Typography;
 
 export const StyledDescription = styled(Box)(({ theme }) => ({
   margin: theme.spacing(3, 0),
-}));
+})) as typeof Box;
 
 export const StyledTime = styled(Box)(({ theme }) => ({
   margin: theme.spacing(3, 0, 4),
   color: "red",
   height: "1em",
   textAlign: "center",
-}));
+})) as typeof Box;
 
 export const StyledButtonWrapper = styled(Box)(({ theme }) => ({
   margin: theme.spacing(4, 0, 3),
   textAlign: "center",
-}));
+})) as typeof Box;

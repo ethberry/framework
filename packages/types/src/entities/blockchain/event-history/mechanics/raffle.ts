@@ -1,12 +1,19 @@
 import type { IAssetItem } from "../exchange/common";
 
 export enum RaffleEventType {
-  RoundFinalizedRaffle = "RoundFinalizedRaffle",
   RoundFinalized = "RoundFinalized",
   RoundStarted = "RoundStarted",
   RoundEnded = "RoundEnded",
   Released = "Released",
   Prize = "Prize",
+}
+
+export enum RaffleEventSignature {
+  RoundFinalized = "RoundFinalized(uint256,uint8[6])",
+  RoundStarted = "RoundStarted(uint256,uint256,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256))",
+  RoundEnded = "RoundEnded(uint256,uint256)",
+  Released = "Released(uint256,uint256)",
+  Prize = "Prize(address,uint256,uint256,uint256)",
 }
 
 export interface IRaffleRoundStartedEvent {

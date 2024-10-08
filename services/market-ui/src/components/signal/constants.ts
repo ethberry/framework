@@ -1,6 +1,5 @@
-import type { ContractEventSignature } from "@framework/types";
-
-export const EventRouteMatch: Partial<Record<keyof typeof ContractEventSignature, string>> = {
+export const EventRouteMatch: Partial<Record<string, string>> = {
+  Transfer: "/tokens",
   Claim: "/claim",
   DepositWithdraw: "/staking/deposits",
   Lend: "/rent/tokens",

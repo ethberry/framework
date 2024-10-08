@@ -3,6 +3,7 @@ import { Inventory } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
 
+import { comparator } from "@ethberry/utils";
 import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 import { useUser } from "@ethberry/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -10,8 +11,6 @@ import type { IClaim, IContract, IUser } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 
 import VestingDeployABI from "@framework/abis/json/VestingFactoryFacet/deployVesting.json";
-
-import { sorter } from "../../../../../utils/sorter";
 
 export interface IVestingDeployButtonProps {
   claim: IClaim;
@@ -46,7 +45,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
           cliffInMonth: claim.parameters.cliffInMonth,
           monthlyRelease: claim.parameters.monthlyRelease,
         },
-        claim.item?.components.sort(sorter("id")).map(component => ({
+        claim.item?.components.sort(comparator("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract?.address,
           tokenId: (component.templateId || 0).toString(), // suppression types check with 0

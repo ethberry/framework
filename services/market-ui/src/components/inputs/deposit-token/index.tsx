@@ -3,10 +3,10 @@ import { FormattedMessage } from "react-intl";
 import { Alert, Box, Typography } from "@mui/material";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
+import { comparator } from "@ethberry/utils";
 import { formatItem } from "@framework/exchange";
 import type { IAssetComponent } from "@framework/types";
 
-import { sorter } from "../../../utils/sorter";
 import { TokenInput } from "./token-input";
 
 export const TokenDepositInput: FC = () => {
@@ -28,7 +28,7 @@ export const TokenDepositInput: FC = () => {
         <FormattedMessage id="alert.deposit" />
       </Alert>
       <Box>
-        {assets.sort(sorter("templateId")).map((asset, index) => (
+        {assets.sort(comparator("templateId")).map((asset, index) => (
           <Fragment key={asset.id}>
             <TokenInput
               key={asset.id}

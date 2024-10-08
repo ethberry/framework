@@ -1,12 +1,27 @@
-export interface IVrfRandomnessRequestEvent {
-  sender: string;
-  keyHash: string;
-  seed: string;
+export enum ChainLinkEventType {
+  // VRFCoordinatorV2_5
+  RandomWordsRequested = "RandomWordsRequested",
+
+  // SubscriptionAPI
+  SubscriptionCreated = "SubscriptionCreated",
+  SubscriptionConsumerAdded = "SubscriptionConsumerAdded",
+  SubscriptionConsumerRemoved = "SubscriptionConsumerRemoved",
+
+  // ChainLinkBaseV2Plus
+  VrfSubscriptionSet = "VrfSubscriptionSet",
 }
 
-export interface IVrfRandomRequestEvent {
-  _requestID: string;
-  _sender: string;
+export enum ChainLinkEventSignature {
+  // VRFCoordinatorV2_5
+  RandomWordsRequested = "RandomWordsRequested(bytes32,uint256,uint256,uint256,uint16,uint32,uint32,bytes,address)",
+
+  // SubscriptionAPI
+  SubscriptionCreated = "SubscriptionCreated(uint256,address)",
+  SubscriptionConsumerAdded = "SubscriptionConsumerAdded(uint256,address)",
+  SubscriptionConsumerRemoved = "SubscriptionConsumerRemoved(uint256,address)",
+
+  // ChainLinkBaseV2Plus
+  VrfSubscriptionSet = "VrfSubscriptionSet(uint256)",
 }
 
 export interface IVrfRandomWordsRequestedEvent {
@@ -17,30 +32,32 @@ export interface IVrfRandomWordsRequestedEvent {
   minimumRequestConfirmations: string;
   callbackGasLimit: string;
   numWords: string;
+  extraArgs: string;
   sender: string;
 }
 
-// event SubscriptionCreated(uint64 indexed subId, address owner);
 export interface IVrfSubscriptionCreatedEvent {
   subId: string;
   owner: string;
 }
 
-// event VrfSubscriptionSet(uint64 subId);
-export interface IVrfSubscriptionSetEvent {
-  subId: string;
-}
-
-// event SubscriptionConsumerAdded(uint64 indexed subId, address consumer);
 export interface IVrfSubscriptionConsumerAddedEvent {
   subId: string;
   consumer: string;
 }
 
+export interface IVrfSubscriptionConsumerRemovedEvent {
+  subId: string;
+  consumer: string;
+}
+
+export interface IVrfSubscriptionSetEvent {
+  subId: string;
+}
+
 export type TChainLinkEvents =
-  | IVrfRandomnessRequestEvent
-  | IVrfRandomRequestEvent
   | IVrfRandomWordsRequestedEvent
   | IVrfSubscriptionCreatedEvent
-  | IVrfSubscriptionSetEvent
-  | IVrfSubscriptionConsumerAddedEvent;
+  | IVrfSubscriptionConsumerAddedEvent
+  | IVrfSubscriptionConsumerRemovedEvent
+  | IVrfSubscriptionSetEvent;

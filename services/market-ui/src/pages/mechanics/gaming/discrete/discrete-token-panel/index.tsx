@@ -7,7 +7,7 @@ import type { IToken } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { useCheckTokenOwnership } from "../../../../../utils/use-check-token-ownership";
-import { GradeButton } from "../../../../../components/buttons";
+import { DiscreteButton } from "../../../../../components/buttons";
 import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { TokenDiscreteView } from "./discrete";
 import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
@@ -53,7 +53,7 @@ export const DiscreteTokenPanel: FC<IDiscreteTokenPanelProps> = props => {
         <TokenDiscreteView metadata={token.metadata} />
       </CardContent>
       <CardActions>
-        <GradeButton token={token} disabled={!hasOwnership} />
+        <DiscreteButton token={token} disabled={!hasOwnership} />
       </CardActions>
     </StyledCard>
   );

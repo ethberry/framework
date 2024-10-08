@@ -15,8 +15,6 @@ import { BusinessType, ContractStatus, NativeContractFeatures } from "@framework
 import {
   ContractAllowanceButton,
   ContractMintButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
@@ -112,8 +110,6 @@ export const NativeContract: FC = () => {
               <ContractAllowanceButton contract={contract} disabled={true} />
               <TransferButton contract={contract} disabled={true} />
               <RoyaltyButton contract={contract} disabled={true} />
-              <EthListenerAddButton contract={contract} disabled={true} />
-              <EthListenerRemoveButton contract={contract} disabled={true} />
             </ListActions>
           </ListItem>
         ))}

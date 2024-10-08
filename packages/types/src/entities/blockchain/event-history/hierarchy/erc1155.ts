@@ -1,3 +1,17 @@
+export enum Erc1155EventType {
+  ApprovalForAll = "ApprovalForAll",
+  TransferBatch = "TransferBatch",
+  TransferSingle = "TransferSingle",
+  URI = "URI",
+}
+
+export enum Erc1155EventSignature {
+  ApprovalForAll = "ApprovalForAll(address,address,bool)",
+  TransferBatch = "TransferBatch(address,address,address,uint256[],uint256[])",
+  TransferSingle = "TransferSingle(address,address,address,uint256,uint256)",
+  URI = "URI(string,uint256)",
+}
+
 export interface IErc1155TokenTransferSingleEvent {
   operator: string;
   from: string;

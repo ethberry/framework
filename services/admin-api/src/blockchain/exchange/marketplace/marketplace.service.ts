@@ -4,8 +4,8 @@ import { Brackets, EntityManager, Repository } from "typeorm";
 import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
-import type { IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
-import { ContractEventType, ExchangeType, TokenType, UserRole } from "@framework/types";
+import { ExchangeEventType, IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
+import { ExchangeType, TokenType, UserRole } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
@@ -74,7 +74,7 @@ export class MarketplaceService {
       chainId: userEntity.chainId,
     });
 
-    queryBuilder.andWhere("history.event_type = :eventType", { eventType: ContractEventType.Purchase });
+    queryBuilder.andWhere("history.event_type = :eventType", { eventType: ExchangeEventType.Purchase });
 
     queryBuilder.andWhere("item_contract.contractType IN(:...contractType)", {
       contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],

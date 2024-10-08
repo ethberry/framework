@@ -1,27 +1,25 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IExchangeErc20PaymentReleasedEvent,
-  IExchangePayeeAddedEvent,
-  IExchangePaymentReceivedEvent,
-  IExchangePaymentReleasedEvent,
+  IPaymentSplitterERC20PaymentReleasedEvent,
+  IPaymentSplitterPayeeAddedEvent,
+  IPaymentSplitterPaymentReceivedEvent,
+  IPaymentSplitterPaymentReleasedEvent,
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { PayeesService } from "./payee/payees.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { BalanceService } from "../../hierarchy/balance/balance.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
+import { PayeesService } from "./payee/payees.service";
 
 @Injectable()
 export class PaymentSplitterServiceEth {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly payeesService: PayeesService,
     private readonly contractService: ContractService,
@@ -30,7 +28,7 @@ export class PaymentSplitterServiceEth {
     private readonly eventHistoryService: EventHistoryService,
   ) {}
 
-  public async addPayee(event: ILogEvent<IExchangePayeeAddedEvent>, context: Log): Promise<void> {
+  public async addPayee(event: ILogEvent<IPaymentSplitterPayeeAddedEvent>, context: Log): Promise<void> {
     const {
       args: { account, shares },
     } = event;
@@ -49,7 +47,7 @@ export class PaymentSplitterServiceEth {
     });
   }
 
-  public async addEth(event: ILogEvent<IExchangePaymentReceivedEvent>, context: Log): Promise<void> {
+  public async addEth(event: ILogEvent<IPaymentSplitterPaymentReceivedEvent>, context: Log): Promise<void> {
     const {
       args: { amount },
     } = event;
@@ -66,7 +64,7 @@ export class PaymentSplitterServiceEth {
     await this.balanceService.increment(tokenEntity.id, context.address.toLowerCase(), amount);
   }
 
-  public async releaseEth(event: ILogEvent<IExchangePaymentReleasedEvent>, context: Log): Promise<void> {
+  public async releaseEth(event: ILogEvent<IPaymentSplitterPaymentReleasedEvent>, context: Log): Promise<void> {
     const {
       args: { amount },
     } = event;
@@ -82,7 +80,7 @@ export class PaymentSplitterServiceEth {
     await this.balanceService.decrement(tokenEntity.id, context.address.toLowerCase(), amount);
   }
 
-  public async releaseErc20(event: ILogEvent<IExchangeErc20PaymentReleasedEvent>, context: Log): Promise<void> {
+  public async releaseErc20(event: ILogEvent<IPaymentSplitterERC20PaymentReleasedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     // Balance will decrement by Erc20 controller
   }

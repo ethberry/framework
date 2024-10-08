@@ -3,6 +3,7 @@ import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
+import { comparator } from "@ethberry/utils";
 import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IContract } from "@framework/types";
@@ -10,8 +11,6 @@ import { ClaimStatus, SystemModuleType, TokenType, ClaimType } from "@framework/
 
 import ExchangeClaimFacetClaimABI from "@framework/abis/json/ExchangeClaimFacet/claim.json";
 import ExchangeClaimFacetSpendABI from "@framework/abis/json/ExchangeClaimFacet/spend.json";
-
-import { sorter } from "../../../../../utils/sorter";
 
 export interface IClaimRedeemButtonProps {
   claim: IClaim;
@@ -41,7 +40,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
       };
       const item = values.item?.components
         .slice()
-        .sort(sorter("id"))
+        .sort(comparator("id"))
         .map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract?.address,

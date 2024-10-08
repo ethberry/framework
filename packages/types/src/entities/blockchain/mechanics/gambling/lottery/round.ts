@@ -3,8 +3,8 @@ import type { IIdDateBase } from "@ethberry/types-collection";
 import type { IAsset } from "../../../exchange/asset";
 import type { IContract } from "../../../hierarchy/contract";
 import type { IToken } from "../../../hierarchy/token";
-import type { IAssetItem } from "../../../event-history";
 import type { ILotteryRoundAggregation } from "./aggregation";
+import type { IAssetItem } from "../../../event-history/exchange/common";
 
 export interface ILotteryRound extends IIdDateBase {
   numbers: Array<boolean>;

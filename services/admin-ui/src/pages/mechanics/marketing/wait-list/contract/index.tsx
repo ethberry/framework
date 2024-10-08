@@ -14,8 +14,6 @@ import { ContractStatus } from "@framework/types";
 
 import {
   AllowanceButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   PauseButton,
   RenounceRoleButton,
@@ -111,8 +109,6 @@ export const WaitListContracts: FC = () => {
               <UnPauseButton contract={contract} />
               <AllowanceButton contract={contract} />
               <TopUpButton contract={contract} />
-              <EthListenerAddButton contract={contract} />
-              <EthListenerRemoveButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

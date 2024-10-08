@@ -7,18 +7,18 @@ import { ZeroAddress } from "ethers";
 import {
   AccessControlEventType,
   AchievementRuleStatus,
-  ContractEventType,
   ContractManagerEventType,
+  TContractEventType,
   TokenType,
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { AchievementRuleEntity } from "./rule.entity";
 import { EventHistoryEntity } from "../../../../event-history/event-history.entity";
 import { AchievementsItemService } from "../item/item.service";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { UserService } from "../../../../../infrastructure/user/user.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { AchievementRuleEntity } from "./rule.entity";
 
 interface IAchievementRuleAsset {
   tokenType: TokenType;
@@ -56,7 +56,10 @@ export class AchievementsRuleService {
     return this.achievementRuleEntityRepository.find({ where, ...options });
   }
 
-  public findAllWithRelations(contractId: number, eventType: ContractEventType): Promise<Array<AchievementRuleEntity>> {
+  public findAllWithRelations(
+    contractId: number,
+    eventType: TContractEventType,
+  ): Promise<Array<AchievementRuleEntity>> {
     const queryBuilder = this.achievementRuleEntityRepository.createQueryBuilder("rules");
     queryBuilder.leftJoinAndSelect("rules.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
@@ -96,13 +99,13 @@ export class AchievementsRuleService {
   }
 
   public async processEvent(id: number): Promise<void> {
-    const event = await this.eventHistoryService.findOneWithRelations({ id });
+    const eventHistoryEntity = await this.eventHistoryService.findOneWithRelations({ id });
 
-    if (!event) {
+    if (!eventHistoryEntity) {
       throw new NotFoundException("eventNotFound");
     }
 
-    const { contractId, eventType, eventData } = event;
+    const { contractId, eventType, eventData } = eventHistoryEntity;
 
     // do not check ContractManager's deploy events
     // do not check AccessControlEventType's events
@@ -111,6 +114,7 @@ export class AchievementsRuleService {
       !Object.values(ContractManagerEventType).includes(eventType as any) &&
       !Object.values(AccessControlEventType).includes(eventType as any)
     ) {
+      // @ts-ignore
       if (eventData && "account" in eventData) {
         const wallet = eventData.account;
         // TODO filter all db.contracts or limit rule events
@@ -128,7 +132,7 @@ export class AchievementsRuleService {
         if (wallet !== ZeroAddress && !allContracts.map(c => c.address).includes(wallet.toLowerCase())) {
           const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
-          // find event User
+          // find eventHistoryEntity User
           if (!userEntity) {
             this.loggerService.error("userNotFound", wallet, AchievementsRuleService.name);
             throw new NotFoundException("userNotFound");
@@ -148,19 +152,19 @@ export class AchievementsRuleService {
                 return null;
               }
               const ruleAsset = rule.item;
-              // if rule with Asset - compare with event assets
+              // if rule with Asset - compare with eventHistoryEntity assets
               if (ruleAsset.components) {
                 // get Asset from eventData
-                const eventAsset = this.getEventTokenAsset(event);
+                const eventAsset = this.getEventTokenAsset(eventHistoryEntity);
                 // if both Assets - check deeper
                 if (eventAsset.length) {
-                  // Check if any one rule.item == event.item
+                  // Check if any one rule.item == eventHistoryEntity.item
                   ruleAsset.components.map(asset => {
                     return eventAsset.map(async item => {
                       // if Rule.Asset condition met - create achievementsItem
                       if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
                         if (asset.templateId === item.templateId || !asset.templateId) {
-                          return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+                          return this.achievementsItemService.create(userEntity.id, rule.id, eventHistoryEntity.id);
                         } else {
                           return void 0;
                         }
@@ -175,7 +179,7 @@ export class AchievementsRuleService {
                 }
               } else {
                 // Rule condition met - create achievementsItem
-                return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+                return this.achievementsItemService.create(userEntity.id, rule.id, eventHistoryEntity.id);
               }
             });
 
@@ -213,6 +217,7 @@ export class AchievementsRuleService {
       });
     } else {
       // try to parse eventData
+      // @ts-ignore
       if (eventData && "item" in eventData) {
         const { tokenType, token, tokenId } = eventData.item;
         eventTokenAsset.push({
@@ -220,16 +225,18 @@ export class AchievementsRuleService {
           contract: token.toLowerCase(),
           templateId: ~~tokenId,
         });
-      } else if (eventData && "items" in eventData) {
+      } else {
         // @ts-ignore
-        eventData.items.map(item => {
-          const { tokenType, token, tokenId } = item;
-          return eventTokenAsset.push({
-            tokenType: Object.values(TokenType)[~~tokenType],
-            contract: token.toLowerCase(),
-            templateId: ~~tokenId,
+        if (eventData && "items" in eventData) {
+          eventData.items.map(item => {
+            const { tokenType, token, tokenId } = item;
+            return eventTokenAsset.push({
+              tokenType: Object.values(TokenType)[~~tokenType],
+              contract: token.toLowerCase(),
+              templateId: ~~tokenId,
+            });
           });
-        });
+        }
       }
     }
     return eventTokenAsset;

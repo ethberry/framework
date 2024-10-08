@@ -37,7 +37,7 @@ export const LootBoxToken: FC = () => {
       <Grid container>
         <Grid item xs={12} sm={9}>
           <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
-          <StyledDescription>
+          <StyledDescription component="div">
             <RichTextDisplay data={selected.template!.description} />
           </StyledDescription>
         </Grid>

@@ -1,13 +1,13 @@
 import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
-import { JsonRpcProvider, Log, stripZerosLeft, toUtf8String, ZeroAddress } from "ethers";
+import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { testChainId } from "@framework/constants";
-import type { IERC721ConsecutiveTransfer, IERC721TokenTransferEvent, ILevelUp } from "@framework/types";
+import type { IERC721ConsecutiveTransfer, IERC721TokenTransferEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
@@ -21,7 +21,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { ABI } from "./log/interfaces";
+import { Erc721ABI } from "./interfaces";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -57,7 +57,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       const metadata = await getMetadata(
         Number(tokenId).toString(),
         address,
-        ABI,
+        Erc721ABI,
         this.jsonRpcProvider,
         this.loggerService,
       );
@@ -193,34 +193,5 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     }));
 
     await this.balanceService.createBatch(balanceArray);
-  }
-
-  public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
-    const {
-      name,
-      args: { tokenId, attribute, value },
-    } = event;
-    const { address, transactionHash } = context;
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId, true);
-
-    if (!erc721TokenEntity) {
-      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    Object.assign(erc721TokenEntity.metadata, { [toUtf8String(stripZerosLeft(attribute))]: value });
-    await erc721TokenEntity.save();
-
-    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: erc721TokenEntity.balance[0].account,
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
   }
 }

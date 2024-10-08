@@ -142,9 +142,6 @@ export class MarketplaceService {
       throw new NotFoundException("templateNotFound");
     }
 
-    // DO REFERRAL LOGIC
-    // await this.referralService.referralPurchase(account, referrer, templateEntity.contract.merchantId);
-
     const cap = BigInt(templateEntity.cap);
     if (cap > 0 && cap <= BigInt(templateEntity.amount)) {
       throw new BadRequestException("limitExceeded");

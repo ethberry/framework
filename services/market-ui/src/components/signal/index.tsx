@@ -8,7 +8,7 @@ import { useUser } from "@ethberry/provider-user";
 import { useAppDispatch } from "@ethberry/redux";
 import { collectionActions } from "@ethberry/provider-collection";
 import type { IUser } from "@framework/types";
-import { ContractEventType, SignalEventType } from "@framework/types";
+import { TContractEventType, SignalEventType } from "@framework/types";
 
 import { EventRouteMatch } from "./constants";
 
@@ -52,7 +52,7 @@ export const Signal: FC = () => {
     // }
     socket.on(
       SignalEventType.TRANSACTION_HASH,
-      (dto: { transactionHash: string; transactionType?: ContractEventType }) => {
+      (dto: { transactionHash: string; transactionType?: TContractEventType }) => {
         if (dto.transactionType) {
           enqueueSnackbar(
             formatMessage(

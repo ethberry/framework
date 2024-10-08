@@ -1,46 +1,8 @@
 export * from "./contract-manager";
-
-export * from "./exchange/exchange";
-export * from "./exchange/breeding";
-export * from "./exchange/common";
-export * from "./exchange/claim";
-export * from "./exchange/core";
-export * from "./exchange/craft";
-export * from "./exchange/merge";
-export * from "./exchange/dismantle";
-export * from "./exchange/discrete";
-export * from "./exchange/lottery";
-export * from "./exchange/loot";
-export * from "./exchange/mystery";
-export * from "./exchange/raffle";
-export * from "./exchange/referral";
-export * from "./exchange/rentable";
-
-export * from "./extensions/access-control";
-export * from "./extensions/access-list";
-export * from "./extensions/erc4907";
-export * from "./extensions/royalty";
-export * from "./extensions/pausable";
-export * from "./extensions/base-uri";
-
-export * from "./hierarchy/erc20";
-export * from "./hierarchy/erc721";
-export * from "./hierarchy/erc998";
-export * from "./hierarchy/erc1155";
-export * from "./hierarchy/erc1363";
-
-export * from "./integrations/chain-link";
-
-export * from "./mechanics/breed";
-export * from "./mechanics/lottery";
-export * from "./mechanics/raffle";
-export * from "./mechanics/discrete";
-export * from "./mechanics/loot";
-export * from "./mechanics/mystery";
-export * from "./mechanics/ponzi";
-export * from "./mechanics/staking";
-export * from "./mechanics/vesting";
-export * from "./mechanics/wrapper";
-export * from "./mechanics/waitlist";
+export * from "./exchange";
+export * from "./extensions";
+export * from "./hierarchy";
+export * from "./integrations";
+export * from "./mechanics";
 
 export * from "./event";

@@ -7,11 +7,13 @@ export enum LotteryEventType {
   Released = "Released",
   Prize = "Prize",
 }
-// event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
-// event RoundEnded(uint256 round, uint256 endTimestamp);
-// event RoundFinalized(uint256 round, uint8[6] winValues);
-// event Released(uint256 round, uint256 amount);
-// event Prize(address account, uint256 ticketId, uint256 amount);
+export enum LotteryEventSignature {
+  RoundFinalized = "RoundFinalized(uint256,uint8[6])",
+  RoundStarted = "RoundStarted(uint256,uint256,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256))",
+  RoundEnded = "RoundEnded(uint256,uint256)",
+  Released = "Released(uint256,uint256)",
+  Prize = "Prize(address,uint256,uint256,uint256)",
+}
 
 export interface IRoundStartedEvent {
   roundId: string;

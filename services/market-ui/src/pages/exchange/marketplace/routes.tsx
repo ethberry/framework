@@ -25,7 +25,6 @@ export const marketplaceRoutes: Array<RouteObject> = [
         path: "/marketplace/merchants",
         children: [
           { index: true, element: <MerchantList /> },
-
           { path: "/marketplace/merchants/:id/:action", element: <Merchant /> },
         ],
       },

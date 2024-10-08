@@ -20,11 +20,17 @@ import {
 } from "typeorm";
 
 import { testChainId } from "@framework/constants";
-import type { IAssetComponentDto, IAssetDto, IAssetItem, IExchangePurchaseEvent } from "@framework/types";
-import { ContractEventType, ContractFeatures, ExchangeType, TokenType } from "@framework/types";
+import {
+  ContractFeatures,
+  ExchangeEventType,
+  ExchangeType,
+  IAssetComponentDto,
+  IAssetDto,
+  IAssetItem,
+  IExchangePurchaseEvent,
+  TokenType,
+} from "@framework/types";
 
-import { AssetEntity } from "./asset.entity";
-import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
 import { EventHistoryService } from "../../event-history/event-history.service";
@@ -33,6 +39,8 @@ import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { AssetComponentEntity } from "./asset-component.entity";
+import { AssetEntity } from "./asset.entity";
 
 @Injectable()
 export class AssetService {
@@ -251,7 +259,7 @@ export class AssetService {
           const isNft = ~~tokenType === 2 || ~~tokenType === 3; // 721 | 998
           const isCoin = ~~tokenType === 0 || ~~tokenType === 1; // Native | 20
           const isErc1155 = ~~tokenType === 4; // 1155
-          const isPurchase = eventHistoryEntity.eventType === ContractEventType.Purchase;
+          const isPurchase = eventHistoryEntity.eventType === ExchangeEventType.Purchase;
 
           if (isCoin) {
             // NATIVE & ERC20

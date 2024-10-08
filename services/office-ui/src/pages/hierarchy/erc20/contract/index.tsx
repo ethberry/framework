@@ -19,8 +19,6 @@ import {
   BlacklistButton,
   ContractMintButton,
   Erc20ContractDeployButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
@@ -151,8 +149,6 @@ export const Erc20Contract: FC = () => {
                 <AllowanceButton contract={contract} />
                 <TransferButton contract={contract} />
                 <RoyaltyButton contract={contract} />
-                <EthListenerAddButton contract={contract} />
-                <EthListenerRemoveButton contract={contract} />
               </ListActions>
             </ListItem>
           );

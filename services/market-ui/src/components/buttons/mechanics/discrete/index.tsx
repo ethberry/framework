@@ -20,17 +20,17 @@ import { getEthPrice, getMultiplier } from "./utils";
 import type { IUpgradeDto } from "./dialog";
 import { UpgradeDialog } from "./dialog";
 
-interface IUpgradeButtonProps {
+interface IDiscreteButtonProps {
   className?: string;
   disabled?: boolean;
   token: IToken;
   variant?: ListActionVariant;
 }
 
-export const GradeButton: FC<IUpgradeButtonProps> = props => {
+export const DiscreteButton: FC<IDiscreteButtonProps> = props => {
   const { className, disabled = false, token, variant = ListActionVariant.button } = props;
 
-  const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
+  const [isDiscreteDialogOpen, setIsDiscreteDialogOpen] = useState(false);
 
   const api = useApi();
 
@@ -47,6 +47,9 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
       const level = token.metadata[values.attribute] || 0;
 
       const item = convertTemplateToChainAsset(token.template, "1");
+      // set real token Id
+      item.tokenId = token.tokenId;
+
       const price = convertDatabaseAssetToChainAsset(discrete.price?.components, {
         multiplier: getMultiplier(level, discrete),
       });
@@ -121,17 +124,17 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   });
 
   const handleUpgrade = (): void => {
-    setIsUpgradeDialogOpen(true);
+    setIsDiscreteDialogOpen(true);
   };
 
   const handleUpgradeConfirm = async (dto: IUpgradeDto): Promise<void> => {
     await metaFn(dto).then(() => {
-      setIsUpgradeDialogOpen(false);
+      setIsDiscreteDialogOpen(false);
     });
   };
 
   const handleUpgradeCancel = (): void => {
-    setIsUpgradeDialogOpen(false);
+    setIsDiscreteDialogOpen(false);
   };
 
   if (!contractFeatures.includes(ContractFeatures.DISCRETE)) {
@@ -151,7 +154,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
       <UpgradeDialog
         onCancel={handleUpgradeCancel}
         onConfirm={handleUpgradeConfirm}
-        open={isUpgradeDialogOpen}
+        open={isDiscreteDialogOpen}
         initialValues={{
           attribute: "",
           contractId: token.template!.contractId,

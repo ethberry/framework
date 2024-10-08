@@ -14,8 +14,6 @@ import { ContractStatus } from "@framework/types";
 
 import {
   ChainLinkSetSubscriptionButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   LotteryContractDeployButton,
   LotteryRoundEndButton,
@@ -116,8 +114,6 @@ export const LotteryContracts: FC = () => {
               <LotteryRoundEndButton contract={contract} />
               <LotteryScheduleButton contract={contract} refreshPage={handleRefreshPage} />
               <ChainLinkSetSubscriptionButton contract={contract} />
-              <EthListenerAddButton contract={contract} />
-              <EthListenerRemoveButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

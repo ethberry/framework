@@ -4,7 +4,8 @@ import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
-  ContractEventType,
+  Erc721EventType,
+  ExchangeEventType,
   ExchangeType,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
@@ -16,8 +17,8 @@ import {
   TokenStatus,
 } from "@framework/types";
 
-import { ABI } from "./log/interfaces";
 import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
@@ -25,7 +26,7 @@ import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { BreedServiceEth } from "../../../mechanics/gaming/breed/breed.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { NotificatorService } from "../../../../game/notificator/notificator.service";
+import { Erc721ABI } from "./interfaces";
 
 @Injectable()
 export class Erc721TokenRandomServiceEth extends TokenServiceEth {
@@ -59,7 +60,7 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
       const metadata = await getMetadata(
         Number(tokenId).toString(),
         address,
-        ABI,
+        Erc721ABI,
         this.jsonRpcProvider,
         this.loggerService,
       );
@@ -90,14 +91,14 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
           // update Asset history
           const historyEntity = await this.eventHistoryService.findOne({
             transactionHash,
-            eventType: ContractEventType.MintRandom,
+            eventType: Erc721EventType.MintRandom,
           });
 
           if (!historyEntity) {
             this.loggerService.error(
               "historyNotFound",
               transactionHash,
-              ContractEventType.MintRandom,
+              Erc721EventType.MintRandom,
               Erc721TokenRandomServiceEth.name,
             );
             throw new NotFoundException("historyNotFound");
@@ -193,7 +194,7 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
   public async exchangeNotify(historyId: number) {
     const history = await this.eventHistoryService.findOneWithRelations({ id: historyId });
     // it must work for exchange purchase random
-    if (history?.parent?.parent?.parent?.eventType === ContractEventType.Purchase) {
+    if (history?.parent?.parent?.parent?.eventType === ExchangeEventType.Purchase) {
       const exchangeEvent = history.parent.parent.parent;
       const eventData = exchangeEvent.eventData as unknown as IExchangePurchaseEvent;
       const exchangeAssetHistory = await this.assetService.findAll(

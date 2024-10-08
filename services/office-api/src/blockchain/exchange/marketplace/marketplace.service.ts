@@ -5,7 +5,7 @@ import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
 import type { IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
-import { ContractEventType, ExchangeType, TokenType } from "@framework/types";
+import { ExchangeEventType, ExchangeType, TokenType } from "@framework/types";
 
 import { formatPrice } from "./marketplace.utils";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -76,7 +76,7 @@ export class MarketplaceService {
       });
     }
 
-    queryBuilder.andWhere("history.event_type = :eventType", { eventType: ContractEventType.Purchase });
+    queryBuilder.andWhere("history.event_type = :eventType", { eventType: ExchangeEventType.Purchase });
 
     queryBuilder.andWhere("item_contract.contractType IN(:...contractType)", {
       contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],

@@ -45,7 +45,6 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     RedisModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      // @ts-ignore
       useFactory: (configService: ConfigService): RedisModuleOptions => {
         const redisThrottleUrl = configService.get<string>("REDIS_THROTTLE_URL", "redis://127.0.0.1:6379/2");
         const redisCacheUrl = configService.get<string>("REDIS_CACHE_URL", "redis://127.0.0.1:6379/15");

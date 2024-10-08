@@ -19,6 +19,9 @@ export class SeedSettings1563803000020 implements MigrationInterface {
       ), (
         'SIGNATURE_TTL',
         '${JSON.stringify(0)}'
+      ), (
+        'STARTING_BLOCK_ETHBERRY_BESU',
+        '${JSON.stringify(0)}'
       );
     `);
   }

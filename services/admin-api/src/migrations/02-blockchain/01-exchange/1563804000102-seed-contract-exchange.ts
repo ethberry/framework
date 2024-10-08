@@ -2,9 +2,14 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { Wallet } from "ethers";
 import { populate } from "dotenv";
 
+import { Networks } from "@ethberry/types-blockchain";
 import { simpleFormatting } from "@ethberry/draft-js-utils";
 import { NodeEnv } from "@ethberry/constants";
-import { ns, testChainId } from "@framework/constants";
+import { networks, ns } from "@framework/constants";
+
+const chainIdToSuffix = (chainId: string | bigint | number) => {
+  return Object.keys(Networks)[Object.values(Networks).indexOf(Number(chainId))];
+};
 
 export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -15,10 +20,12 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     populate(
       process.env as any,
       {
-        EXCHANGE_ADDR: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_ETHBERRY: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_ETHBERRY_BESU: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_ETHEREUM: Wallet.createRandom().address.toLowerCase(),
+        EXCHANGE_ADDR_ETHEREUM_SEPOLIA: Wallet.createRandom().address.toLowerCase(),
         EXCHANGE_ADDR_BINANCE: Wallet.createRandom().address.toLowerCase(),
         EXCHANGE_ADDR_BINANCE_TEST: Wallet.createRandom().address.toLowerCase(),
-        EXCHANGE_ADDR_ETHEREUM: Wallet.createRandom().address.toLowerCase(),
         EXCHANGE_ADDR_POLYGON: Wallet.createRandom().address.toLowerCase(),
         EXCHANGE_ADDR_POLYGON_AMOY: Wallet.createRandom().address.toLowerCase(),
       },
@@ -26,21 +33,6 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     );
 
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-
-    const exchangeGemunionAddress = process.env.EXCHANGE_ADDR;
-    const exchangeAddressBinance = process.env.EXCHANGE_ADDR_BINANCE;
-    const exchangeAddressBinanceTest = process.env.EXCHANGE_ADDR_BINANCE_TEST;
-    const exchangeAddressPolygon = process.env.EXCHANGE_ADDR_POLYGON;
-    const exchangeAddressPolygonAmoy = process.env.EXCHANGE_ADDR_POLYGON_AMOY;
-    const exchangeAddressMainnet = process.env.EXCHANGE_ADDR_ETHEREUM;
-
-    const fromBlock = process.env.STARTING_BLOCK || 1;
-    const fromBlockBinance = process.env.STARTING_BLOCK_BINANCE || 1;
-    const fromBlockBinanceTest = process.env.STARTING_BLOCK_BINANCE_TEST || 1;
-    const fromBlockPolygon = process.env.STARTING_BLOCK_POLYGON || 1;
-    const fromBlockPolygonAmoy = process.env.STARTING_BLOCK_POLYGON_AMOY || 1;
-    const fromBlockEthereum = process.env.STARTING_BLOCK_ETHEREUM || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -57,119 +49,31 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         contract_type,
         contract_features,
         contract_module,
-        from_block,
         merchant_id,
         created_at,
         updated_at
-      ) VALUES (
-        ${process.env.NODE_ENV === NodeEnv.production ? 111 : 102},
-        '${exchangeGemunionAddress}',
-        '${chainId}',
-        'EXCHANGE (BESU)',
-        '${simpleFormatting}',
-        '',
-        'EXCHANGE',
-        '',
-        '',
-        'ACTIVE',
-        null,
-        '{WITHDRAW,ALLOWANCE,REFERRAL}',
-        'EXCHANGE',
-        '${fromBlock}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 112 : 202},
-        '${exchangeAddressBinance}',
-        56,
-        'EXCHANGE (BNB)',
-        '${simpleFormatting}',
-        '',
-        'EXCHANGE',
-        '',
-        '',
-        'ACTIVE',
-        null,
-        '{WITHDRAW,ALLOWANCE,REFERRAL}',
-        'EXCHANGE',
-        '${fromBlockBinance}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 113 : 302},
-        '${exchangeAddressMainnet}',
-        1,
-        'EXCHANGE (ETH)',
-        '${simpleFormatting}',
-        '',
-        'EXCHANGE',
-        '',
-        '',
-        'ACTIVE',
-        null,
-        '{WITHDRAW,ALLOWANCE,REFERRAL}',
-        'EXCHANGE',
-        '${fromBlockEthereum}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 114 : 402},
-        '${exchangeAddressPolygon}',
-        137,
-        'EXCHANGE (MATIC)',
-        '${simpleFormatting}',
-        '',
-        'EXCHANGE',
-        '',
-        '',
-        'ACTIVE',
-        null,
-        '{WITHDRAW,ALLOWANCE,REFERRAL}',
-        'EXCHANGE',
-        '${fromBlockPolygon}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 115 : 502},
-        '${exchangeAddressBinanceTest}',
-        97,
-        'EXCHANGE (tBNB)',
-        '${simpleFormatting}',
-        '',
-        'EXCHANGE',
-        '',
-        '',
-        'ACTIVE',
-        null,
-        '{WITHDRAW,ALLOWANCE,REFERRAL}',
-        'EXCHANGE',
-        '${fromBlockBinanceTest}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        ${process.env.NODE_ENV === NodeEnv.production ? 116 : 602},
-        '${exchangeAddressPolygonAmoy}',
-        80002,
-        'EXCHANGE (tMATIC)',
-        '${simpleFormatting}',
-        '',
-        'EXCHANGE',
-        '',
-        '',
-        'ACTIVE',
-        null,
-        '{WITHDRAW,ALLOWANCE,REFERRAL}',
-        'EXCHANGE',
-        '${fromBlockPolygonAmoy}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      );
+      ) VALUES ${Object.values(networks)
+        .map(network => {
+          return `(
+            ${network.order}02,
+            '${process.env[`EXCHANGE_ADDR_${chainIdToSuffix(network.chainId)}`]}',
+            ${network.chainId},
+            'EXCHANGE (${chainIdToSuffix(network.chainId)})',
+            '${simpleFormatting}',
+            '',
+            'EXCHANGE',
+            '',
+            '',
+            'ACTIVE',
+            null,
+            '{WITHDRAW,ALLOWANCE,REFERRAL}',
+            'EXCHANGE',
+            1,
+            '${currentDateTime}',
+            '${currentDateTime}'
+          )`;
+        })
+        .join(", ")};
     `);
   }
 

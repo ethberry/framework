@@ -18,8 +18,8 @@ import { humanReadableDateTimeFormat } from "@ethberry/constants";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 import { TxHashLink } from "@ethberry/mui-scanner";
 import { useCollection } from "@ethberry/provider-collection";
-import type { IEventHistory, IExchangeLendEvent } from "@framework/types";
-import { ContractEventType } from "@framework/types";
+import type { IEventHistory, IExchangeRentableEvent } from "@framework/types";
+import { ExchangeEventType } from "@framework/types";
 
 import { EventDataView } from "./event-data-view";
 import type { IEventSearchDto } from "./form";
@@ -63,7 +63,8 @@ export const MyTransactions: FC = () => {
       flex: 2,
       renderCell: (params: GridRenderCellParams<GridValidRowModel, any, IEventHistory, any>) => {
         const { eventData, eventType } = params.row;
-        const isBorrow = eventType === ContractEventType.Lend && account !== (eventData as IExchangeLendEvent).account;
+        const isBorrow =
+          eventType === ExchangeEventType.Lend && account !== (eventData as IExchangeRentableEvent).account;
         return <>{isBorrow ? formatMessage({ id: "enums.eventDataLabel.borrow" }) : eventType}</>;
       },
       minWidth: 140,

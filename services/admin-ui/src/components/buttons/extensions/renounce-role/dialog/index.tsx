@@ -54,9 +54,9 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   };
 
   useEffect(() => {
-    if (open) {
+    if (account && open) {
       void fn().then((rows: Array<IAccessControl>) => {
-        setRows(rows.filter(row => row.account === account));
+        setRows(rows.filter(row => row.account === account.toLocaleLowerCase()));
       });
     }
   }, [account, open]);

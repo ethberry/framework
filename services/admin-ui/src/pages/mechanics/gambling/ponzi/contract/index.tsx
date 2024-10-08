@@ -12,8 +12,6 @@ import { ContractStatus, IContract, IContractSearchDto, PonziContractFeatures } 
 
 import {
   ContractAllowanceButton,
-  EthListenerAddButton,
-  EthListenerRemoveButton,
   GrantRoleButton,
   PonziBalanceButton,
   PonziContractDeployButton,
@@ -105,8 +103,6 @@ export const PonziContract: FC = () => {
                 <ContractAllowanceButton contract={contract} />
                 <TopUpButton contract={contract} />
                 <PonziBalanceButton contract={contract} />
-                <EthListenerAddButton contract={contract} />
-                <EthListenerRemoveButton contract={contract} />
               </ListActions>
             </StyledListItem>
           ))}

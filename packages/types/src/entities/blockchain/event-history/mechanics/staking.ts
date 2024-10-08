@@ -10,6 +10,18 @@ export enum StakingEventType {
   DepositReturn = "DepositReturn",
   DepositPenalty = "DepositPenalty",
 }
+
+export enum StakingEventSignature {
+  RuleCreated = "RuleCreated(uint256,((uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[][],(uint256,uint256,uint256,bool,bool),bool))",
+  RuleUpdated = "RuleUpdated(uint256,bool)",
+  DepositStart = "DepositStart(uint256,uint256,address,uint256,uint256[])",
+  DepositWithdraw = "DepositWithdraw(uint256,address,uint256)",
+  DepositFinish = "DepositFinish(uint256,address,uint256,uint256)",
+  BalanceWithdraw = "BalanceWithdraw(address,(uint8,address,uint256,uint256))",
+  DepositReturn = "DepositReturn(uint256,address)",
+  DepositPenalty = "DepositPenalty(uint256,(uint8,address,uint256,uint256))",
+}
+
 export interface IStakingRuleTermsStruct {
   period: string;
   penalty: string;

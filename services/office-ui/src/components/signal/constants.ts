@@ -1,6 +1,4 @@
-import type { ContractEventSignature } from "@framework/types";
-
-export const EventRouteMatch: Partial<Record<keyof typeof ContractEventSignature, string>> = {
+export const EventRouteMatch: Partial<Record<string, string>> = {
   // DEPLOY
   ERC20TokenDeployed: "/erc20/contracts",
   ERC721TokenDeployed: "/erc721/contracts",
@@ -20,4 +18,7 @@ export const EventRouteMatch: Partial<Record<keyof typeof ContractEventSignature
   // STAKING RULES
   RuleCreated: "/staking/rules",
   RuleUpdated: "/staking/rules",
+  // ERC20
+  Whitelisted: "/erc20/contracts",
+  UnWhitelisted: "/erc20/contracts",
 };

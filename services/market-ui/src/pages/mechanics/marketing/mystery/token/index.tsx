@@ -13,7 +13,7 @@ import { MysteryTokenPanel } from "./mystery-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
 
 export const MysteryBoxToken: FC = () => {
-  const { selected, handleRefreshPage, isLoading } = useCollection<IToken>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/mystery/tokens",
     empty: {
       template: {
@@ -37,7 +37,7 @@ export const MysteryBoxToken: FC = () => {
       <Grid container>
         <Grid item xs={12} sm={9}>
           <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
-          <StyledDescription>
+          <StyledDescription component="div">
             <RichTextDisplay data={selected.template!.description} />
           </StyledDescription>
         </Grid>
@@ -45,7 +45,7 @@ export const MysteryBoxToken: FC = () => {
           {selected.templateId ? (
             <>
               <CommonTokenPanel token={selected} />
-              <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+              <MysteryTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>

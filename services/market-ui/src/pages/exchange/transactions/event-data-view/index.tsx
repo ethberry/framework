@@ -1,7 +1,14 @@
 import { FC } from "react";
 
 import type { IEventHistory } from "@framework/types";
-import { ContractEventType } from "@framework/types";
+import {
+  AccessControlEventType,
+  Erc1155EventType,
+  Erc20EventType,
+  Erc721EventType,
+  ExchangeEventType,
+  MysteryEventType,
+} from "@framework/types";
 
 import { ClaimDataView } from "./claim";
 import { CraftDataView } from "./craft";
@@ -29,33 +36,36 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
   const { assets, contract, eventData, eventType } = row as unknown as Required<IEventHistory>;
 
   switch (eventType) {
-    case ContractEventType.Claim:
+    case ExchangeEventType.Claim:
       return <ClaimDataView assets={assets} contract={contract} />;
-    case ContractEventType.Craft:
+    case ExchangeEventType.Craft:
       return <CraftDataView assets={assets} contract={contract} />;
-    case ContractEventType.Dismantle:
+    case ExchangeEventType.Dismantle:
       return <DismantleDataView assets={assets} contract={contract} />;
-    case ContractEventType.WaitListRewardClaimed:
+    case ExchangeEventType.WaitListRewardClaimed:
       return <WaitListRewardClaimedDataView assets={assets} contract={contract} />;
-    case ContractEventType.Purchase:
+    case ExchangeEventType.Purchase:
       return <PurchaseDataView assets={assets} contract={contract} />;
-    case ContractEventType.PurchaseRaffle:
+    case ExchangeEventType.PurchaseRaffle:
       return <PurchaseRaffleDataView assets={assets} contract={contract} eventData={eventData} />;
-    case ContractEventType.PurchaseLottery:
+    case ExchangeEventType.PurchaseLottery:
       return <PurchaseLotteryDataView assets={assets} contract={contract} eventData={eventData} />;
-    case ContractEventType.PurchaseMysteryBox:
+    case ExchangeEventType.PurchaseMysteryBox:
       return <PurchaseMysteryBoxDataView assets={assets} contract={contract} />;
-    case ContractEventType.UnpackMysteryBox:
-      return <UnpackMysteryBoxDataView assets={assets} contract={contract} />;
-    case ContractEventType.Upgrade:
+    case ExchangeEventType.Upgrade:
       return <UpgradeDataView assets={assets} contract={contract} eventData={eventData} />;
-    case ContractEventType.Transfer:
+    // mechanics
+    case MysteryEventType.UnpackMysteryBox:
+      return <UnpackMysteryBoxDataView assets={assets} contract={contract} />;
+    // hierarchy
+    case Erc20EventType.Transfer || Erc721EventType.Transfer:
       return <TransferDataView eventData={eventData} contract={contract} />;
-    case ContractEventType.TransferSingle:
+    case Erc1155EventType.TransferSingle:
       return <TransferSingleDataView eventData={eventData} />;
-    case ContractEventType.TransferBatch:
+    case Erc1155EventType.TransferBatch:
       return <TransferBatchDataView eventData={eventData} />;
-    case ContractEventType.OwnershipTransferred:
+    // extensions
+    case AccessControlEventType.OwnershipTransferred:
       return <OwnershipTransferredDataView contract={contract} eventData={eventData} />;
     default: {
       return <DefaultDataView eventData={eventData} />;

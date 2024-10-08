@@ -3,14 +3,14 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type {
+import {
+  ContractType,
+  Erc721EventType,
   IERC721ConsecutiveTransfer,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  ILevelUp,
 } from "@framework/types";
-import { ContractEventType, ContractType } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
 
@@ -18,25 +18,17 @@ import { Erc721TokenServiceEth } from "./token.service.eth";
 export class Erc721TokenControllerEth {
   constructor(public readonly erc721TokenServiceEth: Erc721TokenServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Transfer })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721EventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.transfer(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.ConsecutiveTransfer })
-  public consecutiveTransfer(
-    @Payload() event: ILogEvent<IERC721ConsecutiveTransfer>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.erc721TokenServiceEth.consecutiveTransfer(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Approval })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721EventType.Approval })
   public approval(@Payload() event: ILogEvent<IERC721TokenApproveEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.approval(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.ApprovalForAll })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721EventType.ApprovalForAll })
   public approvalForAll(
     @Payload() event: ILogEvent<IERC721TokenApprovedForAllEvent>,
     @Ctx() context: Log,
@@ -44,8 +36,11 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.LevelUp })
-  public levelUp(@Payload() event: ILogEvent<ILevelUp>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.levelUp(event, context);
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721EventType.ConsecutiveTransfer })
+  public consecutiveTransfer(
+    @Payload() event: ILogEvent<IERC721ConsecutiveTransfer>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.erc721TokenServiceEth.consecutiveTransfer(event, context);
   }
 }

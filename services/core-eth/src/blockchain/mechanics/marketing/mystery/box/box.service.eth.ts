@@ -14,7 +14,7 @@ import {
 } from "@framework/types";
 
 import { getMetadata } from "../../../../../common/utils";
-import { ABI } from "../../../../tokens/erc721/token/log/interfaces";
+import { Erc721ABI } from "../../../../tokens/erc721/token/interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
@@ -61,7 +61,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider, this.loggerService);
+      const metadata = await getMetadata(tokenId, address, Erc721ABI, this.jsonRpcProvider, this.loggerService);
       const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const mysteryBoxEntity = await this.mysteryBoxService.findOne({ templateId });
 

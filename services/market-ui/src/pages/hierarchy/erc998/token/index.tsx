@@ -22,7 +22,7 @@ import { Erc998Composition } from "./composition";
 import { StyledDescription, StyledImage } from "./styled";
 
 export const Erc998Token: FC = () => {
-  const { selected, isLoading, handleRefreshPage } = useCollection<IToken>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/erc998/tokens",
     empty: {
       template: {
@@ -45,7 +45,7 @@ export const Erc998Token: FC = () => {
       <Grid container>
         <Grid item xs={12} sm={9}>
           <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
-          <StyledDescription>
+          <StyledDescription component="div">
             <RichTextDisplay data={selected.template!.description} />
           </StyledDescription>
           <br />
@@ -58,7 +58,7 @@ export const Erc998Token: FC = () => {
               <CommonTokenPanel token={selected} />
               <RarityTokenPanel token={selected} />
               <DiscreteTokenPanel token={selected} />
-              <MysteryTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+              <MysteryTokenPanel token={selected} />
               <GenesTokenPanel token={selected} />
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />

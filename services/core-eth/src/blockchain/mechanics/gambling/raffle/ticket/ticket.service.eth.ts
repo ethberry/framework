@@ -15,7 +15,7 @@ import { BalanceService } from "../../../../hierarchy/balance/balance.service";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { getMetadata } from "../../../../../common/utils";
-import { ABI } from "../../../../tokens/erc721/token/log/interfaces";
+import { Erc721ABI } from "../../../../tokens/erc721/token/interfaces";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 
 @Injectable()
@@ -95,7 +95,7 @@ export class RaffleTicketServiceEth {
       throw new NotFoundException("ticketTemplateNotFound");
     }
 
-    const metadata = await getMetadata(tokenId, contract, ABI, this.jsonRpcProvider, this.loggerService);
+    const metadata = await getMetadata(tokenId, contract, Erc721ABI, this.jsonRpcProvider, this.loggerService);
 
     const tokenEntity = await this.tokenService.create({
       tokenId,

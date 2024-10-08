@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledImage = styled(Box)(({ theme }) => ({
@@ -7,8 +7,8 @@ export const StyledImage = styled(Box)(({ theme }) => ({
   maxWidth: "70%",
 })) as typeof Box;
 
-export const StyledDescription = styled(Box)(({ theme }) => ({
+export const StyledDescription = styled(Typography)(({ theme }) => ({
   ...theme.typography.body2,
   color: theme.palette.text.secondary,
   margin: theme.spacing(1, 0),
-}));
+})) as typeof Typography;

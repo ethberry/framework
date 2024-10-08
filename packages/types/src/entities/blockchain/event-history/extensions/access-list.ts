@@ -5,6 +5,13 @@ export enum AccessListEventType {
   UnWhitelisted = "UnWhitelisted",
 }
 
+export enum AccessListEventSignature {
+  Blacklisted = "Blacklisted(address)",
+  UnBlacklisted = "UnBlacklisted(address)",
+  Whitelisted = "Whitelisted(address)",
+  UnWhitelisted = "UnWhitelisted(address)",
+}
+
 export interface IBlacklistedEvent {
   account: string;
 }

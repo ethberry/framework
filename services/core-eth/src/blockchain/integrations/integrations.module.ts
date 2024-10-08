@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 
-import { ChainLinkContractModule } from "./chain-link/contract/contract.module";
+import { ChainLinkModule } from "./chain-link/chain-link.module";
 import { OpenSeaModule } from "./opensea/opensea.module";
 
 @Module({
-  imports: [OpenSeaModule, ChainLinkContractModule],
+  imports: [ChainLinkModule, OpenSeaModule],
 })
 export class IntegrationsModule {}

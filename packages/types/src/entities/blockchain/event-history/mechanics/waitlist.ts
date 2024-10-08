@@ -4,6 +4,10 @@ export enum WaitListEventType {
   WaitListRewardSet = "WaitListRewardSet",
   WaitListRewardClaimed = "WaitListRewardClaimed",
 }
+export enum WaitListEventSignature {
+  WaitListRewardSet = "WaitListRewardSet(uint256,bytes32,(uint8,address,uint256,uint256)[])",
+  WaitListRewardClaimed = "WaitListRewardClaimed(address,uint256,(uint8,address,uint256,uint256)[])",
+}
 
 export interface IWaitListRewardSetEvent {
   externalId: string;

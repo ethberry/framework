@@ -9,8 +9,7 @@ interface IOptions {
 }
 
 export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[], options: IOptions = {}) => {
-  const { sortBy = "id" } = options;
-  const { multiplier = 1 } = options;
+  const { sortBy = "id", multiplier = 1 } = options;
 
   if (components === undefined) {
     throw new Error("blockchainError");
@@ -96,7 +95,7 @@ export const convertTemplateToChainAsset = (
     tokenId = template?.tokens?.[0]?.tokenId;
     if (!tokenId) {
       // tokenId for ERC1155 notFound. You most likely forget to leftAndJoin Tokens for ERC1155
-      throw new Error();
+      throw new Error("blockchainError");
     }
   } else {
     throw new Error("blockchainError");

@@ -26,8 +26,6 @@ import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity"
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
-// contract-manager
-import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 // exchange
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
@@ -429,7 +427,6 @@ const config: PostgresConnectionOptions = {
     NetworkEntity,
     RatePlanEntity,
     /* blockchain */
-    ContractManagerEntity,
     EventHistoryEntity,
     // exchange
     AssetEntity,

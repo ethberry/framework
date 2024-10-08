@@ -29,7 +29,6 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'PREDICTION',
         'RAFFLE',
         'STAKING',
-        'TEST',
         'VESTING',
         'WAIT_LIST',
         'WRAPPER'
@@ -81,7 +80,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
-    // networks
+    // networks - old
     // 1 - besu
     // 2 - binance
     // 3 - mainnet
@@ -89,11 +88,21 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // 5 - binance test
     // 6 - polygon amoy
 
+    // networks - new
+    // 1 - ethberry
+    // 2 - ethberry_besu
+    // 3 - ethereum
+    // 4 - ethereum_sepolis
+    // 5 - binance
+    // 6 - binance test
+    // 7 - polygon
+    // 8 - polygon amoy
+
     // mechanics
     // 01   - CM
     // 02   - exchange
-    // 07   - VRF
-    // 08   - dispenser
+    // 03   - VRF
+    // 04   - dispenser
     // 01x - native
     // 02x - erc20
     // 03x - erc721
@@ -222,6 +231,12 @@ export class CreateContract1563804000100 implements MigrationInterface {
           columnNames: ["merchant_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["chain_id"],
+          referencedColumnNames: ["chain_id"],
+          referencedTableName: `${ns}.network`,
           onDelete: "CASCADE",
         },
       ],

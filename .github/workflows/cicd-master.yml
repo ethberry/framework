@@ -67,7 +67,7 @@ jobs:
           TEST_CONTRACTS: false
           BUSINESS_TYPE: B2B
           POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/framework-test'
-          CHAIN_ID: 10001
+          CHAIN_ID: 10000
           ETHBERRY_API_KEY: ${{ secrets.ETHBERRY_API_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           PRIVATE_KEY1: ${{ secrets.PRIVATE_KEY }}

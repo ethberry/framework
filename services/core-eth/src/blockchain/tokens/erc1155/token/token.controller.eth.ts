@@ -4,13 +4,12 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
-  ContractEventType,
-  ContractType,
   IErc1155TokenApprovalForAllEvent,
   IErc1155TokenTransferBatchEvent,
   IErc1155TokenTransferSingleEvent,
   IErc1155TokenUriEvent,
 } from "@framework/types";
+import { Erc1155EventType, ContractType } from "@framework/types";
 
 import { Erc1155TokenServiceEth } from "./token.service.eth";
 
@@ -18,7 +17,7 @@ import { Erc1155TokenServiceEth } from "./token.service.eth";
 export class Erc1155TokenControllerEth {
   constructor(private readonly erc1155ServiceEth: Erc1155TokenServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.TransferSingle })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155EventType.TransferSingle })
   public transferSingle(
     @Payload() event: ILogEvent<IErc1155TokenTransferSingleEvent>,
     @Ctx() context: Log,
@@ -26,7 +25,7 @@ export class Erc1155TokenControllerEth {
     return this.erc1155ServiceEth.transferSingle(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.TransferBatch })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155EventType.TransferBatch })
   public transferBatch(
     @Payload() event: ILogEvent<IErc1155TokenTransferBatchEvent>,
     @Ctx() context: Log,
@@ -34,7 +33,7 @@ export class Erc1155TokenControllerEth {
     return this.erc1155ServiceEth.transferBatch(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.ApprovalForAll })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155EventType.ApprovalForAll })
   public approvalForAll(
     @Payload() event: ILogEvent<IErc1155TokenApprovalForAllEvent>,
     @Ctx() context: Log,
@@ -42,7 +41,7 @@ export class Erc1155TokenControllerEth {
     return this.erc1155ServiceEth.approvalForAllErc1155(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.URI })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155EventType.URI })
   public uri(@Payload() event: ILogEvent<IErc1155TokenUriEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.uri(event, context);
   }

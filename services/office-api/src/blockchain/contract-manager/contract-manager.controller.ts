@@ -5,7 +5,6 @@ import { User } from "@ethberry/nest-js-utils";
 import type { IServerSignature } from "@ethberry/types-blockchain";
 
 import { ContractManagerSignService } from "./contract-manager.sign.service";
-import { ContractManagerService } from "./contract-manager.service";
 import {
   Erc1155ContractDeployDto,
   Erc20ContractDeployDto,
@@ -21,10 +20,7 @@ import { UserEntity } from "../../infrastructure/user/user.entity";
 @ApiBearerAuth()
 @Controller("/contract-manager")
 export class ContractManagerController {
-  constructor(
-    private readonly contractManagerSignService: ContractManagerSignService,
-    private readonly contractManagerService: ContractManagerService,
-  ) {}
+  constructor(private readonly contractManagerSignService: ContractManagerSignService) {}
 
   @Post("/erc20")
   public erc20Token(@Body() dto: Erc20ContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {

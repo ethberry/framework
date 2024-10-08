@@ -15,9 +15,9 @@ import type {
   IContractManagerERC20TokenDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
+  IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
-  IContractManagerLootTokenDeployedEvent,
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
@@ -34,45 +34,40 @@ import {
   Erc721ContractTemplates,
   Erc998ContractTemplates,
   IContractManagerPaymentSplitterDeployedEvent,
+  LootContractTemplates,
   ModuleType,
   MysteryContractTemplates,
-  LootContractTemplates,
   RmqProviderType,
   SignalEventType,
-  // StakingContractFeatures,
-  // StakingContractTemplates,
   TemplateStatus,
   TokenType,
 } from "@framework/types";
 
 import { UserService } from "../../infrastructure/user/user.service";
-import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
-import { Erc721LogService } from "../tokens/erc721/token/log/log.service";
-import { Erc998LogService } from "../tokens/erc998/token/log/log.service";
-import { Erc1155LogService } from "../tokens/erc1155/token/log/log.service";
-import { VestingLogService } from "../mechanics/marketing/vesting/log/vesting.log.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
-import { MysteryLogService } from "../mechanics/marketing/mystery/box/log/log.service";
-import { PonziLogService } from "../mechanics/gambling/ponzi/log/log.service";
 import { TokenEntity } from "../hierarchy/token/token.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
-import { StakingLogService } from "../mechanics/marketing/staking/log/log.service";
 import { EventHistoryService } from "../event-history/event-history.service";
 import { RentService } from "../mechanics/gaming/rent/rent.service";
-import { LotteryLogService } from "../mechanics/gambling/lottery/log/log.service";
-import { RaffleLogService } from "../mechanics/gambling/raffle/log/log.service";
-import { Erc721TokenRandomLogService } from "../tokens/erc721/token/log-random/log.service";
-import { Erc998TokenRandomLogService } from "../tokens/erc998/token/log-random/log.service";
-import { LotteryTicketLogService } from "../mechanics/gambling/lottery/ticket/log/log.service";
-import { RaffleTicketLogService } from "../mechanics/gambling/raffle/ticket/log/log.service";
 import { ClaimService } from "../mechanics/marketing/claim/claim.service";
-import { ChainLinkLogService } from "../integrations/chain-link/contract/log/log.service";
-import { WaitListLogService } from "../mechanics/marketing/wait-list/log/log.service";
 import { decodeExternalId } from "../../common/utils";
-import { PaymentSplitterLogService } from "../mechanics/meta/payment-splitter/log/log.service";
-import { LootLogService } from "../mechanics/marketing/loot/box/log/log.service";
+import { Erc20TokenServiceLog } from "../tokens/erc20/token/token.service.log";
+import { Erc721TokenServiceLog } from "../tokens/erc721/token/token.service.log";
+import { Erc998TokenServiceLog } from "../tokens/erc998/token/token.service.log";
+import { Erc1155TokenServiceLog } from "../tokens/erc1155/token/token.service.log";
+import { LotteryTicketServiceLog } from "../mechanics/gambling/lottery/ticket/ticket.service.log";
+import { RaffleTicketServiceLog } from "../mechanics/gambling/raffle/ticket/ticket.service.log";
+import { PaymentSplitterServiceLog } from "../mechanics/meta/payment-splitter/payment-splitter.service.log";
+import { LotteryRoundServiceLog } from "../mechanics/gambling/lottery/round/round.service.log";
+import { RaffleRoundServiceLog } from "../mechanics/gambling/raffle/round/round.service.log";
+import { MysteryBoxServiceLog } from "../mechanics/marketing/mystery/box/box.service.log";
+import { LootBoxServiceLog } from "../mechanics/marketing/loot/box/box.service.log";
+import { PonziServiceLog } from "../mechanics/gambling/ponzi/ponzi.service.log";
+import { WaitListListServiceLog } from "../mechanics/marketing/wait-list/list/list.service.log";
+import { VestingServiceLog } from "../mechanics/marketing/vesting/vesting.service.log";
+import { StakingContractServiceLog } from "../mechanics/marketing/staking/contract/contract.service.log";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -88,30 +83,27 @@ export class ContractManagerServiceEth {
     private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
-    private readonly erc20LogService: Erc20LogService,
-    private readonly erc721LogService: Erc721LogService,
-    private readonly erc721RandomLogService: Erc721TokenRandomLogService,
-    private readonly erc998LogService: Erc998LogService,
-    private readonly erc998RandomLogService: Erc998TokenRandomLogService,
-    private readonly erc1155LogService: Erc1155LogService,
-    private readonly vestingLogService: VestingLogService,
-    private readonly stakingLogService: StakingLogService,
-    private readonly mysteryLogService: MysteryLogService,
-    private readonly lootLogService: LootLogService,
-    private readonly ponziLogService: PonziLogService,
-    private readonly paymentSplitterLogService: PaymentSplitterLogService,
-    private readonly lotteryLogService: LotteryLogService,
-    private readonly lotteryTicketLogService: LotteryTicketLogService,
-    private readonly raffleLogService: RaffleLogService,
-    private readonly waitListLogService: WaitListLogService,
-    private readonly raffleTicketLogService: RaffleTicketLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly rentService: RentService,
     private readonly balanceService: BalanceService,
     private readonly userService: UserService,
     private readonly claimService: ClaimService,
-    private readonly chainLinkLogService: ChainLinkLogService,
+    private readonly erc20TokenService: Erc20TokenServiceLog,
+    private readonly erc721TokenService: Erc721TokenServiceLog,
+    private readonly erc998TokenService: Erc998TokenServiceLog,
+    private readonly erc1155TokenService: Erc1155TokenServiceLog,
+    private readonly mysteryBoxServiceLog: MysteryBoxServiceLog,
+    private readonly lootBoxServiceLog: LootBoxServiceLog,
+    private readonly lotteryRoundServiceLog: LotteryRoundServiceLog,
+    private readonly lotteryTicketServiceLog: LotteryTicketServiceLog,
+    private readonly raffleRoundServiceLog: RaffleRoundServiceLog,
+    private readonly raffleTicketServiceLog: RaffleTicketServiceLog,
+    private readonly vestingServiceLog: VestingServiceLog,
+    private readonly paymentSplitterServiceLog: PaymentSplitterServiceLog,
+    private readonly ponziServiceLog: PonziServiceLog,
+    private readonly stakingContractServiceLog: StakingContractServiceLog,
+    private readonly waitListListServiceLog: WaitListListServiceLog,
   ) {}
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
@@ -126,7 +118,7 @@ export class ContractManagerServiceEth {
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const erc20ContractEntity = await this.contractService.create({
+    const contractEntity = await this.contractService.create({
       address: account.toLowerCase(),
       title: name,
       name,
@@ -150,7 +142,7 @@ export class ContractManagerServiceEth {
       imageUrl,
       cap,
       amount: cap,
-      contractId: erc20ContractEntity.id,
+      contractId: contractEntity.id,
     });
 
     await this.tokenService.create({
@@ -160,10 +152,10 @@ export class ContractManagerServiceEth {
       template: templateEntity,
     });
 
-    this.erc20LogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.erc20TokenService.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -205,11 +197,6 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      await this.chainLinkLogService.updateListener();
-      // TODO probably update listener only after set subscription by admin etc..
-    }
-
     if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
       await this.rentService.create({ contract: contractEntity }, chainId);
     }
@@ -240,26 +227,25 @@ export class ContractManagerServiceEth {
       contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
       contractEntity.contractFeatures.includes(ContractFeatures.GENES)
     ) {
-      this.erc721RandomLogService.addListener({
-        address: [account.toLowerCase()],
-        fromBlock: parseInt(context.blockNumber.toString(), 16),
-      });
+      await this.erc721TokenService.updateRegistryAndReadBlockRandom(
+        [account.toLowerCase()],
+        parseInt(context.blockNumber.toString(), 16),
+      );
     } else if (contractEntity.contractModule === ModuleType.LOTTERY) {
-      this.lotteryTicketLogService.addListener({
-        address: [account.toLowerCase()],
-        fromBlock: parseInt(context.blockNumber.toString(), 16),
-      });
+      await this.lotteryTicketServiceLog.updateRegistryAndReadBlock(
+        [account.toLowerCase()],
+        parseInt(context.blockNumber.toString(), 16),
+      );
     } else if (contractEntity.contractModule === ModuleType.RAFFLE) {
-      // ADD LISTENER
-      this.raffleTicketLogService.addListener({
-        address: [account.toLowerCase()],
-        fromBlock: parseInt(context.blockNumber.toString(), 16),
-      });
+      await this.raffleTicketServiceLog.updateRegistryAndReadBlock(
+        [account.toLowerCase()],
+        parseInt(context.blockNumber.toString(), 16),
+      );
     } else {
-      this.erc721LogService.addListener({
-        address: [account.toLowerCase()],
-        fromBlock: parseInt(context.blockNumber.toString(), 16),
-      });
+      await this.erc721TokenService.updateRegistryAndReadBlockSimple(
+        [account.toLowerCase()],
+        parseInt(context.blockNumber.toString(), 16),
+      );
     }
 
     await this.signalClientProxy
@@ -327,8 +313,6 @@ export class ContractManagerServiceEth {
       metadata: "{}",
       tokenId: i.toString(),
       royalty: Number(royalty),
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      // $url/collection/$account/$index.jpg
       imageUrl: `${imgUrl}/${account.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
       createdAt: currentDateTime,
@@ -339,10 +323,10 @@ export class ContractManagerServiceEth {
 
     await this.createBalancesBatch(externalId, entityArray);
 
-    this.erc721LogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.erc721TokenService.updateRegistryAndReadBlockSimple(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -384,10 +368,6 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      await this.chainLinkLogService.updateListener();
-    }
-
     if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
       await this.templateService.create({
         title: name,
@@ -403,15 +383,15 @@ export class ContractManagerServiceEth {
       contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
       contractEntity.contractFeatures.includes(ContractFeatures.GENES)
     ) {
-      this.erc998RandomLogService.addListener({
-        address: [account.toLowerCase()],
-        fromBlock: parseInt(context.blockNumber.toString(), 16),
-      });
+      await this.erc998TokenService.updateRegistryAndReadBlockRandom(
+        [account.toLowerCase()],
+        parseInt(context.blockNumber.toString(), 16),
+      );
     } else {
-      this.erc998LogService.addListener({
-        address: [account.toLowerCase()],
-        fromBlock: parseInt(context.blockNumber.toString(), 16),
-      });
+      await this.erc998TokenService.updateRegistryAndReadBlockSimple(
+        [account.toLowerCase()],
+        parseInt(context.blockNumber.toString(), 16),
+      );
     }
 
     await this.signalClientProxy
@@ -452,11 +432,10 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
-
-    this.erc1155LogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.erc1155TokenService.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -467,7 +446,7 @@ export class ContractManagerServiceEth {
       .toPromise();
   }
 
-  public async mysteryBox(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, context: Log): Promise<void> {
+  public async mystery(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
@@ -499,10 +478,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.mysteryLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.mysteryBoxServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -513,7 +492,7 @@ export class ContractManagerServiceEth {
       .toPromise();
   }
 
-  public async lootBox(event: ILogEvent<IContractManagerLootTokenDeployedEvent>, context: Log): Promise<void> {
+  public async loot(event: ILogEvent<IContractManagerLootTokenDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account, args, externalId },
     } = event;
@@ -546,10 +525,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.lootLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.lootBoxServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -602,10 +581,10 @@ export class ContractManagerServiceEth {
       await this.claimService.redeemClaim(claimId);
     }
 
-    this.vestingLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.vestingServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -648,10 +627,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.ponziLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.ponziServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -692,11 +671,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.chainLinkLogService.updateListener();
-    this.lotteryLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.lotteryRoundServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -730,11 +708,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.chainLinkLogService.updateListener();
-    this.raffleLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.raffleRoundServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -768,10 +745,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.waitListLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.waitListListServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -816,10 +793,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.paymentSplitterLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.paymentSplitterServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -860,10 +837,10 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    this.stakingLogService.addListener({
-      address: [account.toLowerCase()],
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-    });
+    await this.stakingContractServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

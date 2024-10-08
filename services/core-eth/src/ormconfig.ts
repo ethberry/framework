@@ -1,8 +1,6 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-// import { NodeEnv } from "@ethberry/constants";
-
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { ClaimEntity } from "./blockchain/mechanics/marketing/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/marketing/mystery/box/box.entity";
@@ -41,7 +39,6 @@ import { RaffleTicketEntity } from "./blockchain/mechanics/gambling/raffle/ticke
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 import { DismantleEntity } from "./blockchain/mechanics/gaming/recipes/dismantle/dismantle.entity";
 import { CraftEntity } from "./blockchain/mechanics/gaming/recipes/craft/craft.entity";
-import { TransactionEntity } from "./blockchain/transaction/transaction.entity";
 import { MergeEntity } from "./blockchain/mechanics/gaming/recipes/merge/merge.entity";
 import { StakingPenaltyEntity } from "./blockchain/mechanics/marketing/staking/penalty/penalty.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/meta/referral/reward/referral.reward.entity";
@@ -49,6 +46,7 @@ import { ReferralTreeEntity } from "./blockchain/mechanics/meta/referral/program
 import { ReferralProgramEntity } from "./blockchain/mechanics/meta/referral/program/referral.program.entity";
 import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/referral.claim.entity";
 import { ReferralRewardShareEntity } from "./blockchain/mechanics/meta/referral/reward/share/referral.reward.share.entity";
+import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -57,10 +55,10 @@ const config: PostgresConnectionOptions = {
   entities: [
     UserEntity,
     MerchantEntity,
-    ChainLinkSubscriptionEntity,
+    SettingsEntity,
     // Blockchain
+    ChainLinkSubscriptionEntity,
     // exchange
-    TransactionEntity,
     EventHistoryEntity,
     AssetEntity,
     AssetComponentEntity,
@@ -101,7 +99,6 @@ const config: PostgresConnectionOptions = {
     ReferralProgramEntity,
     ReferralClaimEntity,
     ReferralRewardShareEntity,
-    /* achievements */
     AchievementItemEntity,
     AchievementLevelEntity,
     AchievementRuleEntity,

@@ -56,11 +56,11 @@ export const StyledImageListItem = styled(Box)(({ theme }) => ({
     height: "100%",
     objectFit: "contain",
   },
-}));
+})) as typeof Box;
 
 export const StyledDescription = styled(Box)(({ theme }) => ({
   ...theme.typography.body2,
   color: theme.palette.text.secondary,
   marginTop: theme.spacing(4),
   marginBottom: theme.spacing(4),
-}));
+})) as typeof Box;

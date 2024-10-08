@@ -1,3 +1,4 @@
+export * from "./chain-link/address";
 export * from "./chain-link/supported";
 
 export * from "./enjin/meta-data";

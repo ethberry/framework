@@ -10,6 +10,18 @@ export enum AccessControlEventType {
   OwnershipTransferStarted = "OwnershipTransferStarted",
 }
 
+export enum AccessControlEventSignature {
+  RoleGranted = "RoleGranted(bytes32,address,address)",
+  RoleRevoked = "RoleRevoked(bytes32,address,address)",
+  RoleAdminChanged = "RoleAdminChanged(bytes32,bytes32,bytes32)",
+  DefaultAdminTransferScheduled = "DefaultAdminTransferScheduled(address,uint48)",
+  DefaultAdminTransferCanceled = "DefaultAdminTransferCanceled()",
+  DefaultAdminDelayChangeScheduled = "DefaultAdminDelayChangeScheduled(uint48,uint48)",
+  DefaultAdminDelayChangeCanceled = "DefaultAdminDelayChangeCanceled()",
+  OwnershipTransferred = "OwnershipTransferred(address,address)",
+  OwnershipTransferStarted = "OwnershipTransferStarted(address,address)",
+}
+
 // event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender);
 export interface IAccessControlRoleGrantedEvent {
   role: string;
