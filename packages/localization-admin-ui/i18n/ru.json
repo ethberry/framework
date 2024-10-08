@@ -887,7 +887,7 @@
       "addressLine2": "Дополнительная информация об адресе",
       "amount": "10",
       "attribute": "УРОВЕНЬ",
-      "baseTokenURI": "https://gemunion.io/",
+      "baseTokenURI": "https://ethberry.io/",
       "batchSize": "1000",
       "beneficiary": "0x...",
       "cap": "10",

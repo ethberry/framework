@@ -1,6 +1,6 @@
 import { Interface } from "ethers";
 
-import ExchangeBreedFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeBreedFacet.sol/ExchangeBreedFacet.json";
+import ExchangeGenesFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeGenesFacet.sol/ExchangeGenesFacet.json";
 import ExchangeClaimFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeClaimFacet.sol/ExchangeClaimFacet.json";
 import ExchangeCraftFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeCraftFacet.sol/ExchangeCraftFacet.json";
 import ExchangeDismantleFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeDismantleFacet.sol/ExchangeDismantleFacet.json";
@@ -17,7 +17,7 @@ import ExchangeUtilsSol from "@framework/core-contracts/artifacts/contracts/Exch
 export const ExchangeABI = new Interface([
   ...new Set(
     ([] as Array<any>)
-      .concat(ExchangeBreedFacetSol.abi)
+      .concat(ExchangeGenesFacetSol.abi)
       .concat(ExchangeClaimFacetSol.abi)
       .concat(ExchangeCraftFacetSol.abi)
       .concat(ExchangeDismantleFacetSol.abi)

@@ -14,7 +14,7 @@ import type { IServerSignature } from "@ethberry/types-blockchain";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import BreedABI from "@framework/abis/json/ExchangeBreedFacet/breed.json";
+import BreedABI from "@framework/abis/json/ExchangeGenesFacet/breed.json";
 
 import { CommonContractInput } from "../../../../../components/inputs/common-contract";
 import { TemplateInput } from "./template-input";
