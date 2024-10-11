@@ -59,7 +59,7 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/erc721collection",
+        url: "/contract-manager/collection",
         method: "POST",
         data: values,
       },

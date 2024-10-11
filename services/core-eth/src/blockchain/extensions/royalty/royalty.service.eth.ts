@@ -4,10 +4,15 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IDefaultRoyaltyInfoEvent, ITokenRoyaltyInfoEvent } from "@framework/types";
+import type {
+  IContractManagerERC721TokenDeployedEvent,
+  IDefaultRoyaltyInfoEvent,
+  ITokenRoyaltyInfoEvent,
+} from "@framework/types";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { RmqProviderType, SignalEventType } from "@framework/types";
+import { RoyaltyServiceLog } from "./royalty.service.log";
 
 @Injectable()
 export class RoyaltyServiceEth {
@@ -16,6 +21,7 @@ export class RoyaltyServiceEth {
     protected readonly signalClientProxy: ClientProxy,
     private readonly contractService: ContractService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly royaltyServiceLog: RoyaltyServiceLog,
   ) {}
 
   public async defaultRoyaltyInfo(event: ILogEvent<IDefaultRoyaltyInfoEvent>, context: Log): Promise<void> {
@@ -75,5 +81,16 @@ export class RoyaltyServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    await this.royaltyServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
   }
 }

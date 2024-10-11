@@ -7,7 +7,8 @@ export class CreateEventHistoryComponents1563804040020 implements MigrationInter
     await queryRunner.query(
       `CREATE TYPE ${ns}.exchange_type_enum AS ENUM (
         'ITEM',
-        'PRICE'
+        'PRICE',
+        'CONTENT'
       );`,
     );
 

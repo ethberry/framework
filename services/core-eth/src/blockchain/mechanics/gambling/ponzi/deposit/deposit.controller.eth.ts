@@ -10,8 +10,9 @@ import type {
   IPonziWithdrawEvent,
   IWithdrawTokenEvent,
 } from "@framework/types";
-import { ContractType, PonziEventType } from "@framework/types";
+import { PonziEventType } from "@framework/types";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { PonziDepositServiceEth } from "./deposit.service.eth";
 
 @Controller()

@@ -1,13 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { ChainLinkEventSignature, ContractType, ModuleType } from "@framework/types";
+import { ChainLinkEventSignature, ModuleType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { VrfABI } from "./interfaces";
+import { ContractType } from "../../../../utils/contract-type";
 
 @Injectable()
 export class ChainLinkSubscriptionServiceLog {

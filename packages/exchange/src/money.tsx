@@ -25,13 +25,13 @@ export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number)
 
   return asset.components
     .map(component => {
-      switch (component.contract?.contractType) {
+      switch (component.template?.contract?.contractType) {
         case TokenType.NATIVE:
         case TokenType.ERC20:
           return formatEther(
             component.amount,
-            component.contract.decimals,
-            component.contract.symbol,
+            component.template.contract.decimals,
+            component.template.contract.symbol,
             maxDecimalDigits,
           );
         case TokenType.ERC721:
@@ -43,7 +43,7 @@ export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number)
               : component.tokenId
                 ? `${component.template?.title} #${component.token!.tokenId}`
                 : component.template?.title || ""
-            : `${component.amount === "1" ? "" : `${component.amount} x`} ${component.contract.title}`;
+            : `${component.amount === "1" ? "" : `${component.amount} x`} ${component.template.contract.title}`;
         default:
           return "unsupported token type";
       }

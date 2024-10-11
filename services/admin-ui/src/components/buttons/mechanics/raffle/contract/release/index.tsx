@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IRaffleRound } from "@framework/types";
 import { AccessControlRoleType } from "@framework/types";
 
-import LotteryRandomReleaseFundsABI from "@framework/abis/json/LotteryRandom/releaseFunds.json";
+import LotteryReleaseFundsABI from "@framework/abis/json/Lottery/releaseFunds.json";
 
 import { useSetButtonPermission } from "../../../../../../shared";
 
@@ -34,11 +34,7 @@ export const RaffleReleaseButton: FC<IRaffleReleaseButtonProps> = props => {
   const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, round.contract?.id);
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(
-      round.contract!.address,
-      LotteryRandomReleaseFundsABI,
-      web3Context.provider?.getSigner(),
-    );
+    const contract = new Contract(round.contract!.address, LotteryReleaseFundsABI, web3Context.provider?.getSigner());
     return contract.releaseFunds(round.roundId);
   });
 

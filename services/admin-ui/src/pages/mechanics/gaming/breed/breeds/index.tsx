@@ -8,7 +8,6 @@ import type { ISearchDto } from "@ethberry/types-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IBreed } from "@framework/types";
 
-import { BreedLimitButton } from "../../../../../components/buttons";
 import { BreedItemViewDialog } from "./view";
 
 export const BreedBreeds: FC = () => {
@@ -32,15 +31,12 @@ export const BreedBreeds: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "breed", "breed.breeds"]} />
 
-      <PageHeader message="pages.breed.breeds.title">
-        <BreedLimitButton />
-      </PageHeader>
+      <PageHeader message="pages.breed.breeds.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(breed => (
             <StyledListItem key={breed.id}>
-              {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
               <ListItemText>{`${breed.token.template?.title} #${breed.token.tokenId} breeds count: ${breed.count}`}</ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(breed)} message="form.tips.view" icon={Visibility} />

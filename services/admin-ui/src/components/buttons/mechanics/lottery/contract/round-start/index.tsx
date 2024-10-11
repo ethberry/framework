@@ -9,7 +9,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, TokenType } from "@framework/types";
 
-import LotteryStartRoundABI from "@framework/abis/json/LotteryRandom/startRound.json";
+import LotteryStartRoundABI from "@framework/abis/json/Lottery/startRound.json";
 
 import { LotteryStartRoundDialog } from "./round-dialog";
 import type { ILotteryRound } from "./round-dialog";

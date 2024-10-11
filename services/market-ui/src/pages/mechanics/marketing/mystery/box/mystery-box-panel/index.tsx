@@ -6,7 +6,6 @@ import { formatItem } from "@framework/exchange";
 import type { IMysteryBox } from "@framework/types";
 
 import { MysteryBoxPurchaseButton } from "../../../../../../components/buttons";
-import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
 import { AllowanceButton } from "../../../../../exchange/wallet/allowance";
 import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
@@ -24,7 +23,6 @@ export const MysteryBoxPanel: FC<IMysteryBoxPanelProps> = props => {
           <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.mystery.box.price" />
           </StyledTypography>
-          <AllowanceInfoPopover />
         </StyledToolbar>
         <Box>{formatItem(box.template?.price)}</Box>
       </CardContent>

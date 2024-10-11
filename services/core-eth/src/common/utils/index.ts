@@ -4,6 +4,5 @@ export * from "./ethLogs";
 export * from "./handlers";
 export * from "./lottery";
 export * from "./metaData";
-export * from "./mintInfo";
 export * from "./raffle";
 export * from "./time";

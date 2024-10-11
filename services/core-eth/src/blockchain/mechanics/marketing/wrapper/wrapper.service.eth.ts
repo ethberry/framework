@@ -16,7 +16,7 @@ import {
 
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { getMetadata } from "../../../../common/utils";
-import { Erc721ABI } from "../../../tokens/erc721/token/interfaces";
+import { ERC721SimpleABI } from "../../../tokens/erc721/token/interfaces";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
@@ -75,7 +75,7 @@ export class WrapperServiceEth {
       const metadata = await getMetadata(
         Number(tokenId).toString(),
         address,
-        Erc721ABI,
+        ERC721SimpleABI,
         this.jsonRpcProvider,
         this.loggerService,
       );
@@ -95,7 +95,7 @@ export class WrapperServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), void 0, true);
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), true);
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");

@@ -1,8 +1,8 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ethersRpcProvider, EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
+import { EthersModule, ethersRpcProvider } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { LootBoxEntity } from "./box.entity";
 import { LootBoxService } from "./box.service";
@@ -35,4 +35,10 @@ import { LootBoxServiceLog } from "./box.service.log";
   controllers: [LootBoxControllerEth],
   exports: [LootBoxService, LootBoxServiceLog, LootBoxServiceEth],
 })
-export class LootBoxModule {}
+export class LootBoxModule implements OnModuleInit {
+  constructor(private readonly lootBoxServiceLog: LootBoxServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.lootBoxServiceLog.updateRegistry();
+  }
+}

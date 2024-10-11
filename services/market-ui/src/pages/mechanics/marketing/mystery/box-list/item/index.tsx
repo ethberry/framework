@@ -18,7 +18,7 @@ export const MysteryBoxListItem: FC<IMysteryBoxListItemProps> = props => {
 
   return (
     <StyledTemplateItemCard>
-      <CardActionArea component={RouterLink} to={`/mystery/boxes/${mysteryBox.id}`}>
+      <CardActionArea component={RouterLink} to={`/mystery/boxes/${mysteryBox.id}/view`}>
         <CardHeader title={mysteryBox.title} />
         <StyledCardMedia image={mysteryBox.imageUrl} />
         <CardContent>

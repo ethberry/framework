@@ -1,22 +1,15 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { In, Not } from "typeorm";
+import { Not, In } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  AccessControlEventSignature,
-  AccessListEventSignature,
-  ContractFeatures,
-  ContractType,
-  Erc20EventSignature,
-  ModuleType,
-  TokenType,
-} from "@framework/types";
+import { ContractFeatures, Erc20EventSignature, TokenType } from "@framework/types";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { Erc20ABI } from "./interfaces";
+import { ERC20SimpleABI } from "./interfaces";
 
 @Injectable()
 export class Erc20TokenServiceLog {
@@ -29,7 +22,6 @@ export class Erc20TokenServiceLog {
   public async updateRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
-      contractModule: ModuleType.HIERARCHY,
       contractType: TokenType.ERC20,
       contractFeatures: Not(In([[ContractFeatures.EXTERNAL]])),
       chainId,
@@ -38,18 +30,8 @@ export class Erc20TokenServiceLog {
     return this.ethersService.updateRegistry({
       contractType: ContractType.ERC20_TOKEN,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: Erc20ABI,
-      eventSignatures: [
-        Erc20EventSignature.Approval,
-        Erc20EventSignature.Transfer,
-        AccessListEventSignature.Blacklisted,
-        AccessListEventSignature.UnBlacklisted,
-        AccessListEventSignature.Whitelisted,
-        AccessListEventSignature.UnWhitelisted,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
-      ],
+      contractInterface: ERC20SimpleABI,
+      eventSignatures: [Erc20EventSignature.Approval, Erc20EventSignature.Transfer],
     });
   }
 
@@ -58,18 +40,8 @@ export class Erc20TokenServiceLog {
       {
         contractType: ContractType.ERC20_TOKEN,
         contractAddress: address,
-        contractInterface: Erc20ABI,
-        eventSignatures: [
-          Erc20EventSignature.Approval,
-          Erc20EventSignature.Transfer,
-          AccessListEventSignature.Blacklisted,
-          AccessListEventSignature.UnBlacklisted,
-          AccessListEventSignature.Whitelisted,
-          AccessListEventSignature.UnWhitelisted,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
+        contractInterface: ERC20SimpleABI,
+        eventSignatures: [Erc20EventSignature.Approval, Erc20EventSignature.Transfer],
       },
       blockNumber,
     );

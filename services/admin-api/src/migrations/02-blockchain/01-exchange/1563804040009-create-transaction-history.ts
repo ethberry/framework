@@ -35,8 +35,7 @@ export class CreateTransactionHistory1563804040009 implements MigrationInterface
        'WAIT_LIST',
        'PAYMENT_SPLITTER',
        'WRAPPER',
-       'VRF',
-       'VRF_SUB'
+       'VRF'
       );
     `);
 

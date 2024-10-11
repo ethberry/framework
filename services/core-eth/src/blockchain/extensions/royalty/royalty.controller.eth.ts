@@ -3,61 +3,48 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { ContractType, IDefaultRoyaltyInfoEvent, ITokenRoyaltyInfoEvent, RoyaltyEventType } from "@framework/types";
+import type {
+  IContractManagerERC721TokenDeployedEvent,
+  IDefaultRoyaltyInfoEvent,
+  ITokenRoyaltyInfoEvent,
+} from "@framework/types";
+import { ContractManagerEventType, RoyaltyEventType } from "@framework/types";
 
 import { RoyaltyServiceEth } from "./royalty.service.eth";
+import { ContractType } from "../../../utils/contract-type";
 
 @Controller()
 export class RoyaltyControllerEth {
   constructor(private readonly royaltyServiceEth: RoyaltyServiceEth) {}
 
-  @EventPattern([
-    {
-      contractType: ContractType.ERC1155_TOKEN,
-      eventName: RoyaltyEventType.DefaultRoyaltyInfo,
-    },
-    {
-      contractType: ContractType.ERC998_TOKEN,
-      eventName: RoyaltyEventType.DefaultRoyaltyInfo,
-    },
-    {
-      contractType: ContractType.ERC998_TOKEN_RANDOM,
-      eventName: RoyaltyEventType.DefaultRoyaltyInfo,
-    },
-    {
-      contractType: ContractType.ERC721_TOKEN,
-      eventName: RoyaltyEventType.DefaultRoyaltyInfo,
-    },
-    {
-      contractType: ContractType.ERC721_TOKEN_RANDOM,
-      eventName: RoyaltyEventType.DefaultRoyaltyInfo,
-    },
-    { contractType: ContractType.MYSTERY, eventName: RoyaltyEventType.DefaultRoyaltyInfo },
-    { contractType: ContractType.WRAPPER, eventName: RoyaltyEventType.DefaultRoyaltyInfo },
-    { contractType: ContractType.LOTTERY, eventName: RoyaltyEventType.DefaultRoyaltyInfo },
-  ])
+  @EventPattern([{ contractType: ContractType.ROYALTY, eventName: RoyaltyEventType.DefaultRoyaltyInfo }])
   public defaultRoyaltyInfo(@Payload() event: ILogEvent<IDefaultRoyaltyInfoEvent>, @Ctx() context: Log): Promise<void> {
     return this.royaltyServiceEth.defaultRoyaltyInfo(event, context);
   }
 
-  @EventPattern([
-    {
-      contractType: ContractType.ERC1155_TOKEN,
-      eventName: RoyaltyEventType.TokenRoyaltyInfo,
-    },
-    {
-      contractType: ContractType.ERC998_TOKEN,
-      eventName: RoyaltyEventType.TokenRoyaltyInfo,
-    },
-    {
-      contractType: ContractType.ERC721_TOKEN,
-      eventName: RoyaltyEventType.TokenRoyaltyInfo,
-    },
-    { contractType: ContractType.MYSTERY, eventName: RoyaltyEventType.TokenRoyaltyInfo },
-    { contractType: ContractType.WRAPPER, eventName: RoyaltyEventType.TokenRoyaltyInfo },
-    { contractType: ContractType.LOTTERY, eventName: RoyaltyEventType.TokenRoyaltyInfo },
-  ])
+  @EventPattern([{ contractType: ContractType.ROYALTY, eventName: RoyaltyEventType.TokenRoyaltyInfo }])
   public tokenRoyaltyInfo(@Payload() event: ILogEvent<ITokenRoyaltyInfoEvent>, @Ctx() context: Log): Promise<void> {
     return this.royaltyServiceEth.tokenRoyaltyInfo(event, context);
+  }
+
+  @EventPattern([
+    {
+      contractType: ContractType.CONTRACT_MANAGER,
+      eventName: ContractManagerEventType.ERC721TokenDeployed,
+    },
+    {
+      contractType: ContractType.CONTRACT_MANAGER,
+      eventName: ContractManagerEventType.ERC998TokenDeployed,
+    },
+    {
+      contractType: ContractType.CONTRACT_MANAGER,
+      eventName: ContractManagerEventType.ERC1155TokenDeployed,
+    },
+  ])
+  public erc721Token(
+    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
+    @Ctx() ctx: Log,
+  ): Promise<void> {
+    return this.royaltyServiceEth.deploy(event, ctx);
   }
 }

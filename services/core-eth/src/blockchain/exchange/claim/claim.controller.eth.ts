@@ -4,8 +4,9 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IExchangeClaimEvent } from "@framework/types";
-import { ContractType, ExchangeEventType } from "@framework/types";
+import { ExchangeEventType } from "@framework/types";
 
+import { ContractType } from "../../../utils/contract-type";
 import { ExchangeClaimServiceEth } from "./claim.service.eth";
 
 @Controller()

@@ -2,18 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { IsNull } from "typeorm";
 
-import {
-  AccessControlEventSignature,
-  ContractType,
-  ModuleType,
-  PausableEventSignature,
-  ReferralProgramEventSignature,
-  StakingEventSignature,
-} from "@framework/types";
+import { ModuleType, StakingEventSignature } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { StakingABI } from "./interfaces";
 
@@ -46,14 +40,6 @@ export class StakingContractServiceLog {
         StakingEventSignature.DepositFinish,
         StakingEventSignature.DepositReturn,
         StakingEventSignature.DepositPenalty,
-        // MODULE:REFERRAL
-        ReferralProgramEventSignature.ReferralEvent,
-        // extensions
-        PausableEventSignature.Paused,
-        PausableEventSignature.Unpaused,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
       ],
     });
   }
@@ -73,14 +59,6 @@ export class StakingContractServiceLog {
           StakingEventSignature.DepositFinish,
           StakingEventSignature.DepositReturn,
           StakingEventSignature.DepositPenalty,
-          // MODULE:REFERRAL
-          ReferralProgramEventSignature.ReferralEvent,
-          // extensions
-          PausableEventSignature.Paused,
-          PausableEventSignature.Unpaused,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
         ],
       },
       blockNumber,

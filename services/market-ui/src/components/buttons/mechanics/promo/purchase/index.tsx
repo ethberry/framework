@@ -64,9 +64,9 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
         web3Context.provider?.getSigner(),
       );
 
-      const items = convertDatabaseAssetToChainAsset(promo.box?.content?.components);
-      const promoItem = convertDatabaseAssetToChainAsset(promo.item?.components);
-      const price = convertDatabaseAssetToChainAsset(promo.price?.components);
+      const items = convertDatabaseAssetToChainAsset(promo.box!.content!.components);
+      const promoItem = convertDatabaseAssetToChainAsset(promo.item!.components);
+      const price = convertDatabaseAssetToChainAsset(promo.price!.components);
 
       return mysteryComponents && mysteryComponents.length > 0
         ? (contract.purchaseMystery(
@@ -106,7 +106,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const price = convertDatabaseAssetToTokenTypeAsset(promo.price?.components);
+      const price = convertDatabaseAssetToTokenTypeAsset(promo.price!.components);
       return metaFnWithAllowance(
         {
           contract: systemContract.address,

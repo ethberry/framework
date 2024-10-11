@@ -1,4 +1,4 @@
-import { Injectable, Inject, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 
@@ -9,6 +9,7 @@ import type {
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
+  IContractManagerERC20TokenDeployedEvent,
   IOwnershipTransferredEvent,
 } from "@framework/types";
 import {
@@ -24,6 +25,7 @@ import { AccessControlService } from "./access-control.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { testChainId } from "@framework/constants";
+import { AccessControlServiceLog } from "./access-control.service.log";
 
 @Injectable()
 export class AccessControlServiceEth {
@@ -33,7 +35,8 @@ export class AccessControlServiceEth {
     private readonly accessControlService: AccessControlService,
     private readonly contractService: ContractService,
     private readonly eventHistoryService: EventHistoryService,
-    protected readonly configService: ConfigService,
+    private readonly configService: ConfigService,
+    private readonly accessControlServiceLog: AccessControlServiceLog,
   ) {}
 
   public async roleGranted(event: ILogEvent<IAccessControlRoleGrantedEvent>, context: Log): Promise<void> {
@@ -237,5 +240,16 @@ export class AccessControlServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    await this.accessControlServiceLog.updateRegistryAndReadBlock(
+      [account.toLowerCase()],
+      parseInt(context.blockNumber.toString(), 16),
+    );
   }
 }

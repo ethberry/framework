@@ -12,8 +12,6 @@ import { imageUrl, testChainId } from "@framework/constants";
 import type {
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
-  IContractManagerERC20TokenDeployedEvent,
-  IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
@@ -30,8 +28,6 @@ import {
   ContractSecurity,
   ContractStatus,
   Erc1155ContractTemplates,
-  Erc20ContractTemplates,
-  Erc721ContractTemplates,
   Erc998ContractTemplates,
   IContractManagerPaymentSplitterDeployedEvent,
   LootContractTemplates,
@@ -50,15 +46,11 @@ import { TokenService } from "../hierarchy/token/token.service";
 import { TokenEntity } from "../hierarchy/token/token.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { EventHistoryService } from "../event-history/event-history.service";
-import { RentService } from "../mechanics/gaming/rent/rent.service";
 import { ClaimService } from "../mechanics/marketing/claim/claim.service";
 import { decodeExternalId } from "../../common/utils";
-import { Erc20TokenServiceLog } from "../tokens/erc20/token/token.service.log";
 import { Erc721TokenServiceLog } from "../tokens/erc721/token/token.service.log";
 import { Erc998TokenServiceLog } from "../tokens/erc998/token/token.service.log";
 import { Erc1155TokenServiceLog } from "../tokens/erc1155/token/token.service.log";
-import { LotteryTicketServiceLog } from "../mechanics/gambling/lottery/ticket/ticket.service.log";
-import { RaffleTicketServiceLog } from "../mechanics/gambling/raffle/ticket/ticket.service.log";
 import { PaymentSplitterServiceLog } from "../mechanics/meta/payment-splitter/payment-splitter.service.log";
 import { LotteryRoundServiceLog } from "../mechanics/gambling/lottery/round/round.service.log";
 import { RaffleRoundServiceLog } from "../mechanics/gambling/raffle/round/round.service.log";
@@ -85,177 +77,22 @@ export class ContractManagerServiceEth {
     private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
-    private readonly rentService: RentService,
     private readonly balanceService: BalanceService,
     private readonly userService: UserService,
     private readonly claimService: ClaimService,
-    private readonly erc20TokenService: Erc20TokenServiceLog,
     private readonly erc721TokenService: Erc721TokenServiceLog,
     private readonly erc998TokenService: Erc998TokenServiceLog,
     private readonly erc1155TokenService: Erc1155TokenServiceLog,
     private readonly mysteryBoxServiceLog: MysteryBoxServiceLog,
     private readonly lootBoxServiceLog: LootBoxServiceLog,
     private readonly lotteryRoundServiceLog: LotteryRoundServiceLog,
-    private readonly lotteryTicketServiceLog: LotteryTicketServiceLog,
     private readonly raffleRoundServiceLog: RaffleRoundServiceLog,
-    private readonly raffleTicketServiceLog: RaffleTicketServiceLog,
     private readonly vestingServiceLog: VestingServiceLog,
     private readonly paymentSplitterServiceLog: PaymentSplitterServiceLog,
     private readonly ponziServiceLog: PonziServiceLog,
     private readonly stakingContractServiceLog: StakingContractServiceLog,
     private readonly waitListListServiceLog: WaitListListServiceLog,
   ) {}
-
-  public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
-    const {
-      args: { account, args, externalId },
-    } = event;
-    const { transactionHash } = context;
-
-    const { name, symbol, cap, contractTemplate } = args;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    const contractEntity = await this.contractService.create({
-      address: account.toLowerCase(),
-      title: name,
-      name,
-      symbol,
-      decimals: 18,
-      description: emptyStateString,
-      imageUrl,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(Erc20ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
-      contractType: TokenType.ERC20,
-      chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(externalId),
-    });
-
-    const templateEntity = await this.templateService.create({
-      title: name,
-      description: emptyStateString,
-      imageUrl,
-      cap,
-      amount: cap,
-      contractId: contractEntity.id,
-    });
-
-    await this.tokenService.create({
-      metadata: "{}",
-      tokenId: "0",
-      royalty: 0,
-      template: templateEntity,
-    });
-
-    await this.erc20TokenService.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
-        transactionHash,
-        transactionType: event.name,
-      })
-      .toPromise();
-  }
-
-  public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
-    const {
-      args: { account, args, externalId },
-    } = event;
-    const { transactionHash } = context;
-
-    const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    const { contractFeatures, contractModule } = this.parseErc721Template(contractTemplate);
-
-    const contractEntity = await this.contractService.create({
-      address: account.toLowerCase(),
-      title: name,
-      name,
-      symbol,
-      description: emptyStateString,
-      imageUrl,
-      contractFeatures,
-      contractType: TokenType.ERC721,
-      contractModule,
-      chainId,
-      royalty: Number(royalty),
-      baseTokenURI,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(externalId),
-    });
-
-    if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
-      await this.rentService.create({ contract: contractEntity }, chainId);
-    }
-
-    if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
-      await this.templateService.create({
-        title: name,
-        description: emptyStateString,
-        imageUrl,
-        cap: (1024 * 1024 * 1024 * 4).toString(),
-        contractId: contractEntity.id,
-        templateStatus: TemplateStatus.HIDDEN,
-      });
-    }
-
-    if (contractEntity.contractModule === ModuleType.LOTTERY || contractEntity.contractModule === ModuleType.RAFFLE) {
-      // CREATE TEMPLATE TICKET
-      await this.templateService.create({
-        title: name,
-        description: emptyStateString,
-        imageUrl,
-        contractId: contractEntity.id,
-        templateStatus: TemplateStatus.ACTIVE,
-      });
-    }
-
-    if (
-      contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
-      contractEntity.contractFeatures.includes(ContractFeatures.GENES)
-    ) {
-      await this.erc721TokenService.updateRegistryAndReadBlockRandom(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    } else if (contractEntity.contractModule === ModuleType.LOTTERY) {
-      await this.lotteryTicketServiceLog.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    } else if (contractEntity.contractModule === ModuleType.RAFFLE) {
-      await this.raffleTicketServiceLog.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    } else {
-      await this.erc721TokenService.updateRegistryAndReadBlockSimple(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    }
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
-        transactionHash,
-        transactionType: event.name,
-      })
-      .toPromise();
-  }
 
   public async erc721Collection(
     event: ILogEvent<IContractManagerCollectionDeployedEvent>,
@@ -323,7 +160,7 @@ export class ContractManagerServiceEth {
 
     await this.createBalancesBatch(externalId, entityArray);
 
-    await this.erc721TokenService.updateRegistryAndReadBlockSimple(
+    await this.erc721TokenService.updateRegistryAndReadBlock(
       [account.toLowerCase()],
       parseInt(context.blockNumber.toString(), 16),
     );
@@ -383,12 +220,12 @@ export class ContractManagerServiceEth {
       contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
       contractEntity.contractFeatures.includes(ContractFeatures.GENES)
     ) {
-      await this.erc998TokenService.updateRegistryAndReadBlockRandom(
+      await this.erc998TokenService.updateRegistryAndReadBlock(
         [account.toLowerCase()],
         parseInt(context.blockNumber.toString(), 16),
       );
     } else {
-      await this.erc998TokenService.updateRegistryAndReadBlockSimple(
+      await this.erc998TokenService.updateRegistryAndReadBlock(
         [account.toLowerCase()],
         parseInt(context.blockNumber.toString(), 16),
       );
@@ -503,10 +340,6 @@ export class ContractManagerServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    const contractFeatures =
-      contractTemplate === "0"
-        ? []
-        : (Object.values(LootContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>);
 
     await this.contractService.create({
       address: account.toLowerCase(),
@@ -515,7 +348,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: [ContractFeatures.ALLOWANCE, ...contractFeatures],
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(LootContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.LOOT,
       chainId,
@@ -769,6 +605,8 @@ export class ContractManagerServiceEth {
     } = event;
     const { transactionHash } = context;
 
+    console.info(args);
+
     const { payees, shares } = args;
 
     await this.eventHistoryService.updateHistory(event, context);
@@ -781,11 +619,10 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       parameters: {
         payees: payees.map(payee => payee.toLowerCase()),
-        shares: shares.map(share => share.toLowerCase()),
+        shares: shares.map(share => Number(share)),
       },
       imageUrl,
       contractFeatures: [],
-      // TODO active from deploy?
       contractStatus: ContractStatus.ACTIVE,
       contractModule: ModuleType.PAYMENT_SPLITTER,
       chainId,
@@ -869,30 +706,6 @@ export class ContractManagerServiceEth {
         updatedAt: currentDateTime,
       })),
     );
-  }
-
-  public parseErc721Template(contractTemplate: string): {
-    contractFeatures: Array<ContractFeatures>;
-    contractModule: ModuleType;
-  } {
-    switch (Object.values(Erc721ContractTemplates)[Number(contractTemplate)]) {
-      case Erc721ContractTemplates.RAFFLE:
-        return { contractFeatures: [], contractModule: ModuleType.RAFFLE };
-      case Erc721ContractTemplates.LOTTERY:
-        return { contractFeatures: [], contractModule: ModuleType.LOTTERY };
-      case Erc721ContractTemplates.SIMPLE:
-        return { contractFeatures: [], contractModule: ModuleType.HIERARCHY };
-      default:
-        return {
-          contractFeatures:
-            contractTemplate === "0" || ""
-              ? []
-              : (Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split(
-                  "_",
-                ) as Array<ContractFeatures>),
-          contractModule: ModuleType.HIERARCHY,
-        };
-    }
   }
 
   public async getMerchantId(userId: number): Promise<number> {

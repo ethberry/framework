@@ -11,7 +11,7 @@ import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
 import { EventHistoryModule } from "../event-history/event-history.module";
-import { RentModule } from "../mechanics/gaming/rent/rent.module";
+import { RentableModule } from "../mechanics/gaming/rentable/rentable.module";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { ClaimModule } from "../mechanics/marketing/claim/claim.module";
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
@@ -31,9 +31,14 @@ import { StakingContractModule } from "../mechanics/marketing/staking/contract/c
 import { LotteryRoundModule } from "../mechanics/gambling/lottery/round/round.module";
 import { RaffleRoundModule } from "../mechanics/gambling/raffle/round/round.module";
 import { WaitListListModule } from "../mechanics/marketing/wait-list/list/list.module";
+import { ContractManagerErc20Module } from "./erc20/erc20.module";
+import { ContractManagerErc721Module } from "./erc721/erc721.module";
 
 @Module({
   imports: [
+    ContractManagerErc20Module,
+    ContractManagerErc721Module,
+
     ConfigModule,
     EthersModule.deferred(),
     ContractModule,
@@ -41,7 +46,7 @@ import { WaitListListModule } from "../mechanics/marketing/wait-list/list/list.m
     VestingModule,
     TemplateModule,
     TokenModule,
-    RentModule,
+    RentableModule,
     BalanceModule,
     UserModule,
     ClaimModule,

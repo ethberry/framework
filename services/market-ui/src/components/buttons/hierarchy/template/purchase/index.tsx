@@ -50,7 +50,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
       );
 
       const item = convertTemplateToChainAsset(template, values.amount);
-      const price = convertDatabaseAssetToChainAsset(template.price?.components, { multiplier: values.amount });
+      const price = convertDatabaseAssetToChainAsset(template.price!.components, { multiplier: values.amount });
 
       return contract.purchase(
         {
@@ -73,7 +73,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
   const metaFnWithSign = useServerSignature(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const assets = convertDatabaseAssetToTokenTypeAsset(template.price?.components, {
+      const assets = convertDatabaseAssetToTokenTypeAsset(template.price!.components, {
         multiplier: values.amount,
       });
       return metaFnWithAllowance(

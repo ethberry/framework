@@ -150,7 +150,7 @@ export class LootBoxService {
     queryBuilder.leftJoinAndSelect("box.content", "content");
     queryBuilder.leftJoinAndSelect("content.components", "content_components");
     queryBuilder.leftJoinAndSelect("content_components.contract", "content_contract");
-    queryBuilder.leftJoinAndSelect("content_components.template", "content_template");
+    queryBuilder.leftJoinAndSelect("content_contract.template", "content_template");
     queryBuilder.leftJoinAndSelect(
       "content_template.tokens",
       "content_tokens",
@@ -161,7 +161,7 @@ export class LootBoxService {
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
-    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_contract.template", "price_template");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",

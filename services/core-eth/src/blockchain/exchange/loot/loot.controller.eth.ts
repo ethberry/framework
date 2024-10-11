@@ -4,8 +4,9 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IExchangePurchaseLootBoxEvent } from "@framework/types";
-import { ContractType, ExchangeEventType } from "@framework/types";
+import { ExchangeEventType } from "@framework/types";
 
+import { ContractType } from "../../../utils/contract-type";
 import { ExchangeLootServiceEth } from "./loot.service.eth";
 
 @Controller()

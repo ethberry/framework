@@ -6,8 +6,6 @@ import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
-  IContractManagerERC20TokenDeployedEvent,
-  IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerLootTokenDeployedEvent,
@@ -19,9 +17,10 @@ import type {
   IContractManagerVestingDeployedEvent,
   IContractManagerWaitListDeployedEvent,
 } from "@framework/types";
-import { ContractManagerEventType, ContractType } from "@framework/types";
+import { ContractManagerEventType } from "@framework/types";
 
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
+import { ContractType } from "../../utils/contract-type";
 
 @Controller()
 export class ContractManagerControllerEth {
@@ -37,31 +36,9 @@ export class ContractManagerControllerEth {
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.ERC20TokenDeployed,
-  })
-  public erc20Token(
-    @Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.contractManagerServiceEth.erc20Token(event, ctx);
-  }
-
-  @EventPattern({
-    contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.ERC721TokenDeployed,
-  })
-  public erc721Token(
-    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.contractManagerServiceEth.erc721Token(event, ctx);
-  }
-
-  @EventPattern({
-    contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.CollectionDeployed,
   })
-  public erc721Collection(
+  public collection(
     @Payload() event: ILogEvent<IContractManagerCollectionDeployedEvent>,
     @Ctx() ctx: Log,
   ): Promise<void> {
@@ -94,7 +71,7 @@ export class ContractManagerControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.MysteryBoxDeployed,
   })
-  public mysterybox(
+  public mystery(
     @Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>,
     @Ctx() ctx: Log,
   ): Promise<void> {

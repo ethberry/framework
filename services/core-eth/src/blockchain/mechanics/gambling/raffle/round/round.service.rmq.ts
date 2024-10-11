@@ -4,7 +4,7 @@ import { Contract, JsonRpcProvider, Wallet } from "ethers";
 import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IRaffleScheduleUpdateRmq } from "@framework/types";
 
-import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
+import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/Raffle.sol/Raffle.json";
 
 import { blockAwait, getCurrentRaffleRound } from "../../../../../common/utils";
 

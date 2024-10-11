@@ -4,9 +4,10 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IExchangeCraftEvent } from "@framework/types";
-import { ContractType, ExchangeEventType } from "@framework/types";
+import { ExchangeEventType } from "@framework/types";
 
 import { ExchangeCraftServiceEth } from "./craft.service.eth";
+import { ContractType } from "../../../utils/contract-type";
 
 @Controller()
 export class ExchangeCraftControllerEth {

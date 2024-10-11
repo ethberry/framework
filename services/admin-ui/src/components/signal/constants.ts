@@ -6,6 +6,7 @@ export const EventRouteMatch: Partial<Record<string, string>> = {
   WhitelistedChild: "/erc998/composition",
   UnWhitelistedChild: "/erc998/composition",
   ERC1155TokenDeployed: "/erc1155/contracts",
+  LootBoxDeployed: "/loot/contracts",
   MysteryBoxDeployed: "/mystery/contracts",
   CollectionDeployed: "/collection/contracts",
   PonziDeployed: "/ponzi/contracts",

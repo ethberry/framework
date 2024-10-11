@@ -14,7 +14,7 @@ import {
   convertTemplateToChainAsset,
 } from "@framework/exchange";
 
-import ExchangeGradeFacetUpgradeABI from "@framework/abis/json/ExchangeGradeFacet/upgrade.json";
+import ExchangeDiscreteFacetUpgradeABI from "@framework/abis/json/ExchangeDiscreteFacet/upgrade.json";
 
 import { getEthPrice, getMultiplier } from "./utils";
 import type { IUpgradeDto } from "./dialog";
@@ -50,13 +50,13 @@ export const DiscreteButton: FC<IDiscreteButtonProps> = props => {
       // set real token Id
       item.tokenId = token.tokenId;
 
-      const price = convertDatabaseAssetToChainAsset(discrete.price?.components, {
+      const price = convertDatabaseAssetToChainAsset(discrete.price!.components, {
         multiplier: getMultiplier(level, discrete),
       });
 
       const contract = new Contract(
         systemContract.address,
-        ExchangeGradeFacetUpgradeABI,
+        ExchangeDiscreteFacetUpgradeABI,
         web3Context.provider?.getSigner(),
       );
 
@@ -92,7 +92,7 @@ export const DiscreteButton: FC<IDiscreteButtonProps> = props => {
         })
         .then((discrete: IDiscrete) => {
           const level = token.metadata[values.attribute] || 0;
-          const price = convertDatabaseAssetToTokenTypeAsset(discrete.price?.components, {
+          const price = convertDatabaseAssetToTokenTypeAsset(discrete.price!.components, {
             multiplier: getMultiplier(level, discrete),
           });
 

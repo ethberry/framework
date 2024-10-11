@@ -2,10 +2,9 @@ import { FC } from "react";
 
 import { FormDialog } from "@ethberry/mui-dialog-form";
 import { SelectInput } from "@ethberry/mui-inputs-core";
-import type { IContract } from "@framework/types";
+import type { IContract, IPonziContractDeployDto } from "@framework/types";
 import { PonziContractTemplates } from "@framework/types";
 
-import { emptyShare, SharesInput } from "./shares";
 import { validationSchema } from "./validation";
 
 export interface IPonziContractDeployDialogProps {
@@ -15,9 +14,8 @@ export interface IPonziContractDeployDialogProps {
 }
 
 export const PonziContractDeployDialog: FC<IPonziContractDeployDialogProps> = props => {
-  const fixedValues: Record<string, any> = {
+  const fixedValues: IPonziContractDeployDto = {
     contractTemplate: PonziContractTemplates.SIMPLE,
-    shares: [emptyShare],
   };
 
   return (
@@ -31,9 +29,8 @@ export const PonziContractDeployDialog: FC<IPonziContractDeployDialogProps> = pr
       <SelectInput
         name="contractTemplate"
         options={PonziContractTemplates}
-        disabledOptions={[PonziContractTemplates.SPLITTER]}
+        disabledOptions={[PonziContractTemplates.SIMPLE]}
       />
-      <SharesInput />
     </FormDialog>
   );
 };

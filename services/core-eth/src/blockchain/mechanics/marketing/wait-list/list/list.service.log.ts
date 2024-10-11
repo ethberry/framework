@@ -2,19 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { IsNull } from "typeorm";
 
-import {
-  AccessControlEventSignature,
-  ContractType,
-  ModuleType,
-  PausableEventSignature,
-  WaitListEventType,
-} from "@framework/types";
+import { ModuleType, WaitListEventType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { WaitListABI } from "./interfaces";
+import { ContractType } from "../../../../../utils/contract-type";
 
 @Injectable()
 export class WaitListListServiceLog {
@@ -36,16 +31,7 @@ export class WaitListListServiceLog {
       contractType: ContractType.WAIT_LIST,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: WaitListABI,
-      eventSignatures: [
-        WaitListEventType.WaitListRewardSet,
-        WaitListEventType.WaitListRewardClaimed,
-        // extensions
-        PausableEventSignature.Paused,
-        PausableEventSignature.Unpaused,
-        AccessControlEventSignature.RoleAdminChanged,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-      ],
+      eventSignatures: [WaitListEventType.WaitListRewardSet, WaitListEventType.WaitListRewardClaimed],
     });
   }
 
@@ -55,16 +41,7 @@ export class WaitListListServiceLog {
         contractType: ContractType.WAIT_LIST,
         contractAddress: address,
         contractInterface: WaitListABI,
-        eventSignatures: [
-          WaitListEventType.WaitListRewardSet,
-          WaitListEventType.WaitListRewardClaimed,
-          // extensions
-          PausableEventSignature.Paused,
-          PausableEventSignature.Unpaused,
-          AccessControlEventSignature.RoleAdminChanged,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-        ],
+        eventSignatures: [WaitListEventType.WaitListRewardSet, WaitListEventType.WaitListRewardClaimed],
       },
       blockNumber,
     );

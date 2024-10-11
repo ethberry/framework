@@ -2,8 +2,10 @@ import { FC } from "react";
 
 import { FormDialog } from "@ethberry/mui-dialog-form";
 import { SelectInput } from "@ethberry/mui-inputs-core";
-import { StakingContractTemplates } from "@framework/types";
 import type { IContract, IStakingContractDeployDto } from "@framework/types";
+import { StakingContractTemplates } from "@framework/types";
+
+import { validationSchema } from "./validation";
 
 export interface IStakingDeployDialogProps {
   open: boolean;
@@ -19,6 +21,7 @@ export const StakingDeployDialog: FC<IStakingDeployDialogProps> = props => {
   return (
     <FormDialog
       initialValues={fixedValues}
+      validationSchema={validationSchema}
       message="dialogs.deploy"
       testId="StakingDeployForm"
       disabled={false}

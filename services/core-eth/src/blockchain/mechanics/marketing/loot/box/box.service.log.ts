@@ -1,20 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import {
-  AccessControlEventSignature,
-  BaseUrlEventSignature,
-  ContractType,
-  Erc721EventSignature,
-  ModuleType,
-  LootEventSignature,
-  RoyaltyEventSignature,
-  TokenType,
-} from "@framework/types";
+import { LootEventSignature, ModuleType, TokenType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { LootABI } from "./interfaces";
 
@@ -38,19 +30,7 @@ export class LootBoxServiceLog {
       contractType: ContractType.LOOT,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: LootABI,
-      eventSignatures: [
-        Erc721EventSignature.Approval,
-        Erc721EventSignature.ApprovalForAll,
-        Erc721EventSignature.Transfer,
-        LootEventSignature.UnpackLootBox,
-        // extensions
-        BaseUrlEventSignature.BaseURIUpdate,
-        RoyaltyEventSignature.DefaultRoyaltyInfo,
-        RoyaltyEventSignature.TokenRoyaltyInfo,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
-      ],
+      eventSignatures: [LootEventSignature.UnpackLootBox],
     });
   }
 
@@ -60,19 +40,7 @@ export class LootBoxServiceLog {
         contractType: ContractType.LOOT,
         contractAddress: address,
         contractInterface: LootABI,
-        eventSignatures: [
-          Erc721EventSignature.Approval,
-          Erc721EventSignature.ApprovalForAll,
-          Erc721EventSignature.Transfer,
-          LootEventSignature.UnpackLootBox,
-          // extensions
-          RoyaltyEventSignature.DefaultRoyaltyInfo,
-          RoyaltyEventSignature.TokenRoyaltyInfo,
-          BaseUrlEventSignature.BaseURIUpdate,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
+        eventSignatures: [LootEventSignature.UnpackLootBox],
       },
       blockNumber,
     );

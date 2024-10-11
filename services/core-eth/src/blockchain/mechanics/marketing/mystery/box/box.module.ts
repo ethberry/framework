@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -42,4 +42,10 @@ import { MysteryBoxServiceLog } from "./box.service.log";
   controllers: [MysteryBoxControllerEth],
   exports: [MysteryBoxService, MysteryBoxServiceLog, MysteryBoxServiceEth],
 })
-export class MysteryBoxModule {}
+export class MysteryBoxModule implements OnModuleInit {
+  constructor(private readonly mysteryBoxServiceLog: MysteryBoxServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.mysteryBoxServiceLog.updateRegistry();
+  }
+}

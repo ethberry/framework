@@ -2,17 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { IsNull } from "typeorm";
 
-import {
-  AccessControlEventSignature,
-  ContractType,
-  Erc1363EventType,
-  ModuleType,
-  VestingEventType,
-} from "@framework/types";
+import { AccessControlEventSignature, Erc1363EventType, ModuleType, VestingEventType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { VestingABI } from "./interfaces";
 

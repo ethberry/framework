@@ -7,102 +7,29 @@ import type {
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
+  IContractManagerERC20TokenDeployedEvent,
   IOwnershipTransferredEvent,
 } from "@framework/types";
-import { AccessControlEventType, ContractType } from "@framework/types";
+import { AccessControlEventType, ContractManagerEventType } from "@framework/types";
 
 import { AccessControlServiceEth } from "./access-control.service.eth";
+import { ContractType } from "../../../utils/contract-type";
 
 @Controller()
 export class AccessControlControllerEth {
   constructor(private readonly accessControlServiceEth: AccessControlServiceEth) {}
 
-  @EventPattern([
-    {
-      contractType: ContractType.CONTRACT_MANAGER,
-      eventName: AccessControlEventType.RoleGranted,
-    },
-    {
-      contractType: ContractType.EXCHANGE,
-      eventName: AccessControlEventType.RoleGranted,
-    },
-    {
-      contractType: ContractType.MYSTERY,
-      eventName: AccessControlEventType.RoleGranted,
-    },
-    { contractType: ContractType.STAKING, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.PONZI, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.ERC998_TOKEN, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.ERC20_TOKEN, eventName: AccessControlEventType.RoleGranted },
-    { contractType: ContractType.WAIT_LIST, eventName: AccessControlEventType.RoleGranted },
-  ])
+  @EventPattern([{ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleGranted }])
   public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGrantedEvent>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleGranted(event, context);
   }
 
-  @EventPattern([
-    {
-      contractType: ContractType.CONTRACT_MANAGER,
-      eventName: AccessControlEventType.RoleRevoked,
-    },
-    {
-      contractType: ContractType.EXCHANGE,
-      eventName: AccessControlEventType.RoleRevoked,
-    },
-    {
-      contractType: ContractType.MYSTERY,
-      eventName: AccessControlEventType.RoleRevoked,
-    },
-    { contractType: ContractType.STAKING, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.PONZI, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.ERC998_TOKEN, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.ERC20_TOKEN, eventName: AccessControlEventType.RoleRevoked },
-    { contractType: ContractType.WAIT_LIST, eventName: AccessControlEventType.RoleRevoked },
-  ])
+  @EventPattern([{ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleRevoked }])
   public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevokedEvent>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleRevoked(event, context);
   }
 
-  @EventPattern([
-    {
-      contractType: ContractType.CONTRACT_MANAGER,
-      eventName: AccessControlEventType.RoleAdminChanged,
-    },
-    {
-      contractType: ContractType.EXCHANGE,
-      eventName: AccessControlEventType.RoleAdminChanged,
-    },
-    {
-      contractType: ContractType.MYSTERY,
-      eventName: AccessControlEventType.RoleAdminChanged,
-    },
-    { contractType: ContractType.STAKING, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.PONZI, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.ERC998_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.ERC20_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },
-    { contractType: ContractType.WAIT_LIST, eventName: AccessControlEventType.RoleAdminChanged },
-  ])
+  @EventPattern([{ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleAdminChanged }])
   public roleAdmin(
     @Payload() event: ILogEvent<IAccessControlRoleAdminChangedEvent>,
     @Ctx() context: Log,
@@ -121,5 +48,28 @@ export class AccessControlControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.accessControlServiceEth.ownershipTransferred(event, context);
+  }
+
+  @EventPattern([
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC20TokenDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC721TokenDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC998TokenDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC1155TokenDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.CollectionDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.MysteryBoxDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LootBoxDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.StakingDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PonziDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LotteryDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.RaffleDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PaymentSplitterDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.WaitListDeployed },
+  ])
+  public deploy(
+    @Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.accessControlServiceEth.deploy(event, context);
   }
 }

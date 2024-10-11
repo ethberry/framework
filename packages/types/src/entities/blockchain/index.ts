@@ -1,6 +1,4 @@
-export * from "./transaction/transaction";
 export * from "./event-history";
-export * from "./contract-manager";
 
 export * from "./extensions/access-control";
 export * from "./extensions/access-list";

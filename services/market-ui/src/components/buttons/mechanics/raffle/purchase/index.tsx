@@ -33,7 +33,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, RafflePurchaseABI, web3Context.provider?.getSigner());
 
-      const price = convertDatabaseAssetToChainAsset(round.price?.components);
+      const price = convertDatabaseAssetToChainAsset(round.price!.components);
 
       return contract.purchaseRaffle(
         {
@@ -61,7 +61,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const price = convertDatabaseAssetToTokenTypeAsset(round.price?.components);
+      const price = convertDatabaseAssetToTokenTypeAsset(round.price!.components);
       return metaFnWitnAllowance(
         {
           contract: systemContract.address,

@@ -4,11 +4,12 @@ import { IsNull } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
-import { ContractType, ModuleType, PaymentSplitterEventSignature } from "@framework/types";
+import { ModuleType, PaymentSplitterEventSignature } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { PaymentSplitterABI } from "./interfaces";
+import { ContractType } from "../../../../utils/contract-type";
 
 @Injectable()
 export class PaymentSplitterServiceLog {

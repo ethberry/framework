@@ -4,17 +4,10 @@ import { IsNull } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
-import {
-  AccessControlEventType,
-  ChainLinkEventSignature,
-  ContractType,
-  Erc1363EventSignature,
-  LotteryEventType,
-  ModuleType,
-  PausableEventSignature,
-} from "@framework/types";
+import { LotteryEventType, ModuleType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { LotteryABI } from "./interfaces";
 
@@ -44,15 +37,6 @@ export class LotteryRoundServiceLog {
         LotteryEventType.Released,
         LotteryEventType.RoundStarted,
         LotteryEventType.RoundFinalized,
-        Erc1363EventSignature.TransferReceived,
-        // integrations
-        ChainLinkEventSignature.VrfSubscriptionSet,
-        // extensions
-        PausableEventSignature.Paused,
-        PausableEventSignature.Unpaused,
-        AccessControlEventType.RoleAdminChanged,
-        AccessControlEventType.RoleGranted,
-        AccessControlEventType.RoleRevoked,
       ],
     });
   }
@@ -69,15 +53,6 @@ export class LotteryRoundServiceLog {
           LotteryEventType.Released,
           LotteryEventType.RoundStarted,
           LotteryEventType.RoundFinalized,
-          Erc1363EventSignature.TransferReceived,
-          // integrations
-          ChainLinkEventSignature.VrfSubscriptionSet,
-          // extensions
-          PausableEventSignature.Paused,
-          PausableEventSignature.Unpaused,
-          AccessControlEventType.RoleAdminChanged,
-          AccessControlEventType.RoleGranted,
-          AccessControlEventType.RoleRevoked,
         ],
       },
       blockNumber,

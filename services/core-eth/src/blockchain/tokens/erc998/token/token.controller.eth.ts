@@ -3,10 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  ContractType,
-  Erc721EventType,
-  Erc998EventType,
+import type {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
@@ -18,7 +15,9 @@ import {
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
 } from "@framework/types";
+import { Erc721EventType, Erc998EventType } from "@framework/types";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { Erc998TokenServiceEth } from "./token.service.eth";
 
 @Controller()

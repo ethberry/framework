@@ -57,7 +57,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         ? token.template?.contract?.rent.filter(r => r.id === values.rentRule)
         : [];
 
-      const price = convertDatabaseAssetToChainAsset(rentRule ? rentRule[0].price?.components : []);
+      const price = convertDatabaseAssetToChainAsset(rentRule ? rentRule[0].price!.components : []);
 
       // TODO - test
       return contract.lend(params, item, price, sign.signature, {
@@ -72,7 +72,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         ? token.template?.contract?.rent.filter(r => r.id === values.rentRule)
         : [];
 
-      const price = convertDatabaseAssetToTokenTypeAsset(rentRule ? rentRule[0].price?.components : []);
+      const price = convertDatabaseAssetToTokenTypeAsset(rentRule ? rentRule[0].price!.components : []);
 
       return metaFnWithAllowance(
         { contract: systemContract.address, assets: price },

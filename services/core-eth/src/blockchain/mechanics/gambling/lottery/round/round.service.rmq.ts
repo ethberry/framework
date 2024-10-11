@@ -4,7 +4,7 @@ import { Contract, JsonRpcProvider, Wallet } from "ethers";
 import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 import type { ILotteryScheduleUpdateRmq } from "@framework/types";
 
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
 
 import { blockAwait, getCurrentLotteryRound } from "../../../../../common/utils";
 

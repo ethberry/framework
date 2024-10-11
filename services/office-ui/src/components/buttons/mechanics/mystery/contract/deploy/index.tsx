@@ -57,7 +57,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/mysterybox",
+        url: "/contract-manager/mystery",
         method: "POST",
         data: values,
       },

@@ -80,8 +80,8 @@ export class TokenService {
   //   return tokenEntity.save();
   // }
 
-  public getToken(tokenId: string, address: string, chainId?: number, balance = false): Promise<TokenEntity | null> {
-    const currentChainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+  public getToken(tokenId: string, address: string, balance = false): Promise<TokenEntity | null> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
@@ -101,15 +101,9 @@ export class TokenService {
       address,
     });
 
-    if (chainId) {
-      queryBuilder.andWhere("contract.chainId = :chainId", {
-        chainId,
-      });
-    } else {
-      queryBuilder.andWhere("contract.chainId = :chainId", {
-        chainId: currentChainId,
-      });
-    }
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId,
+    });
 
     return queryBuilder.getOne();
   }

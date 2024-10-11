@@ -1,5 +1,5 @@
 import { Interface } from "ethers";
 
-import VrfContract from "@framework/core-contracts/artifacts/@ethberry/contracts-chain-link-v2-plus/contracts/mocks/VRFCoordinatorV2Plus.sol/VRFCoordinatorV2PlusMock.json";
+import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Random/ERC721Random.sol/ERC721Random.json";
 
-export const VrfABI = new Interface(VrfContract.abi);
+export const ERC721RandomABI = new Interface(ERC721RandomSol.abi);

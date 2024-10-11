@@ -57,7 +57,7 @@ export const LootContractDeployButton: FC<ILootContractDeployButtonProps> = prop
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/lootbox",
+        url: "/contract-manager/loot",
         method: "POST",
         data: values,
       },

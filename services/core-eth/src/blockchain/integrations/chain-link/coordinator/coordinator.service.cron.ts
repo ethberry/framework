@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { ConfigService } from "@nestjs/config";
 import { Contract, Wallet, WeiPerEther } from "ethers";
@@ -34,12 +34,16 @@ export class ChainLinkCoordinatorServiceCron {
     const minimum = WeiPerEther * 5n; // TODO set(get) minBalance from VRF contract parameters or settings?
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const vrfCoordinator = await this.contractService.findSystemByName({
+    const contractEntity = await this.contractService.findOne({
       contractModule: ModuleType.CHAIN_LINK,
       chainId,
     });
 
-    const vrfContract = new Contract(vrfCoordinator.address[0], VrfSol.abi, this.signer);
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    const vrfContract = new Contract(contractEntity.address, VrfSol.abi, this.signer);
 
     // get all subscription ids
     const merchantsWithSubs = await this.merchantService.findAll(

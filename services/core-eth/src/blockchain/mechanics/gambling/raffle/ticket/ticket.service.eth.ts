@@ -1,21 +1,17 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import { IERC721TokenTransferEvent, RmqProviderType, SignalEventType, TokenStatus } from "@framework/types";
-import { testChainId } from "@framework/constants";
 
-import { RaffleRoundService } from "../round/round.service";
-import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../../hierarchy/balance/balance.service";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { getMetadata } from "../../../../../common/utils";
-import { Erc721ABI } from "../../../../tokens/erc721/token/interfaces";
+import { ERC721SimpleABI } from "../../../../tokens/erc721/token/interfaces";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 
 @Injectable()
@@ -27,14 +23,11 @@ export class RaffleTicketServiceEth {
     protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
-    private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
     protected readonly assetService: AssetService,
-    private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
@@ -44,12 +37,10 @@ export class RaffleTicketServiceEth {
     } = event;
     const { address, transactionHash } = context;
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
     const erc721TokenEntity =
       from === ZeroAddress
         ? await this.createTicketToken(address, tokenId, to, transactionHash)
-        : await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId, true);
+        : await this.tokenService.getToken(tokenId, address.toLowerCase(), true);
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -95,7 +86,7 @@ export class RaffleTicketServiceEth {
       throw new NotFoundException("ticketTemplateNotFound");
     }
 
-    const metadata = await getMetadata(tokenId, contract, Erc721ABI, this.jsonRpcProvider, this.loggerService);
+    const metadata = await getMetadata(tokenId, contract, ERC721SimpleABI, this.jsonRpcProvider, this.loggerService);
 
     const tokenEntity = await this.tokenService.create({
       tokenId,

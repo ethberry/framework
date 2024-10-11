@@ -1,8 +1,8 @@
-import { forwardRef, OnModuleInit, Logger, Module } from "@nestjs/common";
+import { forwardRef, Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ethersRpcProvider, EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
+import { EthersModule, ethersRpcProvider } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { signalServiceProvider } from "../../../../../common/providers";
 import { EventHistoryModule } from "../../../../event-history/event-history.module";
@@ -13,7 +13,6 @@ import { TokenModule } from "../../../../hierarchy/token/token.module";
 import { AssetModule } from "../../../../exchange/asset/asset.module";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { LotteryRoundModule } from "../round/round.module";
-import { LotteryTicketServiceLog } from "./ticket.service.log";
 import { LotteryTicketControllerEth } from "./ticket.controller.eth";
 import { LotteryTicketService } from "./ticket.service";
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
@@ -31,21 +30,8 @@ import { LotteryTicketServiceEth } from "./ticket.service.eth";
     EthersModule.deferred(),
     TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [
-    Logger,
-    signalServiceProvider,
-    ethersRpcProvider,
-    LotteryTicketService,
-    LotteryTicketServiceLog,
-    LotteryTicketServiceEth,
-  ],
+  providers: [Logger, signalServiceProvider, ethersRpcProvider, LotteryTicketService, LotteryTicketServiceEth],
   controllers: [LotteryTicketControllerEth],
-  exports: [LotteryTicketService, LotteryTicketServiceLog, LotteryTicketServiceEth],
+  exports: [LotteryTicketService, LotteryTicketServiceEth],
 })
-export class LotteryTicketModule implements OnModuleInit {
-  constructor(private readonly lotteryTicketServiceLog: LotteryTicketServiceLog) {}
-
-  public async onModuleInit(): Promise<void> {
-    await this.lotteryTicketServiceLog.updateRegistry();
-  }
-}
+export class LotteryTicketModule {}

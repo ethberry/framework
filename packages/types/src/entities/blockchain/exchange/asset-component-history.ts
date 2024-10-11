@@ -7,6 +7,7 @@ import type { IEventHistory } from "../event-history";
 export enum ExchangeType {
   ITEM = "ITEM",
   PRICE = "PRICE",
+  CONTENT = "CONTENT",
 }
 
 export interface IAssetComponentHistory extends IIdBase {

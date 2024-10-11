@@ -14,7 +14,7 @@ import {
 } from "@framework/types";
 
 import { getMetadata } from "../../../../../common/utils";
-import { Erc721ABI } from "../../../../tokens/erc721/token/interfaces";
+import { ERC721SimpleABI } from "../../../../tokens/erc721/token/interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
@@ -22,8 +22,8 @@ import { BalanceService } from "../../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
-import { MysteryBoxService } from "./box.service";
 import { NotificatorService } from "../../../../../game/notificator/notificator.service";
+import { MysteryBoxService } from "./box.service";
 
 @Injectable()
 export class MysteryBoxServiceEth extends TokenServiceEth {
@@ -61,7 +61,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, Erc721ABI, this.jsonRpcProvider, this.loggerService);
+      const metadata = await getMetadata(tokenId, address, ERC721SimpleABI, this.jsonRpcProvider, this.loggerService);
       const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const mysteryBoxEntity = await this.mysteryBoxService.findOne({ templateId });
 
@@ -89,7 +89,6 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     const mysteryBoxTokenEntity = await this.tokenService.getToken(
       Number(tokenId).toString(),
       address.toLowerCase(),
-      void 0,
       true,
     );
 

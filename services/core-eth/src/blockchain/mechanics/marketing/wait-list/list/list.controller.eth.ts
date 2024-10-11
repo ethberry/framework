@@ -4,8 +4,9 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IWaitListRewardClaimedEvent, IWaitListRewardSetEvent } from "@framework/types";
-import { ContractType, WaitListEventType } from "@framework/types";
+import { WaitListEventType } from "@framework/types";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { WaitListListServiceEth } from "./list.service.eth";
 
 @Controller()

@@ -15,8 +15,6 @@ import { BreedModule } from "../../../mechanics/gaming/breed/breed.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 import { Erc998CompositionModule } from "../composition/composition.module";
-import { Erc998TokenRandomControllerEth } from "./token.controller.random.eth";
-import { Erc998TokenRandomServiceEth } from "./token.service.random.eth";
 import { Erc998TokenControllerEth } from "./token.controller.eth";
 import { Erc998TokenServiceEth } from "./token.service.eth";
 import { Erc998TokenServiceLog } from "./token.service.log";
@@ -36,22 +34,14 @@ import { Erc998TokenServiceLog } from "./token.service.log";
     NotificatorModule,
     Erc998CompositionModule,
   ],
-  providers: [
-    signalServiceProvider,
-    Logger,
-    ethersRpcProvider,
-    Erc998TokenServiceLog,
-    Erc998TokenServiceEth,
-    Erc998TokenRandomServiceEth,
-  ],
-  controllers: [Erc998TokenControllerEth, Erc998TokenRandomControllerEth],
-  exports: [Erc998TokenServiceLog, Erc998TokenServiceEth, Erc998TokenRandomServiceEth],
+  providers: [signalServiceProvider, Logger, ethersRpcProvider, Erc998TokenServiceLog, Erc998TokenServiceEth],
+  controllers: [Erc998TokenControllerEth],
+  exports: [Erc998TokenServiceLog, Erc998TokenServiceEth],
 })
 export class Erc998TokenModule implements OnModuleInit {
   constructor(private readonly erc998TokenServiceLog: Erc998TokenServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.erc998TokenServiceLog.updateRegistrySimple();
-    await this.erc998TokenServiceLog.updateRegistryRandom();
+    await this.erc998TokenServiceLog.updateRegistry();
   }
 }

@@ -4,9 +4,10 @@ import { ConfigService } from "@nestjs/config";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
-import { AccessControlEventSignature, ContractManagerEventSignature, ContractType, ModuleType } from "@framework/types";
+import { ContractManagerEventSignature, ModuleType } from "@framework/types";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { ContractManagerABI } from "./interfaces";
+import { ContractType } from "../../utils/contract-type";
 
 @Injectable()
 export class ContractManagerServiceLog {
@@ -42,10 +43,6 @@ export class ContractManagerServiceLog {
         ContractManagerEventSignature.LotteryDeployed,
         ContractManagerEventSignature.RaffleDeployed,
         ContractManagerEventSignature.WaitListDeployed,
-        // MODULE:ACCESS_CONTROL
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
       ],
     });
   }

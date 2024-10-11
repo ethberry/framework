@@ -18,7 +18,7 @@ export const LootBoxListItem: FC<ILootBoxListItemProps> = props => {
 
   return (
     <StyledTemplateItemCard>
-      <CardActionArea component={RouterLink} to={`/loot/boxes/${lootBox.id}`}>
+      <CardActionArea component={RouterLink} to={`/loot/boxes/${lootBox.id}/view`}>
         <CardHeader title={lootBox.title} />
         <StyledCardMedia image={lootBox.imageUrl} />
         <CardContent>

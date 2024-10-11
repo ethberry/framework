@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { encodeBytes32String, ethers, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
-import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { ITemplateSignDto } from "@framework/types";
 import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
@@ -24,6 +23,7 @@ import {
   getOpenSeaSigner,
   getPriceType,
 } from "../../../common/utils/opensea";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 @Injectable()
 export class MarketplaceService {
@@ -177,6 +177,8 @@ export class MarketplaceService {
     params: ISignatureParams,
     templateEntity: TemplateEntity,
   ): Promise<string> {
+    const price = convertDatabaseAssetToChainAsset(templateEntity.price.components);
+
     return this.signerService.getOneToManySignature(
       verifyingContract,
       account,
@@ -190,12 +192,7 @@ export class MarketplaceService {
             : templateEntity.id.toString(),
         amount: amount || "1",
       },
-      templateEntity.price.components.sort(comparator("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
-        amount: (BigInt(component.amount) * BigInt(amount)).toString(),
-      })),
+      price,
     );
   }
 }

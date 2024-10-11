@@ -43,7 +43,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
         32,
       );
 
-      const items = convertDatabaseAssetToChainAsset(merge.item?.components);
+      const items = convertDatabaseAssetToChainAsset(merge.item!.components);
 
       const price = arrayComparator(values.tokenEntities, "tokenId").map(el => ({
         tokenId: el.tokenId,

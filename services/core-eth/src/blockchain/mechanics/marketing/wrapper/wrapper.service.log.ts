@@ -1,20 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import {
-  AccessControlEventSignature,
-  BaseUrlEventSignature,
-  ContractType,
-  Erc721EventSignature,
-  ModuleType,
-  RoyaltyEventSignature,
-  TokenType,
-  WrapperEventSignature,
-} from "@framework/types";
+import { ModuleType, TokenType, WrapperEventSignature } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { WrapperABI } from "./interfaces";
 
@@ -38,19 +30,7 @@ export class WrapperServiceLog {
       contractType: ContractType.WRAPPER,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: WrapperABI,
-      eventSignatures: [
-        Erc721EventSignature.Approval,
-        Erc721EventSignature.ApprovalForAll,
-        Erc721EventSignature.Transfer,
-        WrapperEventSignature.UnpackWrapper,
-        // extensions
-        BaseUrlEventSignature.BaseURIUpdate,
-        RoyaltyEventSignature.DefaultRoyaltyInfo,
-        RoyaltyEventSignature.TokenRoyaltyInfo,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
-      ],
+      eventSignatures: [WrapperEventSignature.UnpackWrapper],
     });
   }
 
@@ -60,19 +40,7 @@ export class WrapperServiceLog {
         contractType: ContractType.WRAPPER,
         contractAddress: address,
         contractInterface: WrapperABI,
-        eventSignatures: [
-          Erc721EventSignature.Approval,
-          Erc721EventSignature.ApprovalForAll,
-          Erc721EventSignature.Transfer,
-          WrapperEventSignature.UnpackWrapper,
-          // extensions
-          RoyaltyEventSignature.DefaultRoyaltyInfo,
-          RoyaltyEventSignature.TokenRoyaltyInfo,
-          BaseUrlEventSignature.BaseURIUpdate,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
+        eventSignatures: [WrapperEventSignature.UnpackWrapper],
       },
       blockNumber,
     );

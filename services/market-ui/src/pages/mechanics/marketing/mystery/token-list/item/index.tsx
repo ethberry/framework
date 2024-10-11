@@ -18,7 +18,7 @@ export const MysteryTokenListItem: FC<IMysteryTokenListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/mystery/tokens/${token.id}`}>
+      <CardActionArea component={RouterLink} to={`/mystery/tokens/${token.id}/view`}>
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
         <StyledCardMedia image={token.template!.imageUrl} />

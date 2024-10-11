@@ -1,6 +1,5 @@
 export * from "./claim/upload";
 export * from "./dispenser/upload";
-export * from "./breed/breed-limits";
 export * from "./collection/deploy";
 export * from "./collection/upload";
 

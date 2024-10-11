@@ -3,18 +3,11 @@ import { ConfigService } from "@nestjs/config";
 import { In, Not } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  AccessControlEventSignature,
-  AccessListEventSignature,
-  ContractFeatures,
-  ContractType,
-  Erc1155EventSignature,
-  ModuleType,
-  TokenType,
-} from "@framework/types";
+import { ContractFeatures, Erc1155EventSignature, TokenType } from "@framework/types";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { Erc1155ABI } from "./interfaces";
 
@@ -29,7 +22,6 @@ export class Erc1155TokenServiceLog {
   public async updateRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
-      contractModule: ModuleType.HIERARCHY,
       contractType: TokenType.ERC1155,
       contractFeatures: Not(In([[ContractFeatures.EXTERNAL]])),
       chainId,
@@ -44,11 +36,6 @@ export class Erc1155TokenServiceLog {
         Erc1155EventSignature.TransferSingle,
         Erc1155EventSignature.TransferBatch,
         Erc1155EventSignature.URI,
-        AccessListEventSignature.Blacklisted,
-        AccessListEventSignature.UnBlacklisted,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
       ],
     });
   }
@@ -64,11 +51,6 @@ export class Erc1155TokenServiceLog {
           Erc1155EventSignature.TransferSingle,
           Erc1155EventSignature.TransferBatch,
           Erc1155EventSignature.URI,
-          AccessListEventSignature.Blacklisted,
-          AccessListEventSignature.UnBlacklisted,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
         ],
       },
       blockNumber,

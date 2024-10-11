@@ -8,7 +8,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType } from "@framework/types";
 
-import LotteryEndRoundABI from "@framework/abis/json/LotteryRandom/endRound.json";
+import LotteryEndRoundABI from "@framework/abis/json/Lottery/endRound.json";
 
 import { shouldDisableByContractType } from "../../../../utils";
 import { useSetButtonPermission } from "../../../../../../shared";

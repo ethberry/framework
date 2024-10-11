@@ -1,6 +1,7 @@
 // import {  } from "./breed";
+import { CollectionEventType, TCollectionEvents } from "./collection";
 import { DiscreteEventType, TDiscreteEvents } from "./discrete";
-import { Erc4907EventType, TErc4907Events } from "./erc4907";
+import { RentableEventType, TRentableEvents } from "./rentable";
 import { LootEventType, TLootEvents } from "./loot";
 import { LotteryEventType, TLotteryEvents } from "./lottery";
 import { MysteryEventType, TMysteryEvents } from "./mystery";
@@ -13,8 +14,9 @@ import { TVestingEvents, VestingEventType } from "./vesting";
 import { TWaitListEvents, WaitListEventType } from "./waitlist";
 import { TWrapperEvents, WrapperEventType } from "./wrapper";
 
+export * from "./collection";
 export * from "./discrete";
-export * from "./erc4907";
+export * from "./rentable";
 export * from "./loot";
 export * from "./lottery";
 export * from "./mystery";
@@ -28,8 +30,9 @@ export * from "./waitlist";
 export * from "./wrapper";
 
 export type TMechanicsEventType =
+  | CollectionEventType
   | DiscreteEventType
-  | Erc4907EventType
+  | RentableEventType
   | LootEventType
   | LotteryEventType
   | MysteryEventType
@@ -43,8 +46,9 @@ export type TMechanicsEventType =
   | WrapperEventType;
 
 export type TMechanicsEventData =
+  | TCollectionEvents
   | TDiscreteEvents
-  | TErc4907Events
+  | TRentableEvents
   | TLootEvents
   | TLotteryEvents
   | TMysteryEvents

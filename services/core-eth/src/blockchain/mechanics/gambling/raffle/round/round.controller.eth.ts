@@ -3,16 +3,16 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  ContractType,
+import type {
   IRafflePrizeEvent,
   IRaffleReleaseEvent,
   IRaffleRoundEndedEvent,
   IRaffleRoundFinalizedEvent,
   IRaffleRoundStartedEvent,
-  RaffleEventType,
 } from "@framework/types";
+import { RaffleEventType } from "@framework/types";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { RaffleRoundServiceEth } from "./round.service.eth";
 
 @Controller()

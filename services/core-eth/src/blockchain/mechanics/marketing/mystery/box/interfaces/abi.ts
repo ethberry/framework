@@ -1,5 +1,5 @@
 import { Interface } from "ethers";
 
-import MysterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
+import MysteryBoxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxSimple.sol/ERC721MysteryBoxSimple.json";
 
-export const MysteryABI = new Interface(MysterySol.abi);
+export const MysteryBoxABI = new Interface(MysteryBoxSol.abi);

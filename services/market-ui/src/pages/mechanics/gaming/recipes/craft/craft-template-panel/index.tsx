@@ -18,7 +18,6 @@ import { TokenType } from "@framework/types";
 
 import CraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
 
-import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
 import { StyledTitle, StyledToolbar } from "./styled";
 
 export interface ICraftTemplatePanelProps {
@@ -127,7 +126,6 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
           <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.craft" />
           </StyledTitle>
-          <AllowanceInfoPopover />
         </StyledToolbar>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(craft => {

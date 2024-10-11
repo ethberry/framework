@@ -92,7 +92,7 @@ export class VestingServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
 
     // get NATIVE token
-    const tokenEntity = await this.tokenService.getToken("0", ZeroAddress.toLowerCase(), chainId);
+    const tokenEntity = await this.tokenService.getToken("0", ZeroAddress.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -129,7 +129,7 @@ export class VestingServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
 
     // get NATIVE token
-    const tokenEntity = await this.tokenService.getToken("0", ZeroAddress, chainId);
+    const tokenEntity = await this.tokenService.getToken("0", ZeroAddress);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");

@@ -10,9 +10,10 @@ import type {
   IStakingDepositWithdrawEvent,
   IStakingPenaltyEvent,
 } from "@framework/types";
-import { ContractType, StakingEventType } from "@framework/types";
+import { StakingEventType } from "@framework/types";
 
 import { StakingDepositServiceEth } from "./deposit.service.eth";
+import { ContractType } from "../../../../../utils/contract-type";
 
 @Controller()
 export class StakingDepositControllerEth {

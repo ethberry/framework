@@ -3,7 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { ContractType, LotteryEventType } from "@framework/types";
+import { LotteryEventType } from "@framework/types";
 import type {
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
@@ -12,6 +12,7 @@ import type {
   IRoundStartedEvent,
 } from "@framework/types";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { LotteryRoundServiceEth } from "./round.service.eth";
 
 @Controller()

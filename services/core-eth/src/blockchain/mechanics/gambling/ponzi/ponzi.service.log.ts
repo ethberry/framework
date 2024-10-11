@@ -4,16 +4,10 @@ import { IsNull } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
-import {
-  AccessControlEventSignature,
-  ContractType,
-  ModuleType,
-  PausableEventSignature,
-  PonziEventSignature,
-  ReferralProgramEventSignature,
-} from "@framework/types";
+import { ModuleType, PonziEventSignature } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { PonziABI } from "./interfaces";
 
@@ -45,14 +39,6 @@ export class PonziServiceLog {
         PonziEventSignature.StakingFinish,
         PonziEventSignature.FinalizedToken,
         PonziEventSignature.WithdrawToken,
-        // meta
-        ReferralProgramEventSignature.ReferralEvent,
-        // extensions
-        PausableEventSignature.Paused,
-        PausableEventSignature.Unpaused,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
       ],
     });
   }
@@ -71,14 +57,6 @@ export class PonziServiceLog {
           PonziEventSignature.StakingFinish,
           PonziEventSignature.FinalizedToken,
           PonziEventSignature.WithdrawToken,
-          // mechanics
-          ReferralProgramEventSignature.ReferralEvent,
-          // extensions
-          PausableEventSignature.Paused,
-          PausableEventSignature.Unpaused,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
         ],
       },
       blockNumber,

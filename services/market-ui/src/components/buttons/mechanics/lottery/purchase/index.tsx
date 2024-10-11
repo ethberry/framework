@@ -35,7 +35,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, LotteryPurchaseABI, web3Context.provider?.getSigner());
 
-      const price = convertDatabaseAssetToChainAsset(round.price?.components);
+      const price = convertDatabaseAssetToChainAsset(round.price!.components);
 
       return contract
         .purchaseLottery(
@@ -65,7 +65,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const price = convertDatabaseAssetToTokenTypeAsset(round.price?.components);
+      const price = convertDatabaseAssetToTokenTypeAsset(round.price!.components);
 
       return metaFnWithAllowance(
         { contract: systemContract.address, assets: price },

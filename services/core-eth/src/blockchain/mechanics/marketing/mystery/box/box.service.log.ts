@@ -1,22 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import {
-  AccessControlEventSignature,
-  BaseUrlEventSignature,
-  ContractType,
-  Erc721EventSignature,
-  ModuleType,
-  MysteryEventSignature,
-  RoyaltyEventSignature,
-  TokenType,
-} from "@framework/types";
+import { ModuleType, MysteryEventSignature, TokenType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import { MysteryABI } from "./interfaces";
+import { MysteryBoxABI } from "./interfaces";
 
 @Injectable()
 export class MysteryBoxServiceLog {
@@ -37,20 +29,8 @@ export class MysteryBoxServiceLog {
     return this.ethersService.updateRegistry({
       contractType: ContractType.MYSTERY,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: MysteryABI,
-      eventSignatures: [
-        Erc721EventSignature.Approval,
-        Erc721EventSignature.ApprovalForAll,
-        Erc721EventSignature.Transfer,
-        MysteryEventSignature.UnpackMysteryBox,
-        // extensions
-        BaseUrlEventSignature.BaseURIUpdate,
-        RoyaltyEventSignature.DefaultRoyaltyInfo,
-        RoyaltyEventSignature.TokenRoyaltyInfo,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
-      ],
+      contractInterface: MysteryBoxABI,
+      eventSignatures: [MysteryEventSignature.UnpackMysteryBox],
     });
   }
 
@@ -59,20 +39,8 @@ export class MysteryBoxServiceLog {
       {
         contractType: ContractType.MYSTERY,
         contractAddress: address,
-        contractInterface: MysteryABI,
-        eventSignatures: [
-          Erc721EventSignature.Approval,
-          Erc721EventSignature.ApprovalForAll,
-          Erc721EventSignature.Transfer,
-          MysteryEventSignature.UnpackMysteryBox,
-          // extensions
-          RoyaltyEventSignature.DefaultRoyaltyInfo,
-          RoyaltyEventSignature.TokenRoyaltyInfo,
-          BaseUrlEventSignature.BaseURIUpdate,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
+        contractInterface: MysteryBoxABI,
+        eventSignatures: [MysteryEventSignature.UnpackMysteryBox],
       },
       blockNumber,
     );
