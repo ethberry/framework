@@ -2,7 +2,6 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Logger } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { WeiPerEther } from "ethers";
 
 import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp";
 import { EthBerryTypeormModule } from "@ethberry/nest-js-module-typeorm-debug";
@@ -62,51 +61,51 @@ describe("DiscreteService", () => {
   describe("getMultiplier", () => {
     describe("FLAT", () => {
       it.each(new Array(5).fill(null).map((e, i) => i))("should get multiplier for %i", i => {
-        const multiplier = discreteService.getMultiplier(i, WeiPerEther.toString(), {
+        const multiplier = discreteService.getMultiplier(i, {
           discreteStrategy: DiscreteStrategy.FLAT,
         } as DiscreteEntity);
-        expect(multiplier.toString()).toEqual(WeiPerEther.toString());
+        expect(multiplier.toString()).toEqual(1);
       });
     });
 
     describe("LINEAR", () => {
       it.each(new Array(5).fill(null).map((e, i) => i))("should get multiplier for %i", i => {
-        const multiplier = discreteService.getMultiplier(i, WeiPerEther.toString(), {
+        const multiplier = discreteService.getMultiplier(i, {
           discreteStrategy: DiscreteStrategy.LINEAR,
         } as DiscreteEntity);
-        expect(multiplier.toString()).toEqual((WeiPerEther * BigInt(i)).toString());
+        expect(multiplier.toString()).toEqual(i.toString());
       });
     });
 
-    describe("EXPONENTIAL, rate 1", () => {
+    describe.only("EXPONENTIAL, rate 1", () => {
       it.each([
-        [0, "1000000000000000000"],
-        [1, "1010000000000000000"],
-        [2, "1020100000000000000"],
-        [3, "1030301000000000100"],
-        [4, "1040604010000000000"],
+        [0, 1],
+        [1, 1.01],
+        [2, 1.0201],
+        [3, 1.0303010000000001],
+        [4, 1.04060401],
       ])("should get multiplier for %i", (i, j) => {
-        const multiplier = discreteService.getMultiplier(i, WeiPerEther.toString(), {
+        const multiplier = discreteService.getMultiplier(i, {
           discreteStrategy: DiscreteStrategy.EXPONENTIAL,
           growthRate: 1,
         } as DiscreteEntity);
-        expect(multiplier.toString()).toEqual(j);
+        expect(multiplier).toEqual(j);
       });
     });
 
     describe("EXPONENTIAL, rate 100", () => {
       it.each([
-        [0, "1000000000000000000"],
-        [1, "2000000000000000000"],
-        [2, "4000000000000000000"],
-        [3, "8000000000000000000"],
-        [4, "16000000000000000000"],
+        [0, 1],
+        [1, 2],
+        [2, 4],
+        [3, 8],
+        [4, 16],
       ])("should get multiplier for %i", (i, j) => {
-        const multiplier = discreteService.getMultiplier(i, WeiPerEther.toString(), {
+        const multiplier = discreteService.getMultiplier(i, {
           discreteStrategy: DiscreteStrategy.EXPONENTIAL,
           growthRate: 100,
         } as DiscreteEntity);
-        expect(multiplier.toString()).toEqual(j);
+        expect(multiplier).toEqual(j);
       });
     });
   });

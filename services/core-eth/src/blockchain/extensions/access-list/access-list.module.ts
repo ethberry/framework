@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -25,4 +25,10 @@ import { AccessListServiceLog } from "./access-list.service.log";
   controllers: [AccessListControllerEth],
   exports: [AccessListService, AccessListServiceLog, AccessListServiceEth],
 })
-export class AccessListModule {}
+export class AccessListModule implements OnModuleInit {
+  constructor(private readonly accessListServiceLog: AccessListServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.accessListServiceLog.updateRegistry();
+  }
+}

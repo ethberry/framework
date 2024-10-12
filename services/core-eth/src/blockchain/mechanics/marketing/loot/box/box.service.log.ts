@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { LootEventSignature, ModuleType, TokenType } from "@framework/types";
+import { Erc721EventSignature, LootEventSignature, ModuleType, TokenType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
@@ -30,7 +30,12 @@ export class LootBoxServiceLog {
       contractType: ContractType.LOOT,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: LootABI,
-      eventSignatures: [LootEventSignature.UnpackLootBox],
+      eventSignatures: [
+        Erc721EventSignature.Approval,
+        Erc721EventSignature.ApprovalForAll,
+        Erc721EventSignature.Transfer,
+        LootEventSignature.UnpackLootBox,
+      ],
     });
   }
 
@@ -40,7 +45,12 @@ export class LootBoxServiceLog {
         contractType: ContractType.LOOT,
         contractAddress: address,
         contractInterface: LootABI,
-        eventSignatures: [LootEventSignature.UnpackLootBox],
+        eventSignatures: [
+          Erc721EventSignature.Approval,
+          Erc721EventSignature.ApprovalForAll,
+          Erc721EventSignature.Transfer,
+          LootEventSignature.UnpackLootBox,
+        ],
       },
       blockNumber,
     );

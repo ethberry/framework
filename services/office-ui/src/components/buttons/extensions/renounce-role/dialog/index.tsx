@@ -12,7 +12,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IAccessControl } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
-import RenounceRoleABI from "@framework/abis/json/AccessControlFacet/renounceRole.json";
+import AccessControlFacetRenounceRoleABI from "@framework/abis/json/AccessControlFacet/renounceRole.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
@@ -22,7 +22,7 @@ export interface IAccessControlRenounceRoleDialogProps {
 }
 
 export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialogProps> = props => {
-  const { data, open, ...rest } = props;
+  const { data, open, onConfirm, onCancel } = props;
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
@@ -38,7 +38,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   );
 
   const metaRenounceRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, RenounceRoleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, AccessControlFacetRenounceRoleABI, web3Context.provider?.getSigner());
     return contract.renounceRole(
       Object.values(AccessControlRoleHash)[
         Object.keys(AccessControlRoleHash).indexOf(values.role as unknown as AccessControlRoleHash)
@@ -49,7 +49,9 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
 
   const handleRenounce = (values: IAccessControl): (() => Promise<void>) => {
     return async () => {
-      return metaRenounceRole(values);
+      return metaRenounceRole(values).then(() => {
+        return onConfirm();
+      });
     };
   };
 
@@ -66,7 +68,8 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
       message="dialogs.renounceRole"
       data-testid="AccessControlRenounceRoleDialog"
       open={open}
-      {...rest}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
     >
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
@@ -78,12 +81,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
                 {access.role}
               </ListItemText>
               <ListActions>
-                <ListAction
-                  onClick={handleRenounce(access)}
-                  message="form.buttons.delete"
-                  dataTestId="AccessDeleteButton"
-                  icon={Delete}
-                />
+                <ListAction onClick={handleRenounce(access)} message="form.buttons.delete" icon={Delete} />
               </ListActions>
             </StyledListItem>
           ))}

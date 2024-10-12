@@ -398,8 +398,6 @@
       "Paused": "Paused",
       "PayeeAdded": "PayeeAdded",
       "PaymentReceived": "PaymentReceived",
-      "PaymentReceived": "PaymentReceived",
-      "PaymentReleased": "PaymentReleased",
       "PaymentReleased": "PaymentReleased",
       "PaymentSplitterDeployed": "PaymentSplitterDeployed",
       "PonziDeployed": "PonziDeployed",
@@ -759,7 +757,7 @@
       "deposit": "Deposit",
       "description": "Description",
       "discreteStatus": "Status",
-      "discreteStrategy": "Grade strategy",
+      "discreteStrategy": "Strategy",
       "dismantleStatus": "Status",
       "dismantleStrategy": "Strategy",
       "displayName": "Display name",
@@ -1169,7 +1167,7 @@
       "exchange": {
         "marketplace": {
           "chart": "Chart",
-          "discrete": "Grade",
+          "discrete": "Discrete",
           "rarity": "Rarity",
           "report": "Report",
           "title": "Marketplace"
@@ -1197,7 +1195,7 @@
         "breed": "Breed",
         "claim": "Claim",
         "collection": "Collections",
-        "discrete": "Grade",
+        "discrete": "Discrete",
         "dispenser": "Dispenser",
         "loot": "Loot",
         "lottery": "Lottery",
@@ -1218,7 +1216,7 @@
       "title": "Dashboard"
     },
     "discrete": {
-      "title": "Grade Rules"
+      "title": "Discrete Rules"
     },
     "dispenser": {
       "description": "This mechanic allows to mass-transact tokens to the list of addresses",
@@ -1333,8 +1331,8 @@
       },
       "discrete": {
         "amount": "Amount",
-        "attribute": "Grade",
-        "title": "Grade"
+        "attribute": "Attribute",
+        "title": "Discrete"
       },
       "rarity": {
         "amount": "Amount",

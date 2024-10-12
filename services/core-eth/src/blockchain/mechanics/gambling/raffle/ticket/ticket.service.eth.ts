@@ -11,24 +11,27 @@ import { BalanceService } from "../../../../hierarchy/balance/balance.service";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { getMetadata } from "../../../../../common/utils";
-import { ERC721SimpleABI } from "../../../../tokens/erc721/token/interfaces";
 import { AssetService } from "../../../../exchange/asset/asset.service";
+import { TokenServiceEth } from "../../../../hierarchy/token/token.service.eth";
+import { RaffleTicketABI } from "./interfaces";
 
 @Injectable()
-export class RaffleTicketServiceEth {
+export class RaffleTicketServiceEth extends TokenServiceEth {
   constructor(
     @Inject(Logger)
-    private readonly loggerService: LoggerService,
+    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
-    private readonly eventHistoryService: EventHistoryService,
+    protected readonly eventHistoryService: EventHistoryService,
     protected readonly assetService: AssetService,
-    private readonly templateService: TemplateService,
-    private readonly tokenService: TokenService,
+    protected readonly templateService: TemplateService,
+    protected readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
-  ) {}
+  ) {
+    super(loggerService, signalClientProxy, tokenService, eventHistoryService);
+  }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
@@ -86,7 +89,7 @@ export class RaffleTicketServiceEth {
       throw new NotFoundException("ticketTemplateNotFound");
     }
 
-    const metadata = await getMetadata(tokenId, contract, ERC721SimpleABI, this.jsonRpcProvider, this.loggerService);
+    const metadata = await getMetadata(tokenId, contract, RaffleTicketABI, this.jsonRpcProvider, this.loggerService);
 
     const tokenEntity = await this.tokenService.create({
       tokenId,

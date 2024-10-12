@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { In } from "typeorm";
+import { In, ArrayContains } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
@@ -24,7 +24,7 @@ export class DiscreteServiceLog {
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.HIERARCHY,
       contractType: In([TokenType.ERC721, TokenType.ERC998]),
-      contractFeatures: ContractFeatures.DISCRETE,
+      contractFeatures: ArrayContains([ContractFeatures.DISCRETE]),
       chainId,
     });
 

@@ -259,11 +259,7 @@
       { "indexed": false, "internalType": "address", "name": "account", "type": "address" },
       { "indexed": false, "internalType": "uint256", "name": "externalId", "type": "uint256" },
       {
-        "components": [
-          { "internalType": "address[]", "name": "payees", "type": "address[]" },
-          { "internalType": "uint256[]", "name": "shares", "type": "uint256[]" },
-          { "internalType": "string", "name": "contractTemplate", "type": "string" }
-        ],
+        "components": [{ "internalType": "string", "name": "contractTemplate", "type": "string" }],
         "indexed": false,
         "internalType": "struct PonziFactoryFacet.PonziArgs",
         "name": "args",

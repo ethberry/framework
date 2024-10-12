@@ -1,15 +1,15 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { In } from "typeorm";
+import { ArrayOverlap } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 import { AccessListEventSignature, ContractFeatures } from "@framework/types";
 
+import { ContractType } from "../../../utils/contract-type";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { AccessListABI } from "./interfaces";
-import { ContractType } from "../../../utils/contract-type";
 
 @Injectable()
 export class AccessListServiceLog {
@@ -22,7 +22,7 @@ export class AccessListServiceLog {
   public async updateRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
-      contractFeatures: In([[ContractFeatures.BLACKLIST, ContractFeatures.WHITELIST]]),
+      contractFeatures: ArrayOverlap([[ContractFeatures.BLACKLIST, ContractFeatures.WHITELIST]]),
       chainId,
     });
 

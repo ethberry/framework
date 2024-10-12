@@ -12,7 +12,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@fra
 import type { IAccessControl, IContract } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
-import RevokeRoleABI from "@framework/abis/json/AccessControlFacet/revokeRole.json";
+import AccessControlFacetRevokeRoleABI from "@framework/abis/json/AccessControlFacet/revokeRole.json";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;
@@ -27,7 +27,7 @@ export interface IAccessControlWithRelations extends IAccessControl {
 }
 
 export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogProps> = props => {
-  const { data, open, ...rest } = props;
+  const { data, open, onConfirm, onCancel } = props;
 
   const [rows, setRows] = useState<Array<IAccessControlWithRelations>>([]);
 
@@ -43,7 +43,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   );
 
   const metaRevokeRole = useMetamask((values: IAccessControlWithRelations, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, RevokeRoleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, AccessControlFacetRevokeRoleABI, web3Context.provider?.getSigner());
     return contract.revokeRole(
       Object.values(AccessControlRoleHash)[
         Object.keys(AccessControlRoleHash).indexOf(values.role as unknown as AccessControlRoleHash)
@@ -54,7 +54,9 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
 
   const handleRevoke = (values: IAccessControlWithRelations): (() => Promise<void>) => {
     return async () => {
-      return metaRevokeRole(values);
+      return metaRevokeRole(values).then(() => {
+        return onConfirm();
+      });
     };
   };
 
@@ -67,7 +69,13 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   }, [account, open]);
 
   return (
-    <ConfirmationDialog message="dialogs.revokeRole" data-testid="AccessControlRevokeRoleDialog" open={open} {...rest}>
+    <ConfirmationDialog
+      message="dialogs.revokeRole"
+      data-testid="AccessControlRevokeRoleDialog"
+      open={open}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+    >
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(access => (

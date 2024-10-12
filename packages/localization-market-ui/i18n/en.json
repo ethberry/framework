@@ -450,7 +450,7 @@
       "facebookUrl": "Facebook",
       "from": "From",
       "gender": "Gender",
-      "discreteId": "Grade",
+      "discreteId": "Attribute",
       "id": "ID",
       "imageUrl": "Avatar",
       "instagramUrl": "Instagram",

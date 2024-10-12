@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { In } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
@@ -21,7 +22,7 @@ export class PauseServiceLog {
   public async updateRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
-      contractFeatures: ContractFeatures.PAUSABLE,
+      contractFeatures: In([[ContractFeatures.PAUSABLE]]),
       chainId,
     });
 

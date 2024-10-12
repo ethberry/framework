@@ -134,29 +134,13 @@ export class AccessControlServiceEth {
       }
     }
 
-    const chainId = this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    const contractManagerEntity = await this.contractService.findOne({
-      contractModule: ModuleType.CONTRACT_MANAGER,
-      chainId,
-    });
-    const exchnageEntity = await this.contractService.findOne({
-      contractModule: ModuleType.EXCHANGE,
-      chainId,
-    });
-
-    if (
-      account.toLowerCase() !== contractManagerEntity!.address.toLowerCase() &&
-      account.toLowerCase() !== exchnageEntity!.address.toLowerCase() &&
-      account.toLowerCase() !== ZeroAddress
-    ) {
-      await this.signalClientProxy
-        .emit(SignalEventType.TRANSACTION_HASH, {
-          account: contractEntity.merchant.wallet.toLowerCase(),
-          transactionHash,
-          transactionType: name,
-        })
-        .toPromise();
-    }
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: contractEntity.merchant.wallet.toLowerCase(),
+        transactionHash,
+        transactionType: name,
+      })
+      .toPromise();
   }
 
   public async roleAdminChanged(event: ILogEvent<IAccessControlRoleAdminChangedEvent>, context: Log): Promise<void> {

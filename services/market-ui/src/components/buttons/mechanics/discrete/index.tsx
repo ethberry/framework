@@ -50,9 +50,7 @@ export const DiscreteButton: FC<IDiscreteButtonProps> = props => {
       // set real token Id
       item.tokenId = token.tokenId;
 
-      const price = convertDatabaseAssetToChainAsset(discrete.price!.components, {
-        multiplier: getMultiplier(level, discrete),
-      });
+      const price = convertDatabaseAssetToChainAsset(discrete.price!.components, getMultiplier(level, discrete));
 
       const contract = new Contract(
         systemContract.address,
@@ -92,9 +90,10 @@ export const DiscreteButton: FC<IDiscreteButtonProps> = props => {
         })
         .then((discrete: IDiscrete) => {
           const level = token.metadata[values.attribute] || 0;
-          const price = convertDatabaseAssetToTokenTypeAsset(discrete.price!.components, {
-            multiplier: getMultiplier(level, discrete),
-          });
+          const price = convertDatabaseAssetToTokenTypeAsset(
+            discrete.price!.components,
+            getMultiplier(level, discrete),
+          );
 
           return metaFnWithAllowance(
             { contract: systemContract.address, assets: price },

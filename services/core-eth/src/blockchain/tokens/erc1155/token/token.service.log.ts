@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { In, Not } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
-import { ContractFeatures, Erc1155EventSignature, TokenType } from "@framework/types";
+import { ContractFeatures, Erc1155EventSignature, ModuleType, TokenType } from "@framework/types";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
@@ -22,6 +22,7 @@ export class Erc1155TokenServiceLog {
   public async updateRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
+      contractModule: ModuleType.HIERARCHY,
       contractType: TokenType.ERC1155,
       contractFeatures: Not(In([[ContractFeatures.EXTERNAL]])),
       chainId,

@@ -6,11 +6,11 @@ import { FormattedMessage } from "react-intl";
 import { formatItem } from "@framework/exchange";
 
 export const AttributePrice: FC = () => {
-  const watchFields = useWatch({ name: "price" });
+  const price = useWatch({ name: "price" });
 
   return (
     <Typography>
-      <FormattedMessage id="form.labels.price" />: {formatItem(watchFields)}
+      <FormattedMessage id="form.labels.price" />: {formatItem(price)}
     </Typography>
   );
 };

@@ -17,14 +17,9 @@ import { ContractManagerControllerEth } from "./erc998.controller.eth";
 import { ContractManagerServiceEth } from "./erc998.service.eth";
 import { ContractManagerServiceLog } from "./erc998.service.log";
 import { Erc998TokenModule } from "../../tokens/erc998/token/token.module";
-import { ContractManagerErc20Module } from "../erc20/erc20.module";
-import { ContractManagerErc721Module } from "../erc721/erc721.module";
 
 @Module({
   imports: [
-    ContractManagerErc20Module,
-    ContractManagerErc721Module,
-
     ConfigModule,
     EthersModule.deferred(),
     ContractModule,
@@ -49,7 +44,7 @@ import { ContractManagerErc721Module } from "../erc721/erc721.module";
   controllers: [ContractManagerControllerEth],
   exports: [ContractManagerServiceLog, ContractManagerServiceEth],
 })
-export class ContractManagerModule implements OnModuleInit {
+export class ContractManagerErc998Module implements OnModuleInit {
   constructor(protected readonly contractManagerServiceLog: ContractManagerServiceLog) {}
 
   public async onModuleInit(): Promise<void> {

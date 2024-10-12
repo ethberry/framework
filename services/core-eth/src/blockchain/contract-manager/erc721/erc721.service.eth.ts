@@ -23,12 +23,7 @@ import { UserService } from "../../../infrastructure/user/user.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { RentableService } from "../../mechanics/gaming/rentable/rentable.service";
 import { Erc721TokenServiceLog } from "../../tokens/erc721/token/token.service.log";
-import { AccessControlServiceLog } from "../../extensions/access-control/access-control.service.log";
-import { AccessListServiceLog } from "../../extensions/access-list/access-list.service.log";
-import { DiscreteServiceLog } from "../../mechanics/gaming/discrete/discrete.service.log";
-import { PauseServiceLog } from "../../extensions/pause/pause.service.log";
 
 @Injectable()
 export class ContractManagerErc721ServiceEth {
@@ -45,13 +40,8 @@ export class ContractManagerErc721ServiceEth {
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
-    private readonly rentService: RentableService,
     private readonly userService: UserService,
-    private readonly erc721TokenService: Erc721TokenServiceLog,
-    private readonly accessControlServiceLog: AccessControlServiceLog,
-    private readonly accessListServiceLog: AccessListServiceLog,
-    private readonly discreteServiceLog: DiscreteServiceLog,
-    private readonly pauseServiceLog: PauseServiceLog,
+    private readonly erc721TokenServiceLog: Erc721TokenServiceLog,
   ) {}
 
   public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
@@ -85,10 +75,6 @@ export class ContractManagerErc721ServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
-      await this.rentService.create({ contract: contractEntity }, chainId);
-    }
-
     if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
       await this.templateService.create({
         title: name,
@@ -111,38 +97,10 @@ export class ContractManagerErc721ServiceEth {
       });
     }
 
-    await this.erc721TokenService.updateRegistryAndReadBlock(
+    await this.erc721TokenServiceLog.updateRegistryAndReadBlock(
       [account.toLowerCase()],
       parseInt(context.blockNumber.toString(), 16),
     );
-    await this.accessControlServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
-
-    if (
-      contractFeatures.includes(ContractFeatures.BLACKLIST) ||
-      contractFeatures.includes(ContractFeatures.WHITELIST)
-    ) {
-      await this.accessListServiceLog.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    }
-
-    if (contractFeatures.includes(ContractFeatures.DISCRETE)) {
-      await this.discreteServiceLog.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    }
-
-    if (contractFeatures.includes(ContractFeatures.PAUSABLE)) {
-      await this.pauseServiceLog.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    }
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

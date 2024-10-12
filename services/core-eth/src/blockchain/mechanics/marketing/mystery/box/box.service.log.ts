@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { ModuleType, MysteryEventSignature, TokenType } from "@framework/types";
+import { Erc721EventSignature, ModuleType, MysteryEventSignature, TokenType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
@@ -30,7 +30,12 @@ export class MysteryBoxServiceLog {
       contractType: ContractType.MYSTERY,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: MysteryBoxABI,
-      eventSignatures: [MysteryEventSignature.UnpackMysteryBox],
+      eventSignatures: [
+        Erc721EventSignature.Approval,
+        Erc721EventSignature.ApprovalForAll,
+        Erc721EventSignature.Transfer,
+        MysteryEventSignature.UnpackMysteryBox,
+      ],
     });
   }
 
@@ -40,7 +45,12 @@ export class MysteryBoxServiceLog {
         contractType: ContractType.MYSTERY,
         contractAddress: address,
         contractInterface: MysteryBoxABI,
-        eventSignatures: [MysteryEventSignature.UnpackMysteryBox],
+        eventSignatures: [
+          Erc721EventSignature.Approval,
+          Erc721EventSignature.ApprovalForAll,
+          Erc721EventSignature.Transfer,
+          MysteryEventSignature.UnpackMysteryBox,
+        ],
       },
       blockNumber,
     );

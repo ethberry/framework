@@ -1,4 +1,4 @@
-import { forwardRef, Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -16,6 +16,7 @@ import { LotteryRoundModule } from "../round/round.module";
 import { LotteryTicketControllerEth } from "./ticket.controller.eth";
 import { LotteryTicketService } from "./ticket.service";
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
+import { LotteryTicketServiceLog } from "./ticket.service.log";
 
 @Module({
   imports: [
@@ -25,13 +26,26 @@ import { LotteryTicketServiceEth } from "./ticket.service.eth";
     AssetModule,
     TemplateModule,
     BalanceModule,
-    forwardRef(() => LotteryRoundModule),
+    LotteryRoundModule,
     EventHistoryModule,
     EthersModule.deferred(),
     TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Logger, signalServiceProvider, ethersRpcProvider, LotteryTicketService, LotteryTicketServiceEth],
+  providers: [
+    Logger,
+    signalServiceProvider,
+    ethersRpcProvider,
+    LotteryTicketService,
+    LotteryTicketServiceLog,
+    LotteryTicketServiceEth,
+  ],
   controllers: [LotteryTicketControllerEth],
-  exports: [LotteryTicketService, LotteryTicketServiceEth],
+  exports: [LotteryTicketService, LotteryTicketServiceLog, LotteryTicketServiceEth],
 })
-export class LotteryTicketModule {}
+export class LotteryTicketModule implements OnModuleInit {
+  constructor(private readonly lotteryTicketServiceLog: LotteryTicketServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.lotteryTicketServiceLog.updateRegistry();
+  }
+}

@@ -12,7 +12,6 @@ import { imageUrl, testChainId } from "@framework/constants";
 import type {
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
-  IContractManagerERC998TokenDeployedEvent,
   IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
@@ -28,7 +27,6 @@ import {
   ContractSecurity,
   ContractStatus,
   Erc1155ContractTemplates,
-  Erc998ContractTemplates,
   IContractManagerPaymentSplitterDeployedEvent,
   LootContractTemplates,
   ModuleType,
@@ -49,7 +47,6 @@ import { EventHistoryService } from "../event-history/event-history.service";
 import { ClaimService } from "../mechanics/marketing/claim/claim.service";
 import { decodeExternalId } from "../../common/utils";
 import { Erc721TokenServiceLog } from "../tokens/erc721/token/token.service.log";
-import { Erc998TokenServiceLog } from "../tokens/erc998/token/token.service.log";
 import { Erc1155TokenServiceLog } from "../tokens/erc1155/token/token.service.log";
 import { PaymentSplitterServiceLog } from "../mechanics/meta/payment-splitter/payment-splitter.service.log";
 import { LotteryRoundServiceLog } from "../mechanics/gambling/lottery/round/round.service.log";
@@ -81,7 +78,6 @@ export class ContractManagerServiceEth {
     private readonly userService: UserService,
     private readonly claimService: ClaimService,
     private readonly erc721TokenService: Erc721TokenServiceLog,
-    private readonly erc998TokenService: Erc998TokenServiceLog,
     private readonly erc1155TokenService: Erc1155TokenServiceLog,
     private readonly mysteryBoxServiceLog: MysteryBoxServiceLog,
     private readonly lootBoxServiceLog: LootBoxServiceLog,
@@ -164,72 +160,6 @@ export class ContractManagerServiceEth {
       [account.toLowerCase()],
       parseInt(context.blockNumber.toString(), 16),
     );
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
-        transactionHash,
-        transactionType: event.name,
-      })
-      .toPromise();
-  }
-
-  public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, context: Log): Promise<void> {
-    const {
-      args: { account, args, externalId },
-    } = event;
-    const { transactionHash } = context;
-
-    const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    const contractEntity = await this.contractService.create({
-      address: account.toLowerCase(),
-      title: name,
-      name,
-      symbol,
-      description: emptyStateString,
-      imageUrl,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(Erc998ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
-      contractType: TokenType.ERC998,
-      chainId,
-      royalty: Number(royalty),
-      baseTokenURI,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(externalId),
-    });
-
-    if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
-      await this.templateService.create({
-        title: name,
-        description: emptyStateString,
-        imageUrl,
-        cap: (1024 * 1024 * 1024 * 4).toString(),
-        contractId: contractEntity.id,
-        templateStatus: TemplateStatus.HIDDEN,
-      });
-    }
-
-    if (
-      contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
-      contractEntity.contractFeatures.includes(ContractFeatures.GENES)
-    ) {
-      await this.erc998TokenService.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    } else {
-      await this.erc998TokenService.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    }
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

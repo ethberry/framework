@@ -34,6 +34,8 @@ export class AccessListServiceEth {
       args: { account },
     } = event;
 
+    const { address, transactionHash } = context;
+
     await this.eventHistoryService.updateHistory(event, context);
 
     await this.accessListService.create({
@@ -41,6 +43,14 @@ export class AccessListServiceEth {
       account: account.toLowerCase(),
       allowance: false,
     });
+
+    await this.signalClientProxy
+      .emit(SignalEventType.TRANSACTION_HASH, {
+        account: await this.contractService.getMerchantWalletByContract(address.toLowerCase()),
+        transactionHash,
+        transactionType: event.name,
+      })
+      .toPromise();
   }
 
   public async unBlacklisted(event: ILogEvent<IUnBlacklistedEvent>, context: Log): Promise<void> {

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
@@ -16,4 +16,10 @@ import { PauseServiceLog } from "./pause.service.log";
   providers: [signalServiceProvider, PauseServiceLog, PauseServiceEth],
   exports: [PauseServiceLog, PauseServiceEth],
 })
-export class PauseModule {}
+export class PauseModule implements OnModuleInit {
+  constructor(private readonly pauseServiceLog: PauseServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.pauseServiceLog.updateRegistry();
+  }
+}

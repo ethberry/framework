@@ -33,11 +33,13 @@ import { RaffleRoundModule } from "../mechanics/gambling/raffle/round/round.modu
 import { WaitListListModule } from "../mechanics/marketing/wait-list/list/list.module";
 import { ContractManagerErc20Module } from "./erc20/erc20.module";
 import { ContractManagerErc721Module } from "./erc721/erc721.module";
+import { ContractManagerErc998Module } from "./erc998/erc998.module";
 
 @Module({
   imports: [
     ContractManagerErc20Module,
     ContractManagerErc721Module,
+    ContractManagerErc998Module,
 
     ConfigModule,
     EthersModule.deferred(),

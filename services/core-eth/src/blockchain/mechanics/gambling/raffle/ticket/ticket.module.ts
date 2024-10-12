@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -17,6 +17,7 @@ import { RaffleRoundModule } from "../round/round.module";
 import { RaffleTicketControllerEth } from "./ticket.controller.eth";
 import { RaffleTokenService } from "./token.service";
 import { RaffleTicketServiceEth } from "./ticket.service.eth";
+import { RaffleTicketServiceLog } from "./ticket.service.log";
 
 @Module({
   imports: [
@@ -31,8 +32,21 @@ import { RaffleTicketServiceEth } from "./ticket.service.eth";
     EthersModule.deferred(),
     TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Logger, signalServiceProvider, ethersRpcProvider, RaffleTokenService, RaffleTicketServiceEth],
+  providers: [
+    Logger,
+    signalServiceProvider,
+    ethersRpcProvider,
+    RaffleTokenService,
+    RaffleTicketServiceLog,
+    RaffleTicketServiceEth,
+  ],
   controllers: [RaffleTicketControllerEth],
-  exports: [RaffleTokenService, RaffleTicketServiceEth],
+  exports: [RaffleTokenService, RaffleTicketServiceLog, RaffleTicketServiceEth],
 })
-export class RaffleTicketModule {}
+export class RaffleTicketModule implements OnModuleInit {
+  constructor(private readonly raffleTicketServiceLog: RaffleTicketServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.raffleTicketServiceLog.updateRegistry();
+  }
+}

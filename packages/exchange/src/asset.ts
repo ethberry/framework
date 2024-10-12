@@ -2,24 +2,23 @@ import type { IAssetComponent, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { comparator } from "@ethberry/utils";
 
-interface IOptions {
-  sortBy?: string;
-  multiplier?: string | number | bigint;
-}
-
-export const convertDatabaseAssetToChainAsset = (components: IAssetComponent[], options: IOptions = {}) => {
-  const { sortBy = "id", multiplier } = options;
-
+export const convertDatabaseAssetToChainAsset = (
+  components: IAssetComponent[],
+  multiplier?: string | number | bigint,
+) => {
   return components
     .slice()
-    .sort(comparator(sortBy))
+    .sort(comparator("id"))
     .map(item => convertTemplateToChainAsset(item.template, item.amount, multiplier));
 };
 
 // Same as convertDatabaseAssetToChainAsset
 // But return tokenType: TokenType
-export const convertDatabaseAssetToTokenTypeAsset = (components: IAssetComponent[], options: IOptions = {}) => {
-  const assets = convertDatabaseAssetToChainAsset(components, options);
+export const convertDatabaseAssetToTokenTypeAsset = (
+  components: IAssetComponent[],
+  multiplier?: string | number | bigint,
+) => {
+  const assets = convertDatabaseAssetToChainAsset(components, multiplier);
 
   return assets.map(asset => {
     return {

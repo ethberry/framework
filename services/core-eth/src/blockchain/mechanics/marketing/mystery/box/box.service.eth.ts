@@ -4,17 +4,10 @@ import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  IERC721TokenTransferEvent,
-  IUnpackMysteryBoxEvent,
-  RmqProviderType,
-  SignalEventType,
-  TokenMetadata,
-  TokenStatus,
-} from "@framework/types";
+import type { IERC721TokenTransferEvent, IUnpackMysteryBoxEvent } from "@framework/types";
+import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../../common/utils";
-import { ERC721SimpleABI } from "../../../../tokens/erc721/token/interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
@@ -23,7 +16,7 @@ import { TokenServiceEth } from "../../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { NotificatorService } from "../../../../../game/notificator/notificator.service";
-import { MysteryBoxService } from "./box.service";
+import { MysteryBoxABI } from "./interfaces";
 
 @Injectable()
 export class MysteryBoxServiceEth extends TokenServiceEth {
@@ -40,7 +33,6 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
     protected readonly eventHistoryService: EventHistoryService,
-    protected readonly mysteryBoxService: MysteryBoxService,
     protected readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, signalClientProxy, tokenService, eventHistoryService);
@@ -61,15 +53,10 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, ERC721SimpleABI, this.jsonRpcProvider, this.loggerService);
+      const metadata = await getMetadata(tokenId, address, MysteryBoxABI, this.jsonRpcProvider, this.loggerService);
       const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
-      const mysteryBoxEntity = await this.mysteryBoxService.findOne({ templateId });
 
-      if (!mysteryBoxEntity) {
-        throw new NotFoundException("mysteryBoxNotFound");
-      }
-
-      const templateEntity = await this.templateService.findOne({ id: mysteryBoxEntity.templateId });
+      const templateEntity = await this.templateService.findOne({ id: templateId });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");

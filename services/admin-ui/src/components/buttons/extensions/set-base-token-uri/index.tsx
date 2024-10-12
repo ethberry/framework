@@ -10,9 +10,9 @@ import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/t
 
 import ERC721SimpleSetBaseURIABI from "@framework/abis/json/ERC721Simple/setBaseURI.json";
 
-import { shouldDisableByContractType } from "../../../utils";
+import { shouldDisableByContractType } from "../../utils";
 import { BaseTokenURIEditDialog, IBaseTokenURIDto } from "./dialog";
-import { useSetButtonPermission } from "../../../../../shared";
+import { useSetButtonPermission } from "../../../../shared";
 
 export interface ISetBaseTokenURIButtonProps {
   className?: string;

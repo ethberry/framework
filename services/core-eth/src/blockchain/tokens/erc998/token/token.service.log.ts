@@ -5,7 +5,7 @@ import { In, Not } from "typeorm";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
-import { ContractFeatures, Erc721EventSignature, Erc998EventSignature, TokenType } from "@framework/types";
+import { ContractFeatures, Erc721EventSignature, Erc998EventSignature, ModuleType, TokenType } from "@framework/types";
 
 import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -22,6 +22,7 @@ export class Erc998TokenServiceLog {
   public async updateRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
+      contractModule: ModuleType.HIERARCHY,
       contractType: TokenType.ERC998,
       contractFeatures: Not(In([[ContractFeatures.EXTERNAL]])),
       chainId,

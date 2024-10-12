@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
@@ -16,4 +16,10 @@ import { RoyaltyServiceLog } from "./royalty.service.log";
   providers: [signalServiceProvider, RoyaltyServiceLog, RoyaltyServiceEth],
   exports: [RoyaltyServiceLog, RoyaltyServiceEth],
 })
-export class RoyaltyModule {}
+export class RoyaltyModule implements OnModuleInit {
+  constructor(private readonly royaltyServiceLog: RoyaltyServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.royaltyServiceLog.updateRegistry();
+  }
+}

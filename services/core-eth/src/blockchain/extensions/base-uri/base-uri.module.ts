@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
@@ -17,4 +17,10 @@ import { BaseUriServiceLog } from "./base-uri.service.log";
   providers: [signalServiceProvider, BaseUriServiceLog, BaseUriServiceEth],
   exports: [BaseUriServiceLog, BaseUriServiceEth],
 })
-export class BaseUriModule {}
+export class BaseUriModule implements OnModuleInit {
+  constructor(private readonly baseUriServiceLog: BaseUriServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.baseUriServiceLog.updateRegistry();
+  }
+}

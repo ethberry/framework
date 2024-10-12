@@ -6,7 +6,6 @@ import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
-  IContractManagerERC998TokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerLootTokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
@@ -43,17 +42,6 @@ export class ContractManagerControllerEth {
     @Ctx() ctx: Log,
   ): Promise<void> {
     return this.contractManagerServiceEth.erc721Collection(event, ctx);
-  }
-
-  @EventPattern({
-    contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.ERC998TokenDeployed,
-  })
-  public erc998Token(
-    @Payload() event: ILogEvent<IContractManagerERC998TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.contractManagerServiceEth.erc998Token(event, ctx);
   }
 
   @EventPattern({

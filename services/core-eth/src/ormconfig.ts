@@ -47,6 +47,7 @@ import { ReferralProgramEntity } from "./blockchain/mechanics/meta/referral/prog
 import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/referral.claim.entity";
 import { ReferralRewardShareEntity } from "./blockchain/mechanics/meta/referral/reward/share/referral.reward.share.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
+import { RentableEntity } from "./blockchain/mechanics/gaming/rentable/rentable.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -87,6 +88,7 @@ const config: PostgresConnectionOptions = {
     LotteryTicketEntity,
     RaffleRoundEntity,
     RaffleTicketEntity,
+    RentableEntity,
     StakingRulesEntity,
     StakingDepositEntity,
     StakingPenaltyEntity,

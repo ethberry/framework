@@ -64,7 +64,7 @@ export class NotificatorService {
       transport: Transport.RMQ,
       options: {
         urls: [`${rmqUrl}/merchant`],
-        queue: `merchant_${merchantId.toString()}`, // "merchant_1"
+        queue: `merchant_${merchantId.toString()}`, // merchant_1
         queueOptions: {
           durable: false,
         },

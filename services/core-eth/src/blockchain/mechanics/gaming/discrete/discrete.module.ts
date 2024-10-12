@@ -1,4 +1,4 @@
-import { Module, Logger } from "@nestjs/common";
+import { Module, Logger, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -29,4 +29,10 @@ import { DiscreteServiceLog } from "./discrete.service.log";
   controllers: [DiscreteControllerEth],
   exports: [DiscreteService, DiscreteServiceLog, DiscreteServiceEth],
 })
-export class DiscreteModule {}
+export class DiscreteModule implements OnModuleInit {
+  constructor(private readonly discreteServiceLog: DiscreteServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.discreteServiceLog.updateRegistry();
+  }
+}

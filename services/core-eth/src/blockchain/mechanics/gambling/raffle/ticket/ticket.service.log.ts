@@ -1,18 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Not, In } from "typeorm";
 
+import { Erc721EventSignature, LootEventSignature, ModuleType, TokenType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
-import { ContractFeatures, Erc20EventSignature, ModuleType, TokenType } from "@framework/types";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
-import { ContractType } from "../../../../utils/contract-type";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ERC20SimpleABI } from "./interfaces";
+import { ContractType } from "../../../../../utils/contract-type";
+import { ContractService } from "../../../../hierarchy/contract/contract.service";
+import { RaffleTicketABI } from "./interfaces";
 
 @Injectable()
-export class Erc20TokenServiceLog {
+export class RaffleTicketServiceLog {
   constructor(
     protected readonly configService: ConfigService,
     private readonly contractService: ContractService,
@@ -22,27 +21,36 @@ export class Erc20TokenServiceLog {
   public async updateRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
-      contractModule: ModuleType.HIERARCHY,
-      contractType: TokenType.ERC20,
-      contractFeatures: Not(In([[ContractFeatures.EXTERNAL]])),
+      contractModule: ModuleType.RAFFLE,
+      contractType: TokenType.ERC721,
       chainId,
     });
 
     return this.ethersService.updateRegistry({
-      contractType: ContractType.ERC20_TOKEN,
+      contractType: ContractType.RAFFLE_TICKET,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: ERC20SimpleABI,
-      eventSignatures: [Erc20EventSignature.Approval, Erc20EventSignature.Transfer],
+      contractInterface: RaffleTicketABI,
+      eventSignatures: [
+        Erc721EventSignature.Approval,
+        Erc721EventSignature.ApprovalForAll,
+        Erc721EventSignature.Transfer,
+        LootEventSignature.UnpackLootBox,
+      ],
     });
   }
 
   public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
     return this.ethersService.updateRegistryAndReadBlock(
       {
-        contractType: ContractType.ERC20_TOKEN,
+        contractType: ContractType.RAFFLE_TICKET,
         contractAddress: address,
-        contractInterface: ERC20SimpleABI,
-        eventSignatures: [Erc20EventSignature.Approval, Erc20EventSignature.Transfer],
+        contractInterface: RaffleTicketABI,
+        eventSignatures: [
+          Erc721EventSignature.Approval,
+          Erc721EventSignature.ApprovalForAll,
+          Erc721EventSignature.Transfer,
+          LootEventSignature.UnpackLootBox,
+        ],
       },
       blockNumber,
     );
