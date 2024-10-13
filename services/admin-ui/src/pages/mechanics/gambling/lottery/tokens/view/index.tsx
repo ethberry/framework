@@ -33,7 +33,7 @@ export const LotteryTokenViewDialog: FC<ILotteryTokenViewDialogProps> = props =>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.tokenId" />
               </TableCell>
-              <TableCell align="right">{tokenId}</TableCell>
+              <TableCell align="right">{tokenId.toString()}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

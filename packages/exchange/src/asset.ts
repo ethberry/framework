@@ -31,13 +31,13 @@ export const convertDatabaseAssetToTokenTypeAsset = (
 export interface ITemplateToAssetProps {
   contract?: IContract;
   id: number;
-  tokens?: Array<{ tokenId: string }>;
-  amount: string | number | bigint;
+  tokens?: Array<{ tokenId: bigint }>;
+  amount: bigint;
 }
 
 export const convertTemplateToChainAsset = (
   template?: ITemplateToAssetProps,
-  amount: string | number | bigint = 1,
+  amount = 1n,
   multiplier: string | number | bigint = 1,
 ) => {
   let tokenId;
@@ -47,14 +47,14 @@ export const convertTemplateToChainAsset = (
   }
 
   if (template?.contract?.contractType === TokenType.NATIVE || template?.contract?.contractType === TokenType.ERC20) {
-    tokenId = "0";
+    tokenId = 0n;
   } else if (
     template?.contract?.contractType === TokenType.ERC721 ||
     template?.contract?.contractType === TokenType.ERC998
   ) {
-    tokenId = (template.id || 0).toString();
+    tokenId = BigInt(template.id || 0);
   } else if (template?.contract?.contractType === TokenType.ERC1155) {
-    tokenId = template?.tokens?.[0]?.tokenId;
+    tokenId = BigInt(template?.tokens?.[0]?.tokenId || 0);
     if (!tokenId) {
       // tokenId for ERC1155 notFound. You most likely forget to leftAndJoin Tokens for ERC1155
       throw new Error("blockchainError");
@@ -69,14 +69,11 @@ export const convertTemplateToChainAsset = (
     tokenType: Object.values(TokenType).indexOf(template.contract.contractType),
     token: template.contract.address,
     tokenId,
-    amount: ((BigInt(amount) * BigInt(`${whole}${decimals}`)) / BigInt(10 ** decimals.length)).toString(),
+    amount: (amount * BigInt(`${whole}${decimals}`)) / BigInt(10 ** decimals.length),
   };
 };
 
-export const convertTemplateToTokenTypeAsset = (
-  template?: ITemplateToAssetProps,
-  amount?: string | number | bigint,
-) => {
+export const convertTemplateToTokenTypeAsset = (template?: ITemplateToAssetProps, amount?: bigint) => {
   const asset = convertTemplateToChainAsset(template, amount);
 
   return {

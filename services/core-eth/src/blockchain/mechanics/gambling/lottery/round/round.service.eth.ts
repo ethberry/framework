@@ -97,7 +97,7 @@ export class LotteryRoundServiceEth {
           tokenType: priceTemplateEntity.contract.contractType || TokenType.NATIVE,
           contractId: priceTemplateEntity.contract.id,
           templateId: priceTemplateEntity.id,
-          amount: Number(amount).toString(),
+          amount,
         },
       ],
     });
@@ -291,7 +291,7 @@ export class LotteryRoundServiceEth {
       const winNumbers = getNumbers(roundEntity.numbers);
       // Aggregation: { key - match numbers, value - ticket count }
       // {0 match - 10 tickets, 1 match - 5 tickets, 5 match - 1 ticket}
-      const aggregation: Record<string, number> = {}; // {"0":10, "1":5, "5": 1}
+      const aggregation: Record<string, bigint> = {}; // {"0":10, "1":5, "5": 1}
 
       allRoundNumbers.map(numbers => {
         const ticketAggregation = winNumbers.filter(value => numbers.includes(value));
@@ -299,7 +299,7 @@ export class LotteryRoundServiceEth {
         if (aggregation[match]) {
           return aggregation[`${match}`]++;
         } else {
-          return (aggregation[`${match}`] = 1);
+          return (aggregation[`${match}`] = 1n);
         }
       });
 
@@ -313,9 +313,7 @@ export class LotteryRoundServiceEth {
             contractId: price.contractId,
             templateId: price.templateId,
             tokenId: price.tokenId,
-            amount: (BigInt(price.amount) * BigInt(aggregation[aggr])).toString(),
-            // ?JFOM Is it coorect. Forget to multiply to COEFICIENT ? Find Point
-            // ? As more match as more amount would be. It suppose to be opposite...
+            amount: price.amount * aggregation[aggr],
           };
         });
 
@@ -324,7 +322,7 @@ export class LotteryRoundServiceEth {
         await this.lotteryRoundAggregationService.create({
           round: roundEntity,
           match: Number(aggr),
-          tickets: aggregation[aggr],
+          tickets: Number(aggregation[aggr]),
           priceId: newAssetEntity.id,
         });
       });

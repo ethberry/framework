@@ -46,7 +46,7 @@ export const DiscreteButton: FC<IDiscreteButtonProps> = props => {
     ) => {
       const level = token.metadata[values.attribute] || 0;
 
-      const item = convertTemplateToChainAsset(token.template, "1");
+      const item = convertTemplateToChainAsset(token.template, 1n);
       // set real token Id
       item.tokenId = token.tokenId;
 

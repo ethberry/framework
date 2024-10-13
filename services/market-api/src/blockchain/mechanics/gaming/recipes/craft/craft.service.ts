@@ -12,9 +12,9 @@ import { CraftStatus, ModuleType, SettingsKeys, TemplateStatus, TokenType } from
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
-import { CraftEntity } from "./craft.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { CraftEntity } from "./craft.entity";
 
 @Injectable()
 export class CraftService {
@@ -190,7 +190,7 @@ export class CraftService {
         tokenId:
           component.contract.contractType === TokenType.ERC1155
             ? component.template.tokens[0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
+            : BigInt(component.templateId || 0), // suppression types check with 0
         amount: component.amount,
       })),
       craftEntity.price.components.sort(comparator("id")).map(component => ({

@@ -257,9 +257,9 @@ export class AssetService {
           }
 
           const isRandom = contractEntity.contractFeatures.includes(ContractFeatures.RANDOM);
-          const isNft = tokenType.toString() === "2" || tokenType.toString() === "3"; // 721 | 998
-          const isCoin = tokenType.toString() === "0" || tokenType.toString() === "1"; // Native | 20
-          const isErc1155 = tokenType.toString() === "4"; // 1155
+          const isNft = tokenType === 2n || tokenType === 3n; // 721 | 998
+          const isCoin = tokenType === 0n || tokenType === 1n; // Native | 20
+          const isErc1155 = tokenType === 4n; // 1155
           const isPurchase = eventHistoryEntity.eventType === ExchangeEventType.Purchase;
 
           if (isCoin) {
@@ -390,7 +390,7 @@ export class AssetService {
           };
 
           // do not join balances
-          const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), token.toLowerCase());
+          const tokenEntity = await this.tokenService.getToken(tokenId, token.toLowerCase());
 
           if (!tokenEntity) {
             this.loggerService.error("[content] token not found", AssetService.name);

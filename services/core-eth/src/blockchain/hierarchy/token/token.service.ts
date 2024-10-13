@@ -65,22 +65,7 @@ export class TokenService {
     await this.createBatch(tokenBatch);
   }
 
-  // public async updateBatch(where: FindOptionsWhere<TokenEntity>, dto: DeepPartial<TokenEntity>): Promise<void> {
-  //   const { ...rest } = dto;
-  //
-  //   const tokenBatch = await this.findAll(where);
-  //   // $url/collection/0xdf2afd789115c4370ec9f78519411ac021da209f/102.jpg
-  //   for (const token of tokenBatch) {
-  //     const tokenUrl = ba;
-  //     Object.assign(token, {});
-  //   }
-  //
-  //   Object.assign(tokenEntity, rest);
-  //
-  //   return tokenEntity.save();
-  // }
-
-  public getToken(tokenId: string, address: string, balance = false): Promise<TokenEntity | null> {
+  public getToken(tokenId: bigint, address: string, balance = false): Promise<TokenEntity | null> {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
@@ -109,7 +94,7 @@ export class TokenService {
   }
 
   public getBatch(
-    tokenIds: Array<string>,
+    tokenIds: Array<bigint>,
     address: string,
     chainId?: number,
     balance = false,

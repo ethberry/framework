@@ -13,17 +13,17 @@ export enum VestingEventSignature {
 }
 
 export interface IVestingEtherReleasedEvent {
-  amount: string;
+  amount: bigint;
 }
 
 export interface IVestingERC20ReleasedEvent {
   token: string;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IVestingPaymentReceivedEvent {
   from: string;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IVestingTransferReceivedEvent {

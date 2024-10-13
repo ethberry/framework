@@ -110,7 +110,7 @@ export const PonziBalanceDialog: FC<IPonziBalanceDialogProps> = props => {
         testId="AmountDialogForm"
         initialValues={{
           balance: withdrawBalance,
-          amount: withdrawBalance.amount,
+          amount: withdrawBalance.amount.toString(),
         }}
       />
     </ConfirmationDialog>

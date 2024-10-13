@@ -78,14 +78,14 @@ export class RentSignService {
         tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId,
-        amount: "1",
+        amount: 1n,
       },
       rentEntity.price.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:
-          component.template.tokens[0].tokenId === "0"
-            ? component.template.tokens[0].templateId.toString()
+          component.template.tokens[0].tokenId === 0n
+            ? BigInt(component.template.tokens[0].templateId)
             : component.template.tokens[0].tokenId,
         amount: component.amount,
       })),

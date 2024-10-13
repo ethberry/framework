@@ -6,5 +6,5 @@ export interface IAssetComponentDto {
   contractId: number;
   templateId: number | null;
   tokenId?: number | null;
-  amount: string;
+  amount: bigint;
 }

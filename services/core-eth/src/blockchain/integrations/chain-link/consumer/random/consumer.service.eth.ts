@@ -40,7 +40,7 @@ export class ChainLinkConsumerServiceEth {
     } = event;
     const { address, transactionHash } = context;
 
-    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase(), true);
+    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), true);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");

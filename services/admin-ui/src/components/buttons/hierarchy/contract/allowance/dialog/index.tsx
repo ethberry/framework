@@ -9,7 +9,7 @@ import { AllowanceContractInput } from "../../../../../inputs/allowance-contract
 
 export interface IAllowanceDto {
   address: string;
-  amount: string;
+  amount: bigint;
   contractType: TokenType | null;
   decimals: number;
 }

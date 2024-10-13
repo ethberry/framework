@@ -69,15 +69,11 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
         template: templateEntity,
       });
 
-      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
+      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), 1n);
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
-    const mysteryBoxTokenEntity = await this.tokenService.getToken(
-      Number(tokenId).toString(),
-      address.toLowerCase(),
-      true,
-    );
+    const mysteryBoxTokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), true);
 
     if (!mysteryBoxTokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -86,7 +82,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     await this.eventHistoryService.updateHistory(event, context, mysteryBoxTokenEntity.id);
 
     if (from === ZeroAddress) {
-      mysteryBoxTokenEntity.template.amount += 1;
+      mysteryBoxTokenEntity.template.amount += 1n;
       // mysteryBoxTokenEntity.erc721Template
       //   ? (mysteryBoxTokenEntity.template.instanceCount += 1)
       //   : (mysteryBoxTokenEntity.mystery.template.instanceCount += 1);

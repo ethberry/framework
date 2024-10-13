@@ -8,7 +8,7 @@ export enum DiscreteEventSignature {
 
 export interface ILevelUp {
   account: string;
-  tokenId: string;
+  tokenId: bigint;
   attribute: string;
   value: string;
 }

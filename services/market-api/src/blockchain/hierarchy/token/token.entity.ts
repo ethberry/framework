@@ -20,7 +20,7 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   public metadata: any;
 
   @Column({ type: "numeric" })
-  public tokenId: string;
+  public tokenId: bigint;
 
   @Column({ type: "int" })
   public royalty: number;

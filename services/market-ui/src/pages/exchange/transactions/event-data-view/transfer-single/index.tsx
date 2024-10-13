@@ -49,7 +49,7 @@ export const TransferSingleDataView: FC<ITransferSingleDataViewProps> = props =>
           <FormattedMessage id="enums.eventDataLabel.id" />:
         </Typography>
         <StyledDataViewItemContentWrapper>
-          <StyledDataViewAddressLinkWrapper>{id}</StyledDataViewAddressLinkWrapper>
+          <StyledDataViewAddressLinkWrapper>{id.toString()}</StyledDataViewAddressLinkWrapper>
         </StyledDataViewItemContentWrapper>
       </StyledDataViewItemWrapper>
 
@@ -58,7 +58,7 @@ export const TransferSingleDataView: FC<ITransferSingleDataViewProps> = props =>
           <FormattedMessage id="enums.eventDataLabel.value" />:
         </Typography>
         <StyledDataViewItemContentWrapper>
-          <StyledDataViewAddressLinkWrapper>{value}</StyledDataViewAddressLinkWrapper>
+          <StyledDataViewAddressLinkWrapper>{value.toString()}</StyledDataViewAddressLinkWrapper>
         </StyledDataViewItemContentWrapper>
       </StyledDataViewItemWrapper>
     </StyledDataViewWrapper>

@@ -27,7 +27,7 @@ export class Erc20TokenServiceEth {
     const { from, to, value } = args;
     const { address, transactionHash } = context;
 
-    const tokenEntity = await this.tokenService.getToken("0", address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(0n, address.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -38,7 +38,7 @@ export class Erc20TokenServiceEth {
     } else if (to === ZeroAddress) {
       await this.balanceService.decrement(tokenEntity.id, to.toLowerCase(), value);
     } else {
-      if (value !== "0") {
+      if (value !== 0n) {
         await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), value);
         await this.balanceService.decrement(tokenEntity.id, from.toLowerCase(), value);
       }

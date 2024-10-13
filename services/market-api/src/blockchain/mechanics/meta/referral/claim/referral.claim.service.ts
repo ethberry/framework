@@ -127,7 +127,7 @@ export class ReferralClaimService {
               contractId: comp.contractId,
               templateId: comp.templateId,
               tokenId: comp.tokenId || null,
-              amount: ((BigInt(comp.amount) / BigInt(10000)) * BigInt(share)).toString(),
+              amount: (comp.amount / 10000n) * BigInt(share),
             }));
             rewardClaimComponents = rewardClaimComponents.concat(sharedComponents);
           }

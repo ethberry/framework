@@ -2,7 +2,7 @@ import { formatUnits } from "ethers";
 
 import type { IAsset } from "@framework/types";
 
-export const formatEther = (amount = "0", decimals = 18, currency = "Ξ"): string => {
+export const formatEther = (amount = 0n, decimals = 18, currency = "Ξ"): string => {
   return `${currency} ${formatUnits(amount, decimals)}`;
 };
 

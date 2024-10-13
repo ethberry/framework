@@ -88,7 +88,7 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
         initialValues={{
           tokenType: TokenType.ERC20,
           contractId: 0,
-          amount: "0",
+          amount: 0n,
           contract: {
             address: "",
             contractType: TokenType.ERC20,

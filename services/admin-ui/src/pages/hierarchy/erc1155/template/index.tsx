@@ -44,7 +44,7 @@ export const Erc1155Template: FC = () => {
       title: "",
       description: emptyStateString,
       price: emptyPrice,
-      amount: "0",
+      amount: 0n,
     },
     search: {
       query: "",

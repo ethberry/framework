@@ -134,7 +134,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     return null;
   }
 
-  const isCapExceeded = template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap);
+  const isCapExceeded = template.cap !== 0n && template.amount >= template.cap;
 
   return (
     <Fragment>
@@ -152,7 +152,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         onConfirm={handleAmountConfirm}
         open={isAmountDialogOpen}
         initialValues={{
-          amount: 1,
+          amount: 1n,
         }}
       />
     </Fragment>

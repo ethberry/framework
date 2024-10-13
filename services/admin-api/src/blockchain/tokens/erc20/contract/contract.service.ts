@@ -69,7 +69,7 @@ export class Erc20ContractService extends ContractService {
     await this.tokenEntityRepository
       .create({
         metadata: "{}",
-        tokenId: "0",
+        tokenId: 0n,
         royalty: 0,
         template: templateEntity,
       })

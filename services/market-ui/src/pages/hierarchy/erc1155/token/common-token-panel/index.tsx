@@ -30,7 +30,7 @@ export const CommonTokenPanel: FC<ICommonTokenPanelProps> = props => {
           </StyledTitle>
         </StyledToolbar>
         <StyledList component="ul">
-          {token.balance?.map((balance: IBalance, index: number) => <li key={index}>{balance.amount}</li>)}
+          {token.balance?.map((balance: IBalance, index: number) => <li key={index}>{balance.amount.toString()}</li>)}
         </StyledList>
       </CardContent>
       <CardActions>

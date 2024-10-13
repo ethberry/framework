@@ -39,7 +39,7 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   public token: TokenEntity;
 
   @Column({ type: "numeric" })
-  public amount: string;
+  public amount: bigint;
 
   @Column({ type: "int", select: false })
   public assetId: number;

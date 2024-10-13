@@ -8,7 +8,7 @@ export enum MysteryEventSignature {
 
 export interface IUnpackMysteryBoxEvent {
   account: string;
-  tokenId: string;
+  tokenId: bigint;
 }
 
 export type TMysteryEvents = IUnpackMysteryBoxEvent;

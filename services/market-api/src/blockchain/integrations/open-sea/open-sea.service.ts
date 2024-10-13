@@ -67,7 +67,7 @@ export class OpenSeaService {
         {
           itemType,
           token: tokenEntity.template.contract.address,
-          identifier: tokenEntity.tokenId,
+          identifier: tokenEntity.tokenId.toString(),
           amount: 1,
         },
       ],

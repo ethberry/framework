@@ -1,6 +1,6 @@
 export interface IAssetItem {
-  tokenType: string;
+  tokenType: bigint;
   token: string;
-  tokenId: string;
-  amount: string;
+  tokenId: bigint;
+  amount: bigint;
 }

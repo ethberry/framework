@@ -216,7 +216,7 @@ export class ClaimTokenService {
       claimEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.token.tokenId.toString(),
+        tokenId: component.token.tokenId,
         amount: component.amount,
       })),
       [],
@@ -251,7 +251,7 @@ export class ClaimTokenService {
                     tokenType,
                     contractId: contractEntity.id,
                     templateId,
-                    tokenId,
+                    tokenId: Number(tokenId),
                     amount,
                   },
                 ],

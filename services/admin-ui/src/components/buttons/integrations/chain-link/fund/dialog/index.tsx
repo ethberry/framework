@@ -15,7 +15,7 @@ import ERC20SimpleBalanceOfABI from "@framework/abis/json/ERC20Simple/balanceOf.
 
 export interface IChainLinkFundDto {
   subscriptionId: string;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IChainLinkFundDialogProps {

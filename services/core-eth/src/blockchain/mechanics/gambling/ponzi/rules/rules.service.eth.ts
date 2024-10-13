@@ -59,7 +59,7 @@ export class PonziRulesServiceEth {
     const depositItem: IAssetDto = { components: [] };
 
     const { tokenId, token, amount } = deposit;
-    if (tokenId !== "0") {
+    if (tokenId !== 0n) {
       const depositTemplate = await this.templateService.findOne(
         { id: Number(tokenId) },
         { relations: { contract: true } },
@@ -93,7 +93,7 @@ export class PonziRulesServiceEth {
     // REWARD ARRAY
     const rewardItem: IAssetDto = { components: [] };
     // const { tokenId, token, amount } = reward;
-    if (reward.tokenId !== "0") {
+    if (reward.tokenId !== 0n) {
       const rewardTemplate = await this.templateService.findOne(
         { id: Number(reward.tokenId) },
         { relations: { contract: true } },

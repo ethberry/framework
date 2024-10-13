@@ -90,7 +90,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
             decimals: 18,
           },
           contractId: 0,
-          amount: "0",
+          amount: 0n,
         }}
       />
     </Fragment>

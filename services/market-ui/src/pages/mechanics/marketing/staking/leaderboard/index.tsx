@@ -79,7 +79,7 @@ export const StakingLeaderboard: FC = () => {
       field: "amount",
       headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: false,
-      valueFormatter: (value: string) => formatEther(value),
+      valueFormatter: (value: bigint) => formatEther(value),
       flex: 1,
       minWidth: 100
     },

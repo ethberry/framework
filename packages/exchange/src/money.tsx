@@ -14,7 +14,7 @@ export const formatUnitsR = (value: BigNumberish, decimals: string | BigNumberis
     .toString();
 };
 
-export const formatEther = (amount = "0", decimals = 18, currency = "Ξ", maxDecimalDigits?: number) => {
+export const formatEther = (amount = 0n, decimals = 18, currency = "Ξ", maxDecimalDigits?: number) => {
   return `${currency} ${formatUnitsR(amount, decimals, maxDecimalDigits)}`;
 };
 
@@ -43,7 +43,7 @@ export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number)
               : component.tokenId
                 ? `${component.template?.title} #${component.token!.tokenId}`
                 : component.template?.title || ""
-            : `${component.amount === "1" ? "" : `${component.amount} x`} ${component.template.contract.title}`;
+            : `${component.amount === 1n ? "" : `${component.amount} x`} ${component.template.contract.title}`;
         default:
           return "unsupported token type";
       }

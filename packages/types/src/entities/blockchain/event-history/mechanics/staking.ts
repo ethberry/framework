@@ -77,7 +77,7 @@ export interface IStakingDepositStartEvent {
   ruleId: string;
   owner: string;
   startTimestamp: string;
-  tokenIds: Array<string>;
+  tokenIds: Array<bigint>;
 }
 
 export interface IStakingDepositWithdrawEvent {

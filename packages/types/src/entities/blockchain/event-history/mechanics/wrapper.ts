@@ -8,7 +8,7 @@ export enum WrapperEventSignature {
 
 export interface IUnpackWrapper {
   account: string;
-  tokenId: string;
+  tokenId: bigint;
 }
 
 export type TWrapperEvents = IUnpackWrapper;

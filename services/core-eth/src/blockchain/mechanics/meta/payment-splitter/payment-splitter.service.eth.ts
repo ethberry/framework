@@ -50,7 +50,7 @@ export class PaymentSplitterServiceEth {
     } = event;
     await this.eventHistoryService.updateHistory(event, context);
 
-    const tokenEntity = await this.tokenService.getToken("0", ZeroAddress);
+    const tokenEntity = await this.tokenService.getToken(0n, ZeroAddress);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -65,7 +65,7 @@ export class PaymentSplitterServiceEth {
     } = event;
     await this.eventHistoryService.updateHistory(event, context);
 
-    const tokenEntity = await this.tokenService.getToken("0", ZeroAddress);
+    const tokenEntity = await this.tokenService.getToken(0n, ZeroAddress);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");

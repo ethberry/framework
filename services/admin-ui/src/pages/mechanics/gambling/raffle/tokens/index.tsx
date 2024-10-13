@@ -54,7 +54,7 @@ export const RaffleTicketTokens: FC = () => {
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(token => (
             <StyledListItem key={token.id}>
-              <ListItemText sx={{ width: 0.2 }}>#{token.tokenId}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>#{token.tokenId.toString()}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}
@@ -64,7 +64,7 @@ export const RaffleTicketTokens: FC = () => {
               </ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {token.metadata.PRIZE ? "Prize " : ""}
-                {token.round.number === token.tokenId ? "winner" : ""}
+                {token.round.number === String(token.tokenId) ? "winner" : ""}
               </ListItemText>
 
               <ListActions>

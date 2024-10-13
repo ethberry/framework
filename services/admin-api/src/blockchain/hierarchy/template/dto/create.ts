@@ -16,10 +16,11 @@ export class TemplateCreateDto extends SearchableDto implements ITemplateCreateD
   public price: InstanceType<typeof SemiCoinDto>;
 
   @ApiProperty({
+    type: Number,
     minimum: 0,
   })
   @IsBigInt({ minimum: 0 }, { message: "typeMismatch" })
-  public amount: string;
+  public amount: bigint;
 
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })

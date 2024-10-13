@@ -13,7 +13,7 @@ export class TokenUploadDto implements ITokenUploadDto {
     minimum: 0,
   })
   @IsBigInt({}, { message: "typeMismatch" })
-  public tokenId: string;
+  public tokenId: bigint;
 
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })

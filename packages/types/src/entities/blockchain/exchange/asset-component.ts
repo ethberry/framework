@@ -12,9 +12,9 @@ export interface IAssetComponent extends IIdBase {
   contract?: IContract;
   templateId: number | null;
   template?: ITemplate;
-  tokenId: number | null;
+  tokenId: bigint | number | null;
   token?: IToken;
-  amount: string;
+  amount: bigint;
   asset?: IAsset;
   assetId: number;
 }

@@ -16,16 +16,16 @@ export interface IErc1155TokenTransferSingleEvent {
   operator: string;
   from: string;
   to: string;
-  id: string;
-  value: string;
+  id: bigint;
+  value: bigint;
 }
 
 export interface IErc1155TokenTransferBatchEvent {
   operator: string;
   from: string;
   to: string;
-  ids: Array<string>;
-  values: Array<string>;
+  ids: Array<bigint>;
+  values: Array<bigint>;
 }
 
 export interface IErc1155TokenApprovalForAllEvent {

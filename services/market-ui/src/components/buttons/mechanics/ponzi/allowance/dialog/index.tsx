@@ -5,7 +5,7 @@ import { FormDialog } from "@ethberry/mui-dialog-form";
 import { validationSchema } from "./validation";
 
 export interface IAllowanceDto {
-  amount: string;
+  amount: bigint;
   decimals: number;
 }
 

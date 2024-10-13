@@ -18,5 +18,5 @@ export interface IAssetComponentHistory extends IIdBase {
   contract?: IContract;
   tokenId: number | null;
   token?: IToken;
-  amount: string;
+  amount: bigint;
 }

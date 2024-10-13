@@ -63,8 +63,8 @@ export const Details: FC<IDetailsProps> = props => {
     }
     const clonedPrice = deepClone<IAsset>(price);
     clonedPrice.components.forEach(component => {
-      const amount = (BigInt(component.amount) * BigInt(tickets)).toString();
-      component.amount = ((BigInt(amount) * BigInt(100 - ~~commission)) / 100n).toString();
+      const amount = BigInt(component.amount) * BigInt(tickets);
+      component.amount = (amount * BigInt(100 - ~~commission)) / 100n;
     });
     return clonedPrice;
   };

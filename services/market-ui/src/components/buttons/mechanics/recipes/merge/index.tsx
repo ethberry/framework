@@ -131,7 +131,7 @@ export const MergeButton: FC<IMergeButtonProps> = props => {
         message="dialogs.merge"
         merge={merge}
         initialValues={{
-          tokens: new Array(parseInt(merge.price?.components[0].amount || "1")).fill({ tokenId: 0 }),
+          tokens: new Array(Number(merge.price?.components[0].amount || 1n)).fill({ tokenId: 0n }),
           tokenEntities: [],
           tokenIds: [],
         }}

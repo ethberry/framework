@@ -2,7 +2,7 @@ import type { TokenType } from "@ethberry/types-blockchain";
 
 export interface IBlockChainAssetDto {
   address: string;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IBlockChainAssetTemplateDto extends IBlockChainAssetDto {
@@ -12,5 +12,5 @@ export interface IBlockChainAssetTemplateDto extends IBlockChainAssetDto {
 
 export interface IBlockChainAssetTokenDto extends IBlockChainAssetTemplateDto {
   tokenType: TokenType;
-  tokenId: number;
+  tokenId: bigint;
 }

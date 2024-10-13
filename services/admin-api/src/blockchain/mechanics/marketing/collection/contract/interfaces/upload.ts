@@ -1,5 +1,5 @@
 export interface ITokenUploadDto {
-  tokenId: string;
+  tokenId: bigint;
   imageUrl: string;
   metadata: string;
 }

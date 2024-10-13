@@ -79,7 +79,7 @@ export class ContractManagerServiceEth {
         title: name,
         description: emptyStateString,
         imageUrl,
-        cap: (1024 * 1024 * 1024 * 4).toString(),
+        cap: BigInt(1024 * 1024 * 1024 * 4),
         contractId: contractEntity.id,
         templateStatus: TemplateStatus.HIDDEN,
       });

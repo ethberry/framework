@@ -37,7 +37,7 @@ export enum ProtectedAttribute {
 export interface IToken extends IIdDateBase {
   imageUrl: string | null;
   metadata: any;
-  tokenId: string;
+  tokenId: bigint;
   royalty: number;
   cid: string | null;
   tokenStatus: TokenStatus;

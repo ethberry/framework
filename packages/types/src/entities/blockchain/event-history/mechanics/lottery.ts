@@ -37,7 +37,7 @@ export interface IRoundEndedEvent {
 export interface ILotteryPrizeEvent {
   account: string;
   roundId: string;
-  ticketId: string;
+  ticketId: bigint;
   amount: string;
 }
 

@@ -91,7 +91,7 @@ export class RaffleRoundServiceEth {
           tokenType: priceTemplateEntity.contract.contractType || TokenType.NATIVE,
           contractId: priceTemplateEntity.contract.id,
           templateId: priceTemplateEntity.id,
-          amount: Number(amount).toString(),
+          amount,
         },
       ],
     });

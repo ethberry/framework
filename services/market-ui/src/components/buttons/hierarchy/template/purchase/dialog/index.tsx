@@ -6,7 +6,7 @@ import { EthInput } from "@ethberry/mui-inputs-mask";
 import { validationSchema } from "./validation";
 
 export interface IAmountDto {
-  amount: number;
+  amount: bigint;
 }
 
 export interface IAmountDialogProps {

@@ -18,7 +18,7 @@ export interface IAllowanceDto {
     decimals: number;
   };
   contractId: number;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IAllowanceDialogProps {

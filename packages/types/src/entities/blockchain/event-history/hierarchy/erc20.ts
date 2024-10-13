@@ -11,7 +11,7 @@ export enum Erc20EventSignature {
 export interface IErc20TokenTransferEvent {
   from: string;
   to: string;
-  value: string;
+  value: bigint;
 }
 
 export interface IErc20TokenApproveEvent {

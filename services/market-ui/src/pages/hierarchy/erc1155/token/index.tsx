@@ -19,7 +19,7 @@ export const Erc1155Token: FC = () => {
     empty: {
       balance: [
         {
-          amount: "0",
+          amount: 0n,
         } as IBalance,
       ],
       template: {

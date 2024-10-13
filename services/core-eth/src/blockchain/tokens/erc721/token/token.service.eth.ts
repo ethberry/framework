@@ -45,13 +45,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(
-        Number(tokenId).toString(),
-        address,
-        ERC721SimpleABI,
-        this.jsonRpcProvider,
-        this.loggerService,
-      );
+      const metadata = await getMetadata(tokenId, address, ERC721SimpleABI, this.jsonRpcProvider, this.loggerService);
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
 
@@ -66,11 +60,11 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         royalty: templateEntity.contract.royalty,
         template: templateEntity,
       });
-      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
+      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), 1n);
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
-    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase(), true);
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), true);
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", Number(tokenId), address.toLowerCase(), Erc721TokenServiceEth.name);
@@ -80,7 +74,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === ZeroAddress) {
-      erc721TokenEntity.template.amount += 1;
+      erc721TokenEntity.template.amount += 1n;
       erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === ZeroAddress) {
       erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
@@ -98,7 +92,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       token: erc721TokenEntity,
       from: from.toLowerCase(),
       to: to.toLowerCase(),
-      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+      amount: 1n, // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
     });
 
     await this.signalClientProxy

@@ -150,7 +150,7 @@ export class MergeService {
       throw new NotAcceptableException("wrongTokenDuplicate");
     }
 
-    if (mergeEntity.price.components[0].amount !== tokenIds.length.toString()) {
+    if (mergeEntity.price.components[0].amount !== BigInt(tokenIds.length)) {
       throw new NotAcceptableException("wrongTokenAmount");
     }
 
@@ -214,15 +214,15 @@ export class MergeService {
         tokenId:
           component.contract.contractType === TokenType.ERC1155 || component.contract.contractType === TokenType.ERC20
             ? component.template.tokens[0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
-        amount: "1",
+            : BigInt(component.templateId || 0), // suppression types check with 0
+        amount: 1n,
       })),
       // PRICE token to merge
       tokenEntities.sort(comparator("tokenId")).map(tokenEntity => ({
         tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId,
-        amount: "1",
+        amount: 1n,
       })),
     );
   }

@@ -31,7 +31,7 @@ export const RaffleTokenViewDialog: FC<IRaffleTokenViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.tokenId" />
               </TableCell>
-              <TableCell align="right">{tokenId}</TableCell>
+              <TableCell align="right">{tokenId.toString()}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
@@ -45,7 +45,7 @@ export const RaffleTokenViewDialog: FC<IRaffleTokenViewDialogProps> = props => {
               </TableCell>
               <TableCell align="right">{round.roundId}</TableCell>
             </TableRow>
-            {round?.number === tokenId ? (
+            {round?.number === tokenId.toString() ? (
               <TableRow>
                 <TableCell component="th" scope="row">
                   <FormattedMessage id="form.labels.winner" />

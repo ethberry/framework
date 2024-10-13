@@ -8,7 +8,7 @@ export enum LootEventSignature {
 
 export interface IUnpackLootBoxEvent {
   account: string;
-  tokenId: string;
+  tokenId: bigint;
 }
 
 export type TLootEvents = IUnpackLootBoxEvent;

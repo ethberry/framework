@@ -7,9 +7,9 @@ import { ExchangeEventType, IMergeSearchDto, MergeStatus, TemplateStatus } from 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
-import { MergeEntity } from "./merge.entity";
-import type { IMergeCreateDto, IMergeUpdateDto } from "./interfaces";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
+import type { IMergeCreateDto, IMergeUpdateDto } from "./interfaces";
+import { MergeEntity } from "./merge.entity";
 
 @Injectable()
 export class MergeService {

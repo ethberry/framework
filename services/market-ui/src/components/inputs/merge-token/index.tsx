@@ -16,7 +16,7 @@ export const TokenMergeInput: FC<ITokenMergeInputProps> = props => {
 
   return (
     <Root container spacing={2}>
-      {new Array(parseInt(merge.price?.components[0].amount || "1")).fill(null).map((_a, i) => (
+      {new Array(Number(merge.price?.components[0].amount || 1n)).fill(null).map((_a, i) => (
         <StyledAssetWrapper item xs={12} sm={6} md={3} key={i}>
           <Box flex={1} height="100%">
             <TokenInput

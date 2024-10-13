@@ -64,7 +64,9 @@ export const RaffleTicketTokenList: FC = () => {
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>{token.round.number === token.tokenId ? "winner" : ""}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {token.round.number === token.tokenId.toString() ? "winner" : ""}
+              </ListItemText>
               <ListActions>
                 <RaffleRewardButton token={token} />
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />

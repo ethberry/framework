@@ -142,7 +142,7 @@ export class DiscreteService {
   ): Promise<string> {
     const level = tokenEntity.metadata[attribute] || 0;
 
-    const item = convertTemplateToChainAsset(tokenEntity.template, 1);
+    const item = convertTemplateToChainAsset(tokenEntity.template, 1n);
     // set real token Id
     item.tokenId = tokenEntity.tokenId;
     const price = convertDatabaseAssetToChainAsset(

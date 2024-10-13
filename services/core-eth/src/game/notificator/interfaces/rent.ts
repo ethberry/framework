@@ -1,6 +1,6 @@
 export interface IRentUserUpdateData {
   merchantId: number;
-  tokenId: string;
+  tokenId: bigint;
   user: string;
   expires: string;
 }

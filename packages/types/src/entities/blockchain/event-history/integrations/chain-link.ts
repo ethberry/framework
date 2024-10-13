@@ -64,7 +64,7 @@ export interface IERC721TokenMintRandomEvent {
   to: string;
   randomWords: Array<string>;
   templateId: string;
-  tokenId: string;
+  tokenId: bigint;
 }
 
 export interface IERC721TokenMintGenesEvent {

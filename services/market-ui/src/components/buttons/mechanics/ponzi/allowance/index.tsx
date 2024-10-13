@@ -69,7 +69,7 @@ export const PonziAllowanceButton: FC<IPonziAllowanceButtonProps> = props => {
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
         initialValues={{
-          amount: rule.deposit?.components[0].amount || "0",
+          amount: rule.deposit?.components[0].amount || 0n,
           decimals: rule.deposit?.components[0].contract!.decimals || 18,
         }}
       />

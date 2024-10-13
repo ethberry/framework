@@ -14,23 +14,23 @@ export enum PaymentSplitterEventSignature {
 
 export interface IPaymentSplitterPayeeAddedEvent {
   account: string;
-  shares: string;
+  shares: bigint;
 }
 
 export interface IPaymentSplitterPaymentReleasedEvent {
   to: string;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IPaymentSplitterERC20PaymentReleasedEvent {
   token: string;
   to: string;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IPaymentSplitterPaymentReceivedEvent {
   from: string;
-  amount: string;
+  amount: bigint;
 }
 
 export type TPaymentSplitterEvents =

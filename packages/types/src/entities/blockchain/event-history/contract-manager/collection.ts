@@ -3,7 +3,7 @@ export interface ICollectionDeployedEventArgs {
   symbol: string;
   royalty: string;
   baseTokenURI: string;
-  batchSize: string;
+  batchSize: bigint;
   contractTemplate: string;
 }
 

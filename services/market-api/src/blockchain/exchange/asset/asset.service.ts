@@ -134,7 +134,7 @@ export class AssetService {
       } else {
         summaryMap[name] = {
           ...comp,
-          amount: (BigInt(summaryMap[name].amount) + BigInt(amount)).toString(),
+          amount: BigInt(summaryMap[name].amount) + BigInt(amount),
         };
       }
     });

@@ -15,7 +15,7 @@ export class BlockChainAssetDto extends AddressDto implements IBlockChainAssetDt
   )
   @decorate(IsBigInt({}, { message: "typeMismatch" }))
   @decorate(ValidateIf(o => [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155].includes(o.tokenType)))
-  public amount: string;
+  public amount: bigint;
 }
 
 export class BlockChainAssetTemplateDto extends BlockChainAssetDto implements IBlockChainAssetTemplateDto {
@@ -59,7 +59,7 @@ export class BlockChainAssetTokenDto extends BlockChainAssetTemplateDto implemen
   @decorate(IsInt({ message: "typeMismatch" }))
   @decorate(Min(1, { message: "rangeUnderflow" }))
   @decorate(ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.tokenType)))
-  public tokenId: number;
+  public tokenId: bigint;
 }
 
 export class BlockChainAssetVestingDto extends BlockChainAssetTemplateDto implements IBlockChainAssetTokenDto {
@@ -81,5 +81,5 @@ export class BlockChainAssetVestingDto extends BlockChainAssetTemplateDto implem
   @decorate(IsInt({ message: "typeMismatch" }))
   @decorate(Min(1, { message: "rangeUnderflow" }))
   @decorate(ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.tokenType)))
-  public tokenId: number;
+  public tokenId: bigint;
 }

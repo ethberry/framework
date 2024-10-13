@@ -28,5 +28,5 @@ export interface IStakingBalanceCheck {
   stakingContract: IContract;
   token: IToken;
   depositAmount: string;
-  stakingBalance: string;
+  stakingBalance: bigint;
 }
