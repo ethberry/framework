@@ -368,7 +368,7 @@
       "ERC20TokenDeployed": "نشر رمز ERC20",
       "ERC721TokenDeployed": "نشر رمز ERC721",
       "ERC998TokenDeployed": "نشر رمز ERC998",
-      "EcommercePurchase": "شراء التجارة الإلكترونية",
+      "PurchaseEcommerce": "شراء التجارة الإلكترونية",
       "EtherReceived": "استلام الإيثر",
       "EtherReleased": "إطلاق الإيثر",
       "Lend": "الإقراض",

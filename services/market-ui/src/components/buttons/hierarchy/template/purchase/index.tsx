@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { Contract, utils, constants } from "ethers";
 import { ShoppingCart } from "@mui/icons-material";
 
 import { useUser } from "@ethberry/provider-user";
@@ -56,7 +56,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           externalId: template.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
           receiver: template.contract!.merchant!.wallet,
           referrer,
         },

@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { concat, encodeBytes32String, hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
+import { concat, hexlify, randomBytes, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ContractFeatures, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IBreedSignDto } from "@framework/types";
+import { ContractFeatures, ModuleType, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
@@ -109,7 +109,7 @@ export class BreedService {
         externalId: encodedExternalId.toString(),
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: ZeroHash,
         receiver: momTokenEntity.token.template.contract.merchant.wallet,
         referrer,
       },

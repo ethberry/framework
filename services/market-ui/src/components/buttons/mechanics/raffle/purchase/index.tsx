@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { Casino } from "@mui/icons-material";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@ethberry/types-blockchain";
 import { useAllowance, useMetamask, useServerSignature } from "@ethberry/react-hooks-eth";
@@ -40,7 +40,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
           externalId: round.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
           receiver: round.contract?.address,
           referrer,
         },

@@ -368,7 +368,7 @@
       "ERC20TokenDeployed": "ERC20TokenDikerahkan",
       "ERC721TokenDeployed": "ERC721TokenDikerahkan",
       "ERC998TokenDeployed": "ERC998TokenDikerahkan",
-      "EcommercePurchase": "PembelianEcommerce",
+      "PurchaseEcommerce": "PembelianEcommerce",
       "EtherReceived": "EtherDiterima",
       "EtherReleased": "EtherDilepaskan",
       "Lend": "Meminjam",

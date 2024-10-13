@@ -57,7 +57,7 @@ export const Breed: FC = () => {
           externalId: BigNumber.from(sign.bytecode),
           expiresAt: sign.expiresAt,
           referrer: constants.AddressZero,
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
         },
         {
           tokenType: Object.values(TokenType).indexOf(values.tokenType),

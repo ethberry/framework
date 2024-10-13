@@ -44,7 +44,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           externalId: craft.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
           receiver: craft.merchant!.wallet,
           referrer: constants.AddressZero,
         },

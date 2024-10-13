@@ -15,6 +15,10 @@ export * from "./common";
 
 export enum ExchangeEventType {
   Purchase = "Purchase",
+  PurchaseRandom = "PurchaseRandom",
+  PurchaseGenes = "PurchaseGenes",
+  PurchaseLootBox = "PurchaseLootBox",
+  PurchaseMysteryBox = "PurchaseMysteryBox",
   PurchaseLottery = "PurchaseLottery",
   PurchaseRaffle = "PurchaseRaffle",
   Claim = "Claim",
@@ -23,13 +27,11 @@ export enum ExchangeEventType {
   Merge = "Merge",
   Lend = "Lend",
   LendMany = "LendMany",
-  PurchaseLootBox = "PurchaseLootBox",
-  PurchaseMysteryBox = "PurchaseMysteryBox",
   Upgrade = "Upgrade",
   WaitListRewardSet = "WaitListRewardSet",
   WaitListRewardClaimed = "WaitListRewardClaimed",
   Breed = "Breed",
-  EcommercePurchase = "EcommercePurchase",
+  PurchaseEcommerce = "PurchaseEcommerce",
 }
 
 export enum ExchangeEventSignature {
@@ -48,7 +50,7 @@ export enum ExchangeEventSignature {
   WaitListRewardSet = "WaitListRewardSet(uint256,bytes32,(uint8,address,uint256,uint256)[])",
   WaitListRewardClaimed = "WaitListRewardClaimed(address,uint256,(uint8,address,uint256,uint256)[])",
   Breed = "Breed(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256))",
-  EcommercePurchase = "EcommercePurchase(??)",
+  PurchaseEcommerce = "PurchaseEcommerce(??)",
 }
 
 export type TExchangeEvents =

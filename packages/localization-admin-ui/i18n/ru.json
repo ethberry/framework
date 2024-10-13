@@ -368,7 +368,7 @@
       "ERC20TokenDeployed": "Деплой Токена ERC20",
       "ERC721TokenDeployed": "Деплой Токена ERC721",
       "ERC998TokenDeployed": "Деплой Токена ERC998",
-      "EcommercePurchase": "Покупка в Электронной Коммерции",
+      "PurchaseEcommerce": "Покупка в Электронной Коммерции",
       "EtherReceived": "Получен Эфир",
       "EtherReleased": "Выпущен Эфир",
       "Lend": "Займ",

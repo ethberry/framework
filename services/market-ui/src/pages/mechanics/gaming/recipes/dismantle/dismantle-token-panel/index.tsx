@@ -65,7 +65,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
           externalId: values.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
           receiver: values.merchant!.wallet,
           referrer: constants.AddressZero,
         },

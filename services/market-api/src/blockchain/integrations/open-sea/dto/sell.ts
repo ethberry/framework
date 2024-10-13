@@ -1,7 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsISO8601, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
-
 import { Mixin } from "ts-mixer";
 
 import { AccountDto, ChainIdDto, CoinDto, IsBigInt, ReferrerOptionalDto } from "@ethberry/nest-js-validators";

@@ -43,7 +43,7 @@ export const LootBoxPurchaseButton: FC<ILootBoxBuyButtonProps> = props => {
           externalId: lootBox.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
           receiver: lootBox.template!.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },

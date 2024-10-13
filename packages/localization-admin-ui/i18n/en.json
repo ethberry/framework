@@ -382,7 +382,7 @@
       "ERC20TokenDeployed": "ERC20TokenDeployed",
       "ERC721TokenDeployed": "ERC721TokenDeployed",
       "ERC998TokenDeployed": "ERC998TokenDeployed",
-      "EcommercePurchase": "EcommercePurchase",
+      "PurchaseEcommerce": "PurchaseEcommerce",
       "EtherReceived": "EtherReceived",
       "EtherReleased": "EtherReleased",
       "Lend": "Lend",

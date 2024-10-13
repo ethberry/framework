@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, FindManyOptions, In } from "typeorm";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { hexlify, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
 import { comparator } from "@ethberry/utils";
@@ -21,9 +21,9 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
-import { DismantleEntity } from "./dismantle.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { DismantleEntity } from "./dismantle.entity";
 
 @Injectable()
 export class DismantleService {
@@ -171,7 +171,7 @@ export class DismantleService {
         externalId: dismantleEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: ZeroHash,
         receiver: dismantleEntity.merchant.wallet,
         referrer,
       },

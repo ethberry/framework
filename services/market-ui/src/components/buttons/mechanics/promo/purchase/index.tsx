@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import { useAppSelector } from "@ethberry/redux";
 import { walletSelectors } from "@ethberry/provider-wallet";
@@ -74,7 +74,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
               externalId: promo.id,
               expiresAt: sign.expiresAt,
               nonce: utils.arrayify(sign.nonce),
-              extra: utils.formatBytes32String("0x"),
+              extra: constants.HashZero,
               receiver: promo.merchant!.wallet,
               referrer,
             },
@@ -90,7 +90,7 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
               externalId: promo.id,
               expiresAt: sign.expiresAt,
               nonce: utils.arrayify(sign.nonce),
-              extra: utils.formatBytes32String("0x"),
+              extra: constants.HashZero,
               receiver: promo.merchant!.wallet,
               referrer,
             },

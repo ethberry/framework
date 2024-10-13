@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { ShoppingCart } from "@mui/icons-material";
 
 import { useUser } from "@ethberry/provider-user";
@@ -17,9 +17,9 @@ import {
 import { ListAction, ListActionVariant } from "@framework/styled";
 import { ContractFeatures, IContract, ITemplate, IUser, TemplateStatus } from "@framework/types";
 
-import ExchangePurchaseFacetPurchaseRandomABI from "@framework/abis/json/ExchangePurchaseRandomFacet/purchaseRandom.json";
+import ExchangePurchaseFacetPurchaseRandomABI from "@framework/abis/json/ExchangeRandomFacet/purchaseRandom.json";
 
-export interface IAmountDto {
+interface IAmountDto {
   amount: number;
 }
 
@@ -57,7 +57,7 @@ export const TemplatePurchaseRandomButton: FC<ITemplatePurchaseRandomButtonProps
           externalId: template.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
           receiver: template.contract!.merchant!.wallet,
           referrer,
         },

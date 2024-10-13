@@ -28,7 +28,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       externalId: rule.externalId,
       expiresAt: 0,
       nonce: utils.formatBytes32String("nonce"),
-      extra: utils.formatBytes32String("0x"),
+      extra: constants.HashZero,
       receiver: constants.AddressZero,
       referrer: constants.AddressZero,
     };

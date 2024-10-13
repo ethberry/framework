@@ -10,7 +10,7 @@ import ExchangeLotteryFacetSol from "@framework/core-contracts/artifacts/contrac
 import ExchangeMergeFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeMergeFacet.sol/ExchangeMergeFacet.json";
 import ExchangeMysteryBoxFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeMysteryBoxFacet.sol/ExchangeMysteryBoxFacet.json";
 import ExchangePurchaseFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangePurchaseFacet.sol/ExchangePurchaseFacet.json";
-import ExchangePurchaseRandomFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangePurchaseRandomFacet.sol/ExchangePurchaseRandomFacet.json";
+import ExchangeRandomFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeRandomFacet.sol/ExchangeRandomFacet.json";
 import ExchangeRaffleFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeRaffleFacet.sol/ExchangeRaffleFacet.json";
 import ExchangeRentableFacetSol from "@framework/core-contracts/artifacts/contracts/Exchange/ExchangeFacet/ExchangeRentableFacet.sol/ExchangeRentableFacet.json";
 import ExchangeUtilsSol from "@framework/core-contracts/artifacts/contracts/Exchange/lib/ExchangeUtils.sol/ExchangeUtils.json";
@@ -28,7 +28,7 @@ export const ExchangeABI = new Interface([
       .concat(ExchangeMergeFacetSol.abi)
       .concat(ExchangeMysteryBoxFacetSol.abi)
       .concat(ExchangePurchaseFacetSol.abi)
-      .concat(ExchangePurchaseRandomFacetSol.abi)
+      .concat(ExchangeRandomFacetSol.abi)
       .concat(ExchangeRaffleFacetSol.abi)
       .concat(ExchangeRentableFacetSol.abi)
       .concat(ExchangeUtilsSol.abi),

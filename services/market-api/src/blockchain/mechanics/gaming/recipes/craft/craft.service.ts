@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindManyOptions, FindOptionsWhere, Repository, In } from "typeorm";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { hexlify, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
 import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { ICraftSearchDto, ICraftSignDto, ICraftCountDto, ICraftCountResult } from "@framework/types";
+import type { ICraftCountDto, ICraftCountResult, ICraftSearchDto, ICraftSignDto } from "@framework/types";
 import { CraftStatus, ModuleType, SettingsKeys, TemplateStatus, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
@@ -164,7 +164,7 @@ export class CraftService {
         externalId: craftEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: ZeroHash,
         receiver: craftEntity.merchant.wallet,
         referrer,
       },
