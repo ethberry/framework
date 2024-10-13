@@ -13,13 +13,13 @@ export enum Erc721EventSignature {
 export interface IERC721TokenTransferEvent {
   from: string;
   to: string;
-  tokenId: string;
+  tokenId: bigint;
 }
 
 export interface IERC721TokenApproveEvent {
   owner: string;
   approved: string;
-  tokenId: string;
+  tokenId: bigint;
 }
 
 export interface IERC721TokenApprovedForAllEvent {

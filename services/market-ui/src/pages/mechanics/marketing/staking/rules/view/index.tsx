@@ -43,7 +43,7 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
   let totalComp = deposit ? deposit.components : [];
   if (deposit) {
     totalComp = deposit.components.map(item => {
-      return { ...item, amount: (BigInt(item.amount) * BigInt(activeStakesCount)).toString() };
+      return { ...item, amount: BigInt(item.amount) * BigInt(activeStakesCount) };
     });
   }
 

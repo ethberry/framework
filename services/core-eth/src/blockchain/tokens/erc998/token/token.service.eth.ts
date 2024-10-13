@@ -62,11 +62,7 @@ export class Erc998TokenServiceEth extends Erc721TokenServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    const erc998TokenEntity = await this.tokenService.getToken(
-      Number(tokenId).toString(),
-      context.address.toLowerCase(),
-      true,
-    );
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase(), true);
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("token998NotFound");
@@ -74,7 +70,7 @@ export class Erc998TokenServiceEth extends Erc721TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
-    const tokenEntity = await this.tokenService.getToken(Number(childTokenId).toString(), childContract.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -84,7 +80,7 @@ export class Erc998TokenServiceEth extends Erc721TokenServiceEth {
       account: erc998TokenEntity.template.contract.address,
       targetId: erc998TokenEntity.id,
       tokenId: tokenEntity.id,
-      amount: "1",
+      amount: 1n,
     });
 
     await this.signalClientProxy
@@ -103,11 +99,7 @@ export class Erc998TokenServiceEth extends Erc721TokenServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    const erc998TokenEntity = await this.tokenService.getToken(
-      Number(tokenId).toString(),
-      context.address.toLowerCase(),
-      true,
-    );
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase(), true);
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("token998NotFound");
@@ -116,10 +108,7 @@ export class Erc998TokenServiceEth extends Erc721TokenServiceEth {
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
     const promises = childTokenIds.map(async (childTokenId, i) => {
-      const childTokenEntity = await this.tokenService.getToken(
-        Number(childTokenId).toString(),
-        childContract.toLowerCase(),
-      );
+      const childTokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
       if (!childTokenEntity) {
         throw new NotFoundException("childTokenNotFound");
@@ -157,10 +146,7 @@ export class Erc998TokenServiceEth extends Erc721TokenServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    const erc721TokenEntity = await this.tokenService.getToken(
-      Number(childTokenId).toString(),
-      childContract.toLowerCase(),
-    );
+    const erc721TokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("token721NotFound");
@@ -196,10 +182,7 @@ export class Erc998TokenServiceEth extends Erc721TokenServiceEth {
     const { transactionHash } = context;
 
     const promises = childTokenIds.map(async (childTokenId, i) => {
-      const childTokenEntity = await this.tokenService.getToken(
-        Number(childTokenId).toString(),
-        childContract.toLowerCase(),
-      );
+      const childTokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
       if (!childTokenEntity) {
         throw new NotFoundException("childTokenNotFound");

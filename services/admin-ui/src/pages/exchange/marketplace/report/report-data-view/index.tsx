@@ -50,7 +50,7 @@ export const MarketplaceReportDataView: FC<IMarketplaceReportDataViewProps> = pr
                   component={RouterLink}
                   to={`/${itemAsset?.token?.template?.contract?.contractType}/tokens/${itemAsset?.token?.id}`}
                 >
-                  #{itemAsset?.token?.tokenId}
+                  #{itemAsset?.token?.tokenId.toString()}
                 </Link>
               </Typography>
             </Box>

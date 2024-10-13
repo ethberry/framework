@@ -54,7 +54,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
               <ListItemText sx={{ width: 0.6 }}>{row.token?.template?.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>
                 {formatEther(
-                  row.amount.toString(),
+                  row.amount,
                   row.token?.template?.contract?.decimals,
                   row.token?.template?.contract?.symbol,
                 )}

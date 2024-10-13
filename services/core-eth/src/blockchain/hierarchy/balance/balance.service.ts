@@ -56,7 +56,7 @@ export class BalanceService {
     });
   }
 
-  public async increment(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
+  public async increment(tokenId: number, account: string, amount: bigint): Promise<BalanceEntity> {
     const balanceEntity = await this.findOne({ tokenId, account });
 
     if (!balanceEntity) {
@@ -69,21 +69,18 @@ export class BalanceService {
 
     this.loggerService.log(JSON.stringify(balanceEntity, null, "\t"), BalanceService.name);
 
-    balanceEntity.amount = (BigInt(balanceEntity.amount) + BigInt(amount)).toString();
+    balanceEntity.amount = balanceEntity.amount + amount;
 
     return balanceEntity.save();
   }
 
-  public async decrement(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
+  public async decrement(tokenId: number, account: string, amount: bigint): Promise<BalanceEntity> {
     const balanceEntity = await this.findOne({ tokenId, account });
 
     if (!balanceEntity) {
       throw new NotFoundException("balanceNotFound");
     } else {
-      balanceEntity.amount =
-        BigInt(balanceEntity.amount) - BigInt(amount) > 0
-          ? (BigInt(balanceEntity.amount) - BigInt(amount)).toString()
-          : "0";
+      balanceEntity.amount = balanceEntity.amount - amount > 0 ? balanceEntity.amount - amount : 0n;
       return balanceEntity.save();
     }
   }

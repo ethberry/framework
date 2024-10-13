@@ -79,8 +79,8 @@ export class MysterySignService {
       {
         tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
         token: mysteryBoxEntity.template.contract.address,
-        tokenId: mysteryBoxEntity.templateId.toString(),
-        amount: "1",
+        tokenId: BigInt(mysteryBoxEntity.templateId),
+        amount: 1n,
       },
       price,
       content,

@@ -169,7 +169,7 @@ export class PonziDepositServiceEth {
     }
 
     if (token.toLowerCase() === ZeroAddress) {
-      const tokenEntity = await this.tokenService.getToken("0", token.toLowerCase());
+      const tokenEntity = await this.tokenService.getToken(0n, token.toLowerCase());
 
       if (!tokenEntity) {
         throw new NotFoundException("tokenNotFound");

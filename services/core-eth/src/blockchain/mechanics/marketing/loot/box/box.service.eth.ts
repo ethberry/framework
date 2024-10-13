@@ -69,15 +69,11 @@ export class LootBoxServiceEth extends TokenServiceEth {
         template: templateEntity,
       });
 
-      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
+      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), 1n);
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
-    const lootBoxTokenEntity = await this.tokenService.getToken(
-      Number(tokenId).toString(),
-      address.toLowerCase(),
-      true,
-    );
+    const lootBoxTokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), true);
 
     if (!lootBoxTokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -86,7 +82,7 @@ export class LootBoxServiceEth extends TokenServiceEth {
     await this.eventHistoryService.updateHistory(event, context, lootBoxTokenEntity.id);
 
     if (from === ZeroAddress) {
-      lootBoxTokenEntity.template.amount += 1;
+      lootBoxTokenEntity.template.amount += 1n;
       // lootBoxTokenEntity.erc721Template
       //   ? (lootBoxTokenEntity.template.instanceCount += 1)
       //   : (lootBoxTokenEntity.loot.template.instanceCount += 1);

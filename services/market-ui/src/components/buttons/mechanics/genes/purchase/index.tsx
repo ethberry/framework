@@ -20,7 +20,7 @@ import { ContractFeatures, IContract, ITemplate, IUser, TemplateStatus } from "@
 import ExchangePurchaseFacetPurchaseGeneABI from "@framework/abis/json/ExchangeGenesFacet/purchaseGenes.json";
 
 export interface IAmountDto {
-  amount: number;
+  amount: bigint;
 }
 
 interface ITemplatePurchaseGenesButtonProps {
@@ -127,7 +127,7 @@ export const TemplatePurchaseGenesButton: FC<ITemplatePurchaseGenesButtonProps> 
 
   const isChainLinkConfigured = template.contract?.parameters.vrfSubId && template.contract?.parameters.isConsumer;
 
-  const isCapExceeded = template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap);
+  const isCapExceeded = template.cap !== 0n && template.amount >= template.cap;
 
   return (
     <ListAction

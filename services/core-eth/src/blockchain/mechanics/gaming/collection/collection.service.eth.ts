@@ -50,7 +50,7 @@ export class CollectionServiceEth {
       await this.eventHistoryService.updateHistory(event, context);
 
       const description = JSON.parse(templateEntity.contract.description);
-      const batchSize = description.batchSize ? Number(description.batchSize) : 0;
+      const batchSize = description.batchSize ? description.batchSize : 0n;
 
       // const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
       const batchLen = Number(toTokenId) - Number(fromTokenId);
@@ -64,7 +64,7 @@ export class CollectionServiceEth {
 
       const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(batchSize)].map((_, i) => ({
         metadata: "{}",
-        tokenId: i.toString(),
+        tokenId: BigInt(i),
         royalty: templateEntity.contract.royalty,
         templateId: templateEntity.id,
         tokenStatus: TokenStatus.MINTED,
@@ -94,7 +94,7 @@ export class CollectionServiceEth {
   private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
     const balanceArray: Array<DeepPartial<BalanceEntity>> = new Array(tokenArray.length).fill(null).map((_, i) => ({
       account: owner.toLowerCase(),
-      amount: "1",
+      amount: 1n,
       tokenId: tokenArray[i].id,
     }));
 

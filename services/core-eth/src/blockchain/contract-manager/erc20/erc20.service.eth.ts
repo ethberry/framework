@@ -80,7 +80,7 @@ export class ContractManagerErc20ServiceEth {
 
     await this.tokenService.create({
       metadata: "{}",
-      tokenId: "0",
+      tokenId: 0n,
       royalty: 0,
       template: templateEntity,
     });

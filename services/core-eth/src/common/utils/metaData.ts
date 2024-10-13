@@ -6,7 +6,7 @@ import { recursivelyDecodeResult } from "@ethberry/utils-eth";
 import { blockAwait } from "./blockAwait";
 
 export const getMetadata = async function (
-  tokenId: string,
+  tokenId: bigint,
   address: string,
   abi: any,
   provider: JsonRpcProvider,

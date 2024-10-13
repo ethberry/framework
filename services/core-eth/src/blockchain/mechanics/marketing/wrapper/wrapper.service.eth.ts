@@ -46,7 +46,7 @@ export class WrapperServiceEth {
     } = event;
     const { transactionHash, address } = context;
 
-    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -72,13 +72,7 @@ export class WrapperServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(
-        Number(tokenId).toString(),
-        address,
-        ERC721SimpleABI,
-        this.jsonRpcProvider,
-        this.loggerService,
-      );
+      const metadata = await getMetadata(tokenId, address, ERC721SimpleABI, this.jsonRpcProvider, this.loggerService);
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
@@ -91,7 +85,7 @@ export class WrapperServiceEth {
         royalty: templateEntity.contract.royalty,
         template: templateEntity,
       });
-      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
+      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), 1n);
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
@@ -104,7 +98,7 @@ export class WrapperServiceEth {
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === ZeroAddress) {
-      erc721TokenEntity.template.amount += 1;
+      erc721TokenEntity.template.amount += 1n;
       erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === ZeroAddress) {
       erc721TokenEntity.tokenStatus = TokenStatus.BURNED;

@@ -5,6 +5,6 @@ export interface ITemplateUpdateDto {
   description: string;
   imageUrl: string;
   price: IAssetDto;
-  amount: string;
+  amount: bigint;
   templateStatus: TemplateStatus;
 }

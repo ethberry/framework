@@ -3,5 +3,5 @@ export interface ITemplateSignDto {
   templateId: number;
   amount: string;
   chainId: number;
-  account: string;
+  account: bigint;
 }

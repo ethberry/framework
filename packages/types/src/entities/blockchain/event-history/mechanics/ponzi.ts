@@ -22,12 +22,12 @@ export enum PonziEventSignature {
 
 export interface IWithdrawTokenEvent {
   token: string;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IFinalizedTokenEvent {
   token: string;
-  amount: string;
+  amount: bigint;
 }
 
 export interface IPonziRuleTermsStruct {

@@ -325,7 +325,7 @@ export class MysteryBoxService {
       title: dto.title,
       description: dto.description,
       price: priceEntity,
-      amount: "0",
+      amount: 0n,
       imageUrl: dto.imageUrl,
       contractId: contractEntity.id,
     });

@@ -38,7 +38,7 @@ export interface IRaffleRoundEndedEvent {
 export interface IRafflePrizeEvent {
   account: string;
   roundId: string;
-  ticketId: string;
+  ticketId: bigint;
   amount: string; // always 0
 }
 

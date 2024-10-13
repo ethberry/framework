@@ -49,7 +49,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         receiver: token.template?.contract?.merchant!.wallet,
         referrer: values.account,
       };
-      const item = convertTemplateToChainAsset(token.template, 1);
+      const item = convertTemplateToChainAsset(token.template, 1n);
       // set real token Id
       item.tokenId = token.tokenId;
 

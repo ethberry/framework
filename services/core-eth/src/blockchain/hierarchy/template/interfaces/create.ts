@@ -4,8 +4,8 @@ export interface ITemplateCreateDto {
   title: string;
   description: string;
   price?: IAssetDto;
-  amount?: string;
-  cap: string;
+  amount?: bigint;
+  cap: bigint;
   imageUrl: string;
   contractId: number;
   templateStatus: TemplateStatus;

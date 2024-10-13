@@ -85,7 +85,7 @@ export const ContractAllowanceButton: FC<IContractAllowanceButtonProps> = props 
         open={isAllowanceDialogOpen}
         initialValues={{
           address,
-          amount: "0",
+          amount: 0n,
           contractType,
           decimals,
         }}

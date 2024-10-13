@@ -20,7 +20,7 @@ import { ContractFeatures, IContract, ITemplate, IUser, TemplateStatus } from "@
 import ExchangePurchaseFacetPurchaseRandomABI from "@framework/abis/json/ExchangeRandomFacet/purchaseRandom.json";
 
 interface IAmountDto {
-  amount: number;
+  amount: bigint;
 }
 
 interface ITemplatePurchaseRandomButtonProps {
@@ -123,7 +123,7 @@ export const TemplatePurchaseRandomButton: FC<ITemplatePurchaseRandomButtonProps
 
   const isChainLinkConfigured = template.contract?.parameters.vrfSubId && template.contract?.parameters.isConsumer;
 
-  const isCapExceeded = template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap);
+  const isCapExceeded = template.cap !== 0n && template.amount >= template.cap;
 
   return (
     <ListAction

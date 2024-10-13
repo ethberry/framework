@@ -11,7 +11,7 @@ import { validationSchema } from "./validation";
 export interface IAllowanceDto {
   tokenType: TokenType;
   contractId: number;
-  amount: string;
+  amount: bigint;
   contract: {
     address: string;
     contractType: TokenType;

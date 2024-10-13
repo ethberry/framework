@@ -54,18 +54,18 @@ export const TransferDataView: FC<ITransferDataViewProps> = props => {
         </StyledDataViewItemContentWrapper>
       </StyledDataViewItemWrapper>
 
-      {tokenId && (
+      {tokenId ? (
         <StyledDataViewItemWrapper>
           <Typography fontWeight={500}>
             <FormattedMessage id="enums.eventDataLabel.tokenId" />:
           </Typography>
           <StyledDataViewItemContentWrapper>
-            <StyledDataViewAddressLinkWrapper>#{tokenId}</StyledDataViewAddressLinkWrapper>
+            <StyledDataViewAddressLinkWrapper>#{tokenId.toString()}</StyledDataViewAddressLinkWrapper>
           </StyledDataViewItemContentWrapper>
         </StyledDataViewItemWrapper>
-      )}
+      ) : null}
 
-      {value && (
+      {value ? (
         <StyledDataViewItemWrapper>
           <Typography fontWeight={500}>
             <FormattedMessage id="enums.eventDataLabel.value" />:
@@ -76,7 +76,7 @@ export const TransferDataView: FC<ITransferDataViewProps> = props => {
             </StyledDataViewAddressLinkWrapper>
           </StyledDataViewItemContentWrapper>
         </StyledDataViewItemWrapper>
-      )}
+      ) : null}
     </StyledDataViewWrapper>
   );
 };

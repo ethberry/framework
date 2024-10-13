@@ -14,8 +14,8 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { BreedEntity } from "./breed.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { BreedEntity } from "./breed.entity";
 
 @Injectable()
 export class BreedService {
@@ -134,14 +134,14 @@ export class BreedService {
       {
         tokenType: Object.values(TokenType).indexOf(momTokenEntity.template.contract.contractType!),
         token: momTokenEntity.template.contract.address,
-        tokenId: momTokenEntity.tokenId.toString(),
-        amount: "1",
+        tokenId: BigInt(momTokenEntity.tokenId),
+        amount: 1n,
       },
       {
         tokenType: Object.values(TokenType).indexOf(dadTokenEntity.template.contract.contractType!),
         token: dadTokenEntity.template.contract.address,
-        tokenId: dadTokenEntity.tokenId.toString(),
-        amount: "1",
+        tokenId: BigInt(dadTokenEntity.tokenId),
+        amount: 1n,
       },
     );
   }

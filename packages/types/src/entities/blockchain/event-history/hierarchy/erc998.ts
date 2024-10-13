@@ -35,34 +35,34 @@ export interface IErc998TokenSetMaxChildEvent {
 
 export interface IErc998TokenReceivedChildEvent {
   from: string;
-  tokenId: string;
+  tokenId: bigint;
   childContract: string;
-  childTokenId: string;
-  amount: string;
+  childTokenId: bigint;
+  amount: bigint;
 }
 
 export interface IErc998TokenTransferChildEvent {
   to: string;
-  tokenId: string;
+  tokenId: bigint;
   childContract: string;
-  childTokenId: string;
-  amount: string;
+  childTokenId: bigint;
+  amount: bigint;
 }
 
 export interface IErc998BatchReceivedChildEvent {
   from: string;
-  tokenId: string;
+  tokenId: bigint;
   childContract: string;
-  childTokenIds: Array<string>;
-  amounts: Array<string>;
+  childTokenIds: Array<bigint>;
+  amounts: Array<bigint>;
 }
 
 export interface IErc998BatchTransferChildEvent {
   to: string;
-  tokenId: string;
+  tokenId: bigint;
   childContract: string;
-  childTokenIds: Array<string>;
-  amounts: Array<string>;
+  childTokenIds: Array<bigint>;
+  amounts: Array<bigint>;
 }
 
 export type TErc998Events =

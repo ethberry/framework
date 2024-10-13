@@ -79,8 +79,8 @@ export class LootSignService {
       {
         tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
         token: lootBoxEntity.template.contract.address,
-        tokenId: lootBoxEntity.templateId.toString(),
-        amount: "1",
+        tokenId: BigInt(lootBoxEntity.templateId),
+        amount: 1n,
       },
       price,
       content,

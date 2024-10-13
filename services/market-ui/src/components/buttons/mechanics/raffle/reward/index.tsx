@@ -43,7 +43,7 @@ export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
       icon={Redeem}
       message="form.tips.redeem"
       className={className}
-      disabled={disabled || token.tokenStatus !== TokenStatus.MINTED || token.tokenId !== token.round.number}
+      disabled={disabled || token.tokenStatus !== TokenStatus.MINTED || token.tokenId.toString() !== token.round.number}
       data-testid="RaffleRewardButton"
       variant={variant}
     />

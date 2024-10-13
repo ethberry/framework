@@ -42,7 +42,7 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   public baseTokenURI: string;
 
   @Column({ type: "json" })
-  public parameters: Record<string, string | number | Array<string> | Array<number>>;
+  public parameters: Record<string, any>;
 
   @Column({ type: "boolean" })
   public isPaused: boolean;

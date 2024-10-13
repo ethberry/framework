@@ -44,7 +44,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     } = event;
     const { address, transactionHash } = context;
 
-    const tokenEntity = await this.tokenService.getToken(Number(id).toString(), address);
+    const tokenEntity = await this.tokenService.getToken(id, address);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -80,14 +80,8 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
 
     await Promise.all(
-      ids.map((tokenId: string, i: number) =>
-        this.updateBalances(
-          from.toLowerCase(),
-          to.toLowerCase(),
-          context.address.toLowerCase(),
-          tokenId.toString(),
-          values[i],
-        ),
+      ids.map((tokenId: bigint, i: number) =>
+        this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), tokenId, values[i]),
       ),
     );
 
@@ -156,7 +150,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       .toPromise();
   }
 
-  private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: string) {
+  private async updateBalances(from: string, to: string, address: string, tokenId: bigint, amount: bigint) {
     const erc1155TokenEntity = await this.tokenService.getToken(tokenId, address);
 
     if (!erc1155TokenEntity) {
@@ -164,7 +158,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     }
 
     if (from !== ZeroAddress) {
-      erc1155TokenEntity.template.amount += Number(amount);
+      erc1155TokenEntity.template.amount += amount;
       await this.balanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 

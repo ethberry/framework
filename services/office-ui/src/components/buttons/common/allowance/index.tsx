@@ -70,7 +70,7 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
         initialValues={{
-          amount: "0",
+          amount: 0n,
           contract: {
             address: "",
             contractType: TokenType.ERC20,

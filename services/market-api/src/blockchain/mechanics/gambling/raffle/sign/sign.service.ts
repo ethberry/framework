@@ -64,8 +64,8 @@ export class RaffleSignService {
       {
         tokenType: 2,
         token: roundEntity.ticketContract.address,
-        tokenId: "0",
-        amount: "1",
+        tokenId: 0n,
+        amount: 1n,
       },
       {
         tokenType: Object.values(TokenType).indexOf(roundEntity.price.components[0].tokenType),

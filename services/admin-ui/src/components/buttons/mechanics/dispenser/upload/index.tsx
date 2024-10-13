@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { Add } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { BigNumber, Contract } from "ethers";
+import { Contract } from "ethers";
 
 import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -44,7 +44,7 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
           tokenType: Object.values(TokenType).indexOf(item.tokenType).toString(),
           token: item.address,
           tokenId: item.tokenId,
-          amount: BigNumber.from(item.amount),
+          amount: item.amount,
         };
       });
 

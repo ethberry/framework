@@ -18,7 +18,7 @@ export class TemplateSignDto extends Mixin(ReferrerOptionalDto) implements ITemp
     minimum: 1,
   })
   @IsBigInt({}, { message: "typeMismatch" })
-  public amount: string;
+  public amount: bigint;
 
   public chainId: number;
   public account: string;

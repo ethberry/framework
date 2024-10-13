@@ -222,13 +222,13 @@ export class AssetPromoService {
               tokenId:
                 component.contract.contractType === TokenType.ERC1155
                   ? component.template.tokens[0].tokenId
-                  : (component.templateId || 0).toString(),
+                  : BigInt(component.templateId || 0),
               amount: component.amount,
             })),
             assetPromoEntity.item?.components.sort(comparator("id")).map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract.address,
-              tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+              tokenId: BigInt(component.templateId || 0), // suppression types check with 0
               amount: component.amount,
             }))[0],
           ],
@@ -246,7 +246,7 @@ export class AssetPromoService {
           assetPromoEntity.item.components.sort(comparator("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract.address,
-            tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+            tokenId: BigInt(component.templateId || 0), // suppression types check with 0
             amount: component.amount,
           }))[0],
           assetPromoEntity.price.components.sort(comparator("id")).map(component => ({

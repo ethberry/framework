@@ -134,7 +134,7 @@ export class ContractManagerServiceEth {
       title: name,
       description: emptyStateString,
       imageUrl,
-      cap: batchSize.toString(),
+      cap: batchSize,
       contractId: contractEntity.id,
       templateStatus: TemplateStatus.HIDDEN,
     });
@@ -144,7 +144,7 @@ export class ContractManagerServiceEth {
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(Number(batchSize))].map((_, i) => ({
       metadata: "{}",
-      tokenId: i.toString(),
+      tokenId: BigInt(i),
       royalty: Number(royalty),
       imageUrl: `${imgUrl}/${account.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
@@ -597,7 +597,7 @@ export class ContractManagerServiceEth {
     await this.balanceService.createBatch(
       new Array(tokenArray.length).fill(null).map((_, i) => ({
         account: userEntity.wallet.toLowerCase(),
-        amount: "1",
+        amount: 1n,
         tokenId: tokenArray[i].id,
         createdAt: currentDateTime,
         updatedAt: currentDateTime,

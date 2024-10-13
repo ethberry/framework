@@ -228,7 +228,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
         onConfirm={handleComposeTokenConfirm}
         open={isComposeTokenDialogOpen}
         initialValues={{
-          amount: "0",
+          amount: 0n,
           decimals: action.token?.template?.contract?.decimals || 0,
         }}
       />

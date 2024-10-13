@@ -205,8 +205,8 @@ export class ClaimService {
             component.contract.contractType === TokenType.ERC1155
               ? component.template.tokens[0].tokenId
               : claimEntity.claimType === ClaimType.TEMPLATE
-                ? (component.templateId || 0).toString()
-                : (component.token.tokenId || 0).toString(), // suppression types check with 0
+                ? BigInt(component.templateId || 0)
+                : BigInt(component.token.tokenId || 0), // suppression types check with 0
           amount: component.amount,
         })),
       [],

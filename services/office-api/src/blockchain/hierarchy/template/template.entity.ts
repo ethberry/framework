@@ -21,11 +21,11 @@ export class TemplateEntity extends SearchableEntity implements ITemplate {
   @Column({ type: "int" })
   public priceId: number;
 
-  @Column({ type: "int" })
-  public cap: string;
+  @Column({ type: "numeric" })
+  public cap: bigint;
 
-  @Column({ type: "int" })
-  public amount: string;
+  @Column({ type: "numeric" })
+  public amount: bigint;
 
   @Column({ type: "varchar", nullable: true })
   public cid: string | null;

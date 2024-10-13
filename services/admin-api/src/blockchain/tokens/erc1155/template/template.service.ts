@@ -54,7 +54,7 @@ export class Erc1155TemplateService extends TemplateService {
     const maxTokenId = await this.getMaxTokenIdForContract(templateEntity.contractId);
 
     await this.tokenService.create({
-      tokenId: (maxTokenId + 1).toString(),
+      tokenId: BigInt(maxTokenId + 1),
       metadata: "{}",
       royalty: 0,
       template: templateEntity,

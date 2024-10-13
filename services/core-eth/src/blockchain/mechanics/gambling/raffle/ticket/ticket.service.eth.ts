@@ -73,7 +73,7 @@ export class RaffleTicketServiceEth extends TokenServiceEth {
 
   public async createTicketToken(
     contract: string,
-    tokenId: string,
+    tokenId: bigint,
     account: string,
     transactionHash: string,
   ): Promise<TokenEntity> {
@@ -99,7 +99,7 @@ export class RaffleTicketServiceEth extends TokenServiceEth {
       tokenStatus: TokenStatus.MINTED,
     });
 
-    await this.balanceService.increment(tokenEntity.id, account.toLowerCase(), "1");
+    await this.balanceService.increment(tokenEntity.id, account.toLowerCase(), 1n);
     await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
     return tokenEntity;

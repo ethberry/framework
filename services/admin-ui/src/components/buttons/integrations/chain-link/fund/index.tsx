@@ -71,7 +71,7 @@ export const ChainLinkFundButton: FC<IChainLinkFundButtonProps> = props => {
         onConfirm={handleFundConfirm}
         open={isFundDialogOpen}
         initialValues={{
-          amount: "0",
+          amount: 0n,
           subscriptionId,
         }}
       />

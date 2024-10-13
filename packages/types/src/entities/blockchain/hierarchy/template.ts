@@ -15,8 +15,8 @@ export interface ITemplate extends ISearchable {
   title: string;
   price?: IAsset;
   priceId: number;
-  cap: string;
-  amount: string;
+  cap: bigint;
+  amount: bigint;
   cid: string | null;
   templateStatus: TemplateStatus;
   contractId: number;

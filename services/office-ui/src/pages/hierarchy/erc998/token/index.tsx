@@ -88,7 +88,7 @@ export const Erc998Token: FC = () => {
           {rows.map(token => (
             <StyledListItem key={token.id}>
               <ListItemText>
-                {token.template?.title} #{token.tokenId}
+                {token.template?.title} #{token.tokenId.toString()}
               </ListItemText>
               <ListActions>
                 <ListAction

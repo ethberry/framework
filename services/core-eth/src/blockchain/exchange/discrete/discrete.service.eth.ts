@@ -9,7 +9,6 @@ import type { IExchangeDiscreteEvent } from "@framework/types";
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { OpenSeaService } from "../../integrations/opensea/opensea.service";
 import { DiscreteService } from "../../mechanics/gaming/discrete/discrete.service";
 import { AssetService } from "../asset/asset.service";
 import { RmqProviderType, SignalEventType } from "@framework/types";
@@ -22,7 +21,6 @@ export class ExchangeDiscreteServiceEth {
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     private readonly tokenService: TokenService,
-    private readonly openSeaService: OpenSeaService,
     private readonly assetService: AssetService,
     private readonly discreteService: DiscreteService,
     private readonly eventHistoryService: EventHistoryService,
@@ -50,7 +48,7 @@ export class ExchangeDiscreteServiceEth {
     const assets = await this.assetService.saveAssetHistory(
       history,
       // we have to change tokenId to templateId for proper asset history
-      [{ tokenType, token, tokenId: tokenEntity.template.id.toString(), amount }],
+      [{ tokenType, token, tokenId: BigInt(tokenEntity.template.id), amount }],
       price,
     );
 
@@ -80,7 +78,5 @@ export class ExchangeDiscreteServiceEth {
         transactionType: name,
       })
       .toPromise();
-
-    // await this.openSeaService.metadataUpdate(tokenEntity);
   }
 }

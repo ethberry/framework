@@ -66,7 +66,7 @@ export const Erc721Token: FC = () => {
           {rows.map(token => (
             <StyledListItem key={token.id}>
               <ListItemText>
-                {token.template?.title} #{token.tokenId}
+                {token.template?.title} #{token.tokenId.toString()}
               </ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />

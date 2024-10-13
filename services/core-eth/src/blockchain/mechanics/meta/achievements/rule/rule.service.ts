@@ -15,7 +15,7 @@ import { AchievementRuleEntity } from "./rule.entity";
 interface IAchievementRuleAsset {
   tokenType: TokenType;
   contract: string;
-  templateId: number;
+  templateId: bigint;
 }
 
 // TODO create limit list for rule eventTypes
@@ -198,14 +198,14 @@ export class AchievementsRuleService {
       eventTokenAsset.push({
         tokenType: token.template.contract.contractType || TokenType.NATIVE,
         contract: token.template.contract.address,
-        templateId: token.template.id,
+        templateId: BigInt(token.template.id),
       });
       // if event.parent.tokenEntity
     } else if (parent?.token) {
       eventTokenAsset.push({
         tokenType: parent.token.template.contract.contractType || TokenType.NATIVE,
         contract: parent.token.template.contract.address,
-        templateId: parent.token.template.id,
+        templateId: BigInt(parent.token.template.id),
       });
     } else {
       // try to parse eventData
@@ -213,9 +213,9 @@ export class AchievementsRuleService {
       if (eventData && "item" in eventData) {
         const { tokenType, token, tokenId } = eventData.item;
         eventTokenAsset.push({
-          tokenType: Object.values(TokenType)[~~tokenType],
+          tokenType: Object.values(TokenType)[Number(tokenType)],
           contract: token.toLowerCase(),
-          templateId: ~~tokenId,
+          templateId: tokenId,
         });
       } else {
         // @ts-ignore
@@ -223,9 +223,9 @@ export class AchievementsRuleService {
           eventData.items.map(item => {
             const { tokenType, token, tokenId } = item;
             return eventTokenAsset.push({
-              tokenType: Object.values(TokenType)[~~tokenType],
+              tokenType: Object.values(TokenType)[Number(tokenType)],
               contract: token.toLowerCase(),
-              templateId: ~~tokenId,
+              templateId: tokenId,
             });
           });
         }

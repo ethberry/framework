@@ -82,7 +82,7 @@ export const StakingCheckBalanceDialog: FC<IStakingCheckBalanceDialogProps> = pr
               <ListItemText sx={{ width: 0.2 }}>
                 {bal?.token
                   ? formatEther(
-                      bal.stakingBalance.toString(),
+                      bal.stakingBalance,
                       bal.token?.template?.contract!.decimals,
                       bal.token?.template?.contract!.symbol,
                     )
@@ -94,7 +94,7 @@ export const StakingCheckBalanceDialog: FC<IStakingCheckBalanceDialogProps> = pr
               <ListItemText sx={{ width: 0.2 }}>
                 {bal?.token
                   ? formatEther(
-                      bal.depositAmount.toString(),
+                      bal.depositAmount,
                       bal.token?.template?.contract!.decimals,
                       bal.token?.template?.contract!.symbol,
                     )

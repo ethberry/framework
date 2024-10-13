@@ -200,13 +200,13 @@ export class DismantleService {
         tokenId:
           component.contract.contractType === TokenType.ERC1155 || component.contract.contractType === TokenType.ERC20
             ? component.template.tokens[0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
+            : BigInt(component.templateId || 0), // suppression types check with 0
         amount: this.getMultiplier(
           component.amount,
           tokenEntity.metadata,
           dismantleEntity.dismantleStrategy,
           dismantleEntity.rarityMultiplier,
-        ).toString(),
+        ),
       })),
       // PRICE token to dismantle
       [
@@ -221,7 +221,7 @@ export class DismantleService {
   }
 
   public getMultiplier(
-    amount: string,
+    amount: bigint,
     metadata: Record<string, any>,
     dismantleStrategy: DismantleStrategy,
     rarityMultiplier: number,

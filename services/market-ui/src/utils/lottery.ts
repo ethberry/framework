@@ -2,7 +2,7 @@ import { IAsset } from "@framework/types";
 
 export const coefficient = [0, 15, 50, 70, 110, 140, 220];
 
-export const getPrizeAmount = (aggregation: Array<number>, match: number, total: string): string => {
+export const getPrizeAmount = (aggregation: Array<number>, match: number, total: bigint): string => {
   let sumc = 0;
   for (let l = 0; l < coefficient.length; l++) {
     const ag = aggregation[l];

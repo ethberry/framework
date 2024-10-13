@@ -68,7 +68,7 @@ export class MarketplaceService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
-    amount: string,
+    amount: bigint,
     params: ISignatureParams,
     templateEntity: TemplateEntity,
   ): Promise<string> {

@@ -63,7 +63,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
               {name}
             </Link>
             {` - `}
-            {amount}
+            {amount.toString()}
           </StyledDataViewAddressLinkWrapper>
         );
       case TokenType.NATIVE:

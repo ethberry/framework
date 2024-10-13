@@ -7,7 +7,7 @@ export enum RentableEventSignature {
 }
 
 export interface IRentableUpdateUserEvent {
-  tokenId: string;
+  tokenId: bigint;
   user: string;
   expires: string;
 }

@@ -38,5 +38,5 @@ export class AssetComponentHistoryEntity extends IdBaseEntity implements IAssetC
   public token: TokenEntity;
 
   @Column({ type: "numeric" })
-  public amount: string;
+  public amount: bigint;
 }

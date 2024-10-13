@@ -61,7 +61,7 @@ export const Erc20Contract: FC = () => {
       decimals: 18,
       templates: [
         {
-          cap: constants.WeiPerEther.toString(),
+          cap: constants.WeiPerEther.toBigInt(),
         } as ITemplate,
       ],
     },

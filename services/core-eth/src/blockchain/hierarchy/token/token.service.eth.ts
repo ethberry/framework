@@ -32,7 +32,7 @@ export class TokenServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), context.address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!tokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, context.address.toLowerCase(), TokenServiceEth.name);

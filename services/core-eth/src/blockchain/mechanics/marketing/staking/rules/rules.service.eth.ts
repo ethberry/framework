@@ -14,7 +14,7 @@ import { NotificatorService } from "../../../../../game/notificator/notificator.
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import { getDurationUnit } from "../../../../../common/utils/time";
+import { getDurationUnit } from "../../../../../common/utils";
 import { StakingRulesService } from "./rules.service";
 
 @Injectable()
@@ -60,7 +60,7 @@ export class StakingRulesServiceEth {
 
     for (const dep of deposit) {
       const { tokenId, token, amount } = dep;
-      if (tokenId !== "0") {
+      if (tokenId !== 0n) {
         const depositTemplate = await this.templateService.findOne(
           { id: Number(tokenId) },
           { relations: { contract: true } },
@@ -98,7 +98,7 @@ export class StakingRulesServiceEth {
     for (const rew of reward) {
       const { tokenId, token, amount } = rew;
 
-      if (tokenId !== "0") {
+      if (tokenId !== 0n) {
         const rewardTemplate = await this.templateService.findOne(
           { id: Number(tokenId) },
           { relations: { contract: true } },

@@ -72,7 +72,7 @@ export class StakingContractServiceEth {
         contractId: penaltyTemplate.contractId,
         templateId: penaltyTemplate.id,
         tokenId: isNft ? penaltyToken!.id : null,
-        amount: `-${amount}`, // decrement
+        amount: -amount, // decrement
       });
     } else {
       await this.eventHistoryService.updateHistory(event, context);

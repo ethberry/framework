@@ -12,7 +12,7 @@ export class BalanceEntity extends IdDateBaseEntity implements IBalance {
   public account: string;
 
   @Column({ type: "numeric" })
-  public amount: string;
+  public amount: bigint;
 
   @Column({ type: "int" })
   public tokenId: number;

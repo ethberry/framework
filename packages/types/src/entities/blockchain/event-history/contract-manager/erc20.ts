@@ -1,7 +1,7 @@
 export interface IERC20TokenDeployedEventArgs {
   name: string;
   symbol: string;
-  cap: string;
+  cap: bigint;
   contractTemplate: string;
 }
 
