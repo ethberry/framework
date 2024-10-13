@@ -21,6 +21,6 @@ export class BaseUriModule implements OnModuleInit {
   constructor(private readonly baseUriServiceLog: BaseUriServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.baseUriServiceLog.updateRegistry();
+    await this.baseUriServiceLog.initRegistry();
   }
 }

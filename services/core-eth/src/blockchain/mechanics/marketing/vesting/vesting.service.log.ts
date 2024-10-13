@@ -19,7 +19,7 @@ export class VestingServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.VESTING,
@@ -27,9 +27,13 @@ export class VestingServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.VESTING,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: VestingABI,
       eventSignatures: [
         VestingEventType.ERC20Released,
@@ -40,24 +44,5 @@ export class VestingServiceLog {
         AccessControlEventSignature.OwnershipTransferred,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.VESTING,
-        contractAddress: address,
-        contractInterface: VestingABI,
-        eventSignatures: [
-          VestingEventType.ERC20Released,
-          VestingEventType.EtherReleased,
-          VestingEventType.PaymentReceived,
-          Erc1363EventType.TransferReceived,
-          // extensions
-          AccessControlEventSignature.OwnershipTransferred,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

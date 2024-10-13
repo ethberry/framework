@@ -18,14 +18,14 @@ export class ContractManagerServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.CONTRACT_MANAGER,
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    this.ethersService.updateRegistry({
       contractType: ContractType.CONTRACT_MANAGER,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: ContractManagerABI,

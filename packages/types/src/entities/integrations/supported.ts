@@ -1,4 +1,4 @@
-export enum GemunionSupportedChains {
+export enum EthberrySupportedChains {
   ETHBERRY = 11111,
   ETHBERRY_BESU = 10000,
 

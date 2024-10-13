@@ -13,6 +13,7 @@ import { PickerProvider } from "@ethberry/provider-picker";
 import { ReduxProvider, createStore } from "@ethberry/redux";
 import { i18n } from "@framework/localization-market-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
+import { CustomErrors } from "@framework/types";
 
 import { themeProps } from "../components/theme";
 import { Signal } from "../components/signal";
@@ -28,7 +29,7 @@ export const Providers: FC<PropsWithChildren> = props => {
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
                 <SnackbarProvider>
                   <PopupProvider>
-                    <WalletProvider>
+                    <WalletProvider customErrors={CustomErrors}>
                       <PickerProvider>
                         <Signal />
                         {children}

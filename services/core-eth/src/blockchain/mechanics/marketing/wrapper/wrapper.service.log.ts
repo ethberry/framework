@@ -18,7 +18,7 @@ export class WrapperServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.WRAPPER,
@@ -26,23 +26,15 @@ export class WrapperServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.WRAPPER,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: WrapperABI,
       eventSignatures: [WrapperEventSignature.UnpackWrapper],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.WRAPPER,
-        contractAddress: address,
-        contractInterface: WrapperABI,
-        eventSignatures: [WrapperEventSignature.UnpackWrapper],
-      },
-      blockNumber,
-    );
   }
 }

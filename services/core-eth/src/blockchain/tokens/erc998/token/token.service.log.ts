@@ -19,7 +19,7 @@ export class Erc998TokenServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.HIERARCHY,
@@ -28,9 +28,13 @@ export class Erc998TokenServiceLog {
       chainId,
     });
 
+    this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
     this.ethersService.updateRegistry({
       contractType: ContractType.ERC998_TOKEN,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: ERC998SimpleABI,
       eventSignatures: [
         Erc721EventSignature.Approval,
@@ -45,28 +49,5 @@ export class Erc998TokenServiceLog {
         Erc998EventSignature.WhitelistedChild,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.ERC998_TOKEN,
-        contractAddress: address,
-        contractInterface: ERC998SimpleABI,
-        eventSignatures: [
-          Erc721EventSignature.Approval,
-          Erc721EventSignature.ApprovalForAll,
-          Erc721EventSignature.Transfer,
-          Erc998EventSignature.BatchReceivedChild,
-          Erc998EventSignature.BatchTransferChild,
-          Erc998EventSignature.ReceivedChild,
-          Erc998EventSignature.SetMaxChild,
-          Erc998EventSignature.TransferChild,
-          Erc998EventSignature.UnWhitelistedChild,
-          Erc998EventSignature.WhitelistedChild,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

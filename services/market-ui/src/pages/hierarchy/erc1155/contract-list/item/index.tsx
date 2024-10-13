@@ -15,7 +15,7 @@ export const Erc1155ContractListItem: FC<IErc1155TokenItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc1155/contracts/${contract.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc1155/contracts/${contract.id}/view`}>
         <CardHeader title={contract.title} />
         <StyledCardMedia image={contract.imageUrl} title={`${contract.title}`} />
         <CardContent>

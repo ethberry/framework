@@ -1,4 +1,4 @@
-import { Contract, randomBytes, Wallet, ZeroAddress } from "ethers";
+import { Contract, randomBytes, Wallet, ZeroAddress, ContractTransactionResponse } from "ethers";
 
 import VrfV2Sol from "@framework/core-contracts/artifacts/@ethberry/contracts-chain-link-v2-plus/contracts/mocks/VRFCoordinatorV2Plus.sol/VRFCoordinatorV2PlusMock.json";
 
@@ -16,7 +16,7 @@ export const callRandom = async function (
   vrfAddr: string,
   vrfData: IVrfRandomWordsFulfill,
   provider: Wallet,
-): Promise<string> {
+): Promise<ContractTransactionResponse> {
   const { requestId, subId, callbackGasLimit, numWords, sender, extraArgs } = vrfData;
 
   const generatedRandomBytes = randomBytes(32);
@@ -25,7 +25,7 @@ export const callRandom = async function (
   const blockNum = await provider.provider?.getBlockNumber();
 
   const contract = new Contract(vrfAddr, VrfV2Sol.abi, provider);
-  const trx = await contract.fulfillRandomWords(
+  return contract.fulfillRandomWords(
     // Proof
     {
       pk: [0, 0],
@@ -51,5 +51,4 @@ export const callRandom = async function (
     false,
     { gasLimit: 800000 },
   );
-  return trx.hash as string;
 };

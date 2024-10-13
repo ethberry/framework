@@ -19,7 +19,7 @@ export class PonziServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.PONZI,
@@ -27,9 +27,13 @@ export class PonziServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.PONZI,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: PonziABI,
       eventSignatures: [
         PonziEventSignature.RuleCreatedP,
@@ -41,25 +45,5 @@ export class PonziServiceLog {
         PonziEventSignature.WithdrawToken,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.PONZI,
-        contractAddress: address,
-        contractInterface: PonziABI,
-        eventSignatures: [
-          PonziEventSignature.RuleCreatedP,
-          PonziEventSignature.RuleUpdated,
-          PonziEventSignature.StakingStart,
-          PonziEventSignature.StakingWithdraw,
-          PonziEventSignature.StakingFinish,
-          PonziEventSignature.FinalizedToken,
-          PonziEventSignature.WithdrawToken,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

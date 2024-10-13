@@ -44,6 +44,6 @@ export class ExchangeModule implements OnModuleInit {
   constructor(protected readonly exchangeServiceLog: ExchangeServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.exchangeServiceLog.updateRegistry();
+    await this.exchangeServiceLog.initRegistry();
   }
 }

@@ -30,6 +30,6 @@ export class PaymentSplitterModule implements OnModuleInit {
   constructor(private readonly paymentSplitterServiceLog: PaymentSplitterServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.paymentSplitterServiceLog.updateRegistry();
+    await this.paymentSplitterServiceLog.initRegistry();
   }
 }

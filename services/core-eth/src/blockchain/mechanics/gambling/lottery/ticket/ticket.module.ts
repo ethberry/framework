@@ -46,6 +46,6 @@ export class LotteryTicketModule implements OnModuleInit {
   constructor(private readonly lotteryTicketServiceLog: LotteryTicketServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.lotteryTicketServiceLog.updateRegistry();
+    await this.lotteryTicketServiceLog.initRegistry();
   }
 }

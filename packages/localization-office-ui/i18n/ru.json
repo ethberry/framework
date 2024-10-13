@@ -199,17 +199,6 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
-    "listenerType": {
-      "ERC1155": "ERC1155",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "MYSTERYBOX": "Мистерибокс",
-      "NATIVE": "Нативный",
-      "PONZI": "Понци",
-      "STAKING": "Стейкинг",
-      "VESTING": "Вестинг"
-    },
     "merchantStatus": {
       "ACTIVE": "Активный",
       "INACTIVE": "Неактивный",
@@ -453,7 +442,6 @@
       "language": "Язык",
       "listId": "Список",
       "listIds": "Списки",
-      "listenerType": "Тип слушателя",
       "lottery": "Лотерея",
       "matron": "Матрона",
       "maxCycles": "Максимальное количество циклов (0 - без ограничений)",

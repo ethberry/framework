@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { ArrayOverlap, IsNull } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
-import { ChainLinkEventSignature, ContractFeatures } from "@framework/types";
+import { ChainLinkEventSignature, ContractFeatures, ModuleType } from "@framework/types";
 
 import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -18,30 +19,39 @@ export class ChainLinkConsumerServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistrySimple(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
-    const contractEntities = await this.contractService.findAll({
-      contractFeatures: ContractFeatures.RANDOM,
-      chainId,
-    });
+    const contractEntities = await this.contractService.findAll([
+      {
+        contractModule: ModuleType.HIERARCHY,
+        contractFeatures: ArrayOverlap([[ContractFeatures.RANDOM, ContractFeatures.GENES, ContractFeatures.TRAITS]]),
+        chainId,
+      },
+      {
+        contractModule: ModuleType.LOOT,
+        chainId,
+      },
+      {
+        contractModule: ModuleType.LOTTERY,
+        contractType: IsNull(),
+        chainId,
+      },
+      {
+        contractModule: ModuleType.HIERARCHY,
+        contractFeatures: IsNull(),
+        chainId,
+      },
+    ]);
 
-    this.ethersService.updateRegistry({
-      contractType: ContractType.RANDOM,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: ERC721RandomABI,
-      eventSignatures: [ChainLinkEventSignature.MintRandom, ChainLinkEventSignature.VrfSubscriptionSet],
-    });
+    this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
   }
 
-  public updateRegistryAndReadBlockSimple(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.RANDOM,
-        contractAddress: address,
-        contractInterface: ERC721RandomABI,
-        eventSignatures: [ChainLinkEventSignature.MintRandom, ChainLinkEventSignature.VrfSubscriptionSet],
-      },
-      blockNumber,
-    );
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
+      contractType: ContractType.VRF_CONSUMER,
+      contractAddress: address,
+      contractInterface: ERC721RandomABI,
+      eventSignatures: [ChainLinkEventSignature.VrfSubscriptionSet],
+    });
   }
 }

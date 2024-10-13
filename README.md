@@ -14,6 +14,7 @@ git submodule update --init --recursive
 ```
 
 2. Install [NVM](https://github.com/nvm-sh/nvm)
+
 ```shell script
 sudo port install nvm
 
@@ -43,28 +44,39 @@ Then connect to Postgres and manually create `gemunion-development` database
 ## DEV setup with Docker-compose and Besu blockchain
 
 1. Run prepare script
+
 ```shell script
 npm run prepare:framework:dev
 ```
+
 2. Run framework services one-by-one in separate terminals for easy monitoring
 
 Admin-api (it will run postgres migrations)
+
 ```shell script
 npm run --prefix ./services/admin-api start
 ```
+
 Admin-ui
+
 ```shell script
 npm run --prefix ./services/admin-ui start
 ```
+
 Market-api
+
 ```shell script
 npm run --prefix ./services/market-api start
 ```
+
 Market-ui
+
 ```shell script
 npm run --prefix ./services/market-ui start
 ```
+
 Core-eth
+
 ```shell script
 npm run --prefix ./services/core-eth start
 ```
@@ -89,4 +101,3 @@ There is Swagger API documentation configured on
 ## Configuration
 
 For fine tune check services READMEs
-

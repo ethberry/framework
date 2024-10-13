@@ -156,10 +156,7 @@ export class ContractManagerServiceEth {
 
     await this.createBalancesBatch(externalId, entityArray);
 
-    await this.erc721TokenService.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.erc721TokenService.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -199,10 +196,7 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
-    await this.erc1155TokenService.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.erc1155TokenService.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -245,10 +239,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.mysteryBoxServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.mysteryBoxServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -291,10 +282,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.lootBoxServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.lootBoxServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -347,10 +335,7 @@ export class ContractManagerServiceEth {
       await this.claimService.redeemClaim(claimId);
     }
 
-    await this.vestingServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.vestingServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -393,10 +378,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.ponziServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.ponziServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -437,10 +419,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.lotteryRoundServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.lotteryRoundServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -474,10 +453,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.raffleRoundServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.raffleRoundServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -511,10 +487,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.waitListListServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.waitListListServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -560,10 +533,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.paymentSplitterServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.paymentSplitterServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -604,10 +574,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    await this.stakingContractServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.stakingContractServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

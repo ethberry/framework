@@ -4,10 +4,18 @@ import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  ChainLinkEventType,
-  IERC721TokenMintRandomEvent,
+import type {
+  IContractManagerERC721TokenDeployedEvent,
+  IContractManagerERC998TokenDeployedEvent,
+  IContractManagerLootTokenDeployedEvent,
+  IContractManagerLotteryDeployedEvent,
+  IContractManagerRaffleDeployedEvent,
   IVrfSubscriptionSetEvent,
+} from "@framework/types";
+import {
+  ContractFeatures,
+  Erc721ContractTemplates,
+  Erc998ContractTemplates,
   RmqProviderType,
   SignalEventType,
 } from "@framework/types";
@@ -17,6 +25,7 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { ChainLinkConsumerServiceLog } from "./consumer.service.log";
 
 @Injectable()
 export class ChainLinkConsumerServiceEth {
@@ -28,6 +37,7 @@ export class ChainLinkConsumerServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
+    protected readonly chainLinkConsumerServiceLog: ChainLinkConsumerServiceLog,
   ) {}
 
   public async setVrfSubscription(event: ILogEvent<IVrfSubscriptionSetEvent>, context: Log): Promise<void> {
@@ -58,38 +68,63 @@ export class ChainLinkConsumerServiceEth {
       .toPromise();
   }
 
-  public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
+  public async deploy1(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
     const {
-      name,
-      args: { to, tokenId },
+      args: { account, args },
     } = event;
-    const { address, transactionHash } = context;
 
-    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase(), true);
+    const { contractTemplate } = args;
 
-    if (!tokenEntity) {
-      throw new NotFoundException("tokenNotFound");
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    const contractFeatures = Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split("_");
+    if (
+      !(
+        contractFeatures.includes(ContractFeatures.RANDOM) ||
+        contractFeatures.includes(ContractFeatures.GENES) ||
+        contractFeatures.includes(ContractFeatures.TRAITS)
+      )
+    ) {
+      return;
     }
 
-    const historyEntity = await this.eventHistoryService.findOne({
-      transactionHash,
-      eventType: ChainLinkEventType.MintRandom,
-    });
+    this.chainLinkConsumerServiceLog.updateRegistry([account]);
+  }
 
-    if (!historyEntity) {
-      throw new NotFoundException("historyNotFound");
+  public async deploy2(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account, args },
+    } = event;
+
+    const { contractTemplate } = args;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    const contractFeatures = Object.values(Erc998ContractTemplates)[Number(contractTemplate)].split("_");
+    if (!contractFeatures.includes(ContractFeatures.RANDOM)) {
+      return;
     }
 
-    const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
-    await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
+    this.chainLinkConsumerServiceLog.updateRegistry([account]);
+  }
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: to.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+  public async deploy3(
+    event: ILogEvent<
+      | IContractManagerLootTokenDeployedEvent
+      | IContractManagerLotteryDeployedEvent
+      | IContractManagerRaffleDeployedEvent
+    >,
+    context: Log,
+  ): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.chainLinkConsumerServiceLog.updateRegistry([account]);
   }
 }

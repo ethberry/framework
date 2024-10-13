@@ -35,7 +35,6 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
   // MODULE:MYSTERYBOX
   const { fn } = useApiCall(
     (api, data: { templateIds: Array<number> }) => {
-
       return api.fetchJson({
         url: "/mystery/boxes",
         data,

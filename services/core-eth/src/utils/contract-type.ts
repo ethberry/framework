@@ -36,5 +36,7 @@ export enum ContractType {
   REFERRAL = "REFERRAL",
 
   VRF = "VRF",
-  RANDOM = "RANDOM",
+  VRF_CONSUMER = "VRF_CONSUMER",
+  VRF_RANDOM = "VRF_RANDOM",
+  VRF_GENES = "VRF_GENES",
 }

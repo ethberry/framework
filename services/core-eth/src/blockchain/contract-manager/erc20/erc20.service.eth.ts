@@ -85,10 +85,7 @@ export class ContractManagerErc20ServiceEth {
       template: templateEntity,
     });
 
-    await this.erc20TokenServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.erc20TokenServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

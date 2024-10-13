@@ -10,7 +10,7 @@ import { collectionActions } from "@ethberry/provider-collection";
 import type { IUser } from "@framework/types";
 import { TContractEventType, SignalEventType } from "@framework/types";
 
-import { EventRouteMatch } from "./constants";
+import { eventRouteMapping } from "./constants";
 
 export const Signal: FC = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -64,13 +64,7 @@ export const Signal: FC = () => {
             },
           );
 
-          const isRouteMatchToEvent =
-            Object.keys(EventRouteMatch).includes(dto.transactionType) &&
-            location.pathname.startsWith(
-              EventRouteMatch[dto.transactionType as unknown as keyof typeof EventRouteMatch]!,
-            );
-
-          if (isRouteMatchToEvent) {
+          if (eventRouteMapping[dto.transactionType]?.includes(location.pathname)) {
             void dispatch(setNeedRefresh(true));
           }
         } else {

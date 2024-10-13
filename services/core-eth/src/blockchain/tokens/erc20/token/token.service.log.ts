@@ -19,7 +19,7 @@ export class Erc20TokenServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.HIERARCHY,
@@ -28,23 +28,15 @@ export class Erc20TokenServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.ERC20_TOKEN,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: ERC20SimpleABI,
       eventSignatures: [Erc20EventSignature.Approval, Erc20EventSignature.Transfer],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.ERC20_TOKEN,
-        contractAddress: address,
-        contractInterface: ERC20SimpleABI,
-        eventSignatures: [Erc20EventSignature.Approval, Erc20EventSignature.Transfer],
-      },
-      blockNumber,
-    );
   }
 }

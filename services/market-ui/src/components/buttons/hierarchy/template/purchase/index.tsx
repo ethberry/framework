@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
-import { Contract, utils, constants } from "ethers";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Contract, utils } from "ethers";
 import { ShoppingCart } from "@mui/icons-material";
 
 import { useUser } from "@ethberry/provider-user";
@@ -15,8 +15,7 @@ import {
   getEthPrice,
 } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, ITemplate, IUser } from "@framework/types";
-import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
+import { ContractFeatures, IContract, ITemplate, IUser, TemplateStatus, TokenType } from "@framework/types";
 
 import ExchangePurchaseFacetPurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 
@@ -59,7 +58,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
           receiver: template.contract!.merchant!.wallet,
-          referrer: referrer || constants.AddressZero,
+          referrer,
         },
         item,
         price,
@@ -135,14 +134,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     return null;
   }
 
-  // Random contract must be registered in Chain-link VRF
-  // TODO may-be hide BUY button completely, but it brakes formatting
-  const randomRequired =
-    template.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ||
-    template.contract?.contractFeatures.includes(ContractFeatures.GENES);
-  const randomConfigured =
-    !randomRequired ||
-    (randomRequired && template.contract?.parameters.vrfSubId && template.contract?.parameters.isConsumer);
+  const isCapExceeded = template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap);
 
   return (
     <Fragment>
@@ -152,9 +144,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         message={isActive && isUserAuthenticated ? "form.buttons.buy" : "components.header.wallet.connect"}
         className={className}
         dataTestId="TemplatePurchaseButton"
-        disabled={
-          disabled || !randomConfigured || (template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap))
-        }
+        disabled={disabled || isCapExceeded}
         variant={variant}
       />
       <AmountDialog

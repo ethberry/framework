@@ -6,21 +6,6 @@ export enum TokenRarity {
   LEGENDARY = "LEGENDARY",
 }
 
-export enum EventSignature {
-  MintRandom = "MintRandom(uint256,address,uint256[],uint256,uint256)",
-  Transfer = "Transfer(address,address,uint256)",
-}
-
-export enum EventSignatureHash {
-  MintRandom = "0xa29d42f2e56701221b7574eaf57e07a4bdd20605c2bdbe1d244c9e9ddd255e00",
-  Transfer = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-}
-
-export enum TokenMintType {
-  MintRandom = "MintRandom",
-  MintCommon = "MintCommon",
-}
-
 export enum ModuleType {
   CONTRACT_MANAGER = "CONTRACT_MANAGER",
   EXCHANGE = "EXCHANGE",
@@ -39,30 +24,6 @@ export enum ModuleType {
   WAIT_LIST = "WAIT_LIST",
   PAYMENT_SPLITTER = "PAYMENT_SPLITTER",
   PREDICTION = "PREDICTION",
-}
-
-export enum ListenerType {
-  ERC20 = "ERC20",
-  ERC721 = "ERC721",
-  ERC721_RANDOM = "ERC721_RANDOM",
-  ERC998 = "ERC998",
-  ERC998_RANDOM = "ERC998_RANDOM",
-  ERC1155 = "ERC1155",
-  LOOT = "LOOT",
-  MYSTERY = "MYSTERY",
-  VESTING = "VESTING",
-  STAKING = "STAKING",
-  PONZI = "PONZI",
-  PAYMENT_SPLITTER = "PAYMENT_SPLITTER",
-  PREDICTION = "PREDICTION",
-  LOTTERY = "LOTTERY",
-  LOTTERY_TICKET = "LOTTERY_TICKET",
-  RAFFLE = "RAFFLE",
-  RAFFLE_TICKET = "RAFFLE_TICKET",
-  WAIT_LIST = "WAIT_LIST",
-  CONTRACT_MANAGER = "CONTRACT_MANAGER",
-  CHAIN_LINK = "CHAIN_LINK",
-  COLLECTION = "COLLECTION",
 }
 
 export enum SystemModuleType {

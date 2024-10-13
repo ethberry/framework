@@ -20,6 +20,6 @@ export class PauseModule implements OnModuleInit {
   constructor(private readonly pauseServiceLog: PauseServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.pauseServiceLog.updateRegistry();
+    await this.pauseServiceLog.initRegistry();
   }
 }

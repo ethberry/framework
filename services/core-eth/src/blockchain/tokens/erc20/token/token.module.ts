@@ -32,6 +32,6 @@ export class Erc20TokenModule implements OnModuleInit {
   constructor(private readonly erc20TokenServiceLog: Erc20TokenServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.erc20TokenServiceLog.updateRegistry();
+    await this.erc20TokenServiceLog.initRegistry();
   }
 }

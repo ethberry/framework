@@ -18,7 +18,7 @@ export class MysteryBoxServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.MYSTERY,
@@ -26,9 +26,13 @@ export class MysteryBoxServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.MYSTERY,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: MysteryBoxABI,
       eventSignatures: [
         Erc721EventSignature.Approval,
@@ -37,22 +41,5 @@ export class MysteryBoxServiceLog {
         MysteryEventSignature.UnpackMysteryBox,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.MYSTERY,
-        contractAddress: address,
-        contractInterface: MysteryBoxABI,
-        eventSignatures: [
-          Erc721EventSignature.Approval,
-          Erc721EventSignature.ApprovalForAll,
-          Erc721EventSignature.Transfer,
-          MysteryEventSignature.UnpackMysteryBox,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

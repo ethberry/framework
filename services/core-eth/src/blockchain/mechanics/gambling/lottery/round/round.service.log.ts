@@ -19,7 +19,7 @@ export class LotteryRoundServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.LOTTERY,
@@ -27,9 +27,13 @@ export class LotteryRoundServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.LOTTERY,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: LotteryABI,
       eventSignatures: [
         LotteryEventType.Prize,
@@ -39,23 +43,5 @@ export class LotteryRoundServiceLog {
         LotteryEventType.RoundFinalized,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.LOTTERY,
-        contractAddress: address,
-        contractInterface: LotteryABI,
-        eventSignatures: [
-          LotteryEventType.Prize,
-          LotteryEventType.RoundEnded,
-          LotteryEventType.Released,
-          LotteryEventType.RoundStarted,
-          LotteryEventType.RoundFinalized,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

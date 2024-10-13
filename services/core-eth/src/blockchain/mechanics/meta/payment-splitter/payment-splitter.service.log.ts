@@ -19,7 +19,7 @@ export class PaymentSplitterServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.PAYMENT_SPLITTER,
@@ -27,9 +27,13 @@ export class PaymentSplitterServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.PAYMENT_SPLITTER,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: PaymentSplitterABI,
       eventSignatures: [
         PaymentSplitterEventSignature.PayeeAdded,
@@ -38,22 +42,5 @@ export class PaymentSplitterServiceLog {
         PaymentSplitterEventSignature.ERC20PaymentReleased,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.PAYMENT_SPLITTER,
-        contractAddress: address,
-        contractInterface: PaymentSplitterABI,
-        eventSignatures: [
-          PaymentSplitterEventSignature.PayeeAdded,
-          PaymentSplitterEventSignature.PaymentReceived,
-          PaymentSplitterEventSignature.PaymentReleased,
-          PaymentSplitterEventSignature.ERC20PaymentReleased,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

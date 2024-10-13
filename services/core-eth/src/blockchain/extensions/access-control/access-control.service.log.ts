@@ -18,16 +18,20 @@ export class AccessControlServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractSecurity: ContractSecurity.ACCESS_CONTROL,
       chainId,
     });
 
+    this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
     this.ethersService.updateRegistry({
       contractType: ContractType.ACCESS_CONTROLL,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: AccessControlABI,
       eventSignatures: [
         AccessControlEventSignature.RoleGranted,
@@ -37,18 +41,21 @@ export class AccessControlServiceLog {
     });
   }
 
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.ACCESS_CONTROLL,
-        contractAddress: address,
-        contractInterface: AccessControlABI,
-        eventSignatures: [
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
-      },
+  public readLastBlock(address: Array<string>, blockNumber: number): Promise<void> {
+    return this.ethersService.getPastEvents(
+      [
+        {
+          contractType: ContractType.ACCESS_CONTROLL,
+          contractAddress: address,
+          contractInterface: AccessControlABI,
+          eventSignatures: [
+            AccessControlEventSignature.RoleGranted,
+            AccessControlEventSignature.RoleRevoked,
+            AccessControlEventSignature.RoleAdminChanged,
+          ],
+        },
+      ],
+      blockNumber,
       blockNumber,
     );
   }

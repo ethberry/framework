@@ -18,30 +18,22 @@ export class BaseUriServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractType: TokenType.ERC721,
       chainId,
     });
 
+    this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
     this.ethersService.updateRegistry({
       contractType: ContractType.BASE_URL,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: BaseUrlABI,
       eventSignatures: [BaseUrlEventSignature.BaseURIUpdate],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.BASE_URL,
-        contractAddress: address,
-        contractInterface: BaseUrlABI,
-        eventSignatures: [BaseUrlEventSignature.BaseURIUpdate],
-      },
-      blockNumber,
-    );
   }
 }

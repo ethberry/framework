@@ -7,7 +7,7 @@ import { StyledCardContentDescription, StyledCardMedia, StyledTemplateItemCard }
 import type { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@ethberry/mui-rte";
 
-import { TemplatePurchaseButton } from "../../../../../components/buttons";
+import { TemplatePurchaseNowButton } from "../../../../../components/buttons";
 
 interface IErc721TemplateListItemProps {
   template: ITemplate;
@@ -33,7 +33,7 @@ export const Erc721TemplateListItem: FC<IErc721TemplateListItemProps> = props =>
       <CardActions>
         <Grid container spacing={3} justifyContent="space-between" alignItems="flex-end">
           <Grid item xs={12} alignItems="center">
-            <TemplatePurchaseButton template={template} />
+            <TemplatePurchaseNowButton template={template} />
           </Grid>
         </Grid>
       </CardActions>

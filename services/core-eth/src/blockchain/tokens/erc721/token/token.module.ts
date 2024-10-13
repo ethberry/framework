@@ -40,6 +40,6 @@ export class Erc721TokenModule implements OnModuleInit {
   constructor(private readonly erc721TokenServiceLog: Erc721TokenServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.erc721TokenServiceLog.updateRegistry();
+    await this.erc721TokenServiceLog.initRegistry();
   }
 }

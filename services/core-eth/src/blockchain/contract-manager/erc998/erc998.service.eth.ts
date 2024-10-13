@@ -85,20 +85,7 @@ export class ContractManagerServiceEth {
       });
     }
 
-    if (
-      contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
-      contractEntity.contractFeatures.includes(ContractFeatures.GENES)
-    ) {
-      await this.erc998TokenService.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    } else {
-      await this.erc998TokenService.updateRegistryAndReadBlock(
-        [account.toLowerCase()],
-        parseInt(context.blockNumber.toString(), 16),
-      );
-    }
+    this.erc998TokenService.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

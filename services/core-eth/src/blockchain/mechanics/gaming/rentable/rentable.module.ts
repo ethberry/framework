@@ -21,6 +21,6 @@ export class RentableModule implements OnModuleInit {
   constructor(private readonly rentableServiceLog: RentableServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.rentableServiceLog.updateRegistrySimple();
+    await this.rentableServiceLog.initRegistry();
   }
 }

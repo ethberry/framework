@@ -55,10 +55,7 @@ export class AccessListControllerEth {
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PaymentSplitterDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingDeployed },
   ])
-  public erc721Token(
-    @Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
+  public deploy(@Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
     return this.accessListServiceEth.deploy(event, ctx);
   }
 }

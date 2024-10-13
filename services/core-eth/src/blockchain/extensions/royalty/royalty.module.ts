@@ -20,6 +20,6 @@ export class RoyaltyModule implements OnModuleInit {
   constructor(private readonly royaltyServiceLog: RoyaltyServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.royaltyServiceLog.updateRegistry();
+    await this.royaltyServiceLog.initRegistry();
   }
 }

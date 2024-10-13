@@ -42,6 +42,6 @@ export class ContractManagerErc721Module implements OnModuleInit {
   constructor(protected readonly contractManagerServiceLog: ContractManagerServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.contractManagerServiceLog.updateRegistry();
+    await this.contractManagerServiceLog.initRegistry();
   }
 }

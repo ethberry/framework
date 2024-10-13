@@ -126,9 +126,9 @@ export class AccessListServiceEth {
       args: { account },
     } = event;
 
-    await this.accessListServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.accessListServiceLog.updateRegistry([account]);
   }
 }

@@ -15,7 +15,7 @@ export const ContractListItem: FC<IContractListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/marketplace/contracts/${contract.id}`}>
+      <CardActionArea component={RouterLink} to={`/marketplace/contracts/${contract.id}/view`}>
         <CardHeader title={contract.title} />
         <StyledCardMedia image={contract.imageUrl} title={`${contract.title}`} />
         <CardContent>

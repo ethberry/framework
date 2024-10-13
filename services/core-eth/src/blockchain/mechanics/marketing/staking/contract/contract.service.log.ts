@@ -19,7 +19,7 @@ export class StakingContractServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.STAKING,
@@ -27,9 +27,13 @@ export class StakingContractServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.STAKING,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: StakingABI,
       eventSignatures: [
         StakingEventSignature.RuleCreated,
@@ -42,26 +46,5 @@ export class StakingContractServiceLog {
         StakingEventSignature.DepositPenalty,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.STAKING,
-        contractAddress: address,
-        contractInterface: StakingABI,
-        eventSignatures: [
-          StakingEventSignature.RuleCreated,
-          StakingEventSignature.RuleUpdated,
-          StakingEventSignature.BalanceWithdraw,
-          StakingEventSignature.DepositStart,
-          StakingEventSignature.DepositWithdraw,
-          StakingEventSignature.DepositFinish,
-          StakingEventSignature.DepositReturn,
-          StakingEventSignature.DepositPenalty,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

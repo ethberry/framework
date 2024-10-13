@@ -19,7 +19,7 @@ export class Erc1155TokenServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.HIERARCHY,
@@ -28,9 +28,13 @@ export class Erc1155TokenServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.ERC1155_TOKEN,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: Erc1155ABI,
       eventSignatures: [
         Erc1155EventSignature.ApprovalForAll,
@@ -39,22 +43,5 @@ export class Erc1155TokenServiceLog {
         Erc1155EventSignature.URI,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.ERC1155_TOKEN,
-        contractAddress: address,
-        contractInterface: Erc1155ABI,
-        eventSignatures: [
-          Erc1155EventSignature.ApprovalForAll,
-          Erc1155EventSignature.TransferSingle,
-          Erc1155EventSignature.TransferBatch,
-          Erc1155EventSignature.URI,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

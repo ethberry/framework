@@ -88,9 +88,9 @@ export class RoyaltyServiceEth {
       args: { account },
     } = event;
 
-    await this.royaltyServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.royaltyServiceLog.updateRegistry([account]);
   }
 }

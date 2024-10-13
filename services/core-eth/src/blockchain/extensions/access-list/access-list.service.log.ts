@@ -19,16 +19,20 @@ export class AccessListServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractFeatures: ArrayOverlap([[ContractFeatures.BLACKLIST, ContractFeatures.WHITELIST]]),
       chainId,
     });
 
+    this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
     this.ethersService.updateRegistry({
       contractType: ContractType.ACCESS_LIST,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: AccessListABI,
       eventSignatures: [
         AccessListEventSignature.Blacklisted,
@@ -37,22 +41,5 @@ export class AccessListServiceLog {
         AccessListEventSignature.UnWhitelisted,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.ACCESS_LIST,
-        contractAddress: address,
-        contractInterface: AccessListABI,
-        eventSignatures: [
-          AccessListEventSignature.Blacklisted,
-          AccessListEventSignature.UnBlacklisted,
-          AccessListEventSignature.Whitelisted,
-          AccessListEventSignature.UnWhitelisted,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

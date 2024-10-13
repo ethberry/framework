@@ -47,6 +47,6 @@ export class RaffleTicketModule implements OnModuleInit {
   constructor(private readonly raffleTicketServiceLog: RaffleTicketServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.raffleTicketServiceLog.updateRegistry();
+    await this.raffleTicketServiceLog.initRegistry();
   }
 }

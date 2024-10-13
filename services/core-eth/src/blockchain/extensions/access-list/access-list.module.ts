@@ -29,6 +29,6 @@ export class AccessListModule implements OnModuleInit {
   constructor(private readonly accessListServiceLog: AccessListServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.accessListServiceLog.updateRegistry();
+    await this.accessListServiceLog.initRegistry();
   }
 }

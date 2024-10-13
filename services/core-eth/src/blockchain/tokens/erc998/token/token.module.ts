@@ -42,6 +42,6 @@ export class Erc998TokenModule implements OnModuleInit {
   constructor(private readonly erc998TokenServiceLog: Erc998TokenServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.erc998TokenServiceLog.updateRegistry();
+    await this.erc998TokenServiceLog.initRegistry();
   }
 }

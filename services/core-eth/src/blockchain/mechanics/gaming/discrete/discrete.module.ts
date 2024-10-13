@@ -33,6 +33,6 @@ export class DiscreteModule implements OnModuleInit {
   constructor(private readonly discreteServiceLog: DiscreteServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.discreteServiceLog.updateRegistry();
+    await this.discreteServiceLog.initRegistry();
   }
 }

@@ -23,7 +23,7 @@ export class ContractService {
   }
 
   public findAll(
-    where: FindOptionsWhere<ContractEntity>,
+    where: FindOptionsWhere<ContractEntity> | Array<FindOptionsWhere<ContractEntity>>,
     options?: FindManyOptions<ContractEntity>,
   ): Promise<Array<ContractEntity>> {
     return this.contractEntityRepository.find({ where, ...options });
@@ -44,7 +44,7 @@ export class ContractService {
     }
 
     Object.assign(contractEntity, dto);
-     
+
     return contractEntity.save();
   }
 

@@ -97,10 +97,7 @@ export class ContractManagerErc721ServiceEth {
       });
     }
 
-    await this.erc721TokenServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.erc721TokenServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

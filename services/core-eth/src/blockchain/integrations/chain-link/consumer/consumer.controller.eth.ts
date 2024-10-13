@@ -3,8 +3,15 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { IERC721TokenMintRandomEvent, IVrfSubscriptionSetEvent } from "@framework/types";
-import { ChainLinkEventType } from "@framework/types";
+import type {
+  IContractManagerERC721TokenDeployedEvent,
+  IContractManagerERC998TokenDeployedEvent,
+  IContractManagerLootTokenDeployedEvent,
+  IContractManagerLotteryDeployedEvent,
+  IContractManagerRaffleDeployedEvent,
+  IVrfSubscriptionSetEvent,
+} from "@framework/types";
+import { ChainLinkEventType, ContractManagerEventType } from "@framework/types";
 
 import { ContractType } from "../../../../utils/contract-type";
 import { ChainLinkConsumerServiceEth } from "./consumer.service.eth";
@@ -13,13 +20,60 @@ import { ChainLinkConsumerServiceEth } from "./consumer.service.eth";
 export class ChainLinkConsumerControllerEth {
   constructor(private readonly chainLinkConsumerServiceEth: ChainLinkConsumerServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.RANDOM, eventName: ChainLinkEventType.VrfSubscriptionSet })
+  @EventPattern({ contractType: ContractType.VRF_CONSUMER, eventName: ChainLinkEventType.VrfSubscriptionSet })
   public setSubscription(@Payload() event: ILogEvent<IVrfSubscriptionSetEvent>, @Ctx() context: Log): Promise<void> {
     return this.chainLinkConsumerServiceEth.setVrfSubscription(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.RANDOM, eventName: ChainLinkEventType.MintRandom })
-  public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
-    return this.chainLinkConsumerServiceEth.mintRandom(event, context);
+  @EventPattern([
+    {
+      contractType: ContractType.CONTRACT_MANAGER,
+      eventName: ContractManagerEventType.ERC721TokenDeployed,
+    },
+  ])
+  public erc721Token(
+    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
+    @Ctx() ctx: Log,
+  ): Promise<void> {
+    return this.chainLinkConsumerServiceEth.deploy1(event, ctx);
+  }
+
+  @EventPattern([
+    {
+      contractType: ContractType.CONTRACT_MANAGER,
+      eventName: ContractManagerEventType.ERC998TokenDeployed,
+    },
+  ])
+  public erc998Token(
+    @Payload() event: ILogEvent<IContractManagerERC998TokenDeployedEvent>,
+    @Ctx() ctx: Log,
+  ): Promise<void> {
+    return this.chainLinkConsumerServiceEth.deploy2(event, ctx);
+  }
+
+  @EventPattern([
+    {
+      contractType: ContractType.CONTRACT_MANAGER,
+      eventName: ContractManagerEventType.LootBoxDeployed,
+    },
+    {
+      contractType: ContractType.CONTRACT_MANAGER,
+      eventName: ContractManagerEventType.RaffleDeployed,
+    },
+    {
+      contractType: ContractType.CONTRACT_MANAGER,
+      eventName: ContractManagerEventType.LotteryDeployed,
+    },
+  ])
+  public erc721Loot(
+    @Payload()
+    event: ILogEvent<
+      | IContractManagerLootTokenDeployedEvent
+      | IContractManagerLotteryDeployedEvent
+      | IContractManagerRaffleDeployedEvent
+    >,
+    @Ctx() ctx: Log,
+  ): Promise<void> {
+    return this.chainLinkConsumerServiceEth.deploy3(event, ctx);
   }
 }

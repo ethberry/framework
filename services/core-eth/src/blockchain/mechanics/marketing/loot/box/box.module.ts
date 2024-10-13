@@ -38,6 +38,6 @@ export class LootBoxModule implements OnModuleInit {
   constructor(private readonly lootBoxServiceLog: LootBoxServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.lootBoxServiceLog.updateRegistry();
+    await this.lootBoxServiceLog.initRegistry();
   }
 }

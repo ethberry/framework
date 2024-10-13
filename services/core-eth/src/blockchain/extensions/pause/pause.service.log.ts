@@ -19,30 +19,22 @@ export class PauseServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractFeatures: In([[ContractFeatures.PAUSABLE]]),
       chainId,
     });
 
+    this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
     this.ethersService.updateRegistry({
       contractType: ContractType.PAUSE,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: PausableABI,
       eventSignatures: [PausableEventSignature.Paused, PausableEventSignature.Unpaused],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.PAUSE,
-        contractAddress: address,
-        contractInterface: PausableABI,
-        eventSignatures: [PausableEventSignature.Paused, PausableEventSignature.Unpaused],
-      },
-      blockNumber,
-    );
   }
 }

@@ -231,9 +231,8 @@ export class AccessControlServiceEth {
       args: { account },
     } = event;
 
-    await this.accessControlServiceLog.updateRegistryAndReadBlock(
-      [account.toLowerCase()],
-      parseInt(context.blockNumber.toString(), 16),
-    );
+    this.accessControlServiceLog.updateRegistry([account]);
+
+    await this.accessControlServiceLog.readLastBlock([account], parseInt(context.blockNumber.toString(), 16));
   }
 }

@@ -38,6 +38,6 @@ export class MysteryBoxModule implements OnModuleInit {
   constructor(private readonly mysteryBoxServiceLog: MysteryBoxServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.mysteryBoxServiceLog.updateRegistry();
+    await this.mysteryBoxServiceLog.initRegistry();
   }
 }
