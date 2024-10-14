@@ -29,11 +29,12 @@ export const CraftItemPanel: FC<ICraftItemPanelProps> = props => {
             <ListItemButton
               key={component.id || i}
               component={RouterLink}
-              to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}`}
+              to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}/view`}
             >
               <ListItemText>
                 {component.template!.title}{" "}
-                {`(${formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)}`})
+                {`(${formatEther(component.amount, component.template!.contract!.decimals, component.template!.contract!.symbol)}`}
+                )
               </ListItemText>
             </ListItemButton>
           ))}

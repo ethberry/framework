@@ -53,7 +53,7 @@ export const TopUpButton: FC<ITopUpButtonProps> = props => {
       return contract.topUp([
         {
           tokenType: 1,
-          token: asset.contract.address,
+          token: asset.template.contract.address,
           tokenId: 0,
           amount: asset.amount,
         },

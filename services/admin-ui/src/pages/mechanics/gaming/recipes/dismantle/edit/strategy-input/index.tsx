@@ -11,7 +11,9 @@ export interface IAddressInputProps {
 export const StrategyInput: FC<IAddressInputProps> = props => {
   const { name = "dismantleStrategy" } = props;
 
-  const contractFeatures: Array<ContractFeatures> = useWatch({ name: "price.components[0].contract.contractFeatures" });
+  const contractFeatures: Array<ContractFeatures> = useWatch({
+    name: "price.components[0].template.contract.contractFeatures",
+  });
 
   if (contractFeatures.includes(ContractFeatures.RANDOM)) {
     return <SelectInput name={name} options={DismantleStrategy} />;

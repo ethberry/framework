@@ -37,8 +37,9 @@ export class CreateDismantle1693120862000 implements MigrationInterface {
           type: "bigint",
         },
         {
-          name: "rarity_multiplier",
+          name: "growth_rate",
           type: "int",
+          default: 0,
         },
         {
           name: "dismantle_strategy",

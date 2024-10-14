@@ -18,6 +18,7 @@ import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { MergeEntity } from "./merge.entity";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 @Injectable()
 export class MergeService {
@@ -41,12 +42,12 @@ export class MergeService {
     queryBuilder.leftJoinAndSelect("merge.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
 
     queryBuilder.leftJoinAndSelect("merge.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.andWhere({
       mergeStatus: MergeStatus.ACTIVE,
@@ -103,11 +104,11 @@ export class MergeService {
           item: "merge.item",
           item_components: "item.components",
           item_template: "item_components.template",
-          item_contract: "item_components.contract",
+          item_contract: "item_template.contract",
           price: "merge.price",
           price_components: "price.components",
           price_template: "price_components.template",
-          price_contract: "price_components.contract",
+          price_contract: "price_template.contract",
         },
       },
     });
@@ -203,20 +204,14 @@ export class MergeService {
     mergeEntity: MergeEntity,
     tokenEntities: Array<TokenEntity>,
   ): Promise<string> {
+    const items = convertDatabaseAssetToChainAsset(mergeEntity.item.components);
+
     return this.signerService.getManyToManySignature(
       verifyingContract,
       account,
       params,
       // ITEM to get after merge
-      mergeEntity.item.components.sort(comparator("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId:
-          component.contract.contractType === TokenType.ERC1155 || component.contract.contractType === TokenType.ERC20
-            ? component.template.tokens[0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
-        amount: "1",
-      })),
+      items,
       // PRICE token to merge
       tokenEntities.sort(comparator("tokenId")).map(tokenEntity => ({
         tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),

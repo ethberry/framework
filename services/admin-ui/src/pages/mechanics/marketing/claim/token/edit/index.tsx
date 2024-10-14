@@ -6,16 +6,17 @@ import { FormDialog } from "@ethberry/mui-dialog-form";
 import { TextInput } from "@ethberry/mui-inputs-core";
 import { DateTimeInput } from "@ethberry/mui-inputs-picker";
 import { TokenAssetInput } from "@ethberry/mui-inputs-asset";
-import { convertDatabaseAssetToTokenTypeAsset } from "@framework/exchange";
+import { convertTemplateToTokenTypeAsset } from "@framework/exchange";
 import type { IClaim } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { arrayComparator } from "./utils";
 
 export interface IClaimEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IClaim>, form: any) => Promise<void>;
+  onConfirm: (values: any, form: any) => Promise<void>;
   initialValues: IClaim;
 }
 
@@ -32,12 +33,15 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
-  const metaFnWithAllowance = useAllowance((_web3Context: Web3ContextType, values: IClaim, form: any) => {
+  const metaFnWithAllowance = useAllowance((_web3Context: Web3ContextType, values: any, form: any) => {
     return onConfirm(values, form).then(() => null);
   });
 
   const metaFn = useMetamask((values: IClaim, form: any, web3Context: Web3ContextType) => {
-    const assets = convertDatabaseAssetToTokenTypeAsset(values.item.components);
+    const assets = arrayComparator(values.item.components, "tokenId").map(el =>
+      convertTemplateToTokenTypeAsset(el.template),
+    );
+
     return metaFnWithAllowance(
       {
         contract: values.account,

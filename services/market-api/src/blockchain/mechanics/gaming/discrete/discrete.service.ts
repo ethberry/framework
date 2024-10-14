@@ -14,6 +14,7 @@ import {
   SettingsKeys,
   TokenType,
 } from "@framework/types";
+import { convertDatabaseAssetToChainAsset, convertTemplateToChainAsset } from "@framework/exchange";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
@@ -22,7 +23,6 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { DiscreteEntity } from "./discrete.entity";
-import { convertDatabaseAssetToChainAsset, convertTemplateToChainAsset } from "@framework/exchange";
 
 @Injectable()
 export class DiscreteService {
@@ -145,6 +145,7 @@ export class DiscreteService {
     const item = convertTemplateToChainAsset(tokenEntity.template, 1);
     // set real token Id
     item.tokenId = tokenEntity.tokenId;
+
     const price = convertDatabaseAssetToChainAsset(
       discreteEntity.price.components,
       this.getMultiplier(level, discreteEntity),

@@ -10,7 +10,11 @@ import { ListActions, StyledListItem, StyledListWrapper, StyledPagination } from
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-import { ClaimRedeemButton, VestingDeployButton } from "../../../../../components/buttons";
+import {
+  ClaimRedeemTemplateButton,
+  VestingDeployButton,
+  ClaimRedeemTokenButton,
+} from "../../../../../components/buttons";
 import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {
@@ -41,11 +45,9 @@ export const Claim: FC = () => {
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimType}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{formatItem(claim.item)}</ListItemText>
               <ListActions>
-                {claim.claimType === ClaimType.TOKEN || claim.claimType === ClaimType.TEMPLATE ? (
-                  <ClaimRedeemButton claim={claim} />
-                ) : (
-                  <VestingDeployButton claim={claim} />
-                )}
+                {claim.claimType === ClaimType.TEMPLATE ? <ClaimRedeemTemplateButton claim={claim} /> : null}
+                {claim.claimType === ClaimType.TOKEN ? <ClaimRedeemTokenButton claim={claim} /> : null}
+                {claim.claimType === ClaimType.VESTING ? <VestingDeployButton claim={claim} /> : null}
               </ListActions>
             </StyledListItem>
           ))}

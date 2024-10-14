@@ -82,7 +82,7 @@ export class RentSignService {
       },
       rentEntity.price.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
+        token: component.template.contract.address,
         tokenId:
           component.template.tokens[0].tokenId === "0"
             ? component.template.tokens[0].templateId.toString()

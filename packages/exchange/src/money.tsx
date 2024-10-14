@@ -15,7 +15,7 @@ export const formatUnitsR = (value: BigNumberish, decimals: string | BigNumberis
 };
 
 export const formatEther = (amount = "0", decimals = 18, currency = "Ξ", maxDecimalDigits?: number) => {
-  return `${currency} ${formatUnitsR(amount, decimals, maxDecimalDigits)}`;
+  return `${currency ? `${currency} ` : ""}${formatUnitsR(amount, decimals, maxDecimalDigits)}`;
 };
 
 export const formatItemCore = (asset?: IPartialAsset, maxDecimalDigits?: number) => {

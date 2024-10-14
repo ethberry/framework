@@ -42,7 +42,7 @@ export class DismantleService {
     queryBuilder.leftJoinAndSelect("dismantle.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
 
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -54,7 +54,7 @@ export class DismantleService {
     queryBuilder.leftJoinAndSelect("dismantle.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.andWhere("dismantle.merchantId = :merchantId", {
       merchantId: merchantEntity.id,
@@ -106,8 +106,8 @@ export class DismantleService {
     queryBuilder.leftJoinAndSelect("dismantle.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("dismantle.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
 
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -118,8 +118,8 @@ export class DismantleService {
 
     queryBuilder.leftJoinAndSelect("dismantle.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -187,7 +187,7 @@ export class DismantleService {
       // ITEM to get after dismantle
       dismantleEntity.item.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
+        token: component.template.contract.address,
         tokenId:
           component.contract.contractType === TokenType.ERC1155
             ? component.template.tokens[0].tokenId
@@ -203,7 +203,7 @@ export class DismantleService {
       [
         dismantleEntity.price.components.sort(comparator("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract.address,
+          token: component.template.contract.address,
           tokenId: tokenEntity.tokenId,
           amount: component.amount,
         }))[0],

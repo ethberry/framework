@@ -167,7 +167,7 @@ export class DiscreteService {
       },
       discreteEntity.price.components.sort(comparator("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
+        token: component.template.contract.address,
         // tokenId: (component.templateId || 0).toString(),
         tokenId: component.template.tokens[0].tokenId,
         amount: this.getMultiplier(level, component.amount, discreteEntity).toString(),

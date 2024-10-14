@@ -48,7 +48,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
     // TODO use convertDatabaseAssetToChainAsset
     const content = values.item.components.map(component => ({
       tokenType: Object.values(TokenType).indexOf(component.tokenType),
-      token: component.contract.address,
+      token: component.template.contract.address,
       tokenId: component.token.tokenId || 0,
       amount: component.amount,
     }));

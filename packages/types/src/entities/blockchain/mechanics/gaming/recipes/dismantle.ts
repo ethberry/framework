@@ -21,7 +21,7 @@ export interface IDismantle extends IIdDateBase {
   merchantId: number;
   merchant?: IMerchant;
   dismantleStatus: DismantleStatus;
-  rarityMultiplier: number;
+  growthRate: number;
   dismantleStrategy: DismantleStrategy;
   history?: Array<IEventHistory>;
 }

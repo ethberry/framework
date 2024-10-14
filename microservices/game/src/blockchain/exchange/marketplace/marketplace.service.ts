@@ -73,7 +73,7 @@ export class MarketplaceService {
       },
       templateEntity.price.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
+        token: component.template.contract.address,
         // pass templateId instead of tokenId = 0
         tokenId:
           component.template.tokens[0].tokenId === "0"

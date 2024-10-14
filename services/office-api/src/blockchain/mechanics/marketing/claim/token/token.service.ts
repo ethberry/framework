@@ -41,7 +41,7 @@ export class ClaimTokenService {
     private readonly contractService: ContractService,
   ) {}
 
-  public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
+  public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
     const { account, claimStatus, merchantId, skip, take } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
@@ -49,9 +49,14 @@ export class ClaimTokenService {
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    // queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     queryBuilder.andWhere("claim.merchantId = :merchantId", {
       merchantId,
@@ -210,8 +215,8 @@ export class ClaimTokenService {
       params,
       claimEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: (component.tokenId || 0).toString(), // suppression types check with 0
+        token: component.template.contract.address,
+        tokenId: component.token.tokenId.toString(),
         amount: component.amount,
       })),
       [],
@@ -231,7 +236,7 @@ export class ClaimTokenService {
           });
 
           if (!contractEntity) {
-            throw new NotFoundException("contractNotFound");
+            return null;
           }
 
           return this.create(
