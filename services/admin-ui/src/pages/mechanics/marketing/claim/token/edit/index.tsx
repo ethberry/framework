@@ -38,8 +38,8 @@ export const ClaimTokenEditDialog: FC<IClaimEditDialogProps> = props => {
   });
 
   const metaFn = useMetamask((values: IClaim, form: any, web3Context: Web3ContextType) => {
-    const assets = arrayComparator(values.item.components, "tokenId").map(el =>
-      convertTemplateToTokenTypeAsset(el.template),
+    const assets = arrayComparator(values.item.components, "tokenId").map(component =>
+      convertTemplateToTokenTypeAsset(component.template),
     );
 
     return metaFnWithAllowance(

@@ -7,12 +7,11 @@ import { ContractFeatures, ITemplateSignDto, ModuleType, SettingsKeys } from "@f
 import { convertDatabaseAssetToChainAsset, convertTemplateToChainAsset } from "@framework/exchange";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-
-import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class MarketplaceService {
@@ -55,9 +54,9 @@ export class MarketplaceService {
         externalId: templateEntity.id,
         expiresAt,
         nonce,
-        extra: extra,
+        extra,
         receiver: templateEntity.contract.merchant.wallet,
-        referrer: referrer === null ? ZeroAddress : referrer,
+        referrer,
       },
       templateEntity,
     );

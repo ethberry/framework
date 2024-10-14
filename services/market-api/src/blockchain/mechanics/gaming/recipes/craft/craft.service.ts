@@ -182,7 +182,6 @@ export class CraftService {
   ): Promise<string> {
     const items = convertDatabaseAssetToChainAsset(craftEntity.item.components);
     const price = convertDatabaseAssetToChainAsset(craftEntity.price.components);
-
     return this.signerService.getManyToManySignature(verifyingContract, account, params, items, price);
   }
 

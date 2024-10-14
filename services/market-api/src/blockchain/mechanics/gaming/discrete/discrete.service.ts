@@ -17,11 +17,11 @@ import {
 import { convertDatabaseAssetToChainAsset, convertTemplateToChainAsset } from "@framework/exchange";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { DiscreteEntity } from "./discrete.entity";
 
 @Injectable()

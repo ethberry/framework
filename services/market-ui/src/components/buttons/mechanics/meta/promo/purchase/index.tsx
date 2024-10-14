@@ -9,19 +9,13 @@ import type { IServerSignature } from "@ethberry/types-blockchain";
 import {
   convertDatabaseAssetToChainAsset,
   convertDatabaseAssetToTokenTypeAsset,
+  convertTemplateToChainAsset,
   getEthPrice,
 } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetPromo, IContract, ILootBox, IMysteryBox } from "@framework/types";
-// import type { ITemplate } from "@framework/types";
-import { ModuleType } from "@framework/types";
 
 import PurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
-import PurchaseMysteryABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
-
-// import { MysteryBoxPurchaseButton } from "../../mystery/purchase";
-// import { LootBoxPurchaseButton } from "../../loot/purchase";
-// import { TemplatePurchaseButton } from "../../../hierarchy";
 
 interface IPromoWithMystery extends IAssetPromo {
   box?: IMysteryBox | ILootBox;
@@ -37,70 +31,31 @@ interface IPromoPurchaseButtonProps {
 export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
   const { className, disabled, promo, variant = ListActionVariant.button } = props;
 
-  // TODO use native buttons
-  // switch (promo.item?.components[0].contract!.contractModule){
-  //   case ModuleType.MYSTERY:
-  //     return <MysteryBoxPurchaseButton mysteryBox={promo.box as IMysteryBox} />
-  //   case ModuleType.LOOT:
-  //     return <LootBoxPurchaseButton lootBox={promo.box as ILootBox} />
-  //   case ModuleType.HIERARCHY:
-  //     return <TemplatePurchaseButton template={promo as ITemplate} />
-  //   default: // RAFFLE
-  //     throw new Error("unsupported token type");
-  // }
-
-  // TODO LootBox
-  const mysteryComponents = promo.item?.components.filter(
-    component => component.contract!.contractModule === ModuleType.MYSTERY,
-  );
-
   const referrer = useAppSelector(walletSelectors.referrerSelector);
 
   const metaFnWithAllowance = useAllowance(
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(
-        systemContract.address,
-        PurchaseABI.concat(PurchaseMysteryABI),
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(systemContract.address, PurchaseABI, web3Context.provider?.getSigner());
 
-      const items = convertDatabaseAssetToChainAsset(promo.box!.content!.components);
-      const promoItem = convertDatabaseAssetToChainAsset(promo.item!.components);
+      const item = convertTemplateToChainAsset(promo.item!.components[0].template);
       const price = convertDatabaseAssetToChainAsset(promo.price!.components);
 
-      return mysteryComponents && mysteryComponents.length > 0
-        ? (contract.purchaseMystery(
-            {
-              externalId: promo.id,
-              expiresAt: sign.expiresAt,
-              nonce: utils.arrayify(sign.nonce),
-              extra: constants.HashZero,
-              receiver: promo.merchant!.wallet,
-              referrer,
-            },
-            [...items, promoItem[0]],
-            price,
-            sign.signature,
-            {
-              value: getEthPrice(promo.price),
-            },
-          ) as Promise<void>)
-        : (contract.purchase(
-            {
-              externalId: promo.id,
-              expiresAt: sign.expiresAt,
-              nonce: utils.arrayify(sign.nonce),
-              extra: constants.HashZero,
-              receiver: promo.merchant!.wallet,
-              referrer,
-            },
-            promoItem[0],
-            price,
-            sign.signature,
-            {
-              value: getEthPrice(promo.price),
-            },
-          ) as Promise<void>);
+      return contract.purchase(
+        {
+          externalId: promo.item!.components[0].template!.id,
+          expiresAt: sign.expiresAt,
+          nonce: utils.arrayify(sign.nonce),
+          extra: constants.HashZero,
+          receiver: promo.merchant!.wallet,
+          referrer,
+        },
+        item,
+        price,
+        sign.signature,
+        {
+          value: getEthPrice(promo.price),
+        },
+      ) as Promise<void>;
     },
   );
 

@@ -21,13 +21,14 @@ import type {
   IClaimTokenRowDto,
   IClaimTokenUploadDto,
 } from "@framework/types";
-import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
+import { ClaimStatus, ClaimType, ModuleType } from "@framework/types";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import { ClaimEntity } from "../claim.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { ClaimEntity } from "../claim.entity";
 
 @Injectable()
 export class ClaimTokenService {
@@ -209,18 +210,8 @@ export class ClaimTokenService {
     params: ISignatureParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
-      verifyingContract,
-      account,
-      params,
-      claimEntity.item.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.template.contract.address,
-        tokenId: component.token.tokenId.toString(),
-        amount: component.amount,
-      })),
-      [],
-    );
+    const items = convertDatabaseAssetToChainAsset(claimEntity.item.components);
+    return this.signerService.getManyToManySignature(verifyingContract, account, params, items, []);
   }
 
   public async upload(dto: IClaimTokenUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {

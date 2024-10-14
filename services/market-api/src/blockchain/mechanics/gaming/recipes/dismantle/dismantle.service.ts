@@ -106,6 +106,8 @@ export class DismantleService {
   public findOneWithRelations(where: FindOptionsWhere<DismantleEntity>): Promise<DismantleEntity | null> {
     const queryBuilder = this.dismantleEntityRepository.createQueryBuilder("dismantle");
 
+    queryBuilder.where(where);
+
     queryBuilder.leftJoinAndSelect("dismantle.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("dismantle.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
@@ -131,9 +133,6 @@ export class DismantleService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    queryBuilder.andWhere("dismantle.id = :id", {
-      id: where.id,
-    });
     return queryBuilder.getOne();
   }
 

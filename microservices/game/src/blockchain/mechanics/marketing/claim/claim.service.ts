@@ -6,13 +6,14 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 import type { ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
-import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
+import { ClaimStatus, ClaimType, ModuleType } from "@framework/types";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import { MerchantEntity } from "../../../../infrastructure/merchant/merchant.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
-import { ClaimEntity } from "./claim.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ClaimEntity } from "./claim.entity";
 
 @Injectable()
 export class ClaimService {
@@ -177,17 +178,7 @@ export class ClaimService {
     params: ISignatureParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
-      verifyingContract,
-      account,
-      params,
-      claimEntity.item.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.template.contract.address,
-        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-        amount: component.amount,
-      })),
-      [],
-    );
+    const items = convertDatabaseAssetToChainAsset(claimEntity.item.components);
+    return this.signerService.getManyToManySignature(verifyingContract, account, params, items, []);
   }
 }

@@ -7,12 +7,12 @@ import type { IMysteryBoxSignDto } from "@framework/types";
 import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
-import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class MysterySignService {
