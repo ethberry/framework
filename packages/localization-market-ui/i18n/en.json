@@ -1204,7 +1204,6 @@
       "price": "Base price",
       "priceTitle": "Base price:",
       "rarity": "Rarity",
-      "rarityMultiplier": " x {multiplier}",
       "tokenUser": "User",
       "traits": "Traits"
     },

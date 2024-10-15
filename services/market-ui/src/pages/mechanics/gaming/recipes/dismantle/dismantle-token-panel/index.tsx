@@ -141,7 +141,6 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
         </StyledToolbar>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(dismantle => {
-            const multiplier = getMultiplier(level, dismantle);
             return (
               <ListItemButton key={dismantle.id} onClick={handleDismantle(dismantle)}>
                 <ListItemIcon>
@@ -153,9 +152,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
                       {formatItem(dismantle.item)}
                     </Grid>
                     <Grid item xs={12}>
-                      {multiplier !== 1 ? (
-                        <FormattedMessage id="pages.token.rarityMultiplier" values={{ multiplier }} />
-                      ) : null}
+                      x {getMultiplier(level, dismantle)}
                     </Grid>
                   </Grid>
                 </ListItemText>

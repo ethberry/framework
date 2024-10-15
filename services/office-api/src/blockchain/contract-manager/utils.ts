@@ -1,8 +1,8 @@
 import { NotFoundException } from "@nestjs/common";
 
 import { Networks } from "@ethberry/types-blockchain";
-import { ChainLinkV2SupportedChains } from "@framework/types";
 import { NodeEnv } from "@ethberry/constants";
+import { ChainLinkV2SupportedChains } from "@framework/types";
 
 export const chainIdToSuffix = (chainId: bigint | number) => {
   switch (chainId) {
@@ -27,19 +27,20 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
     case Networks.ETHBERRY_BESU:
       return "EthberryBesu";
     default:
-      return "";
+      throw new Error("Unsupported chain");
   }
 };
 
 export const getContractABI = (path: string, chainId: bigint | number) => {
-  const isRandom = path.includes("Random") || path.includes("Genes") || path.includes("Loot");
-  if (!isRandom) {
+  const isChainLink = path.includes("networks");
+  if (!isChainLink) {
     return import(path);
   }
 
   const isSupported = Object.values(ChainLinkV2SupportedChains).includes(Number(chainId));
+  // TODO use configService
   if (process.env.NODE_ENV === NodeEnv.production && !isSupported) {
-    throw new NotFoundException("randomNotSupported", chainId.toString());
+    throw new NotFoundException("chainLinkNotSupported", chainId.toString());
   }
 
   const suffix = chainIdToSuffix(chainId);

@@ -1,8 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { ValidateNested, IsInt, IsEnum, Min } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsInt, IsOptional, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { NotNativeDto, NftDto } from "@ethberry/nest-js-validators";
+import { NftDto, NotNativeDto } from "@ethberry/nest-js-validators";
 import { DismantleStrategy } from "@framework/types";
 
 import type { IDismantleCreateDto } from "../interfaces";
@@ -22,12 +22,12 @@ export class DismantleCreateDto implements IDismantleCreateDto {
   @Type(() => NftDto)
   public price: InstanceType<typeof NftDto>;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
-  // unfortunately there is no such property, so we just save
-  // @ValidateIf(o => o.item.components[0].contract.contractFeatures.includes(ContractFeatures.RANDOM))
-  public rarityMultiplier: number;
+  @Min(1, { message: "rangeUnderflow" })
+  @ValidateIf(o => o.discreteStrategy === DismantleStrategy.EXPONENTIAL)
+  public growthRate: number;
 
   @ApiProperty()
   @IsEnum(DismantleStrategy, { message: "badInput" })

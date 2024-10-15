@@ -11,6 +11,7 @@ import { SettingsKeys } from "@framework/types";
 const emptySettings = {
   [SettingsKeys.DUMMY]: JSON.stringify(loremIpsum),
   [SettingsKeys.SIGNATURE_TTL]: JSON.stringify(0),
+  [SettingsKeys.STARTING_BLOCK_ETHBERRY_BESU]: JSON.stringify(0),
 };
 
 export const Settings: FC = () => {
