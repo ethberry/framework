@@ -15,7 +15,7 @@ export const MysteryContractListItem: FC<IMysteryContractListItemProps> = props 
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/mystery/contracts/${contract.id}`}>
+      <CardActionArea component={RouterLink} to={`/mystery/contracts/${contract.id}/view`}>
         <CardHeader title={contract.title} />
         <StyledCardMedia image={contract.imageUrl} title={`${contract.title}`} />
         <CardContent>

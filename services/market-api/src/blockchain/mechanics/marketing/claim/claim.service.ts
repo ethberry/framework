@@ -4,16 +4,16 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
 import type { ISignatureParams } from "@ethberry/types-blockchain";
-import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
-import { ClaimEntity } from "./claim.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { ClaimEntity } from "./claim.entity";
 
 @Injectable()
 export class ClaimService {
@@ -26,7 +26,7 @@ export class ClaimService {
   ) {}
 
   public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
-    const { skip, take, /* account, */ claimStatus, claimType } = dto;
+    const { claimStatus, claimType, skip, take } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
@@ -38,7 +38,7 @@ export class ClaimService {
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
 
     queryBuilder.select();
@@ -95,8 +95,8 @@ export class ClaimService {
           merchant: "claim.merchant",
           item: "claim.item",
           item_components: "item.components",
-          item_contract: "item_components.contract",
           item_template: "item_components.template",
+          item_contract: "item_template.contract",
           item_token: "item_components.token",
         },
       },
@@ -191,25 +191,7 @@ export class ClaimService {
     params: ISignatureParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
-      verifyingContract,
-      account,
-      params,
-      claimEntity.item.components
-        .slice()
-        .sort(comparator("id"))
-        .map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract.address,
-          tokenId:
-            component.contract.contractType === TokenType.ERC1155
-              ? component.template.tokens[0].tokenId
-              : claimEntity.claimType === ClaimType.TEMPLATE
-                ? (component.templateId || 0).toString()
-                : (component.token.tokenId || 0).toString(), // suppression types check with 0
-          amount: component.amount,
-        })),
-      [],
-    );
+    const items = convertDatabaseAssetToChainAsset(claimEntity.item.components);
+    return this.signerService.getManyToManySignature(verifyingContract, account, params, items, []);
   }
 }

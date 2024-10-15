@@ -3,16 +3,15 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  AccessControlEventType,
-  ContractType,
+import type {
   IOwnershipTransferredEvent,
   IVestingERC20ReleasedEvent,
   IVestingPaymentReceivedEvent,
   IVestingEtherReleasedEvent,
-  VestingEventType,
 } from "@framework/types";
+import { AccessControlEventType, VestingEventType } from "@framework/types";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { VestingServiceEth } from "./vesting.service.eth";
 
 @Controller()
@@ -34,12 +33,7 @@ export class VestingControllerEth {
     return this.vestingServiceEth.ethReceived(event, context);
   }
 
-  @EventPattern([
-    {
-      contractType: ContractType.VESTING,
-      eventName: AccessControlEventType.OwnershipTransferred,
-    },
-  ])
+  @EventPattern({ contractType: ContractType.VESTING, eventName: AccessControlEventType.OwnershipTransferred })
   public ownership(@Payload() event: ILogEvent<IOwnershipTransferredEvent>, @Ctx() context: Log): Promise<void> {
     return this.vestingServiceEth.ownershipChanged(event, context);
   }

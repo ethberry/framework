@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 import { ListItemText } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
@@ -21,9 +21,11 @@ export interface IAccessListUnBlacklistDialogProps {
 }
 
 export const AccessListUnBlacklistDialog: FC<IAccessListUnBlacklistDialogProps> = props => {
-  const { data, ...rest } = props;
+  const { data, open, onConfirm, onCancel } = props;
 
   const [rows, setRows] = useState<Array<IAccessList>>([]);
+
+  const { account } = useWeb3React();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -41,7 +43,9 @@ export const AccessListUnBlacklistDialog: FC<IAccessListUnBlacklistDialogProps> 
 
   const handleUnBlacklist = (values: IAccessList): (() => Promise<void>) => {
     return async () => {
-      return metaUnBlacklist(values);
+      return metaUnBlacklist(values).then(() => {
+        return onConfirm();
+      });
     };
   };
 
@@ -49,10 +53,16 @@ export const AccessListUnBlacklistDialog: FC<IAccessListUnBlacklistDialogProps> 
     void fn().then((rows: Array<IAccessList>) => {
       setRows(rows);
     });
-  }, []);
+  }, [account, open]);
 
   return (
-    <ConfirmationDialog message="dialogs.unBlacklist" data-testid="AccessListUnBlacklistDialog" {...rest}>
+    <ConfirmationDialog
+      message="dialogs.unBlacklist"
+      data-testid="AccessListUnBlacklistDialog"
+      open={open}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+    >
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(access => (

@@ -1,11 +1,11 @@
 import { BadRequestException, ForbiddenException, Injectable } from "@nestjs/common";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { AbiCoder, hexlify, keccak256, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
-import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 import type { IMysteryBoxSignDto } from "@framework/types";
+import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { MerchantEntity } from "../../../../../infrastructure/merchant/merchant.entity";
@@ -52,7 +52,7 @@ export class MysterySignService {
         externalId: mysteryBoxEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: ZeroHash,
         receiver: mysteryBoxEntity.template.contract.merchant.wallet,
         referrer,
       },
@@ -68,34 +68,22 @@ export class MysterySignService {
     params: ISignatureParams,
     mysteryBoxEntity: MysteryBoxEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
+    const content = convertDatabaseAssetToChainAsset(mysteryBoxEntity.content.components);
+    const price = convertDatabaseAssetToChainAsset(mysteryBoxEntity.template.price.components);
+
+    return this.signerService.getOneToManyToManySignature(
       verifyingContract,
       account,
       params,
-      [
-        ...mysteryBoxEntity.content.components.sort(comparator("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract.address,
-          // tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-          tokenId:
-            component.contract.contractType === TokenType.ERC1155
-              ? component.template.tokens[0].tokenId
-              : (component.templateId || 0).toString(),
-          amount: component.amount,
-        })),
-        {
-          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-          token: mysteryBoxEntity.template.contract.address,
-          tokenId: mysteryBoxEntity.templateId.toString(),
-          amount: "1",
-        },
-      ],
-      mysteryBoxEntity.template.price.components.sort(comparator("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
-        amount: component.amount,
-      })),
+      {
+        tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+        token: mysteryBoxEntity.template.contract.address,
+        tokenId: mysteryBoxEntity.templateId.toString(),
+        amount: "1",
+      },
+      price,
+      content,
+      keccak256(AbiCoder.defaultAbiCoder().encode([], [])),
     );
   }
 }

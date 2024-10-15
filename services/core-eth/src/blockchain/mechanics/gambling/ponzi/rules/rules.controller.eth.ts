@@ -4,9 +4,10 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IPonziCreateEvent, IPonziUpdateEvent } from "@framework/types";
-import { ContractType, PonziEventType } from "@framework/types";
+import { PonziEventType } from "@framework/types";
 
 import { PonziRulesServiceEth } from "./rules.service.eth";
+import { ContractType } from "../../../../../utils/contract-type";
 
 @Controller()
 export class PonziRulesControllerEth {

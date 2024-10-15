@@ -1,13 +1,10 @@
-import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
-import { DeepPartial } from "typeorm";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 
-import { testChainId } from "@framework/constants";
-import type { IERC721ConsecutiveTransfer, IERC721TokenTransferEvent } from "@framework/types";
+import type { IERC721TokenTransferEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
@@ -17,11 +14,8 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
-// import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
-import { TokenEntity } from "../../../hierarchy/token/token.entity";
-import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { Erc721ABI } from "./interfaces";
+import { ERC721SimpleABI } from "./interfaces";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -36,8 +30,6 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
-    protected readonly configService: ConfigService,
-    // protected readonly breedServiceEth: BreedServiceEth,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly notificatorService: NotificatorService,
   ) {
@@ -50,14 +42,13 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       args: { from, to, tokenId },
     } = event;
     const { address, transactionHash } = context;
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     // Mint token create
     if (from === ZeroAddress) {
       const metadata = await getMetadata(
         Number(tokenId).toString(),
         address,
-        Erc721ABI,
+        ERC721SimpleABI,
         this.jsonRpcProvider,
         this.loggerService,
       );
@@ -79,12 +70,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
     }
 
-    const erc721TokenEntity = await this.tokenService.getToken(
-      Number(tokenId).toString(),
-      address.toLowerCase(),
-      chainId,
-      true,
-    );
+    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase(), true);
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", Number(tokenId), address.toLowerCase(), Erc721TokenServiceEth.name);
@@ -122,76 +108,5 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         transactionType: name,
       })
       .toPromise();
-  }
-
-  public async consecutiveTransfer(event: ILogEvent<IERC721ConsecutiveTransfer>, context: Log): Promise<void> {
-    const {
-      name,
-      args: { fromAddress, toAddress, fromTokenId, toTokenId },
-    } = event;
-    const { address, transactionHash } = context;
-
-    // Mint token create batch
-    if (fromAddress === ZeroAddress) {
-      const templateEntity = await this.templateService.findOne(
-        { contract: { address } },
-        { relations: { contract: true } },
-      );
-
-      if (!templateEntity) {
-        throw new NotFoundException("templateNotFound");
-      }
-      await this.eventHistoryService.updateHistory(event, context);
-
-      const description = JSON.parse(templateEntity.contract.description);
-      const batchSize = description.batchSize ? Number(description.batchSize) : 0;
-
-      // const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
-      const batchLen = Number(toTokenId) - Number(fromTokenId);
-
-      if (batchLen !== batchSize) {
-        throw new BadRequestException("batchLengthError");
-      }
-
-      templateEntity.amount += batchSize;
-      await templateEntity.save();
-
-      const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(batchSize)].map((_, i) => ({
-        metadata: "{}",
-        tokenId: i.toString(),
-        royalty: templateEntity.contract.royalty,
-        templateId: templateEntity.id,
-        tokenStatus: TokenStatus.MINTED,
-      }));
-
-      const entityArray = await this.tokenService.createBatch(tokenArray);
-
-      await this.createBalancesBatch(toAddress, entityArray);
-      // await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
-
-      await this.notificatorService.consecutiveTransfer({
-        tokens: entityArray,
-        from: fromAddress.toLowerCase(),
-        to: toAddress.toLowerCase(),
-      });
-    }
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: fromAddress === ZeroAddress ? toAddress.toLowerCase() : fromAddress.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
-  }
-
-  private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
-    const balanceArray: Array<DeepPartial<BalanceEntity>> = new Array(tokenArray.length).fill(null).map((_, i) => ({
-      account: owner.toLowerCase(),
-      amount: "1",
-      tokenId: tokenArray[i].id,
-    }));
-
-    await this.balanceService.createBatch(balanceArray);
   }
 }

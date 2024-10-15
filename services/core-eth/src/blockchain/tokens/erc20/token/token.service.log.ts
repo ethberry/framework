@@ -1,22 +1,15 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { In, Not } from "typeorm";
+import { Not, In } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  AccessControlEventSignature,
-  AccessListEventSignature,
-  ContractFeatures,
-  ContractType,
-  Erc20EventSignature,
-  ModuleType,
-  TokenType,
-} from "@framework/types";
+import { ContractFeatures, Erc20EventSignature, ModuleType, TokenType } from "@framework/types";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { Erc20ABI } from "./interfaces";
+import { ERC20SimpleABI } from "./interfaces";
 
 @Injectable()
 export class Erc20TokenServiceLog {
@@ -26,7 +19,7 @@ export class Erc20TokenServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.HIERARCHY,
@@ -35,43 +28,15 @@ export class Erc20TokenServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
-      contractType: ContractType.ERC20_TOKEN,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: Erc20ABI,
-      eventSignatures: [
-        Erc20EventSignature.Approval,
-        Erc20EventSignature.Transfer,
-        AccessListEventSignature.Blacklisted,
-        AccessListEventSignature.UnBlacklisted,
-        AccessListEventSignature.Whitelisted,
-        AccessListEventSignature.UnWhitelisted,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
-      ],
-    });
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
   }
 
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.ERC20_TOKEN,
-        contractAddress: address,
-        contractInterface: Erc20ABI,
-        eventSignatures: [
-          Erc20EventSignature.Approval,
-          Erc20EventSignature.Transfer,
-          AccessListEventSignature.Blacklisted,
-          AccessListEventSignature.UnBlacklisted,
-          AccessListEventSignature.Whitelisted,
-          AccessListEventSignature.UnWhitelisted,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
-      },
-      blockNumber,
-    );
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
+      contractType: ContractType.ERC20_TOKEN,
+      contractAddress: address,
+      contractInterface: ERC20SimpleABI,
+      eventSignatures: [Erc20EventSignature.Approval, Erc20EventSignature.Transfer],
+    });
   }
 }

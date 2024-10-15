@@ -1157,7 +1157,6 @@
       "price": "السعر الأساسي",
       "priceTitle": "السعر الأساسي:",
       "rarity": "الندرة",
-      "rarityMultiplier": "× {multiplier}",
       "tokenUser": "المستخدم",
       "traits": "الصفات"
     },

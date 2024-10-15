@@ -17,12 +17,13 @@ import {
   formatItem,
 } from "@framework/exchange";
 import { StyledListWrapper } from "@framework/styled";
-import type { IContract, IDismantle, IToken } from "@framework/types";
+import { IContract, IDismantle, IToken, TokenMetadata, TokenRarity } from "@framework/types";
 
 import DismantleABI from "@framework/abis/json/ExchangeDismantleFacet/dismantle.json";
-import { getDismantleMultiplier } from "./utils";
-import { StyledCard } from "./styled";
+
 import { StyledToolbar, StyledTypography } from "../../../../../hierarchy/erc721/token/common-token-panel/styled";
+import { StyledCard } from "./styled";
+import { getMultiplier } from "./utils";
 
 export interface IDismantleTokenPanelProps {
   token: IToken;
@@ -34,6 +35,9 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
   const navigate = useNavigate();
   const referrer = useAppSelector(walletSelectors.referrerSelector);
   const [rows, setRows] = useState<IDismantle[]>([]);
+
+  const rarity = token.metadata[TokenMetadata.RARITY] || TokenRarity.COMMON;
+  const level = Object.keys(TokenRarity).indexOf(rarity);
 
   const { fn: getDismantleFn, isLoading } = useApiCall(
     api =>
@@ -55,8 +59,9 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
     (web3Context: Web3ContextType, values: IDismantle, sign: IServerSignature, systemContract: IContract) => {
       const contract = new Contract(systemContract.address, DismantleABI, web3Context.provider?.getSigner());
 
+      const items = convertDatabaseAssetToChainAsset(values.item!.components, getMultiplier(level, values));
+
       const price = convertDatabaseAssetToChainAsset(values.price!.components);
-      const item = convertDatabaseAssetToChainAsset(values.item!.components);
       // set real token Id
       price[0].tokenId = token.tokenId;
 
@@ -65,13 +70,11 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
           externalId: values.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
           receiver: values.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        // ITEM to get after dismantle
-        item,
-        // PRICE token to dismantle
+        items,
         price[0],
         sign.signature,
       ) as Promise<void>;
@@ -138,12 +141,6 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
         </StyledToolbar>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(dismantle => {
-            const { multiplier } = getDismantleMultiplier(
-              "1",
-              token.metadata,
-              dismantle.dismantleStrategy,
-              dismantle.rarityMultiplier,
-            );
             return (
               <ListItemButton key={dismantle.id} onClick={handleDismantle(dismantle)}>
                 <ListItemIcon>
@@ -155,9 +152,7 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
                       {formatItem(dismantle.item)}
                     </Grid>
                     <Grid item xs={12}>
-                      {multiplier !== 1 ? (
-                        <FormattedMessage id="pages.token.rarityMultiplier" values={{ multiplier }} />
-                      ) : null}
+                      x {getMultiplier(level, dismantle)}
                     </Grid>
                   </Grid>
                 </ListItemText>

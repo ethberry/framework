@@ -30,12 +30,12 @@ export class DismantleService {
     queryBuilder.leftJoinAndSelect("dismantle.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
 
     queryBuilder.leftJoinAndSelect("dismantle.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.andWhere("dismantle.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
@@ -95,11 +95,11 @@ export class DismantleService {
           item: "dismantle.item",
           item_components: "item.components",
           item_template: "item_components.template",
-          item_contract: "item_components.contract",
+          item_contract: "item_template.contract",
           price: "dismantle.price",
           price_components: "price.components",
           price_template: "price_components.template",
-          price_contract: "price_components.contract",
+          price_contract: "price_template.contract",
         },
       },
     });

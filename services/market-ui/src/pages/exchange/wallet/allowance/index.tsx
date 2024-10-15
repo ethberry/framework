@@ -72,18 +72,22 @@ export const AllowanceButton: FC<IAllowanceButtonProps> = props => {
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     const asset = values.token.components[0];
     if (asset.tokenType === TokenType.ERC20) {
-      const contractErc20 = new Contract(asset.contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(
+        asset.template.contract.address,
+        ERC20ApproveABI,
+        web3Context.provider?.getSigner(),
+      );
       return contractErc20.approve(values.address, asset.amount) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC721 || asset.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
-        asset.contract.address,
+        asset.template.contract.address,
         ERC721SetApprovalABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.approve(values.address, asset.token.tokenId) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
-        asset.contract.address,
+        asset.template.contract.address,
         ERC1155SetApprovalForAllABI,
         web3Context.provider?.getSigner(),
       );

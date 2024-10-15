@@ -21,11 +21,11 @@ export default [
           "./tsconfig.eslint.json",
           "./packages/*/tsconfig.eslint.json",
           "./services/*/tsconfig.eslint.json",
-          "./microservices/*/tsconfig.eslint.json"
+          "./microservices/*/tsconfig.eslint.json",
         ],
-        tsconfigRootDir: import.meta.dirname
+        tsconfigRootDir: import.meta.dirname,
       },
-    }
+    },
   },
 
   ...typescriptRules,

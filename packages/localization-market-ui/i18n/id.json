@@ -1155,7 +1155,6 @@
       "price": "Harga Dasar",
       "priceTitle": "Harga Dasar:",
       "rarity": "Keunikan",
-      "rarityMultiplier": "x {multiplier}",
       "tokenUser": "Pengguna",
       "traits": "Ciri"
     },

@@ -20,7 +20,7 @@
     "@ethberry/nest-js-guards": "3.1.21",
     "@ethberry/nest-js-module-coin-gecko": "4.0.54",
     "@ethberry/nest-js-module-coin-market-cap": "3.0.54",
-    "@ethberry/nest-js-module-ethers-gcp": "7.0.6",
+    "@ethberry/nest-js-module-ethers-gcp": "7.0.7",
     "@ethberry/nest-js-module-helmet": "4.0.57",
     "@ethberry/nest-js-module-license": "4.0.43",
     "@ethberry/nest-js-module-metamask": "3.1.51",

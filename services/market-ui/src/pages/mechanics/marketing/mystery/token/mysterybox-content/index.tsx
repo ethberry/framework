@@ -61,7 +61,7 @@ export const MysteryBoxContent: FC<IMysteryBoxContentProps> = props => {
               )}
             </Grid>
             <Grid xs={4} item>
-              {formatEther(component.amount, component.contract!.decimals, "")}
+              {formatEther(component.amount, component.template!.contract!.decimals, "")}
             </Grid>
           </Grid>
         ))}

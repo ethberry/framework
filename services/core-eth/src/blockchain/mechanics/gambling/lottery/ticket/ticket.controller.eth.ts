@@ -8,33 +8,30 @@ import type {
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
 } from "@framework/types";
-import { ContractType, Erc721EventType } from "@framework/types";
+import { Erc721EventType } from "@framework/types";
 
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
-import { TokenServiceEth } from "../../../../hierarchy/token/token.service.eth";
+import { ContractType } from "../../../../../utils/contract-type";
 
 @Controller()
 export class LotteryTicketControllerEth {
-  constructor(
-    private readonly ticketServiceEth: LotteryTicketServiceEth,
-    private readonly tokenServiceEth: TokenServiceEth,
-  ) {}
+  constructor(private readonly lotteryTicketServiceEth: LotteryTicketServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.LOTTERY, eventName: Erc721EventType.Transfer })
+  @EventPattern({ contractType: ContractType.LOTTERY_TICKET, eventName: Erc721EventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {
-    return this.ticketServiceEth.transfer(event, context);
+    return this.lotteryTicketServiceEth.transfer(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.LOTTERY, eventName: Erc721EventType.Approval })
+  @EventPattern({ contractType: ContractType.LOTTERY_TICKET, eventName: Erc721EventType.Approval })
   public approval(@Payload() event: ILogEvent<IERC721TokenApproveEvent>, @Ctx() context: Log): Promise<void> {
-    return this.tokenServiceEth.approval(event, context);
+    return this.lotteryTicketServiceEth.approval(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.LOTTERY, eventName: Erc721EventType.ApprovalForAll })
+  @EventPattern({ contractType: ContractType.LOTTERY_TICKET, eventName: Erc721EventType.ApprovalForAll })
   public approvalForAll(
     @Payload() event: ILogEvent<IERC721TokenApprovedForAllEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
-    return this.tokenServiceEth.approvalForAll(event, context);
+    return this.lotteryTicketServiceEth.approvalForAll(event, context);
   }
 }

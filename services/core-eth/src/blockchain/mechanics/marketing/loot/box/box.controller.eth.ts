@@ -3,17 +3,16 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  ContractType,
-  Erc721EventType,
+import type {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
   IUnpackLootBoxEvent,
-  LootEventType,
 } from "@framework/types";
+import { Erc721EventType, LootEventType } from "@framework/types";
 
 import { LootBoxServiceEth } from "./box.service.eth";
+import { ContractType } from "../../../../../utils/contract-type";
 
 @Controller()
 export class LootBoxControllerEth {

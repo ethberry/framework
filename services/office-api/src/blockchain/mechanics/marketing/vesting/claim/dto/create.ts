@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
+import { CoinDto } from "@ethberry/nest-js-validators";
 import type { IVestingClaimCreateDto } from "@framework/types";
 
-import { VestingContractDeployDto } from "../../../../../contract-manager/dto";
-import { CoinDto } from "@ethberry/nest-js-validators";
+import { VestingClaimContractDeployDto } from "./vesting";
 
 export class VestingClaimCreateDto implements IVestingClaimCreateDto {
   @ApiProperty({
@@ -21,9 +21,9 @@ export class VestingClaimCreateDto implements IVestingClaimCreateDto {
   // public endTimestamp: string;
 
   @ApiProperty({
-    type: VestingContractDeployDto,
+    type: VestingClaimContractDeployDto,
   })
   @ValidateNested()
-  @Type(() => VestingContractDeployDto)
-  public parameters: VestingContractDeployDto;
+  @Type(() => VestingClaimContractDeployDto)
+  public parameters: VestingClaimContractDeployDto;
 }

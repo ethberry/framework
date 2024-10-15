@@ -169,11 +169,11 @@
       "NotComplete": "The operation is not complete",
       "NotExist": "The item does not exist",
       "RefProgramSet": "The referral program is set",
+      "RuleNotExist": "The rule is wrong",
       "SignerMissingRole": "The signer is missing a role",
+      "StakeNotExist": "The stake is wrong",
       "TemplateZero": "The template is zero",
       "UnsupportedTokenType": "The token type is not supported",
-      "RuleNotExist": "The rule is wrong",
-      "StakeNotExist": "The stake is wrong",
       "WrongToken": "The token is wrong",
       "ZeroBalance": "The balance is zero"
     },
@@ -382,7 +382,7 @@
       "ERC20TokenDeployed": "ERC20TokenDeployed",
       "ERC721TokenDeployed": "ERC721TokenDeployed",
       "ERC998TokenDeployed": "ERC998TokenDeployed",
-      "EcommercePurchase": "EcommercePurchase",
+      "PurchaseEcommerce": "PurchaseEcommerce",
       "EtherReceived": "EtherReceived",
       "EtherReleased": "EtherReleased",
       "Lend": "Lend",
@@ -397,8 +397,6 @@
       "OwnershipTransferred": "OwnershipTransferred",
       "Paused": "Paused",
       "PayeeAdded": "PayeeAdded",
-      "PaymentReceived": "PaymentReceived",
-      "PaymentReleased": "PaymentReleased",
       "PaymentReceived": "PaymentReceived",
       "PaymentReleased": "PaymentReleased",
       "PaymentSplitterDeployed": "PaymentSplitterDeployed",
@@ -478,17 +476,6 @@
       "ID": "\uD83C\uDDEE\uD83C\uDDE9 Bahasa Indonesia",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
-    },
-    "listenerType": {
-      "ERC1155": "ERC1155",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "MYSTERYBOX": "MYSTERYBOX",
-      "NATIVE": "Native",
-      "PONZI": "PONZI",
-      "STAKING": "STAKING",
-      "VESTING": "VESTING"
     },
     "lootBoxStatus": {
       "ACTIVE": "Active",
@@ -688,6 +675,7 @@
       "unpause": "Unpause",
       "unwhitelist": "Un whitelist",
       "upload": "Upload",
+      "view": "View",
       "whitelist": "Whitelist",
       "withdraw": "Withdraw",
       "withdrawPenalty": "Withdraw Penalties"
@@ -758,7 +746,7 @@
       "deposit": "Deposit",
       "description": "Description",
       "discreteStatus": "Status",
-      "discreteStrategy": "Grade strategy",
+      "discreteStrategy": "Strategy",
       "dismantleStatus": "Status",
       "dismantleStrategy": "Strategy",
       "displayName": "Display name",
@@ -786,7 +774,6 @@
       "level": "Level",
       "listId": "List ID",
       "listIds": "List ID",
-      "listenerType": "Listener type",
       "lootBoxStatus": "Status",
       "lootId": "Lootbox",
       "lottery": "Lottery",
@@ -844,7 +831,6 @@
       "questionResult": "Result",
       "questionStatus": "Status",
       "random": "Random",
-      "rarityMultiplier": "Rarity multiplier X.YY%",
       "ratePlan": "Rate plan",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
@@ -991,7 +977,6 @@
       "query": "Search...",
       "questionIds": "Question",
       "rarity": "Legendary",
-      "rarityMultiplier": "0",
       "recipient": "Recipient",
       "referral": "Referral",
       "roundIds": "Round",
@@ -1168,7 +1153,7 @@
       "exchange": {
         "marketplace": {
           "chart": "Chart",
-          "discrete": "Grade",
+          "discrete": "Discrete",
           "rarity": "Rarity",
           "report": "Report",
           "title": "Marketplace"
@@ -1196,7 +1181,7 @@
         "breed": "Breed",
         "claim": "Claim",
         "collection": "Collections",
-        "discrete": "Grade",
+        "discrete": "Discrete",
         "dispenser": "Dispenser",
         "loot": "Loot",
         "lottery": "Lottery",
@@ -1217,7 +1202,7 @@
       "title": "Dashboard"
     },
     "discrete": {
-      "title": "Grade Rules"
+      "title": "Discrete Rules"
     },
     "dispenser": {
       "description": "This mechanic allows to mass-transact tokens to the list of addresses",
@@ -1332,8 +1317,8 @@
       },
       "discrete": {
         "amount": "Amount",
-        "attribute": "Grade",
-        "title": "Grade"
+        "attribute": "Attribute",
+        "title": "Discrete"
       },
       "rarity": {
         "amount": "Amount",
@@ -1498,15 +1483,6 @@
       }
     },
     "ratePlan": {
-      "bronze": {
-        "title": "BRONZE"
-      },
-      "silver": {
-        "title": "SILVER"
-      },
-      "gold": {
-        "title": "GOLD"
-      },
       "alwaysIncluded": {
         "dispenser": "Mass. token transfer",
         "history": "Transaction history",
@@ -1514,49 +1490,58 @@
         "openSea": "OpenSea integration",
         "title": "Always included"
       },
-      "hierarchy": {
-        "native": "Native token",
-        "erc1155": "ERC1155 contracts",
-        "erc20": "ERC20 contract",
-        "erc721": "ERC721 contracts",
-        "erc998": "ERC998 contracts"
-      },
-      "wait_list": {
-        "undefined": "Wait list"
-      },
-      "vesting": {
-        "undefined": "Vesting"
-      },
-      "loot": {
-        "erc721": "Loot box"
-      },
-      "mystery": {
-        "erc721": "Mystery box"
-      },
-      "raffle": {
-        "undefined": "Raffle"
-      },
-      "lottery": {
-        "undefined": "Lottery"
+      "bronze": {
+        "title": "BRONZE"
       },
       "collection": {
         "erc721": "Collectible"
       },
-      "staking": {
-        "undefined": "Staking"
-      },
-      "payment_splitter": {
-        "undefined": "Payment splitter"
-      },
       "contactViaTelegram": "Contact via Telegram",
+      "gold": {
+        "title": "GOLD"
+      },
+      "hierarchy": {
+        "erc1155": "ERC1155 contracts",
+        "erc20": "ERC20 contract",
+        "erc721": "ERC721 contracts",
+        "erc998": "ERC998 contracts",
+        "native": "Native token"
+      },
+      "loot": {
+        "erc721": "Loot box"
+      },
+      "lottery": {
+        "undefined": "Lottery"
+      },
       "month": "month",
+      "mystery": {
+        "erc721": "Mystery box"
+      },
       "onDemand": {
         "raffle": "Raffle",
         "staking": "Staking",
         "title": "On demand",
         "waitList": "Wait list"
       },
-      "title": "Rate plans"
+      "payment_splitter": {
+        "undefined": "Payment splitter"
+      },
+      "raffle": {
+        "undefined": "Raffle"
+      },
+      "silver": {
+        "title": "SILVER"
+      },
+      "staking": {
+        "undefined": "Staking"
+      },
+      "title": "Rate plans",
+      "vesting": {
+        "undefined": "Vesting"
+      },
+      "wait_list": {
+        "undefined": "Wait list"
+      }
     },
     "recipes": {
       "craft": {

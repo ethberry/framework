@@ -8,7 +8,6 @@ import { ContractFeatures } from "@framework/types";
 
 import { useCheckTokenOwnership } from "../../../../../utils/use-check-token-ownership";
 import { DiscreteButton } from "../../../../../components/buttons";
-import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
 import { TokenDiscreteView } from "./discrete";
 import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
@@ -48,7 +47,6 @@ export const DiscreteTokenPanel: FC<IDiscreteTokenPanelProps> = props => {
           <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.token.attributes" />
           </StyledTypography>
-          <AllowanceInfoPopover />
         </StyledToolbar>
         <TokenDiscreteView metadata={token.metadata} />
       </CardContent>

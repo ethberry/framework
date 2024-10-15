@@ -1,5 +1,3 @@
-import type { IAssetComponentDto } from "./components";
+import type { IAssetComponentDto, IAssetDto } from "@ethberry/types-blockchain";
 
-export interface IAssetDto {
-  components: Array<IAssetComponentDto>;
-}
+export { IAssetComponentDto, IAssetDto };

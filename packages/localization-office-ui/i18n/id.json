@@ -199,17 +199,6 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
-    "listenerType": {
-      "ERC1155": "ERC1155",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "MYSTERYBOX": "KOTAK MISTERI",
-      "NATIVE": "Asli",
-      "PONZI": "PONZI",
-      "STAKING": "STAKING",
-      "VESTING": "VESTING"
-    },
     "merchantStatus": {
       "ACTIVE": "Aktif",
       "INACTIVE": "Tidak Aktif",
@@ -453,7 +442,6 @@
       "language": "Bahasa",
       "listId": "ID daftar",
       "listIds": "ID daftar",
-      "listenerType": "Tipe pendengar",
       "lottery": "Lotere",
       "matron": "Induk betina",
       "maxCycles": "Jumlah siklus maksimal (0 - tanpa batas)",
@@ -502,7 +490,6 @@
       "productStatus": "Status",
       "random": "Acak",
       "ratePlan": "Rencana Tarif",
-      "rarityMultiplier": "Pengganda Kelangkaan X.YY%",
       "recentDeposits": "Deposit Terbaru",
       "recipient": "Penerima",
       "recurrent": "Apakah berulang?",
@@ -639,7 +626,6 @@
       "productStatus": "Status",
       "query": "Cari...",
       "rarity": "Legendaris",
-      "rarityMultiplier": "0",
       "recipient": "Penerima",
       "roundIds": "Ronde",
       "royalty": "1",

@@ -142,15 +142,19 @@ export enum CollectionContractTemplates {
 }
 
 export enum PonziContractFeatures {
-  "REFERRAL" = "REFERRAL",
-  "SPLITTER" = "SPLITTER",
+  "SIMPLE" = "SIMPLE",
 }
 
 export enum PonziContractTemplates {
   "SIMPLE" = "SIMPLE",
-  "REFERRAL" = "REFERRAL",
-  "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
-  "SPLITTER" = "SPLITTER",
+}
+
+export enum StakingContractFeatures {
+  "SIMPLE" = "SIMPLE",
+}
+
+export enum StakingContractTemplates {
+  "SIMPLE" = "SIMPLE",
 }
 
 export enum PredictionContractFeatures {
@@ -161,15 +165,6 @@ export enum PredictionContractFeatures {
 export enum PredictionContractTemplates {
   "SIMPLE" = "SIMPLE",
   "REFERRAL" = "REFERRAL",
-}
-
-export enum StakingContractFeatures {
-  "SIMPLE" = "SIMPLE",
-}
-
-export enum StakingContractTemplates {
-  "SIMPLE" = "SIMPLE",
-  "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
 }
 
 export enum VestingContractTemplates {

@@ -1,18 +1,18 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress, keccak256, AbiCoder } from "ethers";
+import { AbiCoder, hexlify, keccak256, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 import type { IMysteryBoxSignDto } from "@framework/types";
+import { ModuleType, RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
+import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
-import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class MysterySignService {
@@ -53,7 +53,7 @@ export class MysterySignService {
         externalId: mysteryBoxEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: ZeroHash,
         receiver: mysteryBoxEntity.template.contract.merchant.wallet,
         referrer,
       },

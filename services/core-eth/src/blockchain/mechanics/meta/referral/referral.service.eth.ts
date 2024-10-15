@@ -5,7 +5,13 @@ import { ConfigService } from "@nestjs/config";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { ExchangeType, IReferralProgramEvent, RmqProviderType, SignalEventType } from "@framework/types";
+import {
+  ExchangeType,
+  IContractManagerStakingDeployedEvent,
+  IReferralProgramEvent,
+  RmqProviderType,
+  SignalEventType,
+} from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
@@ -16,6 +22,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { ReferralRewardService } from "./reward/referral.reward.service";
 import { ReferralRewardShareService } from "./reward/share/referral.reward.share.service";
+import { ReferralServiceLog } from "./referral.service.log";
 
 @Injectable()
 export class ReferralServiceEth {
@@ -32,9 +39,10 @@ export class ReferralServiceEth {
     private readonly notificatorService: NotificatorService,
     private readonly referralService: ReferralRewardService,
     private readonly referralRewardShareService: ReferralRewardShareService,
+    private readonly referralServiceLog: ReferralServiceLog,
   ) {}
 
-  public async refEvent(event: ILogEvent<IReferralProgramEvent>, context: Log): Promise<void> {
+  public async purchase(event: ILogEvent<IReferralProgramEvent>, context: Log): Promise<void> {
     const { address, transactionHash } = context;
     const { name, args } = event;
     const { account, referrer, price } = args;
@@ -62,7 +70,7 @@ export class ReferralServiceEth {
       for (const item of price) {
         const { token, tokenId, amount } = item;
 
-        const tokenEntity = await this.tokenService.getToken(tokenId, token.toLowerCase(), chainId);
+        const tokenEntity = await this.tokenService.getToken(tokenId, token.toLowerCase());
 
         if (!tokenEntity) {
           this.loggerService.error("priceTokenNotFound", tokenId, ReferralServiceEth.name);
@@ -160,5 +168,16 @@ export class ReferralServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerStakingDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.referralServiceLog.updateRegistry([account]);
   }
 }

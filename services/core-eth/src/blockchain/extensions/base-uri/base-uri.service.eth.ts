@@ -4,10 +4,17 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { IBaseURIUpdateEvent, RmqProviderType, SignalEventType, ModuleType } from "@framework/types";
+import {
+  IBaseURIUpdateEvent,
+  RmqProviderType,
+  SignalEventType,
+  ModuleType,
+  type IContractManagerERC721TokenDeployedEvent,
+} from "@framework/types";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { BaseUriServiceLog } from "./base-uri.service.log";
 
 @Injectable()
 export class BaseUriServiceEth {
@@ -17,6 +24,7 @@ export class BaseUriServiceEth {
     private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly baseUriServiceLog: BaseUriServiceLog,
   ) {}
 
   public async updateBaseUri(event: ILogEvent<IBaseURIUpdateEvent>, context: Log): Promise<void> {
@@ -55,5 +63,16 @@ export class BaseUriServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.baseUriServiceLog.updateRegistry([account]);
   }
 }

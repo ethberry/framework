@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@ethberry/mui-dialog-form";
 import { DateTimeInput } from "@ethberry/mui-inputs-picker";
 import { TemplateAssetInput } from "@ethberry/mui-inputs-asset";
-import { IAssetPromo, TokenType } from "@framework/types";
+import { IAssetPromo, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -36,11 +36,20 @@ export const AssetPromoEditDialog: FC<IAssetPromoEditDialogProps> = props => {
       testId="AssetPromoEditForm"
       {...rest}
     >
-      <TemplateAssetInput autoSelect prefix="item" />
+      <TemplateAssetInput
+        autoSelect
+        prefix="item"
+        contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+        tokenType={{
+          disabledOptions: [TokenType.ERC721, TokenType.ERC998],
+        }}
+      />
       <TemplateAssetInput
         autoSelect
         prefix="price"
-        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+        tokenType={{
+          disabledOptions: [TokenType.ERC721, TokenType.ERC998],
+        }}
       />
       <DateTimeInput name="startTimestamp" />
       <DateTimeInput name="endTimestamp" />

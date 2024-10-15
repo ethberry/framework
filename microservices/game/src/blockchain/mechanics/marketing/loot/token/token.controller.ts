@@ -36,6 +36,6 @@ export class LootTokenController {
     @Param("id", ParseIntPipe) id: number,
     @User() merchantEntity: MerchantEntity,
   ): Promise<TokenEntity | null> {
-    return this.lootTokenService.findOneWithRelationsOrFail({ id }, merchantEntity);
+    return this.lootTokenService.findOneAndCheckMerchant({ id }, merchantEntity);
   }
 }

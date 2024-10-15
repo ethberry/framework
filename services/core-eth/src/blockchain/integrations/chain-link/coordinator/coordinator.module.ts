@@ -38,6 +38,6 @@ export class ChainLinkCoordinatorModule implements OnModuleInit {
   constructor(protected readonly chainLinkCoordinatorServiceLog: ChainLinkCoordinatorServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.chainLinkCoordinatorServiceLog.updateRegistry();
+    await this.chainLinkCoordinatorServiceLog.initRegistry();
   }
 }

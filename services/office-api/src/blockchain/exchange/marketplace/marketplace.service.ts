@@ -6,8 +6,8 @@ import { parse } from "json2csv";
 import { ns } from "@framework/constants";
 import type { IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
 import { ExchangeEventType, ExchangeType, TokenType } from "@framework/types";
+import { formatItemCore } from "@framework/exchange";
 
-import { formatPrice } from "./marketplace.utils";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
 import { AssetComponentHistoryEntity } from "../asset/asset-component-history.entity";
@@ -150,7 +150,7 @@ export class MarketplaceService {
         title: eventHistoryEntity.item.template.title,
         createdAt: eventHistoryEntity.createdAt,
         // @ts-ignore
-        price: formatPrice(eventHistoryEntity.item.template.price),
+        price: formatItemCore(eventHistoryEntity.item.template.price),
       })),
       { fields: headers },
     );

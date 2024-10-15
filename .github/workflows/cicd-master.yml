@@ -18,7 +18,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: framework-test
           POSTGRES_PORT: 5432
-        ports: [ "5432:5432" ]
+        ports: ["5432:5432"]
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -31,7 +31,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: "22.x"
       - name: checkout
         uses: actions/checkout@v4
         with:
@@ -66,7 +66,7 @@ jobs:
           NODE_ENV: test
           TEST_CONTRACTS: false
           BUSINESS_TYPE: B2B
-          POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/framework-test'
+          POSTGRES_URL: "postgres://postgres:postgres@0.0.0.0:5432/framework-test"
           CHAIN_ID: 10000
           ETHBERRY_API_KEY: ${{ secrets.ETHBERRY_API_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
@@ -86,7 +86,6 @@ jobs:
           curl --request POST --url $CLOUDBUILD_WEBHOOK_URL --header "content-type: application/json"
         env:
           CLOUDBUILD_WEBHOOK_URL: ${{ secrets.CLOUDBUILD_WEBHOOK_URL }}
-
 #  telegram-notify-start:
 #    needs: cloudbuild-deploy
 #    runs-on: ubuntu-latest

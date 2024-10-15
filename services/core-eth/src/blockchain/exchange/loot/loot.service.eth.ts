@@ -29,7 +29,6 @@ export class ExchangeLootServiceEth {
     const { address, transactionHash } = context;
 
     const history = await this.eventHistoryService.updateHistory(event, context);
-
     const assets = await this.assetService.saveAssetHistory(history, [item], price);
 
     await this.notificatorService.purchaseLoot({

@@ -1,12 +1,11 @@
-import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, FindManyOptions, In } from "typeorm";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { hexlify, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
-import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { IDismantleSearchDto, IDismantleSignDto } from "@framework/types";
+import { IDismantleSearchDto, IDismantleSignDto, TokenMetadata, TokenRarity } from "@framework/types";
 import {
   DismantleStatus,
   DismantleStrategy,
@@ -21,9 +20,10 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
 import { TokenService } from "../../../../hierarchy/token/token.service";
 import { TokenEntity } from "../../../../hierarchy/token/token.entity";
-import { DismantleEntity } from "./dismantle.entity";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
+import { DismantleEntity } from "./dismantle.entity";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 @Injectable()
 export class DismantleService {
@@ -47,7 +47,7 @@ export class DismantleService {
     queryBuilder.leftJoinAndSelect("dismantle.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
 
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -59,7 +59,7 @@ export class DismantleService {
     queryBuilder.leftJoinAndSelect("dismantle.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.where({
       dismantleStatus: DismantleStatus.ACTIVE,
@@ -106,11 +106,13 @@ export class DismantleService {
   public findOneWithRelations(where: FindOptionsWhere<DismantleEntity>): Promise<DismantleEntity | null> {
     const queryBuilder = this.dismantleEntityRepository.createQueryBuilder("dismantle");
 
+    queryBuilder.where(where);
+
     queryBuilder.leftJoinAndSelect("dismantle.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("dismantle.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
 
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -121,8 +123,8 @@ export class DismantleService {
 
     queryBuilder.leftJoinAndSelect("dismantle.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -131,9 +133,6 @@ export class DismantleService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    queryBuilder.andWhere("dismantle.id = :id", {
-      id: where.id,
-    });
     return queryBuilder.getOne();
   }
 
@@ -171,7 +170,7 @@ export class DismantleService {
         externalId: dismantleEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: ZeroHash,
         receiver: dismantleEntity.merchant.wallet,
         referrer,
       },
@@ -189,61 +188,28 @@ export class DismantleService {
     dismantleEntity: DismantleEntity,
     tokenEntity: TokenEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
-      verifyingContract,
-      account,
-      params,
-      // ITEM to get after dismantle
-      dismantleEntity.item.components.sort(comparator("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId:
-          component.contract.contractType === TokenType.ERC1155 || component.contract.contractType === TokenType.ERC20
-            ? component.template.tokens[0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
-        amount: this.getMultiplier(
-          component.amount,
-          tokenEntity.metadata,
-          dismantleEntity.dismantleStrategy,
-          dismantleEntity.rarityMultiplier,
-        ).toString(),
-      })),
-      // PRICE token to dismantle
-      [
-        dismantleEntity.price.components.sort(comparator("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract.address,
-          tokenId: tokenEntity.tokenId,
-          amount: component.amount,
-        }))[0],
-      ],
+    const rarity = tokenEntity.metadata[TokenMetadata.RARITY] || TokenRarity.COMMON;
+    const level = Object.keys(TokenRarity).indexOf(rarity);
+
+    const items = convertDatabaseAssetToChainAsset(
+      dismantleEntity.item.components,
+      this.getMultiplier(level, dismantleEntity),
     );
+
+    const price = convertDatabaseAssetToChainAsset(dismantleEntity.price.components);
+    // set real token Id
+    price[0].tokenId = tokenEntity.tokenId;
+
+    return this.signerService.getManyToManySignature(verifyingContract, account, params, items, price);
   }
 
-  public getMultiplier(
-    amount: string,
-    metadata: Record<string, any>,
-    dismantleStrategy: DismantleStrategy,
-    rarityMultiplier: number,
-  ) {
-    const level = metadata.RARITY
-      ? Number(metadata.RARITY)
-      : metadata.LEVEL && !metadata.GRADE
-        ? Number(metadata.LEVEL)
-        : metadata.GRADE && !metadata.LEVEL
-          ? Number(metadata.GRADE)
-          : metadata.LEVEL && metadata.GRADE
-            ? Math.max(...[Number(metadata.LEVEL), Number(metadata.GRADE)])
-            : 1;
-
+  public getMultiplier(level: number, { dismantleStrategy, growthRate }: DismantleEntity) {
     if (dismantleStrategy === DismantleStrategy.FLAT) {
-      return BigInt(amount);
+      return 1;
     } else if (dismantleStrategy === DismantleStrategy.LINEAR) {
-      return BigInt(amount) * BigInt(level);
+      return level;
     } else if (dismantleStrategy === DismantleStrategy.EXPONENTIAL) {
-      const exp = (1 + rarityMultiplier / 100) ** level;
-      const [whole = "", decimals = ""] = exp.toString().split(".");
-      return (BigInt(amount) * BigInt(`${whole}${decimals}`)) / BigInt(10) ** BigInt(decimals.length);
+      return (1 + growthRate / 100) ** level;
     } else {
       throw new BadRequestException("unknownStrategy");
     }

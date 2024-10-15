@@ -38,7 +38,7 @@ export class DiscreteEntity extends IdDateBaseEntity implements IDiscrete {
   @ManyToOne(_type => ContractEntity)
   public contract: ContractEntity;
 
-  @Column({ type: "float" })
+  @Column({ type: "int" })
   public growthRate: number;
 
   @Column({ type: "varchar" })

@@ -37,6 +37,6 @@ export class ChainLinkSubscriptionModule implements OnModuleInit {
   constructor(protected readonly chainLinkSubscriptionServiceLog: ChainLinkSubscriptionServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.chainLinkSubscriptionServiceLog.updateRegistry();
+    await this.chainLinkSubscriptionServiceLog.initRegistry();
   }
 }

@@ -19,7 +19,7 @@ export class DismantleEntity extends IdDateBaseEntity implements IDismantle {
   public price: AssetEntity;
 
   @Column({ type: "int" })
-  public rarityMultiplier: number;
+  public growthRate: number;
 
   @Column({ type: "int" })
   public merchantId: number;

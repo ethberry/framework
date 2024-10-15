@@ -14,11 +14,8 @@ import { AssetModule } from "../../../exchange/asset/asset.module";
 import { BreedModule } from "../../../mechanics/gaming/breed/breed.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { NotificatorModule } from "../../../../game/notificator/notificator.module";
-import { Erc721TokenRandomControllerEth } from "./token.controller.random.eth";
-import { Erc721TokenRandomServiceEth } from "./token.service.random.eth";
 import { Erc721TokenControllerEth } from "./token.controller.eth";
 import { Erc721TokenServiceEth } from "./token.service.eth";
-
 import { Erc721TokenServiceLog } from "./token.service.log";
 
 @Module({
@@ -35,22 +32,14 @@ import { Erc721TokenServiceLog } from "./token.service.log";
     TypeOrmModule.forFeature([TokenEntity]),
     NotificatorModule,
   ],
-  providers: [
-    signalServiceProvider,
-    Logger,
-    ethersRpcProvider,
-    Erc721TokenServiceLog,
-    Erc721TokenServiceEth,
-    Erc721TokenRandomServiceEth,
-  ],
-  controllers: [Erc721TokenControllerEth, Erc721TokenRandomControllerEth],
+  providers: [signalServiceProvider, Logger, ethersRpcProvider, Erc721TokenServiceLog, Erc721TokenServiceEth],
+  controllers: [Erc721TokenControllerEth],
   exports: [Erc721TokenServiceLog, Erc721TokenServiceEth],
 })
 export class Erc721TokenModule implements OnModuleInit {
   constructor(private readonly erc721TokenServiceLog: Erc721TokenServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.erc721TokenServiceLog.updateRegistrySimple();
-    await this.erc721TokenServiceLog.updateRegistryRandom();
+    await this.erc721TokenServiceLog.initRegistry();
   }
 }

@@ -4,9 +4,10 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IErc20TokenApproveEvent, IErc20TokenTransferEvent } from "@framework/types";
-import { ContractType, Erc20EventType } from "@framework/types";
+import { Erc20EventType } from "@framework/types";
 
 import { Erc20TokenServiceEth } from "./token.service.eth";
+import { ContractType } from "../../../../utils/contract-type";
 
 @Controller()
 export class Erc20TokenControllerEth {

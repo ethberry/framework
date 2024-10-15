@@ -1,29 +1,30 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { hexlify, randomBytes, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import type { ITemplateSignDto } from "@framework/types";
-import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import { ContractFeatures, ITemplateSignDto, ModuleType, SettingsKeys } from "@framework/types";
+import { convertDatabaseAssetToChainAsset, convertTemplateToChainAsset } from "@framework/exchange";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class MarketplaceService {
   constructor(
-    private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async sign(dto: ITemplateSignDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, templateId, chainId } = dto;
+    const { account, referrer = ZeroAddress, templateId, chainId, amount } = dto;
+
     const templateEntity = await this.templateService.findOneAndCheckMerchant({ id: templateId }, merchantEntity);
 
     const cap = BigInt(templateEntity.cap);
@@ -35,15 +36,22 @@ export class MarketplaceService {
 
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
+
+    // TODO genes should come from template
+    const extra = templateEntity.contract?.contractFeatures.includes(ContractFeatures.GENES)
+      ? zeroPadValue(toBeHex(107914390657248203931494128369229995047683281774584692748922102830935711579232n), 32)
+      : ZeroHash;
+
     const signature = await this.getSignature(
       await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId }),
       account,
+      amount,
       {
         externalId: templateEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
-        receiver: ZeroAddress,
+        extra,
+        receiver: templateEntity.contract.merchant.wallet,
         referrer,
       },
       templateEntity,
@@ -55,32 +63,13 @@ export class MarketplaceService {
   public async getSignature(
     verifyingContract: ContractEntity,
     account: string,
+    amount: string,
     params: ISignatureParams,
     templateEntity: TemplateEntity,
   ): Promise<string> {
-    return this.signerService.getOneToManySignature(
-      verifyingContract,
-      account,
-      params,
-      {
-        tokenType: Object.values(TokenType).indexOf(templateEntity.contract.contractType!),
-        token: templateEntity.contract.address,
-        tokenId:
-          templateEntity.contract.contractType === TokenType.ERC1155
-            ? templateEntity.tokens[0].tokenId
-            : templateEntity.id.toString(),
-        amount: "1",
-      },
-      templateEntity.price.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        // pass templateId instead of tokenId = 0
-        tokenId:
-          component.template.tokens[0].tokenId === "0"
-            ? component.template.tokens[0].templateId.toString()
-            : component.template.tokens[0].tokenId,
-        amount: component.amount,
-      })),
-    );
+    const item = convertTemplateToChainAsset(templateEntity, amount);
+    const price = convertDatabaseAssetToChainAsset(templateEntity.price.components, amount);
+
+    return this.signerService.getOneToManySignature(verifyingContract, account, params, item, price);
   }
 }

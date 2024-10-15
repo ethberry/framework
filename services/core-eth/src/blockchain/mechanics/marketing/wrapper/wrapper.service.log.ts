@@ -1,20 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import {
-  AccessControlEventSignature,
-  BaseUrlEventSignature,
-  ContractType,
-  Erc721EventSignature,
-  ModuleType,
-  RoyaltyEventSignature,
-  TokenType,
-  WrapperEventSignature,
-} from "@framework/types";
+import { ModuleType, TokenType, WrapperEventSignature } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { WrapperABI } from "./interfaces";
 
@@ -26,7 +18,7 @@ export class WrapperServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.WRAPPER,
@@ -34,47 +26,15 @@ export class WrapperServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
-      contractType: ContractType.WRAPPER,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: WrapperABI,
-      eventSignatures: [
-        Erc721EventSignature.Approval,
-        Erc721EventSignature.ApprovalForAll,
-        Erc721EventSignature.Transfer,
-        WrapperEventSignature.UnpackWrapper,
-        // extensions
-        BaseUrlEventSignature.BaseURIUpdate,
-        RoyaltyEventSignature.DefaultRoyaltyInfo,
-        RoyaltyEventSignature.TokenRoyaltyInfo,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
-      ],
-    });
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
   }
 
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.WRAPPER,
-        contractAddress: address,
-        contractInterface: WrapperABI,
-        eventSignatures: [
-          Erc721EventSignature.Approval,
-          Erc721EventSignature.ApprovalForAll,
-          Erc721EventSignature.Transfer,
-          WrapperEventSignature.UnpackWrapper,
-          // extensions
-          RoyaltyEventSignature.DefaultRoyaltyInfo,
-          RoyaltyEventSignature.TokenRoyaltyInfo,
-          BaseUrlEventSignature.BaseURIUpdate,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
-      },
-      blockNumber,
-    );
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
+      contractType: ContractType.WRAPPER,
+      contractAddress: address,
+      contractInterface: WrapperABI,
+      eventSignatures: [WrapperEventSignature.UnpackWrapper],
+    });
   }
 }

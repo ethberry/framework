@@ -1,4 +1,4 @@
-import type { IAssetItem } from "../exchange/common";
+import type { IAssetItem } from "../exchange";
 
 export interface IVestingDeployedEventArgs {
   owner: string;

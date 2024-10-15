@@ -9,6 +9,8 @@ export enum ChainLinkEventType {
 
   // ChainLinkBaseV2Plus
   VrfSubscriptionSet = "VrfSubscriptionSet",
+  MintRandom = "MintRandom",
+  MintGenes = "MintGenes",
 }
 
 export enum ChainLinkEventSignature {
@@ -22,6 +24,8 @@ export enum ChainLinkEventSignature {
 
   // ChainLinkBaseV2Plus
   VrfSubscriptionSet = "VrfSubscriptionSet(uint256)",
+  MintRandom = "MintRandom(uint256,address,uint256[],uint256,uint256)",
+  MintGenes = "MintGenes(uint256,address,uint256[],uint256,uint256)",
 }
 
 export interface IVrfRandomWordsRequestedEvent {
@@ -55,9 +59,26 @@ export interface IVrfSubscriptionSetEvent {
   subId: string;
 }
 
+export interface IERC721TokenMintRandomEvent {
+  requestId: string;
+  to: string;
+  randomWords: Array<string>;
+  templateId: string;
+  tokenId: string;
+}
+
+export interface IERC721TokenMintGenesEvent {
+  requestId: string;
+  to: string;
+  randomWords: Array<string>;
+  templateId: string;
+  tokenId: string;
+}
+
 export type TChainLinkEvents =
   | IVrfRandomWordsRequestedEvent
   | IVrfSubscriptionCreatedEvent
   | IVrfSubscriptionConsumerAddedEvent
   | IVrfSubscriptionConsumerRemovedEvent
-  | IVrfSubscriptionSetEvent;
+  | IVrfSubscriptionSetEvent
+  | IERC721TokenMintRandomEvent;

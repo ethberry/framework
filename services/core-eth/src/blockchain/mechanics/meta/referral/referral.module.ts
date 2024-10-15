@@ -1,6 +1,8 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
+import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
+
 import { ReferralControllerEth } from "./referral.controller.eth";
 import { ReferralServiceEth } from "./referral.service.eth";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
@@ -11,6 +13,7 @@ import { AssetModule } from "../../../exchange/asset/asset.module";
 import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 import { ReferralProgramModule } from "./program/referral.program.module";
 import { ReferralRewardModule } from "./reward/referral.reward.module";
+import { ReferralServiceLog } from "./referral.service.log";
 
 @Module({
   imports: [
@@ -22,9 +25,10 @@ import { ReferralRewardModule } from "./reward/referral.reward.module";
     TokenModule,
     ReferralProgramModule,
     ReferralRewardModule,
+    EthersModule.deferred(),
   ],
-  providers: [Logger, signalServiceProvider, ReferralServiceEth],
+  providers: [Logger, signalServiceProvider, ReferralServiceLog, ReferralServiceEth],
   controllers: [ReferralControllerEth],
-  exports: [ReferralServiceEth],
+  exports: [ReferralServiceLog, ReferralServiceEth],
 })
 export class ReferralModule {}

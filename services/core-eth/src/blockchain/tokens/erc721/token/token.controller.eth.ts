@@ -3,15 +3,14 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  ContractType,
-  Erc721EventType,
-  IERC721ConsecutiveTransfer,
+import type {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
 } from "@framework/types";
+import { Erc721EventType } from "@framework/types";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { Erc721TokenServiceEth } from "./token.service.eth";
 
 @Controller()
@@ -34,13 +33,5 @@ export class Erc721TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721EventType.ConsecutiveTransfer })
-  public consecutiveTransfer(
-    @Payload() event: ILogEvent<IERC721ConsecutiveTransfer>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.erc721TokenServiceEth.consecutiveTransfer(event, context);
   }
 }

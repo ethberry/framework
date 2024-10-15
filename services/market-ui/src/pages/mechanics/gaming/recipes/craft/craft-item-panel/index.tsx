@@ -6,7 +6,6 @@ import { Card, CardActions, CardContent, List, ListItemButton, ListItemText } fr
 import { formatEther } from "@framework/exchange";
 import type { ICraft } from "@framework/types";
 
-import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
 import { CraftButton } from "../../../../../../components/buttons";
 import { StyledTitle, StyledToolbar } from "./styled";
 
@@ -24,18 +23,18 @@ export const CraftItemPanel: FC<ICraftItemPanelProps> = props => {
           <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.recipes.ingredients" />
           </StyledTitle>
-          <AllowanceInfoPopover />
         </StyledToolbar>
         <List>
           {craft.price?.components.map((component, i) => (
             <ListItemButton
               key={component.id || i}
               component={RouterLink}
-              to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}`}
+              to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}/view`}
             >
               <ListItemText>
                 {component.template!.title}{" "}
-                {`(${formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)}`})
+                {`(${formatEther(component.amount, component.template!.contract!.decimals, component.template!.contract!.symbol)}`}
+                )
               </ListItemText>
             </ListItemButton>
           ))}

@@ -1,30 +1,30 @@
-export * from "./claim/upload";
-export * from "./dispenser/upload";
-export * from "./collection/deploy";
-export * from "./collection/upload";
+export * from "./marketing/claim/upload";
+export * from "./marketing/dispenser/upload";
+export * from "./marketing/collection/deploy";
+export * from "./marketing/collection/upload";
 
-export * from "./mystery/contract/deploy";
-export * from "./mystery/contract/mint";
-export * from "./mystery/box/mint";
+export * from "./marketing/mystery/contract/deploy";
+export * from "./marketing/mystery/contract/mint";
+export * from "./marketing/mystery/box/mint";
 
-export * from "./ponzi/contract/deploy";
-export * from "./ponzi/upload";
-export * from "./ponzi/rule-toggle";
-export * from "./ponzi/ponzi-balances";
+export * from "./gambling/ponzi/contract/deploy";
+export * from "./gambling/ponzi/upload";
+export * from "./gambling/ponzi/rule-toggle";
+export * from "./gambling/ponzi/ponzi-balances";
 
-export * from "./staking/deploy";
-export * from "./staking/upload";
-export * from "./staking/check-balances";
-export * from "./staking/withdraw-penalty";
-export * from "./staking/rule-toggle";
-export * from "./staking/allowance";
+export * from "./marketing/staking/deploy";
+export * from "./marketing/staking/upload";
+export * from "./marketing/staking/check-balances";
+export * from "./marketing/staking/withdraw-penalty";
+export * from "./marketing/staking/rule-toggle";
+export * from "./marketing/staking/allowance";
 
-export * from "./wait-list/contract/deploy";
-export * from "./wait-list/list/upload";
-export * from "./wait-list/list/create";
-export * from "./wait-list/list/generate";
+export * from "./marketing/wait-list/contract/deploy";
+export * from "./marketing/wait-list/list/upload";
+export * from "./marketing/wait-list/list/create";
+export * from "./marketing/wait-list/list/generate";
 
-export * from "./vesting/deploy";
-export * from "./vesting/release";
-export * from "./vesting/releasable";
-export * from "./vesting/upload";
+export * from "./marketing/vesting/deploy";
+export * from "./marketing/vesting/release";
+export * from "./marketing/vesting/releasable";
+export * from "./marketing/vesting/upload";

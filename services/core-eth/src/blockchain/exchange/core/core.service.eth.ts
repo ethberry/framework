@@ -1,16 +1,14 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IExchangePurchaseEvent } from "@framework/types";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { AssetService } from "../asset/asset.service";
-import { RmqProviderType, SignalEventType } from "@framework/types";
-import { ReferralRewardService } from "../../mechanics/meta/referral/reward/referral.reward.service";
 
 @Injectable()
 export class ExchangeCoreServiceEth {
@@ -20,7 +18,6 @@ export class ExchangeCoreServiceEth {
     private readonly assetService: AssetService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly notificatorService: NotificatorService,
-    private readonly referralService: ReferralRewardService,
   ) {}
 
   public async purchase(event: ILogEvent<IExchangePurchaseEvent>, context: Log): Promise<void> {
@@ -33,9 +30,6 @@ export class ExchangeCoreServiceEth {
     const history = await this.eventHistoryService.updateHistory(event, context);
 
     const assets = await this.assetService.saveAssetHistory(history, [item], price);
-
-    // PROCESS REFERRAL LOGIC (IF STRICT REF PROGRAM)
-    // await this.referralService.referral(account.toLowerCase(), item.token.toLowerCase());
 
     await this.notificatorService.purchase({
       ...assets,

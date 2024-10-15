@@ -1,63 +1,24 @@
 import type { IAssetComponent, IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { comparator } from "@ethberry/utils";
-import { BigNumber, BigNumberish } from "ethers";
 
-interface IOptions {
-  sortBy?: string;
-  multiplier?: BigNumberish;
-}
-
-export const convertDatabaseAssetToChainAsset = (components?: IAssetComponent[], options: IOptions = {}) => {
-  const { sortBy = "id", multiplier = 1 } = options;
-
-  if (components === undefined) {
-    throw new Error("blockchainError");
-  }
-
+export const convertDatabaseAssetToChainAsset = (
+  components: IAssetComponent[],
+  multiplier?: string | number | bigint,
+) => {
   return components
     .slice()
-    .sort(comparator(sortBy))
-    .map(item => {
-      let tokenId;
-      if (item?.contract?.contractType === TokenType.NATIVE || item?.contract?.contractType === TokenType.ERC20) {
-        tokenId = "0";
-      } else if (
-        item?.contract?.contractType === TokenType.ERC721 ||
-        item?.contract?.contractType === TokenType.ERC998
-      ) {
-        tokenId = (item.templateId || 0).toString();
-      } else if (item?.contract?.contractType === TokenType.ERC1155) {
-        tokenId = item.template?.tokens?.[0]?.tokenId;
-        if (!tokenId) {
-          // tokenId for ERC1155 notFound. You most likely forget to leftAndJoin Tokens for ERC1155
-          throw new Error("blockchainError");
-        }
-      } else {
-        throw new Error("blockchainError");
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
-      const [whole = "", decimals = ""] = multiplier.toString().split(".");
-
-      const amount = BigNumber.from(item.amount)
-        .mul(`${whole}${decimals}`) // multipler (multiplier * 10 ** decimals)
-        .div(BigNumber.from(10).pow(decimals.length)) // div 10 ** decimals
-        .toString();
-
-      return {
-        tokenType: Object.values(TokenType).indexOf(item.tokenType),
-        token: item.contract.address,
-        tokenId,
-        amount,
-      };
-    });
+    .sort(comparator("id"))
+    .map(item => convertTemplateToChainAsset(item.template, item.amount, multiplier));
 };
 
 // Same as convertDatabaseAssetToChainAsset
 // But return tokenType: TokenType
-export const convertDatabaseAssetToTokenTypeAsset = (components?: IAssetComponent[], options: IOptions = {}) => {
-  const assets = convertDatabaseAssetToChainAsset(components, options);
+export const convertDatabaseAssetToTokenTypeAsset = (
+  components: IAssetComponent[],
+  multiplier?: string | number | bigint,
+) => {
+  const assets = convertDatabaseAssetToChainAsset(components, multiplier);
 
   return assets.map(asset => {
     return {
@@ -71,12 +32,13 @@ export interface ITemplateToAssetProps {
   contract?: IContract;
   id: number;
   tokens?: Array<{ tokenId: string }>;
-  amount: BigNumberish;
+  amount: string | number | bigint;
 }
 
 export const convertTemplateToChainAsset = (
   template?: ITemplateToAssetProps,
-  amount: BigNumberish = "1" as BigNumberish,
+  amount: string | number | bigint = 1,
+  multiplier: string | number | bigint = 1,
 ) => {
   let tokenId;
 
@@ -101,15 +63,20 @@ export const convertTemplateToChainAsset = (
     throw new Error("blockchainError");
   }
 
+  const [whole = "", decimals = ""] = multiplier.toString().split(".");
+
   return {
     tokenType: Object.values(TokenType).indexOf(template.contract.contractType),
     token: template.contract.address,
     tokenId,
-    amount,
+    amount: ((BigInt(amount) * BigInt(`${whole}${decimals}`)) / BigInt(10 ** decimals.length)).toString(),
   };
 };
 
-export const convertTemplateToTokenTypeAsset = (template?: ITemplateToAssetProps, amount?: BigNumberish) => {
+export const convertTemplateToTokenTypeAsset = (
+  template?: ITemplateToAssetProps,
+  amount?: string | number | bigint,
+) => {
   const asset = convertTemplateToChainAsset(template, amount);
 
   return {

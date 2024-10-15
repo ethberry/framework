@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
+import { hexlify, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ModuleType, TokenType } from "@framework/types";
 import type { IRaffleSignDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { RaffleRoundService } from "../round/round.service";
 import { RaffleRoundEntity } from "../round/round.entity";
@@ -41,7 +41,7 @@ export class RaffleSignService {
         externalId: raffleRoundEntity.id,
         expiresAt,
         nonce,
-        extra: encodeBytes32String("0x"),
+        extra: ZeroHash,
         receiver: raffleRoundEntity.contract.address,
         referrer,
       },

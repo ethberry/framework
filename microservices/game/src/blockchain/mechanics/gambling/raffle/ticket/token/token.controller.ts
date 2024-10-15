@@ -28,6 +28,6 @@ export class RaffleTicketTokenController {
     @Param("id", ParseIntPipe) id: number,
     @User() merchantEntity: MerchantEntity,
   ): Promise<TokenEntity | null> {
-    return this.raffleTicketTokenService.findOneWithRelationsOrFail({ id }, merchantEntity);
+    return this.raffleTicketTokenService.findOneAndCheckMerchant({ id }, merchantEntity);
   }
 }

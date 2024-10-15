@@ -1,17 +1,9 @@
-import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { ZeroAddress } from "ethers";
 
-import {
-  AccessControlEventType,
-  AchievementRuleStatus,
-  ContractManagerEventType,
-  TContractEventType,
-  TokenType,
-} from "@framework/types";
-import { testChainId } from "@framework/constants";
+import { AchievementRuleStatus, TContractEventType, TokenType } from "@framework/types";
 
 import { EventHistoryEntity } from "../../../../event-history/event-history.entity";
 import { AchievementsItemService } from "../item/item.service";
@@ -98,102 +90,102 @@ export class AchievementsRuleService {
     return queryBuilder.getMany();
   }
 
-  public async processEvent(id: number): Promise<void> {
-    const eventHistoryEntity = await this.eventHistoryService.findOneWithRelations({ id });
-
-    if (!eventHistoryEntity) {
-      throw new NotFoundException("eventNotFound");
-    }
-
-    const { contractId, eventType, eventData } = eventHistoryEntity;
-
-    // do not check ContractManager's deploy events
-    // do not check AccessControlEventType's events
-    // TODO rename CM's events args account -> addr
-    if (
-      !Object.values(ContractManagerEventType).includes(eventType as any) &&
-      !Object.values(AccessControlEventType).includes(eventType as any)
-    ) {
-      // @ts-ignore
-      if (eventData && "account" in eventData) {
-        const wallet = eventData.account;
-        // TODO filter all db.contracts or limit rule events
-        const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-        const allContracts = await this.contractService.findAll(
-          { chainId },
-          {
-            select: {
-              address: true,
-            },
-          },
-        );
-
-        // Check only user events
-        if (wallet !== ZeroAddress && !allContracts.map(c => c.address).includes(wallet.toLowerCase())) {
-          const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
-
-          // find eventHistoryEntity User
-          if (!userEntity) {
-            this.loggerService.error("userNotFound", wallet, AchievementsRuleService.name);
-            throw new NotFoundException("userNotFound");
-          }
-
-          // Find appropriate rules
-          const rules = await this.findAllWithRelations(contractId, eventType);
-          if (rules.length) {
-            // Check each rule condition
-            const promises = rules.map(async rule => {
-              // CHECK RULE TIMEFRAME
-              // TODO fix format and check date
-              const ruleStartTime = rule.startTimestamp;
-              const ruleEndTime = rule.endTimestamp;
-              const timeNow = Date.now();
-              if (ruleStartTime !== ruleEndTime && (Number(ruleStartTime) > timeNow || Number(ruleEndTime) < timeNow)) {
-                return null;
-              }
-              const ruleAsset = rule.item;
-              // if rule with Asset - compare with eventHistoryEntity assets
-              if (ruleAsset.components) {
-                // get Asset from eventData
-                const eventAsset = this.getEventTokenAsset(eventHistoryEntity);
-                // if both Assets - check deeper
-                if (eventAsset.length) {
-                  // Check if any one rule.item == eventHistoryEntity.item
-                  ruleAsset.components.map(asset => {
-                    return eventAsset.map(async item => {
-                      // if Rule.Asset condition met - create achievementsItem
-                      if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
-                        if (asset.templateId === item.templateId || !asset.templateId) {
-                          return this.achievementsItemService.create(userEntity.id, rule.id, eventHistoryEntity.id);
-                        } else {
-                          return void 0;
-                        }
-                      } else {
-                        return void 0;
-                      }
-                    });
-                  });
-                  return void 0;
-                } else {
-                  return void 0;
-                }
-              } else {
-                // Rule condition met - create achievementsItem
-                return this.achievementsItemService.create(userEntity.id, rule.id, eventHistoryEntity.id);
-              }
-            });
-
-            await Promise.allSettled(promises).then(res =>
-              res.forEach(value => {
-                if (value.status === "rejected") {
-                  this.loggerService.error(value.reason, AchievementsRuleService.name);
-                }
-              }),
-            );
-          }
-        }
-      }
-    }
+  public async processEvent(_id: number): Promise<void> {
+    // const eventHistoryEntity = await this.eventHistoryService.findOneWithRelations({ id });
+    //
+    // if (!eventHistoryEntity) {
+    //   throw new NotFoundException("eventNotFound");
+    // }
+    //
+    // const { contractId, eventType, eventData } = eventHistoryEntity;
+    //
+    // // do not check ContractManager's deploy events
+    // // do not check AccessControlEventType's events
+    // // TODO rename CM's events args account -> addr
+    // if (
+    //   !Object.values(ContractManagerEventType).includes(eventType as any) &&
+    //   !Object.values(AccessControlEventType).includes(eventType as any)
+    // ) {
+    //   // @ts-ignore
+    //   if (eventData && "account" in eventData) {
+    //     const wallet = eventData.account;
+    //     // TODO filter all db.contracts or limit rule events
+    //     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    //     const allContracts = await this.contractService.findAll(
+    //       { chainId },
+    //       {
+    //         select: {
+    //           address: true,
+    //         },
+    //       },
+    //     );
+    //
+    //     // Check only user events
+    //     if (wallet !== ZeroAddress && !allContracts.map(c => c.address).includes(wallet.toLowerCase())) {
+    //       const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
+    //
+    //       // find eventHistoryEntity User
+    //       if (!userEntity) {
+    //         this.loggerService.error("userNotFound", wallet, AchievementsRuleService.name);
+    //         throw new NotFoundException("userNotFound");
+    //       }
+    //
+    //       // Find appropriate rules
+    //       const rules = await this.findAllWithRelations(contractId, eventType);
+    //       if (rules.length) {
+    //         // Check each rule condition
+    //         const promises = rules.map(async rule => {
+    //           // CHECK RULE TIMEFRAME
+    //           // TODO fix format and check date
+    //           const ruleStartTime = rule.startTimestamp;
+    //           const ruleEndTime = rule.endTimestamp;
+    //           const timeNow = Date.now();
+    //           if (ruleStartTime !== ruleEndTime && (Number(ruleStartTime) > timeNow || Number(ruleEndTime) < timeNow)) {
+    //             return null;
+    //           }
+    //           const ruleAsset = rule.item;
+    //           // if rule with Asset - compare with eventHistoryEntity assets
+    //           if (ruleAsset.components) {
+    //             // get Asset from eventData
+    //             const eventAsset = this.getEventTokenAsset(eventHistoryEntity);
+    //             // if both Assets - check deeper
+    //             if (eventAsset.length) {
+    //               // Check if any one rule.item == eventHistoryEntity.item
+    //               ruleAsset.components.map(asset => {
+    //                 return eventAsset.map(async item => {
+    //                   // if Rule.Asset condition met - create achievementsItem
+    //                   if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
+    //                     if (asset.templateId === item.templateId || !asset.templateId) {
+    //                       return this.achievementsItemService.create(userEntity.id, rule.id, eventHistoryEntity.id);
+    //                     } else {
+    //                       return void 0;
+    //                     }
+    //                   } else {
+    //                     return void 0;
+    //                   }
+    //                 });
+    //               });
+    //               return void 0;
+    //             } else {
+    //               return void 0;
+    //             }
+    //           } else {
+    //             // Rule condition met - create achievementsItem
+    //             return this.achievementsItemService.create(userEntity.id, rule.id, eventHistoryEntity.id);
+    //           }
+    //         });
+    //
+    //         await Promise.allSettled(promises).then(res =>
+    //           res.forEach(value => {
+    //             if (value.status === "rejected") {
+    //               this.loggerService.error(value.reason, AchievementsRuleService.name);
+    //             }
+    //           }),
+    //         );
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   // Get event.Asset data if any

@@ -1,33 +1,23 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
-import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
-import { comparator } from "@ethberry/utils";
+import type { IServerSignature } from "@ethberry/types-blockchain";
 import { defaultChainId } from "@framework/constants";
-import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
-import type { IPromoSignDto, IPromoSearchDto } from "@framework/types";
+import type { IPromoSearchDto, IPromoSignDto } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import { AssetPromoEntity } from "./promo.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
-import { TemplateService } from "../../../hierarchy/template/template.service";
-import { SettingsService } from "../../../../infrastructure/settings/settings.service";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { MysteryBoxEntity } from "../../marketing/mystery/box/box.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { MarketplaceService } from "../../../exchange/marketplace/marketplace.service";
+import { AssetPromoEntity } from "./promo.entity";
 
 @Injectable()
 export class AssetPromoService {
   constructor(
     @InjectRepository(AssetPromoEntity)
     private readonly assetPromoEntityRepository: Repository<AssetPromoEntity>,
-    private readonly templateService: TemplateService,
-    private readonly signerService: SignerService,
-    private readonly contractService: ContractService,
-    private readonly settingsService: SettingsService,
+    private readonly marketplaceService: MarketplaceService,
   ) {}
 
   public async search(
@@ -43,32 +33,12 @@ export class AssetPromoService {
     queryBuilder.leftJoinAndSelect("promo.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
-
-    // JOIN MYSTERY-BOXES IF ANY
-    queryBuilder.leftJoinAndMapOne(
-      "promo.box",
-      MysteryBoxEntity,
-      "box",
-      `item_template.id = item_template.id AND item_contract.contractModule = '${ModuleType.MYSTERY}'`,
-    );
-
-    queryBuilder.leftJoinAndSelect("box.content", "box_item");
-    queryBuilder.leftJoinAndSelect("box_item.components", "box_item_components");
-    queryBuilder.leftJoinAndSelect("box_item_components.template", "box_item_template");
-    queryBuilder.leftJoinAndSelect("box_item_components.contract", "box_item_contract");
-
-    queryBuilder.leftJoinAndSelect(
-      "box_item_template.tokens",
-      "box_item_tokens",
-      "box_item_contract.contractType IN(:...tokenTypes)",
-      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
-    );
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
 
     queryBuilder.leftJoinAndSelect("promo.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -105,36 +75,18 @@ export class AssetPromoService {
   public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<AssetPromoEntity | null> {
     const queryBuilder = this.assetPromoEntityRepository.createQueryBuilder("promo");
 
+    queryBuilder.where(where);
+
     queryBuilder.leftJoinAndSelect("promo.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("promo.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-
-    // JOIN MYSTERY-BOXES IF ANY
-    queryBuilder.leftJoinAndMapOne(
-      "promo.box",
-      MysteryBoxEntity,
-      "box",
-      `item_template.id = item_template.id AND item_contract.contractModule = '${ModuleType.MYSTERY}'`,
-    );
-
-    queryBuilder.leftJoinAndSelect("box.content", "box_item");
-    queryBuilder.leftJoinAndSelect("box_item.components", "box_item_components");
-    queryBuilder.leftJoinAndSelect("box_item_components.template", "box_item_template");
-    queryBuilder.leftJoinAndSelect("box_item_components.contract", "box_item_contract");
-
-    queryBuilder.leftJoinAndSelect(
-      "box_item_template.tokens",
-      "box_item_tokens",
-      "box_item_contract.contractType IN(:...tokenTypes)",
-      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
-    );
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
 
     queryBuilder.leftJoinAndSelect("promo.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -142,119 +94,36 @@ export class AssetPromoService {
       "price_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
-    queryBuilder.andWhere("promo.id = :id", {
-      id: where.id,
-    });
+
     return queryBuilder.getOne();
   }
 
   public async sign(dto: IPromoSignDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { referrer = ZeroAddress, promoId } = dto;
+    const { referrer, promoId, chainId, account } = dto;
 
-    const AssetPromoEntity = await this.findOneWithRelations({ id: promoId });
+    const promoEntity = await this.findOneWithRelations({ id: promoId });
 
-    if (!AssetPromoEntity) {
+    if (!promoEntity) {
       throw new NotFoundException("promoNotFound");
     }
 
     const now = Date.now();
-    if (new Date(AssetPromoEntity.startTimestamp).getTime() > now) {
+    if (new Date(promoEntity.startTimestamp).getTime() > now) {
       throw new BadRequestException("promoNotYetStarted");
     }
-    if (new Date(AssetPromoEntity.endTimestamp).getTime() < now) {
+    if (new Date(promoEntity.endTimestamp).getTime() < now) {
       throw new BadRequestException("promoAlreadyEnded");
     }
-    const templateEntity = await this.templateService.findOne({
-      id: AssetPromoEntity.item.components[0].templateId!,
-    });
 
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    const cap = BigInt(templateEntity.cap);
-    if (cap > 0 && cap <= BigInt(templateEntity.amount)) {
-      throw new BadRequestException("limitExceeded");
-    }
-
-    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
-
-    const nonce = randomBytes(32);
-    const expiresAt = ttl && ttl + Date.now() / 1000;
-
-    const signature = await this.getSignature(
-      await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
-      userEntity.wallet,
+    return this.marketplaceService.sign(
       {
-        externalId: AssetPromoEntity.id,
-        expiresAt,
-        nonce,
-        extra: encodeBytes32String("0x"),
-        receiver: AssetPromoEntity.merchant.wallet,
         referrer,
+        chainId,
+        account,
+        templateId: promoEntity.item.components[0].templateId!,
+        amount: "1",
       },
-      AssetPromoEntity,
+      userEntity,
     );
-
-    return { nonce: hexlify(nonce), signature, expiresAt };
-  }
-
-  public async getSignature(
-    verifyingContract: ContractEntity,
-    account: string,
-    params: ISignatureParams,
-    assetPromoEntity: AssetPromoEntity,
-  ): Promise<string> {
-    const mysteryComponents =
-      assetPromoEntity.item?.components.filter(component => component.contract.contractModule === ModuleType.MYSTERY)
-        .length > 0;
-
-    return mysteryComponents
-      ? this.signerService.getManyToManySignature(
-          verifyingContract,
-          account,
-          params,
-          [
-            ...assetPromoEntity.box!.content.components.sort(comparator("id")).map(component => ({
-              tokenType: Object.values(TokenType).indexOf(component.tokenType),
-              token: component.contract.address,
-              // tokenId: component.templateId || 0,
-              tokenId:
-                component.contract.contractType === TokenType.ERC1155
-                  ? component.template.tokens[0].tokenId
-                  : (component.templateId || 0).toString(),
-              amount: component.amount,
-            })),
-            assetPromoEntity.item?.components.sort(comparator("id")).map(component => ({
-              tokenType: Object.values(TokenType).indexOf(component.tokenType),
-              token: component.contract.address,
-              tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-              amount: component.amount,
-            }))[0],
-          ],
-          assetPromoEntity.price.components.sort(comparator("id")).map(component => ({
-            tokenType: Object.values(TokenType).indexOf(component.tokenType),
-            token: component.contract.address,
-            tokenId: component.template.tokens[0].tokenId,
-            amount: component.amount,
-          })),
-        )
-      : this.signerService.getOneToManySignature(
-          verifyingContract,
-          account,
-          params,
-          assetPromoEntity.item.components.sort(comparator("id")).map(component => ({
-            tokenType: Object.values(TokenType).indexOf(component.tokenType),
-            token: component.contract.address,
-            tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-            amount: component.amount,
-          }))[0],
-          assetPromoEntity.price.components.sort(comparator("id")).map(component => ({
-            tokenType: Object.values(TokenType).indexOf(component.tokenType),
-            token: component.contract.address,
-            tokenId: component.template.tokens[0].tokenId,
-            amount: component.amount,
-          })),
-        );
   }
 }

@@ -33,6 +33,6 @@ export class Erc1155TokenModule implements OnModuleInit {
   constructor(private readonly erc1155TokenServiceLog: Erc1155TokenServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.erc1155TokenServiceLog.updateRegistry();
+    await this.erc1155TokenServiceLog.initRegistry();
   }
 }

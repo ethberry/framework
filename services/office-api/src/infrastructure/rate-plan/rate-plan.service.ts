@@ -35,12 +35,11 @@ export class RatePlanService {
     }
   }
 
-  public async getPlanLimits(
+  public async validateDeployment(
     _userEntity: UserEntity,
     _contractModule: ModuleType,
     _contractType: TokenType | null,
-  ): Promise<number> {
-    // always allow to deploy from office
-    return Promise.resolve(0);
+  ): Promise<void> {
+    await Promise.resolve(0);
   }
 }

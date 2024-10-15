@@ -1,20 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import {
-  AccessControlEventSignature,
-  BaseUrlEventSignature,
-  ContractType,
-  Erc721EventSignature,
-  ModuleType,
-  LootEventSignature,
-  RoyaltyEventSignature,
-  TokenType,
-} from "@framework/types";
+import { Erc721EventSignature, LootEventSignature, ModuleType, TokenType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { LootABI } from "./interfaces";
 
@@ -26,7 +18,7 @@ export class LootBoxServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.LOOT,
@@ -34,47 +26,20 @@ export class LootBoxServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.LOOT,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: LootABI,
       eventSignatures: [
         Erc721EventSignature.Approval,
         Erc721EventSignature.ApprovalForAll,
         Erc721EventSignature.Transfer,
         LootEventSignature.UnpackLootBox,
-        // extensions
-        BaseUrlEventSignature.BaseURIUpdate,
-        RoyaltyEventSignature.DefaultRoyaltyInfo,
-        RoyaltyEventSignature.TokenRoyaltyInfo,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.LOOT,
-        contractAddress: address,
-        contractInterface: LootABI,
-        eventSignatures: [
-          Erc721EventSignature.Approval,
-          Erc721EventSignature.ApprovalForAll,
-          Erc721EventSignature.Transfer,
-          LootEventSignature.UnpackLootBox,
-          // extensions
-          RoyaltyEventSignature.DefaultRoyaltyInfo,
-          RoyaltyEventSignature.TokenRoyaltyInfo,
-          BaseUrlEventSignature.BaseURIUpdate,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

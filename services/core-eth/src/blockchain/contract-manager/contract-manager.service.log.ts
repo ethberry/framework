@@ -4,9 +4,10 @@ import { ConfigService } from "@nestjs/config";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
-import { AccessControlEventSignature, ContractManagerEventSignature, ContractType, ModuleType } from "@framework/types";
+import { ContractManagerEventSignature, ModuleType } from "@framework/types";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { ContractManagerABI } from "./interfaces";
+import { ContractType } from "../../utils/contract-type";
 
 @Injectable()
 export class ContractManagerServiceLog {
@@ -16,14 +17,14 @@ export class ContractManagerServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.CONTRACT_MANAGER,
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    this.ethersService.updateRegistry({
       contractType: ContractType.CONTRACT_MANAGER,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: ContractManagerABI,
@@ -42,10 +43,6 @@ export class ContractManagerServiceLog {
         ContractManagerEventSignature.LotteryDeployed,
         ContractManagerEventSignature.RaffleDeployed,
         ContractManagerEventSignature.WaitListDeployed,
-        // MODULE:ACCESS_CONTROL
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
       ],
     });
   }

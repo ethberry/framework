@@ -5,11 +5,11 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IExchangePurchaseMysteryBoxEvent } from "@framework/types";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { AssetService } from "../asset/asset.service";
-import { RmqProviderType, SignalEventType } from "@framework/types";
 
 @Injectable()
 export class ExchangeMysteryServiceEth {
@@ -24,13 +24,12 @@ export class ExchangeMysteryServiceEth {
   public async log(event: ILogEvent<IExchangePurchaseMysteryBoxEvent>, context: Log): Promise<void> {
     const {
       name,
-      args: { account, item, price },
+      args: { account, item, price, content },
     } = event;
     const { address, transactionHash } = context;
 
     const history = await this.eventHistoryService.updateHistory(event, context);
-
-    const assets = await this.assetService.saveAssetHistory(history, [item], price);
+    const assets = await this.assetService.saveAssetHistory(history, [item], price, content);
 
     await this.notificatorService.purchaseMystery({
       ...assets,

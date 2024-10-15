@@ -56,7 +56,10 @@ export class ExchangeDiscreteServiceEth {
 
     await this.assetService.updateAssetHistory(transactionHash, tokenEntity);
 
-    const discreteEntity = await this.discreteService.findOneWithRelations({ id: Number(externalId) });
+    const discreteEntity = await this.discreteService.findOne(
+      { id: Number(externalId) },
+      { relations: { contract: true } },
+    );
     if (!discreteEntity) {
       this.loggerService.error("discreteNotFound", tokenEntity.id, attribute, ExchangeDiscreteServiceEth.name);
       throw new NotFoundException("discreteNotFound");

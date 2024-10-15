@@ -9,8 +9,9 @@ import {
   IErc1155TokenTransferSingleEvent,
   IErc1155TokenUriEvent,
 } from "@framework/types";
-import { Erc1155EventType, ContractType } from "@framework/types";
+import { Erc1155EventType } from "@framework/types";
 
+import { ContractType } from "../../../../utils/contract-type";
 import { Erc1155TokenServiceEth } from "./token.service.eth";
 
 @Controller()

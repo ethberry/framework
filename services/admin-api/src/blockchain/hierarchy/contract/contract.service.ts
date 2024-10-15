@@ -12,6 +12,7 @@ import {
   UpdateResult,
 } from "typeorm";
 
+import { comparator } from "@ethberry/utils";
 import type { IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -207,7 +208,7 @@ export class ContractService {
       return contractEntities.concat(externalContractEntities);
     }
 
-    return contractEntities;
+    return contractEntities.sort(comparator("id")).reverse();
   }
 
   public findOne(

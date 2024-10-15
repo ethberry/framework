@@ -86,6 +86,8 @@
       "UNCOMMON": "Uncommon"
     },
     "blockchainError": {
+      "ERC721NonexistentToken": "Token doesn't exist",
+      "AccessControlUnauthorizedAccount": "Unauthorized Account",
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
       "Expired": "The item has expired",
@@ -450,7 +452,7 @@
       "facebookUrl": "Facebook",
       "from": "From",
       "gender": "Gender",
-      "discreteId": "Grade",
+      "discreteId": "Attribute",
       "id": "ID",
       "imageUrl": "Avatar",
       "instagramUrl": "Instagram",
@@ -1202,7 +1204,6 @@
       "price": "Base price",
       "priceTitle": "Base price:",
       "rarity": "Rarity",
-      "rarityMultiplier": " x {multiplier}",
       "tokenUser": "User",
       "traits": "Traits"
     },

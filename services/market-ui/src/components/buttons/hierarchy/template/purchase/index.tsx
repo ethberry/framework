@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract, utils, constants } from "ethers";
 import { ShoppingCart } from "@mui/icons-material";
 
@@ -15,8 +15,7 @@ import {
   getEthPrice,
 } from "@framework/exchange";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract, ITemplate, IUser } from "@framework/types";
-import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
+import { ContractFeatures, IContract, ITemplate, IUser, TemplateStatus, TokenType } from "@framework/types";
 
 import ExchangePurchaseFacetPurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 
@@ -50,16 +49,16 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
       );
 
       const item = convertTemplateToChainAsset(template, values.amount);
-      const price = convertDatabaseAssetToChainAsset(template.price?.components, { multiplier: values.amount });
+      const price = convertDatabaseAssetToChainAsset(template.price!.components, values.amount);
 
       return contract.purchase(
         {
           externalId: template.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
-          extra: utils.formatBytes32String("0x"),
+          extra: constants.HashZero,
           receiver: template.contract!.merchant!.wallet,
-          referrer: referrer || constants.AddressZero,
+          referrer,
         },
         item,
         price,
@@ -73,9 +72,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
   const metaFnWithSign = useServerSignature(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const assets = convertDatabaseAssetToTokenTypeAsset(template.price?.components, {
-        multiplier: values.amount,
-      });
+      const assets = convertDatabaseAssetToTokenTypeAsset(template.price!.components, values.amount);
       return metaFnWithAllowance(
         {
           contract: systemContract.address,
@@ -137,14 +134,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     return null;
   }
 
-  // Random contract must be registered in Chain-link VRF
-  // TODO may-be hide BUY button completely, but it brakes formatting
-  const randomRequired =
-    template.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ||
-    template.contract?.contractFeatures.includes(ContractFeatures.GENES);
-  const randomConfigured =
-    !randomRequired ||
-    (randomRequired && template.contract?.parameters.vrfSubId && template.contract?.parameters.isConsumer);
+  const isCapExceeded = template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap);
 
   return (
     <Fragment>
@@ -154,9 +144,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         message={isActive && isUserAuthenticated ? "form.buttons.buy" : "components.header.wallet.connect"}
         className={className}
         dataTestId="TemplatePurchaseButton"
-        disabled={
-          disabled || !randomConfigured || (template.cap !== "0" && BigInt(template.amount) >= BigInt(template.cap))
-        }
+        disabled={disabled || isCapExceeded}
         variant={variant}
       />
       <AmountDialog

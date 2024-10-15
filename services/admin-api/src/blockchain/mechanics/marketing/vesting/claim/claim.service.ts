@@ -14,7 +14,7 @@ import { mapLimit } from "async";
 import type { IClaimSearchDto, IVestingClaimCreateDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-import { ContractManagerSignService } from "../../../../contract-manager/contract-manager.sign.service";
+import { ContractManagerVestingSignService } from "../../../../contract-manager/vesting/vesting.sign.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ClaimEntity } from "../../claim/claim.entity";
 import type { IVestingClaimRow, IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
@@ -29,7 +29,7 @@ export class VestingClaimService {
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     private readonly assetService: AssetService,
-    private readonly contractManagerSignService: ContractManagerSignService,
+    private readonly contractManagerSignService: ContractManagerVestingSignService,
     private readonly contractService: ContractService,
   ) {}
 

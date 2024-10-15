@@ -199,17 +199,6 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
-    "listenerType": {
-      "ERC1155": "ERC1155",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "MYSTERYBOX": "صندوق الألغاز",
-      "NATIVE": "أصلي",
-      "PONZI": "بونزي",
-      "STAKING": "التخزين",
-      "VESTING": "الاستثمار"
-    },
     "merchantStatus": {
       "ACTIVE": "نشط",
       "INACTIVE": "غير نشط",
@@ -453,7 +442,6 @@
       "language": "اللغة",
       "listId": "رقم القائمة",
       "listIds": "رقم القائمة",
-      "listenerType": "نوع المستمع",
       "lottery": "اليانصيب",
       "matron": "الأم",
       "maxCycles": "الحد الأقصى لعدد الدورات (0 - بدون حد)",
@@ -502,7 +490,6 @@
       "productStatus": "حالة",
       "random": "عشوائي",
       "ratePlan": "خطة السعر",
-      "rarityMultiplier": "مضاعف الندرة X.YY%",
       "recentDeposits": "الإيداعات الأخيرة",
       "recipient": "المستلم",
       "recurrent": "هل متكرر؟",
@@ -639,7 +626,6 @@
       "productStatus": "الحالة",
       "query": "البحث...",
       "rarity": "أسطوري",
-      "rarityMultiplier": "0",
       "recipient": "المستلم",
       "roundIds": "الجولة",
       "royalty": "1",

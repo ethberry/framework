@@ -16,6 +16,7 @@ import { EnabledLanguages, ns } from "@framework/constants";
 
 import { themeProps } from "../components/theme";
 import { Signal } from "../components/signal";
+import { CustomErrors } from "@framework/types";
 
 export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
@@ -28,7 +29,7 @@ export const Providers: FC<PropsWithChildren> = props => {
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
                 <SnackbarProvider>
                   <PopupProvider>
-                    <WalletProvider>
+                    <WalletProvider customErrors={CustomErrors}>
                       <PickerProvider>
                         <Signal />
                         {children}

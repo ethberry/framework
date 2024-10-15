@@ -9,7 +9,7 @@ import {
   ChainLinkEventType,
   Erc1155EventType,
   Erc20EventType,
-  Erc4907EventType,
+  RentableEventType,
   Erc721EventType,
   ExchangeEventType,
   IERC721TokenMintRandomEvent,
@@ -118,15 +118,13 @@ export class EventHistoryService {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const { args, name } = event;
-    const { transactionHash, address, blockNumber } = context;
+    const { transactionHash, address } = context;
 
     const contractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
-
-    await this.contractService.updateLastBlockById(contractEntity.id, parseInt(blockNumber.toString(), 16));
 
     const contractEventEntity = await this.create({
       address,
@@ -169,7 +167,7 @@ export class EventHistoryService {
       }
     }
 
-    if (eventType === Erc721EventType.MintRandom) {
+    if (eventType === ChainLinkEventType.MintRandom) {
       const data = eventData as IERC721TokenMintRandomEvent;
       const requestId = data.requestId;
       const parentEvent = await this.findByRandomRequest(requestId.toString());
@@ -202,7 +200,7 @@ export class EventHistoryService {
           ExchangeEventType.Lend,
           ExchangeEventType.PurchaseLottery,
           ExchangeEventType.PurchaseRaffle,
-          Erc721EventType.MintRandom,
+          ChainLinkEventType.MintRandom,
           StakingEventType.DepositStart,
           StakingEventType.DepositFinish,
         ]),
@@ -217,7 +215,7 @@ export class EventHistoryService {
     }
 
     // MODULE:RENTABLE
-    if (eventType === Erc4907EventType.UpdateUser) {
+    if (eventType === RentableEventType.UpdateUser) {
       const parentEvent = await this.findOne({
         transactionHash,
         eventType: In([ExchangeEventType.Lend]),

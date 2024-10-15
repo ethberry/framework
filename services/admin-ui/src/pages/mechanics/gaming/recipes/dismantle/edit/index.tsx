@@ -9,8 +9,8 @@ import type { IDismantle } from "@framework/types";
 import { ContractStatus, DismantleStatus, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { RarityMultiplierInput } from "./rarity-multiplier-input";
 import { StrategyInput } from "./strategy-input";
+import { GrowthRateInput } from "./growth-rate-input";
 
 export interface IDismantleEditDialogProps {
   open: boolean;
@@ -22,7 +22,7 @@ export interface IDismantleEditDialogProps {
 export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, price, dismantleStatus, rarityMultiplier, dismantleStrategy } = initialValues;
+  const { id, item, price, dismantleStatus, growthRate, dismantleStrategy } = initialValues;
 
   const fixedValues = {
     id,
@@ -30,7 +30,7 @@ export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
     price,
     dismantleStatus,
     dismantleStrategy,
-    rarityMultiplier,
+    growthRate,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -76,7 +76,7 @@ export const DismantleEditDialog: FC<IDismantleEditDialogProps> = props => {
         multiple
       />
       <StrategyInput name="dismantleStrategy" />
-      <RarityMultiplierInput name="rarityMultiplier" />
+      <GrowthRateInput name="growthRate" />
       {id ? <SelectInput name="dismantleStatus" options={DismantleStatus} /> : null}
     </FormDialog>
   );

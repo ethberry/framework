@@ -18,9 +18,8 @@ export const validationSchema = object().shape({
         amount: bigNumberValidationSchema.when("tokenType", {
           is: (tokenType: TokenType) => tokenType !== TokenType.ERC721 && tokenType !== TokenType.ERC998,
           then: () =>
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             bigNumberValidationSchema
-              .min(0, "form.validations.rangeUnderflow")
+              .min(0, "form.validations.rangeUnderflow") // <- this is custom
               .required("form.validations.valueMissing"),
         }),
       }),

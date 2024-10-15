@@ -2,19 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { IsNull } from "typeorm";
 
-import {
-  AccessControlEventSignature,
-  ContractType,
-  ModuleType,
-  PausableEventSignature,
-  WaitListEventType,
-} from "@framework/types";
+import { ModuleType, WaitListEventType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { WaitListABI } from "./interfaces";
+import { ContractType } from "../../../../../utils/contract-type";
 
 @Injectable()
 export class WaitListListServiceLog {
@@ -24,7 +19,7 @@ export class WaitListListServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.WAIT_LIST,
@@ -32,41 +27,15 @@ export class WaitListListServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
-      contractType: ContractType.WAIT_LIST,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: WaitListABI,
-      eventSignatures: [
-        WaitListEventType.WaitListRewardSet,
-        WaitListEventType.WaitListRewardClaimed,
-        // extensions
-        PausableEventSignature.Paused,
-        PausableEventSignature.Unpaused,
-        AccessControlEventSignature.RoleAdminChanged,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-      ],
-    });
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
   }
 
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.WAIT_LIST,
-        contractAddress: address,
-        contractInterface: WaitListABI,
-        eventSignatures: [
-          WaitListEventType.WaitListRewardSet,
-          WaitListEventType.WaitListRewardClaimed,
-          // extensions
-          PausableEventSignature.Paused,
-          PausableEventSignature.Unpaused,
-          AccessControlEventSignature.RoleAdminChanged,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-        ],
-      },
-      blockNumber,
-    );
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
+      contractType: ContractType.WAIT_LIST,
+      contractAddress: address,
+      contractInterface: WaitListABI,
+      eventSignatures: [WaitListEventType.WaitListRewardSet, WaitListEventType.WaitListRewardClaimed],
+    });
   }
 }

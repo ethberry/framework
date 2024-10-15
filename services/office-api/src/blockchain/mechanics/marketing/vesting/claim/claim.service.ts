@@ -14,11 +14,10 @@ import { mapLimit } from "async";
 import type { IClaimSearchDto, IVestingClaimCreateDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-import { ContractManagerSignService } from "../../../../contract-manager/contract-manager.sign.service";
+import { ContractManagerVestingSignService } from "../../../../contract-manager/vesting/vesting.sign.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ClaimEntity } from "../../claim/claim.entity";
-import type { IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
-import { IVestingClaimRow } from "./interfaces";
+import type { IVestingClaimRow, IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 
@@ -30,19 +29,19 @@ export class VestingClaimService {
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     private readonly assetService: AssetService,
-    private readonly contractManagerSignService: ContractManagerSignService,
+    private readonly contractManagerSignService: ContractManagerVestingSignService,
     private readonly contractService: ContractService,
   ) {}
 
-  public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
-    const { account, claimStatus, merchantId, skip, take } = dto;
+  public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
+    const { account, claimStatus, skip, take } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
     queryBuilder.select();
 
     queryBuilder.andWhere("claim.merchantId = :merchantId", {
-      merchantId,
+      merchantId: userEntity.merchantId,
     });
 
     queryBuilder.andWhere("claim.claimType = :claimType", {
@@ -200,7 +199,13 @@ export class VestingClaimService {
 
           return this.create(
             {
-              parameters: { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate },
+              parameters: {
+                owner,
+                startTimestamp,
+                cliffInMonth,
+                monthlyRelease,
+                contractTemplate,
+              },
               item: {
                 components: [
                   {

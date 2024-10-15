@@ -37,7 +37,6 @@ export class StakingReportService {
   public async export(dto: IStakingReportSearchDto, userEntity: UserEntity): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
-     
     const [list] = await this.search(rest as IStakingReportSearchDto, userEntity);
 
     const headers = ["id", "account", "createdAt"];

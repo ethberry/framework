@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { BlockChainAssetVestingDto } from "../../../../../exchange/asset/dto";
-import { VestingContractDeployDto } from "../../../../../contract-manager/dto";
+import { VestingContractDeployDto } from "../../../../../contract-manager/vesting/dto";
 import { IVestingClaimRow, IVestingClaimUploadDto } from "../interfaces";
 
 export class VestingClaimRow

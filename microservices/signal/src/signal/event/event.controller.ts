@@ -11,7 +11,6 @@ export class EventController {
 
   @Post("/test")
   public sendMessage(@Body() dto: MessageDto): void {
-    console.info("event/test", dto);
     return this.eventService.sendMessage(dto);
   }
 }

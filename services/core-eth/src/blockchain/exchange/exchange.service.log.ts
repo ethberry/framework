@@ -4,15 +4,9 @@ import { ConfigService } from "@nestjs/config";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
-import {
-  AccessControlEventSignature,
-  ContractType,
-  ExchangeEventSignature,
-  ModuleType,
-  PausableEventSignature,
-  ReferralProgramEventSignature,
-} from "@framework/types";
+import { ExchangeEventSignature, ModuleType } from "@framework/types";
 
+import { ContractType } from "../../utils/contract-type";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { ExchangeABI } from "./interfaces";
 
@@ -24,14 +18,14 @@ export class ExchangeServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.EXCHANGE,
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    this.ethersService.updateRegistry({
       contractType: ContractType.EXCHANGE,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: ExchangeABI,
@@ -49,14 +43,6 @@ export class ExchangeServiceLog {
         ExchangeEventSignature.Breed,
         ExchangeEventSignature.PurchaseLottery,
         ExchangeEventSignature.PurchaseRaffle,
-        // mechanics
-        ReferralProgramEventSignature.ReferralEvent,
-        // extensions
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
-        PausableEventSignature.Paused,
-        PausableEventSignature.Unpaused,
       ],
     });
   }

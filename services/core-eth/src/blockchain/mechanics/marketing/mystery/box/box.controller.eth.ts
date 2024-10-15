@@ -9,8 +9,10 @@ import type {
   IERC721TokenTransferEvent,
   IUnpackMysteryBoxEvent,
 } from "@framework/types";
-import { ContractType, Erc721EventType, MysteryEventType } from "@framework/types";
+import { Erc721EventType } from "@framework/types";
+import { MysteryEventType } from "@framework/types";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { MysteryBoxServiceEth } from "./box.service.eth";
 
 @Controller()

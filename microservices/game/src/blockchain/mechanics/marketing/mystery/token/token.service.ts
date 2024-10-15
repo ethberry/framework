@@ -50,7 +50,7 @@ export class MysteryTokenService extends TokenService {
     return queryBuilder.getOne();
   }
 
-  public async findOneWithRelationsOrFail(
+  public async findOneAndCheckMerchant(
     where: FindOptionsWhere<TokenEntity>,
     merchantEntity: MerchantEntity,
   ): Promise<TokenEntity> {

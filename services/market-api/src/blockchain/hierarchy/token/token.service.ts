@@ -54,8 +54,8 @@ export class TokenService {
     // MODULE:RENT
     queryBuilder.leftJoinAndSelect("rent.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -251,8 +251,8 @@ export class TokenService {
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     // MODULE:LOTTERY
     // MODULE:RAFFLE
@@ -264,22 +264,22 @@ export class TokenService {
     );
     queryBuilder.leftJoinAndSelect("round.price", "round_price");
     queryBuilder.leftJoinAndSelect("round_price.components", "round_price_components");
-    queryBuilder.leftJoinAndSelect("round_price_components.contract", "round_price_contract");
     queryBuilder.leftJoinAndSelect("round_price_components.template", "round_price_template");
+    queryBuilder.leftJoinAndSelect("round_price_template.contract", "round_price_contract");
 
     // MODULE:MYSTERY
     queryBuilder.leftJoinAndMapOne("template.box", MysteryBoxEntity, "box", "box.templateId = template.id");
     queryBuilder.leftJoinAndSelect("box.content", "content");
     queryBuilder.leftJoinAndSelect("content.components", "content_components");
     queryBuilder.leftJoinAndSelect("content_components.template", "content_template");
-    queryBuilder.leftJoinAndSelect("content_components.contract", "content_contract");
+    queryBuilder.leftJoinAndSelect("content_template.contract", "content_contract");
 
     // MODULE:RENT
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");
     queryBuilder.leftJoinAndSelect("rent.price", "rent_price");
     queryBuilder.leftJoinAndSelect("rent_price.components", "rent_price_components");
-    queryBuilder.leftJoinAndSelect("rent_price_components.contract", "rent_price_components_contract");
     queryBuilder.leftJoinAndSelect("rent_price_components.template", "rent_price_components_template");
+    queryBuilder.leftJoinAndSelect("rent_price_components_template.contract", "rent_price_components_contract");
 
     queryBuilder.leftJoinAndSelect(
       "rent_price_components_template.tokens",

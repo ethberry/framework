@@ -2,18 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { IsNull } from "typeorm";
 
-import {
-  AccessControlEventSignature,
-  ContractType,
-  ModuleType,
-  PausableEventSignature,
-  ReferralProgramEventSignature,
-  StakingEventSignature,
-} from "@framework/types";
+import { ModuleType, StakingEventSignature } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { StakingABI } from "./interfaces";
 
@@ -25,7 +19,7 @@ export class StakingContractServiceLog {
     private readonly ethersService: EthersService,
   ) {}
 
-  public async updateRegistry(): Promise<void> {
+  public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
       contractModule: ModuleType.STAKING,
@@ -33,9 +27,13 @@ export class StakingContractServiceLog {
       chainId,
     });
 
-    return this.ethersService.updateRegistry({
+    return this.updateRegistry(contractEntities.filter(c => c.address !== wallet).map(c => c.address));
+  }
+
+  public updateRegistry(address: Array<string>): void {
+    this.ethersService.updateRegistry({
       contractType: ContractType.STAKING,
-      contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
+      contractAddress: address,
       contractInterface: StakingABI,
       eventSignatures: [
         StakingEventSignature.RuleCreated,
@@ -46,44 +44,7 @@ export class StakingContractServiceLog {
         StakingEventSignature.DepositFinish,
         StakingEventSignature.DepositReturn,
         StakingEventSignature.DepositPenalty,
-        // MODULE:REFERRAL
-        ReferralProgramEventSignature.ReferralEvent,
-        // extensions
-        PausableEventSignature.Paused,
-        PausableEventSignature.Unpaused,
-        AccessControlEventSignature.RoleGranted,
-        AccessControlEventSignature.RoleRevoked,
-        AccessControlEventSignature.RoleAdminChanged,
       ],
     });
-  }
-
-  public updateRegistryAndReadBlock(address: Array<string>, blockNumber: number): Promise<void> {
-    return this.ethersService.updateRegistryAndReadBlock(
-      {
-        contractType: ContractType.STAKING,
-        contractAddress: address,
-        contractInterface: StakingABI,
-        eventSignatures: [
-          StakingEventSignature.RuleCreated,
-          StakingEventSignature.RuleUpdated,
-          StakingEventSignature.BalanceWithdraw,
-          StakingEventSignature.DepositStart,
-          StakingEventSignature.DepositWithdraw,
-          StakingEventSignature.DepositFinish,
-          StakingEventSignature.DepositReturn,
-          StakingEventSignature.DepositPenalty,
-          // MODULE:REFERRAL
-          ReferralProgramEventSignature.ReferralEvent,
-          // extensions
-          PausableEventSignature.Paused,
-          PausableEventSignature.Unpaused,
-          AccessControlEventSignature.RoleGranted,
-          AccessControlEventSignature.RoleRevoked,
-          AccessControlEventSignature.RoleAdminChanged,
-        ],
-      },
-      blockNumber,
-    );
   }
 }

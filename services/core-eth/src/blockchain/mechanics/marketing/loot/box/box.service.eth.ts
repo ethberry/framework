@@ -4,17 +4,10 @@ import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  IERC721TokenTransferEvent,
-  IUnpackLootBoxEvent,
-  RmqProviderType,
-  SignalEventType,
-  TokenMetadata,
-  TokenStatus,
-} from "@framework/types";
+import type { IERC721TokenTransferEvent, IUnpackLootBoxEvent } from "@framework/types";
+import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../../common/utils";
-import { Erc721ABI } from "../../../../tokens/erc721/token/interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { TokenService } from "../../../../hierarchy/token/token.service";
@@ -22,8 +15,8 @@ import { BalanceService } from "../../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
-import { LootBoxService } from "./box.service";
 import { NotificatorService } from "../../../../../game/notificator/notificator.service";
+import { LootABI } from "./interfaces";
 
 @Injectable()
 export class LootBoxServiceEth extends TokenServiceEth {
@@ -40,7 +33,6 @@ export class LootBoxServiceEth extends TokenServiceEth {
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
     protected readonly eventHistoryService: EventHistoryService,
-    protected readonly lootBoxService: LootBoxService,
     protected readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, signalClientProxy, tokenService, eventHistoryService);
@@ -61,15 +53,10 @@ export class LootBoxServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, Erc721ABI, this.jsonRpcProvider, this.loggerService);
+      const metadata = await getMetadata(tokenId, address, LootABI, this.jsonRpcProvider, this.loggerService);
       const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
-      const lootBoxEntity = await this.lootBoxService.findOne({ templateId });
 
-      if (!lootBoxEntity) {
-        throw new NotFoundException("lootBoxNotFound");
-      }
-
-      const templateEntity = await this.templateService.findOne({ id: lootBoxEntity.templateId });
+      const templateEntity = await this.templateService.findOne({ id: templateId });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
@@ -89,7 +76,6 @@ export class LootBoxServiceEth extends TokenServiceEth {
     const lootBoxTokenEntity = await this.tokenService.getToken(
       Number(tokenId).toString(),
       address.toLowerCase(),
-      void 0,
       true,
     );
 

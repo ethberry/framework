@@ -6,7 +6,6 @@ import { Card, CardActions, CardContent, List, ListItemButton, ListItemText } fr
 import { formatItem } from "@framework/exchange";
 import type { IMerge } from "@framework/types";
 
-import { AllowanceInfoPopover } from "../../../../../../components/dialogs/allowance";
 import { MergeButton } from "../../../../../../components/buttons";
 import { StyledTitle, StyledToolbar } from "./styled";
 
@@ -24,7 +23,6 @@ export const MergeItemPanel: FC<IMergeItemPanelProps> = props => {
           <StyledTitle gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.recipes.ingredients" />
           </StyledTitle>
-          <AllowanceInfoPopover />
         </StyledToolbar>
         <List>
           {merge.price?.components.map((component, i) => (

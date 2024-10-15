@@ -32,7 +32,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: "22.x"
       - name: checkout
         uses: actions/checkout@v4
         with:
@@ -67,7 +67,7 @@ jobs:
           NODE_ENV: test
           TEST_CONTRACTS: false
           BUSINESS_TYPE: B2B
-          POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/framework-test'
+          POSTGRES_URL: "postgres://postgres:postgres@0.0.0.0:5432/framework-test"
           CHAIN_ID: 10000
           ETHBERRY_API_KEY: ${{ secrets.ETHBERRY_API_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
@@ -77,4 +77,3 @@ jobs:
           ETHBERRY_PRIVATE_KEY_STAGE: ${{ secrets.PRIVATE_KEY }}
           ETHBERRY_PRIVATE_KEY_PROD: ${{ secrets.PRIVATE_KEY }}
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
-

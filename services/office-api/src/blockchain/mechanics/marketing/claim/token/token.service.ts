@@ -21,13 +21,14 @@ import type {
   IClaimTokenRowDto,
   IClaimTokenUploadDto,
 } from "@framework/types";
-import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
+import { ClaimStatus, ClaimType, ModuleType } from "@framework/types";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import { ClaimEntity } from "../claim.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { ClaimEntity } from "../claim.entity";
 
 @Injectable()
 export class ClaimTokenService {
@@ -41,7 +42,7 @@ export class ClaimTokenService {
     private readonly contractService: ContractService,
   ) {}
 
-  public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
+  public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
     const { account, claimStatus, merchantId, skip, take } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
@@ -49,9 +50,14 @@ export class ClaimTokenService {
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    // queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("item_contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     queryBuilder.andWhere("claim.merchantId = :merchantId", {
       merchantId,
@@ -204,18 +210,8 @@ export class ClaimTokenService {
     params: ISignatureParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
-      verifyingContract,
-      account,
-      params,
-      claimEntity.item.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: (component.tokenId || 0).toString(), // suppression types check with 0
-        amount: component.amount,
-      })),
-      [],
-    );
+    const items = convertDatabaseAssetToChainAsset(claimEntity.item.components);
+    return this.signerService.getManyToManySignature(verifyingContract, account, params, items, []);
   }
 
   public async upload(dto: IClaimTokenUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
@@ -231,7 +227,7 @@ export class ClaimTokenService {
           });
 
           if (!contractEntity) {
-            throw new NotFoundException("contractNotFound");
+            return null;
           }
 
           return this.create(

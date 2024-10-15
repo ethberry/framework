@@ -10,8 +10,7 @@ import { useMetamask } from "@ethberry/react-hooks-eth";
 import { useApiCall } from "@ethberry/react-hooks";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
 import type { IAccessList } from "@framework/types";
-
-import UnWhitelistABI from "@framework/abis/json/ERC20Whitelist/unWhitelist.json";
+import ERC20WhitelistUnWhitelistABI from "@framework/abis/json/ERC20Whitelist/unWhitelist.json";
 
 export interface IAccessListUnWhitelistDialogProps {
   open: boolean;
@@ -21,7 +20,7 @@ export interface IAccessListUnWhitelistDialogProps {
 }
 
 export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> = props => {
-  const { data, ...rest } = props;
+  const { data, open, onConfirm, onCancel } = props;
 
   const [rows, setRows] = useState<Array<IAccessList>>([]);
 
@@ -35,13 +34,15 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
   );
 
   const metaUnWhitelist = useMetamask((values: IAccessList, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, UnWhitelistABI, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, ERC20WhitelistUnWhitelistABI, web3Context.provider?.getSigner());
     return contract.unWhitelist(values.account) as Promise<void>;
   });
 
   const handleUnWhitelist = (values: IAccessList): (() => Promise<void>) => {
     return async () => {
-      return metaUnWhitelist(values);
+      return metaUnWhitelist(values).then(() => {
+        return onConfirm();
+      });
     };
   };
 
@@ -52,7 +53,13 @@ export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> 
   }, []);
 
   return (
-    <ConfirmationDialog message="dialogs.unWhitelist" data-testid="AccessListUnWhitelistDialog" {...rest}>
+    <ConfirmationDialog
+      message="dialogs.unWhitelist"
+      data-testid="AccessListUnWhitelistDialog"
+      open={open}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+    >
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(access => (

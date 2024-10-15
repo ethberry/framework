@@ -53,21 +53,21 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
 
     if (templateComponent.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
-        templateComponent.contract.address,
+        templateComponent.template.contract.address,
         ERC20MintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc20.mint(values.account, templateComponent.amount) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC721 || templateComponent.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
-        templateComponent.contract.address,
+        templateComponent.template.contract.address,
         ERC721MintCommonABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.mintCommon(values.account, templateComponent.templateId) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
-        templateComponent.contract.address,
+        templateComponent.template.contract.address,
         ERC1155MintABI,
         web3Context.provider?.getSigner(),
       );

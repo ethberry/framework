@@ -7,7 +7,7 @@ import { formatItem } from "@framework/exchange";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { ITemplate } from "@framework/types";
 
-import { TemplatePurchaseButton } from "../../../../../components/buttons";
+import { PurchaseNowButton } from "../../../../../components/buttons";
 
 interface IErc721TemplateListItemProps {
   template: ITemplate;
@@ -32,7 +32,7 @@ export const TemplateListItem: FC<IErc721TemplateListItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <TemplatePurchaseButton template={template} />
+          <PurchaseNowButton template={template} />
         </Grid>
       </CardActions>
     </Card>

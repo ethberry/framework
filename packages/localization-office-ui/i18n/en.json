@@ -199,17 +199,6 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
-    "listenerType": {
-      "ERC1155": "ERC1155",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "MYSTERYBOX": "MYSTERYBOX",
-      "NATIVE": "Native",
-      "PONZI": "PONZI",
-      "STAKING": "STAKING",
-      "VESTING": "VESTING"
-    },
     "merchantStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
@@ -454,7 +443,6 @@
       "language": "Language",
       "listId": "List ID",
       "listIds": "List ID",
-      "listenerType": "Listener type",
       "lottery": "Lottery",
       "matron": "Matron",
       "maxCycles": "Max cycles count (0 - no limit)",
@@ -502,7 +490,6 @@
       "productItemId": "Item",
       "productStatus": "Status",
       "random": "Random",
-      "rarityMultiplier": "Rarity multiplier X.YY%",
       "ratePlan": "Rate Plan",
       "ratePlanId": "Rate plan",
       "recentDeposits": "Recent deposits",
@@ -643,7 +630,6 @@
       "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
-      "rarityMultiplier": "0",
       "ratePlanId": "0",
       "recipient": "Recipient",
       "roundIds": "Round",

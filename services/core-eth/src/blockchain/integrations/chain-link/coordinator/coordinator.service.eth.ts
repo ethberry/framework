@@ -48,7 +48,7 @@ export class ChainLinkCoordinatorServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    const txr: string = await callRandom(
+    const tx = await callRandom(
       contractEntity.address,
       {
         requestId,
@@ -61,6 +61,6 @@ export class ChainLinkCoordinatorServiceEth {
       },
       this.ethersSignerProvider,
     );
-    this.loggerService.log(JSON.stringify(`callRandom ${txr}`, null, "\t"), ChainLinkCoordinatorServiceEth.name);
+    this.loggerService.log(JSON.stringify(`callRandom ${tx.hash}`, null, "\t"), ChainLinkCoordinatorServiceEth.name);
   }
 }

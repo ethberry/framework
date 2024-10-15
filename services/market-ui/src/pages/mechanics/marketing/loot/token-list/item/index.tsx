@@ -18,7 +18,7 @@ export const LootTokenListItem: FC<ILootTokenListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/loot/tokens/${token.id}`}>
+      <CardActionArea component={RouterLink} to={`/loot/tokens/${token.id}/view`}>
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
         <StyledCardMedia image={token.template!.imageUrl} />

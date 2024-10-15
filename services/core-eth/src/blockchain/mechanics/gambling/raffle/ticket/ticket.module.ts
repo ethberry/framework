@@ -2,7 +2,7 @@ import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ethersRpcProvider, EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
+import { EthersModule, ethersRpcProvider } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { BalanceModule } from "../../../../hierarchy/balance/balance.module";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
@@ -47,6 +47,6 @@ export class RaffleTicketModule implements OnModuleInit {
   constructor(private readonly raffleTicketServiceLog: RaffleTicketServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.raffleTicketServiceLog.updateRegistry();
+    await this.raffleTicketServiceLog.initRegistry();
   }
 }

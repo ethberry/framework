@@ -4,8 +4,9 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IStakingBalanceWithdrawEvent } from "@framework/types";
-import { ContractType, StakingEventType } from "@framework/types";
+import { StakingEventType } from "@framework/types";
 
+import { ContractType } from "../../../../../utils/contract-type";
 import { StakingContractServiceEth } from "./contract.service.eth";
 
 @Controller()

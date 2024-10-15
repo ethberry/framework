@@ -7,7 +7,7 @@ import { useMetamask } from "@ethberry/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, ModuleType } from "@framework/types";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import ERC721RandomGemunionSetSubscriptionIdABI from "@framework/abis/json/ERC721RandomGemunion/setSubscriptionId.json";
+import ERC721RandomGemunionSetSubscriptionIdABI from "@framework/abis/json/ERC721RandomEthberry/setSubscriptionId.json";
 
 import { ChainLinkSetSubscriptionDialog } from "./dialog";
 import type { IChainLinkVrfSubscriptionDto } from "./dialog";

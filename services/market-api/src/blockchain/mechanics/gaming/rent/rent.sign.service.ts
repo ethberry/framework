@@ -2,19 +2,19 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
-import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
 import type { IRentSignDto } from "@framework/types";
+import { ModuleType, SettingsKeys, TokenType } from "@framework/types";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class RentSignService {
@@ -70,6 +70,8 @@ export class RentSignService {
     tokenEntity: TokenEntity,
     rentEntity: RentEntity,
   ): Promise<string> {
+    const price = convertDatabaseAssetToChainAsset(rentEntity.price.components);
+
     return this.signerService.getOneToManySignature(
       verifyingContract,
       account,
@@ -80,15 +82,7 @@ export class RentSignService {
         tokenId: tokenEntity.tokenId,
         amount: "1",
       },
-      rentEntity.price.components.sort(comparator("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId:
-          component.template.tokens[0].tokenId === "0"
-            ? component.template.tokens[0].templateId.toString()
-            : component.template.tokens[0].tokenId,
-        amount: component.amount,
-      })),
+      price,
     );
   }
 }

@@ -28,8 +28,8 @@ export class ClaimTokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: ClaimSearchDto): Promise<[Array<ClaimEntity>, number]> {
-    return this.claimTokenService.search(dto);
+  public search(@Query() dto: ClaimSearchDto, @User() userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
+    return this.claimTokenService.search(dto, userEntity);
   }
 
   @Post("/")

@@ -5,8 +5,7 @@ import { CardActions, CardContent, Grid } from "@mui/material";
 import { formatItemHtmlList } from "@framework/exchange";
 import type { ITemplate } from "@framework/types";
 
-import { ReferralButton, TemplatePurchaseButton } from "../../../../../components/buttons";
-import { AllowanceInfoPopover } from "../../../../../components/dialogs/allowance";
+import { ReferralButton, PurchaseNowButton } from "../../../../../components/buttons";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ICommonTemplatePanelProps {
@@ -23,14 +22,13 @@ export const Erc721TemplatePanel: FC<ICommonTemplatePanelProps> = props => {
           <StyledTypography gutterBottom variant="h5" component="p">
             <FormattedMessage id="pages.erc721.template.price" />
           </StyledTypography>
-          <AllowanceInfoPopover />
         </StyledToolbar>
         <StyledList component="ul">{formatItemHtmlList(template.price)}</StyledList>
       </CardContent>
       <CardActions>
         <Grid container alignItems="center" spacing={1}>
           <Grid item xs={12}>
-            <TemplatePurchaseButton template={template} />
+            <PurchaseNowButton template={template} />
           </Grid>
           {template?.contract?.merchant?.refLevels?.length ? (
             <Grid item xs={12}>

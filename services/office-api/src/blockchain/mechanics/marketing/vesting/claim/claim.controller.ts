@@ -28,8 +28,8 @@ export class VestingClaimController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: ClaimSearchDto): Promise<[Array<ClaimEntity>, number]> {
-    return this.vestingClaimService.search(dto);
+  public search(@Query() dto: ClaimSearchDto, @User() userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
+    return this.vestingClaimService.search(dto, userEntity);
   }
 
   @Post("/")

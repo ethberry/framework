@@ -1156,7 +1156,6 @@
       "price": "Базовая цена",
       "priceTitle": "Базовая цена:",
       "rarity": "Редкость",
-      "rarityMultiplier": "x {multiplier}",
       "tokenUser": "Пользователь",
       "traits": "Характеристики"
     },

@@ -3,7 +3,6 @@ volumes:
   static-market-ui:
 
 services:
-
   framework-packages:
     build:
       context: .
@@ -213,13 +212,13 @@ services:
       CHAIN_ID: "${CHAIN_ID}"
 
       # Contracts
-      CONTRACT_MANAGER_ADDR : "${CONTRACT_MANAGER_ADDR}"
-      ERC721_RANDOM_ADDR : "${ERC721_RANDOM_ADDR}"
-      ERC721_HERO_ADDR : "${ERC721_HERO_ADDR}"
-      ERC721_DISCRETE_ADDR : "${ERC721_DISCRETE_ADDR}"
-      ERC721_LAND_ADDR : "${ERC721_LAND_ADDR}"
-      ERC1155_SIMPLE_ADDR : "${ERC1155_SIMPLE_ADDR}"
-      EXCHANGE_ADDR : "${EXCHANGE_ADDR}"
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_RANDOM_ADDR: "${ERC721_RANDOM_ADDR}"
+      ERC721_HERO_ADDR: "${ERC721_HERO_ADDR}"
+      ERC721_DISCRETE_ADDR: "${ERC721_DISCRETE_ADDR}"
+      ERC721_LAND_ADDR: "${ERC721_LAND_ADDR}"
+      ERC1155_SIMPLE_ADDR: "${ERC1155_SIMPLE_ADDR}"
+      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
 
       ACCOUNT: "${ACCOUNT}"
       PRIVATE_KEY: "${PRIVATE_KEY}"
@@ -279,5 +278,3 @@ services:
       - market-api
       - json-api
       - core-eth
-
-

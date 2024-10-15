@@ -6,7 +6,7 @@ import { IsNull, JsonContains, Not } from "typeorm";
 import { CronJob } from "cron";
 
 import type { IRaffleScheduleUpdateRmq } from "@framework/types";
-import { ContractStatus, CoreEthType, ModuleType, GemunionSupportedChains } from "@framework/types";
+import { ContractStatus, CoreEthType, ModuleType, EthberrySupportedChains } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
@@ -21,7 +21,7 @@ export class RaffleRoundServiceRmq {
   ) {}
 
   private getClientProxyForChain(chainId: number) {
-    const networkName = Object.keys(GemunionSupportedChains)[Object.values(GemunionSupportedChains).indexOf(chainId)];
+    const networkName = Object.keys(EthberrySupportedChains)[Object.values(EthberrySupportedChains).indexOf(chainId)];
     if (!networkName) {
       throw new NotFoundException("networkNotFound");
     }

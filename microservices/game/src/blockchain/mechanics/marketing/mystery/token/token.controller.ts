@@ -36,6 +36,6 @@ export class MysteryTokenController {
     @Param("id", ParseIntPipe) id: number,
     @User() merchantEntity: MerchantEntity,
   ): Promise<TokenEntity | null> {
-    return this.mysteryTokenService.findOneWithRelationsOrFail({ id }, merchantEntity);
+    return this.mysteryTokenService.findOneAndCheckMerchant({ id }, merchantEntity);
   }
 }

@@ -17,7 +17,7 @@ export const CraftItem: FC<ICraftItemProps> = props => {
   const { craft } = props;
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/recipes/craft/${craft.id}`}>
+      <CardActionArea component={RouterLink} to={`/recipes/craft/${craft.id}/view`}>
         <CardHeader
           action={<CraftIngredients craft={craft} />}
           title={craft.item?.components[0].template!.title}

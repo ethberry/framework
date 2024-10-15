@@ -7,7 +7,7 @@ import { SelectInput } from "@ethberry/mui-inputs-core";
 import { CommonSearchForm } from "@ethberry/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 import { DeleteDialog } from "@ethberry/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { getEmptyTemplate } from "@ethberry/mui-inputs-asset";
 import { cleanUpAsset, formatItem } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
@@ -42,25 +42,25 @@ export const Dismantle: FC = () => {
       item: getEmptyTemplate(TokenType.ERC1155),
       dismantleStatus: DismantleStatus.ACTIVE,
       dismantleStrategy: DismantleStrategy.FLAT,
-      rarityMultiplier: 0,
+      growthRate: 0,
     },
     search: {
       query: "",
       dismantleStatus: [DismantleStatus.ACTIVE],
     },
-    filter: ({ id, item, price, dismantleStatus, rarityMultiplier, dismantleStrategy }) =>
+    filter: ({ id, item, price, dismantleStatus, growthRate, dismantleStrategy }) =>
       id
         ? {
             item: cleanUpAsset(item),
             price: cleanUpAsset(price),
             dismantleStatus,
-            rarityMultiplier,
+            growthRate,
             dismantleStrategy,
           }
         : {
             item: cleanUpAsset(item),
             price: cleanUpAsset(price),
-            rarityMultiplier,
+            growthRate,
             dismantleStrategy,
           },
   });

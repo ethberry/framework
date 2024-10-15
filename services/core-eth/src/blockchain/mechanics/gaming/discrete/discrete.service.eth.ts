@@ -4,7 +4,6 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log, stripZerosLeft, toUtf8String } from "ethers";
 
 import { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { testChainId } from "@framework/constants";
 import type { ILevelUp } from "@framework/types";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 
@@ -32,9 +31,8 @@ export class DiscreteServiceEth extends TokenServiceEth {
       args: { tokenId, attribute, value },
     } = event;
     const { address, transactionHash } = context;
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId, true);
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), true);
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), DiscreteServiceEth.name);

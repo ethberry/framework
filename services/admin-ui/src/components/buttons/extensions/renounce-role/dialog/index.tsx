@@ -22,7 +22,7 @@ export interface IAccessControlRenounceRoleDialogProps {
 }
 
 export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialogProps> = props => {
-  const { data, open, ...rest } = props;
+  const { data, open, onConfirm, onCancel } = props;
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
@@ -49,7 +49,9 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
 
   const handleRenounce = (values: IAccessControl): (() => Promise<void>) => {
     return async () => {
-      return metaRenounceRole(values);
+      return metaRenounceRole(values).then(() => {
+        return onConfirm();
+      });
     };
   };
 
@@ -66,7 +68,8 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
       message="dialogs.renounceRole"
       data-testid="AccessControlRenounceRoleDialog"
       open={open}
-      {...rest}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
     >
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>

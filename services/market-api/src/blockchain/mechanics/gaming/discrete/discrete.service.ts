@@ -4,7 +4,6 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature, ISignatureParams } from "@ethberry/types-blockchain";
-import { comparator } from "@ethberry/utils";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type { IDiscreteAutocompleteDto, IDiscreteFindOneDto, IDiscreteSignDto } from "@framework/types";
 import {
@@ -15,13 +14,14 @@ import {
   SettingsKeys,
   TokenType,
 } from "@framework/types";
+import { convertDatabaseAssetToChainAsset, convertTemplateToChainAsset } from "@framework/exchange";
 
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { DiscreteEntity } from "./discrete.entity";
 
 @Injectable()
@@ -64,8 +64,8 @@ export class DiscreteService {
     queryBuilder.leftJoinAndSelect("discrete.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -142,34 +142,25 @@ export class DiscreteService {
   ): Promise<string> {
     const level = tokenEntity.metadata[attribute] || 0;
 
-    return this.signerService.getOneToManySignature(
-      verifyingContract,
-      account,
-      params,
-      {
-        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
-        token: tokenEntity.template.contract.address,
-        tokenId: tokenEntity.tokenId.toString(),
-        amount: "1",
-      },
-      discreteEntity.price.components.sort(comparator("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
-        amount: this.getMultiplier(level, component.amount, discreteEntity).toString(),
-      })),
+    const item = convertTemplateToChainAsset(tokenEntity.template, 1);
+    // set real token Id
+    item.tokenId = tokenEntity.tokenId;
+
+    const price = convertDatabaseAssetToChainAsset(
+      discreteEntity.price.components,
+      this.getMultiplier(level, discreteEntity),
     );
+
+    return this.signerService.getOneToManySignature(verifyingContract, account, params, item, price);
   }
 
-  public getMultiplier(level: number, amount: string, { discreteStrategy, growthRate }: DiscreteEntity) {
+  public getMultiplier(level: number, { discreteStrategy, growthRate }: DiscreteEntity) {
     if (discreteStrategy === DiscreteStrategy.FLAT) {
-      return BigInt(amount);
+      return 1;
     } else if (discreteStrategy === DiscreteStrategy.LINEAR) {
-      return BigInt(amount) * BigInt(level);
+      return level;
     } else if (discreteStrategy === DiscreteStrategy.EXPONENTIAL) {
-      const exp = (1 + growthRate / 100) ** level;
-      const [whole = "", decimals = ""] = exp.toString().split(".");
-      return (BigInt(amount) * BigInt(`${whole}${decimals}`)) / BigInt(10) ** BigInt(decimals.length);
+      return (1 + growthRate / 100) ** level;
     } else {
       throw new BadRequestException("unknownStrategy");
     }
@@ -187,8 +178,8 @@ export class DiscreteService {
         leftJoinAndSelect: {
           price: "discrete.price",
           price_components: "price.components",
-          price_contract: "price_components.contract",
           price_template: "price_components.template",
+          price_contract: "price_template.contract",
         },
       },
     });

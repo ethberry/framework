@@ -26,7 +26,7 @@ import { PonziRulesEntity } from "./blockchain/mechanics/gambling/ponzi/rules/ru
 import { WaitListListEntity } from "./blockchain/mechanics/marketing/wait-list/list/list.entity";
 import { WaitListItemEntity } from "./blockchain/mechanics/marketing/wait-list/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/gaming/breed/breed.entity";
-import { PayeesEntity } from "./blockchain/extensions/payment-splitter/payee/payees.entity";
+import { PayeesEntity } from "./blockchain/mechanics/meta/payment-splitter/payee/payees.entity";
 // import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
@@ -47,6 +47,7 @@ import { ReferralProgramEntity } from "./blockchain/mechanics/meta/referral/prog
 import { ReferralClaimEntity } from "./blockchain/mechanics/meta/referral/claim/referral.claim.entity";
 import { ReferralRewardShareEntity } from "./blockchain/mechanics/meta/referral/reward/share/referral.reward.share.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
+import { RentableEntity } from "./blockchain/mechanics/gaming/rentable/rentable.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -87,6 +88,7 @@ const config: PostgresConnectionOptions = {
     LotteryTicketEntity,
     RaffleRoundEntity,
     RaffleTicketEntity,
+    RentableEntity,
     StakingRulesEntity,
     StakingDepositEntity,
     StakingPenaltyEntity,

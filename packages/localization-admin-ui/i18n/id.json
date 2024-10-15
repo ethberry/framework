@@ -368,7 +368,7 @@
       "ERC20TokenDeployed": "ERC20TokenDikerahkan",
       "ERC721TokenDeployed": "ERC721TokenDikerahkan",
       "ERC998TokenDeployed": "ERC998TokenDikerahkan",
-      "EcommercePurchase": "PembelianEcommerce",
+      "PurchaseEcommerce": "PembelianEcommerce",
       "EtherReceived": "EtherDiterima",
       "EtherReleased": "EtherDilepaskan",
       "Lend": "Meminjam",
@@ -471,17 +471,6 @@
       "ID": "\uD83C\uDDEE\uD83C\uDDE9 Bahasa Indonesia",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
-    },
-    "listenerType": {
-      "ERC1155": "ERC1155",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "MYSTERYBOX": "MYSTERYBOX",
-      "NATIVE": "Asli",
-      "PONZI": "PONZI",
-      "STAKING": "STAKING",
-      "VESTING": "VESTING"
     },
     "merchantStatus": {
       "ACTIVE": "Aktif",
@@ -762,7 +751,6 @@
       "level": "Level",
       "listId": "ID daftar",
       "listIds": "ID daftar",
-      "listenerType": "Jenis pendengar",
       "lottery": "Lotere",
       "matron": "Induk betina",
       "maxCycles": "Jumlah siklus maksimal (0 - tanpa batas)",
@@ -812,7 +800,6 @@
       "programLevel": "Level program",
       "programLevels": "Level program",
       "random": "Acak",
-      "rarityMultiplier": "Pengganda keunikan X.YY%",
       "recentDeposits": "Deposit terbaru",
       "recipient": "Penerima",
       "recurrent": "Berulang?",
@@ -952,7 +939,6 @@
       "productStatus": "Status",
       "query": "Cari...",
       "rarity": "Legendaris",
-      "rarityMultiplier": "0",
       "recipient": "Penerima",
       "referral": "Referal",
       "roundIds": "Ronde",
@@ -1126,7 +1112,7 @@
       "exchange": {
         "marketplace": {
           "chart": "Grafik",
-          "discrete": "Grade",
+          "discrete": "Discrete",
           "rarity": "Keunikan",
           "report": "Laporan",
           "title": "Pasar"

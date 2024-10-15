@@ -1,6 +1,8 @@
-import { Module, Logger } from "@nestjs/common";
+import { Module, Logger, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+
+import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { signalServiceProvider } from "../../../../common/providers";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
@@ -11,6 +13,7 @@ import { DiscreteEntity } from "./discrete.entity";
 import { DiscreteService } from "./discrete.service";
 import { DiscreteControllerEth } from "./discrete.controller.eth";
 import { DiscreteServiceEth } from "./discrete.service.eth";
+import { DiscreteServiceLog } from "./discrete.service.log";
 
 @Module({
   imports: [
@@ -19,10 +22,17 @@ import { DiscreteServiceEth } from "./discrete.service.eth";
     ContractModule,
     TokenModule,
     EventHistoryModule,
+    EthersModule.deferred(),
     TypeOrmModule.forFeature([DiscreteEntity]),
   ],
-  providers: [signalServiceProvider, Logger, DiscreteService, DiscreteServiceEth],
+  providers: [signalServiceProvider, Logger, DiscreteService, DiscreteServiceLog, DiscreteServiceEth],
   controllers: [DiscreteControllerEth],
-  exports: [DiscreteService, DiscreteServiceEth],
+  exports: [DiscreteService, DiscreteServiceLog, DiscreteServiceEth],
 })
-export class DiscreteModule {}
+export class DiscreteModule implements OnModuleInit {
+  constructor(private readonly discreteServiceLog: DiscreteServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.discreteServiceLog.initRegistry();
+  }
+}

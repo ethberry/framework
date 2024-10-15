@@ -1,4 +1,4 @@
-import type { IAssetItem } from "../exchange/common";
+import type { IAssetItem } from "../exchange";
 
 export enum LotteryEventType {
   RoundFinalized = "RoundFinalized",
@@ -7,6 +7,7 @@ export enum LotteryEventType {
   Released = "Released",
   Prize = "Prize",
 }
+
 export enum LotteryEventSignature {
   RoundFinalized = "RoundFinalized(uint256,uint8[6])",
   RoundStarted = "RoundStarted(uint256,uint256,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256))",

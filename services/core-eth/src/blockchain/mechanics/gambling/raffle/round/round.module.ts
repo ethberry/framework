@@ -53,6 +53,6 @@ export class RaffleRoundModule implements OnModuleInit {
   constructor(private readonly raffleRoundServiceLog: RaffleRoundServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.raffleRoundServiceLog.updateRegistry();
+    await this.raffleRoundServiceLog.initRegistry();
   }
 }

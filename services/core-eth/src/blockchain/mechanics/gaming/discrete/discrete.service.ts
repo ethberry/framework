@@ -23,20 +23,4 @@ export class DiscreteService {
   ): Promise<DiscreteEntity | null> {
     return this.discreteEntityRepository.findOne({ where, ...options });
   }
-
-  public async findOneWithRelations(where: FindOptionsWhere<DiscreteEntity>): Promise<DiscreteEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "discrete",
-        leftJoinAndSelect: {
-          contract: "discrete.contract",
-          // price: "discrete.price",
-          // price_components: "price.components",
-          // price_contract: "price_components.contract",
-          // price_template: "price_components.template",
-          // price_tokens: "price_template.tokens",
-        },
-      },
-    });
-  }
 }

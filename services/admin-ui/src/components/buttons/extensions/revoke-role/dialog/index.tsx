@@ -26,7 +26,7 @@ export interface IAccessControlWithRelations extends IAccessControl {
 }
 
 export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogProps> = props => {
-  const { data, open, ...rest } = props;
+  const { data, open, onConfirm, onCancel } = props;
 
   const [rows, setRows] = useState<Array<IAccessControlWithRelations>>([]);
 
@@ -53,7 +53,9 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
 
   const handleRevoke = (values: IAccessControlWithRelations): (() => Promise<void>) => {
     return async () => {
-      return metaRevokeRole(values);
+      return metaRevokeRole(values).then(() => {
+        return onConfirm();
+      });
     };
   };
 
@@ -66,7 +68,13 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   }, [account, open]);
 
   return (
-    <ConfirmationDialog message="dialogs.revokeRole" data-testid="AccessControlRevokeRoleDialog" open={open} {...rest}>
+    <ConfirmationDialog
+      message="dialogs.revokeRole"
+      data-testid="AccessControlRevokeRoleDialog"
+      open={open}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+    >
       <ProgressOverlay isLoading={isLoading}>
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(access => (

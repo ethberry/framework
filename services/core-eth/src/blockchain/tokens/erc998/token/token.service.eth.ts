@@ -1,11 +1,9 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { ConfigService } from "@nestjs/config";
-import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
+import { JsonRpcProvider, Log } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IERC721TokenTransferEvent,
   IErc998BatchReceivedChildEvent,
   IErc998BatchTransferChildEvent,
   IErc998TokenReceivedChildEvent,
@@ -14,23 +12,20 @@ import type {
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
 } from "@framework/types";
-import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
-import { testChainId } from "@framework/constants";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 
-import { getMetadata } from "../../../../common/utils";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
-import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
+import { Erc721TokenServiceEth } from "../../erc721/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
-import { Erc721ABI } from "../../erc721/token/interfaces";
 import { Erc998CompositionService } from "../composition/composition.service";
 
 @Injectable()
-export class Erc998TokenServiceEth extends TokenServiceEth {
+export class Erc998TokenServiceEth extends Erc721TokenServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
@@ -39,103 +34,25 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     protected readonly tokenService: TokenService,
-    protected readonly balanceService: BalanceService,
     protected readonly templateService: TemplateService,
-    protected readonly eventHistoryService: EventHistoryService,
-    protected readonly contractService: ContractService,
+    protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
-    protected readonly configService: ConfigService,
+    protected readonly eventHistoryService: EventHistoryService,
+    protected readonly notificatorService: NotificatorService,
+    protected readonly contractService: ContractService,
     protected readonly erc998CompositionService: Erc998CompositionService,
-    private readonly notificatorService: NotificatorService,
   ) {
-    super(loggerService, signalClientProxy, tokenService, eventHistoryService);
-  }
-
-  public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
-    const {
-      name,
-      args: { from, to, tokenId },
-    } = event;
-    const { address, transactionHash } = context;
-
-    // Mint token create
-    if (from === ZeroAddress) {
-      const metadata = await getMetadata(
-        Number(tokenId).toString(),
-        address,
-        Erc721ABI,
-        this.jsonRpcProvider,
-        this.loggerService,
-      );
-      const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
-      const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
-
-      if (!templateEntity) {
-        throw new NotFoundException("templateNotFound");
-      }
-
-      const tokenEntity = await this.tokenService.create({
-        tokenId,
-        metadata,
-        royalty: templateEntity.contract.royalty,
-        template: templateEntity,
-      });
-
-      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
-      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity);
-    }
-
-    const erc998TokenEntity = await this.tokenService.getToken(
-      Number(tokenId).toString(),
-      address.toLowerCase(),
-      void 0,
-      true,
+    super(
+      loggerService,
+      jsonRpcProvider,
+      signalClientProxy,
+      tokenService,
+      templateService,
+      balanceService,
+      assetService,
+      eventHistoryService,
+      notificatorService,
     );
-
-    if (!erc998TokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
-
-    if (from === ZeroAddress) {
-      erc998TokenEntity.template.amount += 1;
-      // tokenEntity.template
-      //   ? (erc998TokenEntity.template.instanceCount += 1)
-      //   : (erc998TokenEntity.erc998Mysterybox.erc998Template.instanceCount += 1);
-      erc998TokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === ZeroAddress) {
-      // erc998TokenEntity.erc998Template.instanceCount -= 1;
-      erc998TokenEntity.tokenStatus = TokenStatus.BURNED;
-    } else {
-      // change token's owner
-      erc998TokenEntity.balance[0].account = to.toLowerCase();
-    }
-
-    await erc998TokenEntity.save();
-
-    // need to save updates in nested entities too
-    await erc998TokenEntity.template.save();
-    await erc998TokenEntity.balance[0].save();
-
-    // erc998TokenEntity.erc998Template
-    //   ? await erc998TokenEntity.erc998Template.save()
-    //   : await erc998TokenEntity.erc998Mysterybox.erc998Template.save();
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
-
-    await this.notificatorService.tokenTransfer({
-      token: erc998TokenEntity,
-      from: from.toLowerCase(),
-      to: to.toLowerCase(),
-      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
-    });
   }
 
   public async receivedChild(event: ILogEvent<IErc998TokenReceivedChildEvent>, context: Log): Promise<void> {
@@ -145,12 +62,9 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
     const erc998TokenEntity = await this.tokenService.getToken(
       Number(tokenId).toString(),
       context.address.toLowerCase(),
-      chainId,
       true,
     );
 
@@ -160,11 +74,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
-    const tokenEntity = await this.tokenService.getToken(
-      Number(childTokenId).toString(),
-      childContract.toLowerCase(),
-      chainId,
-    );
+    const tokenEntity = await this.tokenService.getToken(Number(childTokenId).toString(), childContract.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -196,7 +106,6 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const erc998TokenEntity = await this.tokenService.getToken(
       Number(tokenId).toString(),
       context.address.toLowerCase(),
-      void 0,
       true,
     );
 

@@ -5,36 +5,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [3.1.6](https://github.com/ethberry/nestjs-packages/compare/@framework/nest-js-module-exchange-signer@3.1.5...@framework/nest-js-module-exchange-signer@3.1.6) (2023-07-25)
 
-
 ### Bug Fixes
 
-* **deps:** update [@gemunion](https://github.com/gemunion) packages ([4b69ba9](https://github.com/ethberry/nestjs-packages/commit/4b69ba9d7d405f134acc9d3cc7c6435e20cac6ee))
-
-
-
-
+- **deps:** update [@gemunion](https://github.com/gemunion) packages ([4b69ba9](https://github.com/ethberry/nestjs-packages/commit/4b69ba9d7d405f134acc9d3cc7c6435e20cac6ee))
 
 ## [3.1.5](https://github.com/ethberry/nestjs-packages/compare/@framework/nest-js-module-exchange-signer@3.1.4...@framework/nest-js-module-exchange-signer@3.1.5) (2023-07-23)
 
-
 ### Bug Fixes
 
-* **deps:** update [@gemunion](https://github.com/gemunion) packages ([9d719fc](https://github.com/ethberry/nestjs-packages/commit/9d719fc585e7f9850afe9d5af55235a619435bf1))
-
-
-
-
+- **deps:** update [@gemunion](https://github.com/gemunion) packages ([9d719fc](https://github.com/ethberry/nestjs-packages/commit/9d719fc585e7f9850afe9d5af55235a619435bf1))
 
 ## 3.1.4 (2023-07-18)
 
-
 ### Bug Fixes
 
-* **deps:** update [@gemunion](https://github.com/gemunion) packages ([4540fea](https://github.com/ethberry/nestjs-packages/commit/4540feaedb56913ba21006f5fbe0c4557c865c8d))
-
-
-
-
+- **deps:** update [@gemunion](https://github.com/gemunion) packages ([4540fea](https://github.com/ethberry/nestjs-packages/commit/4540feaedb56913ba21006f5fbe0c4557c865c8d))
 
 ## [3.1.3](https://github.com/ethberry/nestjs-packages/compare/@framework/nest-js-module-exchange-signer@3.1.2...@framework/nest-js-module-exchange-signer@3.1.3) (2023-07-15)
 
