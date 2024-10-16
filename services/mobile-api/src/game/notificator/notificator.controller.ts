@@ -15,8 +15,13 @@ export class NotificatorController {
     return this.notificatorService.dummy(data);
   }
 
-  @EventPattern(MobileEventType.CLAIM)
-  public claim(@Payload() data: IMessage): void {
+  @EventPattern(MobileEventType.CLAIM_TEMPLATE)
+  public claimTemplate(@Payload() data: IMessage): void {
+    return this.notificatorService.dummy(data);
+  }
+
+  @EventPattern(MobileEventType.CLAIM_TOKEN)
+  public claimToken(@Payload() data: IMessage): void {
     return this.notificatorService.dummy(data);
   }
 

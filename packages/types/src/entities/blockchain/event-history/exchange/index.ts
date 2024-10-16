@@ -1,5 +1,5 @@
 import { IExchangeBreedEvent } from "./breeding";
-import { IExchangeClaimEvent } from "./claim";
+import { IExchangeClaimTemplateEvent, IExchangeClaimTokenEvent } from "./claim";
 import { IExchangeCraftEvent } from "./craft";
 import { IExchangeDiscreteEvent } from "./discrete";
 import { IExchangeDismantleEvent } from "./dismantle";
@@ -21,7 +21,8 @@ export enum ExchangeEventType {
   PurchaseMysteryBox = "PurchaseMysteryBox",
   PurchaseLottery = "PurchaseLottery",
   PurchaseRaffle = "PurchaseRaffle",
-  Claim = "Claim",
+  ClaimTemplate = "ClaimTemplate",
+  ClaimToken = "ClaimToken",
   Craft = "Craft",
   Dismantle = "Dismantle",
   Merge = "Merge",
@@ -38,7 +39,8 @@ export enum ExchangeEventSignature {
   Purchase = "Purchase(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256)[])",
   PurchaseLottery = "PurchaseLottery(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256))",
   PurchaseRaffle = "PurchaseRaffle(address,uint256,(uint8,address,uint256,uint256),(uint8,address,uint256,uint256))",
-  Claim = "Claim(address,uint256,(uint8,address,uint256,uint256)[])",
+  ClaimTemplate = "ClaimTemplate(address,uint256,(uint8,address,uint256,uint256)[])",
+  ClaimToken = "ClaimToken(address,uint256,(uint8,address,uint256,uint256)[])",
   Craft = "Craft(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   Dismantle = "Dismantle(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
   Merge = "Merge(address,uint256,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256)[])",
@@ -55,7 +57,8 @@ export enum ExchangeEventSignature {
 
 export type TExchangeEvents =
   | IExchangeBreedEvent
-  | IExchangeClaimEvent
+  | IExchangeClaimTemplateEvent
+  | IExchangeClaimTokenEvent
   | IExchangePurchaseEvent
   | IExchangeCraftEvent
   | IExchangeDiscreteEvent
@@ -70,7 +73,8 @@ export type TExchangeEvents =
 
 export {
   IExchangeBreedEvent,
-  IExchangeClaimEvent,
+  IExchangeClaimTemplateEvent,
+  IExchangeClaimTokenEvent,
   IExchangePurchaseEvent,
   IExchangeCraftEvent,
   IExchangeDiscreteEvent,

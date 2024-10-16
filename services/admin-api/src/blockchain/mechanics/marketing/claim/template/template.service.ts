@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
-import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
+import { hexlify, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 import { mapLimit } from "async";
 
 import type { ISignatureParams } from "@ethberry/types-blockchain";
@@ -165,18 +165,17 @@ export class ClaimTemplateService {
     }
 
     const nonce = randomBytes(32);
-    const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
 
     const signature = await this.getSignature(
       await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
       account,
       {
         externalId: claimEntity.id,
-        expiresAt,
+        expiresAt: Math.ceil(new Date(endTimestamp).getTime() / 1000),
         nonce,
-        extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
+        extra: ZeroHash,
         receiver: claimEntity.merchant.wallet,
-        referrer: zeroPadValue(toBeHex(Object.values(ClaimType).indexOf(claimEntity.claimType)), 20),
+        referrer: ZeroAddress,
       },
       claimEntity,
     );
@@ -234,7 +233,6 @@ export class ClaimTemplateService {
               chainId: userEntity.chainId,
               account,
               endTimestamp,
-              claimType: ClaimType.TEMPLATE,
               item: {
                 components: [
                   {

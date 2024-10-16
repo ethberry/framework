@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IContract } from "@framework/types";
-import { ClaimStatus, ClaimType, SystemModuleType, TokenType } from "@framework/types";
+import { ClaimStatus, SystemModuleType, TokenType } from "@framework/types";
 
 import ExchangeClaimFacetSpendABI from "@framework/abis/json/ExchangeClaimFacet/spend.json";
 
@@ -34,7 +34,7 @@ export const ClaimRedeemTokenButton: FC<IClaimRedeemTokenButtonProps> = props =>
         nonce: utils.arrayify(values.nonce),
         extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(values.endTimestamp).getTime() / 1000)), 32),
         receiver: values.merchant!.wallet,
-        referrer: utils.hexZeroPad(utils.hexlify(Object.values(ClaimType).indexOf(values.claimType)), 20),
+        referrer: constants.AddressZero,
       };
 
       const items = values.item.components.map(component => ({
@@ -56,7 +56,8 @@ export const ClaimRedeemTokenButton: FC<IClaimRedeemTokenButtonProps> = props =>
     return metaFn(claim);
   };
 
-  const date = new Date();
+  const endDate = new Date(claim.endTimestamp);
+  const isExpired = endDate.getTime() !== new Date(0).getTime() && endDate.getTime() < new Date().getTime();
 
   return (
     <ListAction
@@ -64,7 +65,7 @@ export const ClaimRedeemTokenButton: FC<IClaimRedeemTokenButtonProps> = props =>
       icon={Redeem}
       message="form.tips.redeem"
       className={className}
-      disabled={disabled || claim.claimStatus !== ClaimStatus.NEW || new Date(claim.endTimestamp) > date}
+      disabled={disabled || isExpired || claim.claimStatus !== ClaimStatus.NEW}
       dataTestId="ClaimRedeemTokenButton"
       variant={variant}
     />

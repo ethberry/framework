@@ -1,11 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 
-import type { IClaim } from "@framework/types";
-
-export interface IRmqClaim {
-  transactionHash: string;
-  claim: IClaim;
-}
+import type { IRmqClaimTemplate, IRmqClaimToken } from "./interface";
 
 @Injectable()
 export class ClaimService {
@@ -14,7 +9,12 @@ export class ClaimService {
     private readonly loggerService: LoggerService,
   ) {}
 
-  public async claim(dto: IRmqClaim): Promise<void> {
+  public async rewardSet(dto: IRmqClaimTemplate): Promise<void> {
+    await Promise.resolve();
+    this.loggerService.log(JSON.stringify(dto, null, "\t"), ClaimService.name);
+  }
+
+  public async rewardClaimed(dto: IRmqClaimToken): Promise<void> {
     await Promise.resolve();
     this.loggerService.log(JSON.stringify(dto, null, "\t"), ClaimService.name);
   }

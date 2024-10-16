@@ -241,25 +241,31 @@ export class EventHistoryService {
         /* EXCHANGE 2xx */
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType201", { eventType201: ExchangeEventType.Claim });
+            qb1.andWhere("history.event_type = :eventType201", { eventType201: ExchangeEventType.ClaimTemplate });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType202", { eventType202: ExchangeEventType.Craft });
+            qb1.andWhere("history.event_type = :eventType202", { eventType202: ExchangeEventType.ClaimTemplate });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType203", { eventType203: ExchangeEventType.Dismantle });
+            qb1.andWhere("history.event_type = :eventType203", { eventType203: ExchangeEventType.Craft });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );
         qb.orWhere(
           new Brackets(qb1 => {
-            qb1.andWhere("history.event_type = :eventType204", { eventType204: ExchangeEventType.Merge });
+            qb1.andWhere("history.event_type = :eventType204", { eventType204: ExchangeEventType.Dismantle });
+            qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
+          }),
+        );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType205", { eventType205: ExchangeEventType.Merge });
             qb1.andWhere("LOWER(history.event_data->>'account') = :wallet", { wallet });
           }),
         );

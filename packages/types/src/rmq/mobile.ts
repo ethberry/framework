@@ -39,7 +39,8 @@ export enum MobileEventType {
   DISMANTLE = "DISMANTLE",
   MERGE = "MERGE",
 
-  CLAIM = "CLAIM",
+  CLAIM_TEMPLATE = "CLAIM_TEMPLATE",
+  CLAIM_TOKEN = "CLAIM_TOKEN",
 
   RENT = "RENT",
   RENT_USER = "RENT_USER",

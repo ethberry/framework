@@ -8,7 +8,7 @@ import { AccountOptionalDto } from "@ethberry/nest-js-validators";
 import type { IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-export class ClaimSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IClaimSearchDto {
+export class ClaimTokenSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IClaimSearchDto {
   @ApiPropertyOptional({
     enum: ClaimStatus,
     isArray: true,

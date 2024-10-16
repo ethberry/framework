@@ -1566,9 +1566,6 @@
       "title": "Pengguna"
     },
     "vesting": {
-      "claims": {
-        "title": "Klaim Vesting"
-      },
       "contracts": {
         "title": "Kontrak Vesting"
       },

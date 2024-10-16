@@ -143,6 +143,36 @@ export class EventHistoryService {
     return contractEventEntity;
   }
 
+  public async createHistory(
+    event: ILogEvent<TContractEventData>,
+    context: Log,
+    tokenId?: number,
+  ): Promise<EventHistoryEntity> {
+    this.loggerService.log(JSON.stringify(event, null, "\t"), EventHistoryService.name);
+    this.loggerService.log(JSON.stringify(context, null, "\t"), EventHistoryService.name);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const { args, name } = event;
+    const { transactionHash, address } = context;
+
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return this.create({
+      address,
+      transactionHash,
+      eventType: name as TContractEventType,
+      eventData: args,
+      tokenId: tokenId || null,
+      contractId: contractEntity.id,
+      chainId,
+    });
+  }
+
   // get PARENT events
   public async findParentHistory(contractEventEntity: EventHistoryEntity) {
     const { id, eventType, transactionHash, eventData } = contractEventEntity;
@@ -156,7 +186,8 @@ export class EventHistoryService {
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
           ExchangeEventType.PurchaseMysteryBox,
-          ExchangeEventType.Claim,
+          ExchangeEventType.ClaimTemplate,
+          ExchangeEventType.ClaimToken,
         ]),
       });
 
@@ -196,7 +227,9 @@ export class EventHistoryService {
           ExchangeEventType.Craft,
           ExchangeEventType.Dismantle,
           ExchangeEventType.PurchaseMysteryBox,
-          ExchangeEventType.Claim,
+          ExchangeEventType.PurchaseLootBox,
+          ExchangeEventType.ClaimTemplate,
+          ExchangeEventType.ClaimToken,
           ExchangeEventType.Lend,
           ExchangeEventType.PurchaseLottery,
           ExchangeEventType.PurchaseRaffle,

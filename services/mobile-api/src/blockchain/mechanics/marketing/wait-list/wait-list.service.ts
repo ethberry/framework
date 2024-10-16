@@ -1,16 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 
-import type { IWaitListItem, IWaitListList } from "@framework/types";
-
-export interface IRmqCWaitListList {
-  transactionHash: string;
-  waitListList: IWaitListList;
-}
-
-export interface IRmqCWaitListItem {
-  transactionHash: string;
-  waitListItem: IWaitListItem;
-}
+import type { IRmqWaitListItem, IRmqWaitListList } from "./interface";
 
 @Injectable()
 export class WaitListService {
@@ -19,12 +9,12 @@ export class WaitListService {
     private readonly loggerService: LoggerService,
   ) {}
 
-  public async rewardSet(dto: IRmqCWaitListList): Promise<void> {
+  public async rewardSet(dto: IRmqWaitListList): Promise<void> {
     await Promise.resolve();
     this.loggerService.log(JSON.stringify(dto, null, "\t"), WaitListService.name);
   }
 
-  public async rewardClaimed(dto: IRmqCWaitListItem): Promise<void> {
+  public async rewardClaimed(dto: IRmqWaitListItem): Promise<void> {
     await Promise.resolve();
     this.loggerService.log(JSON.stringify(dto, null, "\t"), WaitListService.name);
   }

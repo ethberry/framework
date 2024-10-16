@@ -244,7 +244,6 @@ import {
   SeedClaimTokenErc998At1653616447840,
   SeedClaimTokenErc998EventHistoryAt1653616447940,
   SeedClaimTokenErc998EventHistoryComponentsAt1653616447945,
-  SeedClaimVestingAt1687835680100,
   SeedCompositionAt1658980520010,
   SeedContractChainLinkVrfAt1563804000105,
   SeedContractCollectionAt1679894500000,
@@ -636,7 +635,6 @@ const config: PostgresConnectionOptions = {
     SeedContractVestingAt1563804000190,
     SeedBalanceVestingAt1563804000490,
     SeedEventHistoryVestingTransferOwnershipAt1687338973200,
-    SeedClaimVestingAt1687835680100,
 
     // MODULE MYSTERY
     CreateMysteryBox1653616447910,

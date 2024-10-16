@@ -968,9 +968,6 @@
       "title": "Users"
     },
     "vesting": {
-      "claims": {
-        "title": "Vesting Claims"
-      },
       "contracts": {
         "title": "Vesting Contracts"
       },

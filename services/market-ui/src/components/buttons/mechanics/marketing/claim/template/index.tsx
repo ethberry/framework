@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Redeem } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { Contract, utils, constants } from "ethers";
 
 import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IClaim, IContract } from "@framework/types";
-import { ClaimStatus, SystemModuleType, ClaimType } from "@framework/types";
+import { ClaimStatus, SystemModuleType } from "@framework/types";
 import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import ExchangeClaimFacetClaimABI from "@framework/abis/json/ExchangeClaimFacet/claim.json";
@@ -35,7 +35,7 @@ export const ClaimRedeemTemplateButton: FC<IClaimRedeemTemplateButtonProps> = pr
         nonce: utils.arrayify(values.nonce),
         extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(values.endTimestamp).getTime() / 1000)), 32),
         receiver: values.merchant!.wallet,
-        referrer: utils.hexZeroPad(utils.hexlify(Object.values(ClaimType).indexOf(values.claimType)), 20),
+        referrer: constants.AddressZero,
       };
 
       const items = convertDatabaseAssetToChainAsset(values.item?.components);
@@ -52,7 +52,8 @@ export const ClaimRedeemTemplateButton: FC<IClaimRedeemTemplateButtonProps> = pr
     return metaFn(claim);
   };
 
-  const date = new Date();
+  const endDate = new Date(claim.endTimestamp);
+  const isExpired = endDate.getTime() !== new Date(0).getTime() && endDate.getTime() < new Date().getTime();
 
   return (
     <ListAction
@@ -60,7 +61,7 @@ export const ClaimRedeemTemplateButton: FC<IClaimRedeemTemplateButtonProps> = pr
       icon={Redeem}
       message="form.tips.redeem"
       className={className}
-      disabled={disabled || claim.claimStatus !== ClaimStatus.NEW || new Date(claim.endTimestamp) > date}
+      disabled={disabled || isExpired || claim.claimStatus !== ClaimStatus.NEW}
       dataTestId="ClaimRedeemTemplateButton"
       variant={variant}
     />

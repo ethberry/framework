@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 
 import { IsBigInt } from "@ethberry/nest-js-validators";
 
-import { ClaimCreateDto } from "../../../claim/template/dto";
+import { ClaimTemplateCreateDto } from "../../../claim/template/dto";
 import type { ICollectionUploadDto, ITokenUploadDto } from "../interfaces";
 
 export class TokenUploadDto implements ITokenUploadDto {
@@ -29,7 +29,7 @@ export class TokenUploadDto implements ITokenUploadDto {
 export class CollectionUploadDto implements ICollectionUploadDto {
   @ApiProperty({
     isArray: true,
-    type: ClaimCreateDto,
+    type: ClaimTemplateCreateDto,
   })
   @IsArray({ message: "typeMismatch" })
   @ValidateNested()

@@ -1,10 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsISO8601, IsString, ValidateNested } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { IsArray, IsISO8601, IsString, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { AccountDto } from "@ethberry/nest-js-validators";
-import { ClaimType } from "@framework/types";
 import type { IClaimTemplateRowDto, IClaimTemplateUploadDto } from "@framework/types";
 
 import { BlockChainAssetTemplateDto } from "../../../../../exchange/asset/dto";
@@ -25,11 +24,4 @@ export class ClaimTemplateUploadDto implements IClaimTemplateUploadDto {
   @ValidateNested()
   @Type(() => ClaimTemplateRowDto)
   public claims: Array<ClaimTemplateRowDto>;
-
-  @ApiProperty({
-    enum: ClaimType,
-  })
-  @Transform(({ value }) => value as ClaimType)
-  @IsEnum(ClaimType, { message: "typeMismatch" })
-  public claimType: ClaimType;
 }

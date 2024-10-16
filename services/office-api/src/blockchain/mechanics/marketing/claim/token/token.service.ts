@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
+import { hexlify, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 import { mapLimit } from "async";
 
 import type { ISignatureParams } from "@ethberry/types-blockchain";
@@ -17,12 +17,11 @@ import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type {
   IClaimCreateDto,
   IClaimSearchDto,
-  IClaimUpdateDto,
   IClaimTokenRowDto,
   IClaimTokenUploadDto,
+  IClaimUpdateDto,
 } from "@framework/types";
-import { ClaimStatus, ClaimType, ModuleType } from "@framework/types";
-import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
+import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";
@@ -50,8 +49,8 @@ export class ClaimTokenService {
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
 
@@ -104,8 +103,9 @@ export class ClaimTokenService {
           merchant: "claim.merchant",
           item: "claim.item",
           item_components: "item.components",
-          item_contract: "item_components.contract",
           item_template: "item_components.template",
+          item_contract: "item_template.contract",
+          item_token: "item_components.token",
         },
       },
     });
@@ -166,18 +166,17 @@ export class ClaimTokenService {
     }
 
     const nonce = randomBytes(32);
-    const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
 
     const signature = await this.getSignature(
       await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
       account,
       {
         externalId: claimEntity.id,
-        expiresAt,
+        expiresAt: Math.ceil(new Date(endTimestamp).getTime() / 1000),
         nonce,
-        extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
+        extra: ZeroHash,
         receiver: claimEntity.merchant.wallet,
-        referrer: zeroPadValue(toBeHex(Object.values(ClaimType).indexOf(claimEntity.claimType)), 20),
+        referrer: ZeroAddress,
       },
       claimEntity,
     );
@@ -210,8 +209,18 @@ export class ClaimTokenService {
     params: ISignatureParams,
     claimEntity: ClaimEntity,
   ): Promise<string> {
-    const items = convertDatabaseAssetToChainAsset(claimEntity.item.components);
-    return this.signerService.getManyToManySignature(verifyingContract, account, params, items, []);
+    return this.signerService.getManyToManySignature(
+      verifyingContract,
+      account,
+      params,
+      claimEntity.item.components.map(component => ({
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
+        token: component.template.contract.address,
+        tokenId: component.token.tokenId.toString(),
+        amount: component.amount,
+      })),
+      [],
+    );
   }
 
   public async upload(dto: IClaimTokenUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
@@ -235,7 +244,6 @@ export class ClaimTokenService {
               chainId: userEntity.chainId,
               account,
               endTimestamp,
-              claimType: ClaimType.TOKEN,
               item: {
                 components: [
                   {

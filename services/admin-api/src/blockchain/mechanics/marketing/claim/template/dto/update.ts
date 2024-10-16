@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { AccountOptionalDto, SemiNftDto } from "@ethberry/nest-js-validators";
 import type { IClaimUpdateDto } from "@framework/types";
 
-export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
+export class ClaimTemplateUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
   @ApiPropertyOptional({
     type: SemiNftDto,
   })

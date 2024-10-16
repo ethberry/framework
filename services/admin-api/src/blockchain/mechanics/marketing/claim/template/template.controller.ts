@@ -19,7 +19,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { ClaimTemplateService } from "./template.service";
 import { ClaimEntity } from "../claim.entity";
-import { ClaimCreateDto, ClaimSearchDto, ClaimUpdateDto, ClaimTemplateUploadDto } from "./dto";
+import { ClaimTemplateCreateDto, ClaimTemplateSearchDto, ClaimTemplateUpdateDto, ClaimTemplateUploadDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/claims/templates")
@@ -28,12 +28,15 @@ export class ClaimTemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: ClaimSearchDto, @User() userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
+  public search(
+    @Query() dto: ClaimTemplateSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ClaimEntity>, number]> {
     return this.claimTemplateService.search(dto, userEntity);
   }
 
   @Post("/")
-  public create(@Body() dto: ClaimCreateDto, @User() userEntity: UserEntity): Promise<ClaimEntity> {
+  public create(@Body() dto: ClaimTemplateCreateDto, @User() userEntity: UserEntity): Promise<ClaimEntity> {
     return this.claimTemplateService.create(dto, userEntity);
   }
 
@@ -45,7 +48,7 @@ export class ClaimTemplateController {
   @Put("/:id")
   public update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() dto: ClaimUpdateDto,
+    @Body() dto: ClaimTemplateUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<ClaimEntity | null> {
     return this.claimTemplateService.update({ id }, dto, userEntity);

@@ -1,12 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateNested } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { IsInt, IsISO8601, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
 import { AccountOptionalDto, SemiNftDto } from "@ethberry/nest-js-validators";
 import type { IClaimUpdateDto } from "@framework/types";
-import { ClaimType } from "@framework/types";
 
-export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
+export class ClaimTemplateUpdateDto extends AccountOptionalDto implements IClaimUpdateDto {
   @ApiPropertyOptional({
     type: SemiNftDto,
   })
@@ -20,14 +19,6 @@ export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDt
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
-
-  @ApiPropertyOptional({
-    enum: ClaimType,
-  })
-  @IsOptional()
-  @Transform(({ value }) => value as ClaimType)
-  @IsEnum(ClaimType, { message: "badInput" })
-  public claimType: ClaimType;
 
   @ApiProperty({
     minimum: 1,

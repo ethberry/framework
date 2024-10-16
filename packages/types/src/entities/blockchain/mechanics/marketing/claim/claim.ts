@@ -12,7 +12,6 @@ export enum ClaimStatus {
 export enum ClaimType {
   TEMPLATE = "TEMPLATE",
   TOKEN = "TOKEN",
-  VESTING = "VESTING",
 }
 
 export interface IClaim extends IIdDateBase {

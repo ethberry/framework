@@ -4,9 +4,8 @@ import { Type } from "class-transformer";
 
 import { AccountDto, SemiNftDto } from "@ethberry/nest-js-validators";
 import type { IClaimCreateDto } from "@framework/types";
-import { ClaimType } from "@framework/types";
 
-export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
+export class ClaimTemplateCreateDto extends AccountDto implements IClaimCreateDto {
   @ApiProperty({
     type: SemiNftDto,
   })
@@ -19,6 +18,5 @@ export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
   @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
 
-  public claimType: ClaimType;
   public chainId: number;
 }

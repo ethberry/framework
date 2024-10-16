@@ -1,6 +1,9 @@
+import { Erc721EventType, ExchangeEventType } from "@framework/types";
+
 export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
-  Transfer: ["/tokens", "/erc721/tokens"],
-  Claim: ["/claim"],
+  [Erc721EventType.Transfer]: ["/tokens", "/erc721/tokens", "/erc998/tokens"],
+  [ExchangeEventType.ClaimTemplate]: ["/claim"],
+  [ExchangeEventType.ClaimToken]: ["/claim"],
   DepositWithdraw: ["/staking/deposits"],
   Lend: ["/rent/tokens"],
   LendMany: ["/rent/tokens"],

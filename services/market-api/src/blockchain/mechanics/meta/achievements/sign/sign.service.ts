@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { hexlify } from "ethers";
 
 import type { IServerSignature } from "@ethberry/types-blockchain";
-import { SettingsKeys, ClaimType } from "@framework/types";
+import { SettingsKeys } from "@framework/types";
 
 import { SettingsService } from "../../../../../infrastructure/settings/settings.service";
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
@@ -50,7 +50,6 @@ export class AchievementSignService {
         item: achievementLevelEntity.reward,
         endTimestamp: new Date(0).toISOString(),
         chainId: userEntity.chainId,
-        claimType: ClaimType.TEMPLATE,
       },
       userEntity,
     );

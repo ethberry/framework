@@ -17,7 +17,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@ethberry/nest-js-utils";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
-import { ClaimCreateDto, ClaimSearchDto, ClaimUpdateDto, ClaimTokenUploadDto } from "./dto";
+import { ClaimTokenCreateDto, ClaimTokenSearchDto, ClaimTokenUpdateDto, ClaimTokenUploadDto } from "./dto";
 import { ClaimTokenService } from "./token.service";
 import { ClaimEntity } from "../claim.entity";
 
@@ -28,12 +28,15 @@ export class ClaimTokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: ClaimSearchDto, @User() userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
+  public search(
+    @Query() dto: ClaimTokenSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ClaimEntity>, number]> {
     return this.claimTokenService.search(dto, userEntity);
   }
 
   @Post("/")
-  public create(@Body() dto: ClaimCreateDto, @User() userEntity: UserEntity): Promise<ClaimEntity> {
+  public create(@Body() dto: ClaimTokenCreateDto, @User() userEntity: UserEntity): Promise<ClaimEntity> {
     return this.claimTokenService.create(dto, userEntity);
   }
 
@@ -45,7 +48,7 @@ export class ClaimTokenController {
   @Put("/:id")
   public update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() dto: ClaimUpdateDto,
+    @Body() dto: ClaimTokenUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<ClaimEntity | null> {
     return this.claimTokenService.update({ id }, dto, userEntity);

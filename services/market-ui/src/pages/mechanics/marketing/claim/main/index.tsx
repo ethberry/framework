@@ -10,11 +10,7 @@ import { ListActions, StyledListItem, StyledListWrapper, StyledPagination } from
 import type { IClaim, IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-import {
-  ClaimRedeemTemplateButton,
-  VestingDeployButton,
-  ClaimRedeemTokenButton,
-} from "../../../../../components/buttons";
+import { ClaimRedeemTemplateButton, ClaimRedeemTokenButton } from "../../../../../components/buttons";
 import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {
@@ -23,7 +19,7 @@ export const Claim: FC = () => {
       baseUrl: "/claim",
       search: {
         claimStatus: [ClaimStatus.NEW],
-        claimType: [ClaimType.VESTING, ClaimType.TOKEN, ClaimType.TEMPLATE],
+        claimType: [ClaimType.TOKEN, ClaimType.TEMPLATE],
       },
     });
 
@@ -47,7 +43,6 @@ export const Claim: FC = () => {
               <ListActions>
                 {claim.claimType === ClaimType.TEMPLATE ? <ClaimRedeemTemplateButton claim={claim} /> : null}
                 {claim.claimType === ClaimType.TOKEN ? <ClaimRedeemTokenButton claim={claim} /> : null}
-                {claim.claimType === ClaimType.VESTING ? <VestingDeployButton claim={claim} /> : null}
               </ListActions>
             </StyledListItem>
           ))}

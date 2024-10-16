@@ -1,4 +1,6 @@
-export * from "./marketing/claim/upload";
+export * from "./marketing/claim/template/upload";
+export * from "./marketing/claim/token/upload";
+
 export * from "./marketing/dispenser/upload";
 export * from "./marketing/collection/deploy";
 export * from "./marketing/collection/upload";
@@ -27,4 +29,3 @@ export * from "./marketing/wait-list/list/generate";
 export * from "./marketing/vesting/deploy";
 export * from "./marketing/vesting/release";
 export * from "./marketing/vesting/releasable";
-export * from "./marketing/vesting/upload";

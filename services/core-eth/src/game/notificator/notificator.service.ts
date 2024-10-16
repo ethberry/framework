@@ -60,11 +60,12 @@ export class NotificatorService {
     }
 
     const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
+    const rmqQueueMobile = this.configService.get<string>("RMQ_QUEUE_MOBILE", "mobile");
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
-        urls: [`${rmqUrl}/merchant`],
-        queue: `merchant_${merchantId.toString()}`, // merchant_1
+        urls: [rmqUrl],
+        queue: rmqQueueMobile,
         queueOptions: {
           durable: false,
         },
@@ -146,9 +147,15 @@ export class NotificatorService {
   }
 
   // MODULE:CLAIM
-  public async claim(data: IClaimData): Promise<any> {
+  public async claimTemplate(data: IClaimData): Promise<any> {
     return this.sendMessage(data.claim.merchantId, clientProxy => {
-      return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
+      return clientProxy.emit(MobileEventType.CLAIM_TEMPLATE, data).toPromise();
+    });
+  }
+
+  public async claimToken(data: IClaimData): Promise<any> {
+    return this.sendMessage(data.claim.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.CLAIM_TOKEN, data).toPromise();
     });
   }
 

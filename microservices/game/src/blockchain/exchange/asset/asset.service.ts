@@ -25,10 +25,8 @@ export class AssetService {
     private readonly loggerService: LoggerService,
     @InjectRepository(AssetEntity)
     private readonly assetEntityRepository: Repository<AssetEntity>,
-    @InjectRepository(AssetComponentEntity)
-    private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
     @InjectDataSource()
-    private dataSource: DataSource,
+    private readonly dataSource: DataSource,
   ) {}
 
   // This method accepts no arguments because all logic is in `update`
@@ -51,9 +49,15 @@ export class AssetService {
           where: {
             contractId: component.contractId,
           },
-          relations: {
-            contract: true,
-          },
+          relations:
+            component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20
+              ? {
+                  contract: true,
+                  tokens: true,
+                }
+              : {
+                  contract: true,
+                },
         });
 
         if (!templateEntity) {
@@ -66,6 +70,7 @@ export class AssetService {
 
         if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
           component.templateId = templateEntity.id;
+          component.tokenId = templateEntity.tokens[0].id;
         }
       }
       if (dto.components.length) {
@@ -79,6 +84,7 @@ export class AssetService {
         const changedComponents = await Promise.allSettled(
           asset.components
             .filter(oldItem => dto.components.find(newItem => newItem.id === oldItem.id))
+            .filter(oldItem => oldItem.id)
             .map(oldItem => {
               Object.assign(
                 oldItem,
@@ -112,6 +118,9 @@ export class AssetService {
             .map(c => c.value),
         );
         Object.assign(asset, { components: [...changedComponents, ...newComponents] });
+      } else {
+        // clear all
+        await Promise.allSettled(asset.components.map(oldItem => queryRunner.manager.remove(oldItem)));
       }
       await queryRunner.manager.save(asset);
 

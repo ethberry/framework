@@ -15,7 +15,7 @@ import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagin
 import type { IClaim, IClaimSearchDto, IUser } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-import { ClaimUploadButton } from "../../../../../components/buttons";
+import { ClaimTemplateUploadButton } from "../../../../../components/buttons";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { ClaimTemplateEditDialog } from "./edit";
 
@@ -73,7 +73,7 @@ export const ClaimTemplate: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <ClaimUploadButton onRefreshPage={handleRefreshPage} claimType={ClaimType.TEMPLATE} />
+        <ClaimTemplateUploadButton onRefreshPage={handleRefreshPage} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>

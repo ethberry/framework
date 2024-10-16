@@ -1,7 +1,7 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
+import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { ISignatureParams } from "@ethberry/types-blockchain";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
@@ -30,7 +30,6 @@ export class ClaimService {
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
-    // queryBuilder.andWhere("claim.account = :account", { account });
     queryBuilder.andWhere("claim.account = :account", { account: userEntity.wallet });
 
     queryBuilder.leftJoinAndSelect("claim.merchant", "merchant");
@@ -106,10 +105,6 @@ export class ClaimService {
   public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
     const { account, endTimestamp, item } = dto;
 
-    // create new asset and update it with actual item
-    // const assetEntity = await this.assetService.create();
-    // await this.assetService.update(assetEntity, { components: dto.item.components });
-
     const claimEntity = await this.claimEntityRepository
       .create({
         account,
@@ -175,8 +170,8 @@ export class ClaimService {
         expiresAt,
         nonce,
         extra: zeroPadValue(toBeHex(Math.ceil(new Date(endTimestamp).getTime() / 1000)), 32),
-        receiver: claimEntity.merchant.wallet,
-        referrer: zeroPadValue(toBeHex(Object.values(ClaimType).indexOf(claimEntity.claimType)), 20),
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       },
       claimEntity,
     );

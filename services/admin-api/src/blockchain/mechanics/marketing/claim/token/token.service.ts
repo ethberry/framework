@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
+import { hexlify, randomBytes, ZeroAddress, ZeroHash } from "ethers";
 import { mapLimit } from "async";
 
 import type { ISignatureParams } from "@ethberry/types-blockchain";
@@ -17,17 +17,17 @@ import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import type {
   IClaimCreateDto,
   IClaimSearchDto,
-  IClaimUpdateDto,
   IClaimTokenRowDto,
   IClaimTokenUploadDto,
+  IClaimUpdateDto,
 } from "@framework/types";
 import { ClaimStatus, ClaimType, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import { ClaimEntity } from "../claim.entity";
 import { ContractEntity } from "../../../../hierarchy/contract/contract.entity";
+import { ClaimEntity } from "../claim.entity";
 
 @Injectable()
 export class ClaimTokenService {
@@ -165,18 +165,17 @@ export class ClaimTokenService {
     }
 
     const nonce = randomBytes(32);
-    const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
 
     const signature = await this.getSignature(
       await this.contractService.findOneOrFail({ contractModule: ModuleType.EXCHANGE, chainId: userEntity.chainId }),
       account,
       {
         externalId: claimEntity.id,
-        expiresAt,
+        expiresAt: Math.ceil(new Date(endTimestamp).getTime() / 1000),
         nonce,
-        extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
+        extra: ZeroHash,
         receiver: claimEntity.merchant.wallet,
-        referrer: zeroPadValue(toBeHex(Object.values(ClaimType).indexOf(claimEntity.claimType)), 20),
+        referrer: ZeroAddress,
       },
       claimEntity,
     );
@@ -244,7 +243,6 @@ export class ClaimTokenService {
               chainId: userEntity.chainId,
               account,
               endTimestamp,
-              claimType: ClaimType.TOKEN,
               item: {
                 components: [
                   {

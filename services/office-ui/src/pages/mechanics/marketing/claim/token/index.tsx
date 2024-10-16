@@ -13,9 +13,9 @@ import { useUser } from "@ethberry/provider-user";
 import { cleanUpAsset, formatItem } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IClaim, IClaimSearchDto, IUser } from "@framework/types";
-import { ClaimStatus, ClaimType, TokenType } from "@framework/types";
+import { ClaimStatus, TokenType } from "@framework/types";
 
-import { ClaimUploadButton } from "../../../../../components/buttons";
+import { ClaimTokenUploadButton } from "../../../../../components/buttons";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { ClaimTokenEditDialog } from "./edit";
 
@@ -71,7 +71,7 @@ export const ClaimToken: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <ClaimUploadButton onRefreshPage={handleRefreshPage} claimType={ClaimType.TOKEN} />
+        <ClaimTokenUploadButton onRefreshPage={handleRefreshPage} />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>

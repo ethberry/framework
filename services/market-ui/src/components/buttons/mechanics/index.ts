@@ -20,14 +20,17 @@ export * from "./gambling/random/purchase";
 export * from "./gaming/recipes/craft";
 export * from "./gaming/recipes/merge";
 export * from "./meta/refferal";
+
 export * from "./marketing/staking/allowance";
 export * from "./marketing/staking/deposit";
 export * from "./marketing/staking/reward";
 export * from "./marketing/staking/reward-complex";
+
 export * from "./marketing/vesting/release";
 export * from "./marketing/vesting/releasable";
 export * from "./marketing/vesting/transfer-ownership";
-export * from "./marketing/vesting/deploy";
+
 export * from "./marketing/wait-list/claim";
 export * from "./marketing/wait-list/join";
+
 export * from "./marketing/wrapper/unpack";

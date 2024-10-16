@@ -36,7 +36,9 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
   const { assets, contract, eventData, eventType } = row as unknown as Required<IEventHistory>;
 
   switch (eventType) {
-    case ExchangeEventType.Claim:
+    case ExchangeEventType.ClaimTemplate:
+      return <ClaimDataView assets={assets} contract={contract} />;
+    case ExchangeEventType.ClaimToken:
       return <ClaimDataView assets={assets} contract={contract} />;
     case ExchangeEventType.Craft:
       return <CraftDataView assets={assets} contract={contract} />;

@@ -5,7 +5,6 @@ import { Protected } from "@ethberry/common-pages";
 import { VestingContracts } from "./contract";
 import { IndexWrapper } from "../../../index-wrapper";
 import { VestingSection } from "../../../dashboard/mechanics/vesting";
-import { VestingClaim } from "./claim";
 
 export const vestingRoutes: Array<RouteObject> = [
   {
@@ -25,15 +24,6 @@ export const vestingRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <VestingContracts /> },
           { path: "/vesting/contracts/:id/:action", element: <VestingContracts /> },
-        ],
-      },
-      {
-        path: "/vesting/claims",
-        element: <Protected />,
-        children: [
-          { index: true, element: <VestingClaim /> },
-
-          { path: "/vesting/claims/:id/:action", element: <VestingClaim /> },
         ],
       },
     ],
