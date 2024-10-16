@@ -5,7 +5,7 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IContractManagerERC721TokenDeployedEvent,
-  IContractManagerERC998TokenDeployedEvent,
+  IContractManagerERC1155TokenDeployedEvent,
   IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerRaffleDeployedEvent,
@@ -45,7 +45,7 @@ export class ChainLinkConsumerControllerEth {
     },
   ])
   public erc998Token(
-    @Payload() event: ILogEvent<IContractManagerERC998TokenDeployedEvent>,
+    @Payload() event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>,
     @Ctx() ctx: Log,
   ): Promise<void> {
     return this.chainLinkConsumerServiceEth.deploy2(event, ctx);

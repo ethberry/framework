@@ -27,15 +27,15 @@ export class Erc998CompositionService {
     where: FindOptionsWhere<CompositionEntity>,
     dto: Partial<CompositionEntity>,
   ): Promise<CompositionEntity> {
-    const contractManagerEntity = await this.findOne(where);
+    const compositionEntity = await this.findOne(where);
 
-    if (!contractManagerEntity) {
+    if (!compositionEntity) {
       throw new NotFoundException("entityNotFound");
     }
 
-    Object.assign(contractManagerEntity, dto);
+    Object.assign(compositionEntity, dto);
 
-    return contractManagerEntity.save();
+    return compositionEntity.save();
   }
 
   public async upsert(dto: DeepPartial<CompositionEntity>): Promise<void> {

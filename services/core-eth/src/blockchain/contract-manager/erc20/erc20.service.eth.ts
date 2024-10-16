@@ -21,7 +21,6 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { Erc20TokenServiceLog } from "../../tokens/erc20/token/token.service.log";
 
 @Injectable()
 export class ContractManagerErc20ServiceEth {
@@ -36,7 +35,6 @@ export class ContractManagerErc20ServiceEth {
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly userService: UserService,
-    private readonly erc20TokenServiceLog: Erc20TokenServiceLog,
   ) {}
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
@@ -84,8 +82,6 @@ export class ContractManagerErc20ServiceEth {
       royalty: 0,
       template: templateEntity,
     });
-
-    this.erc20TokenServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { EthersModule, ethersRpcProvider, ethersSignerProvider } from "@ethberry/nest-js-module-ethers-gcp";
@@ -12,9 +12,9 @@ import { TokenModule } from "../../hierarchy/token/token.module";
 import { EventHistoryModule } from "../../event-history/event-history.module";
 import { ContractManagerErc20ControllerEth } from "./erc20.controller.eth";
 import { ContractManagerErc20ServiceEth } from "./erc20.service.eth";
-import { Erc20TokenModule } from "../../tokens/erc20/token/token.module";
 import { AccessListModule } from "../../extensions/access-list/access-list.module";
 import { AccessControlModule } from "../../extensions/access-control/access-control.module";
+import { ContractManagerErc20ServiceLog } from "./erc20.service.log";
 
 @Module({
   imports: [
@@ -26,12 +26,24 @@ import { AccessControlModule } from "../../extensions/access-control/access-cont
     TokenModule,
     UserModule,
     SecretManagerModule.deferred(),
-    Erc20TokenModule,
     AccessControlModule,
     AccessListModule,
   ],
-  providers: [signalServiceProvider, Logger, ContractManagerErc20ServiceEth, ethersSignerProvider, ethersRpcProvider],
+  providers: [
+    signalServiceProvider,
+    Logger,
+    ContractManagerErc20ServiceLog,
+    ContractManagerErc20ServiceEth,
+    ethersSignerProvider,
+    ethersRpcProvider,
+  ],
   controllers: [ContractManagerErc20ControllerEth],
-  exports: [ContractManagerErc20ServiceEth],
+  exports: [ContractManagerErc20ServiceLog, ContractManagerErc20ServiceEth],
 })
-export class ContractManagerErc20Module {}
+export class ContractManagerErc20Module implements OnModuleInit {
+  constructor(protected readonly contractManagerErc20ServiceLog: ContractManagerErc20ServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.contractManagerErc20ServiceLog.initRegistry();
+  }
+}

@@ -16,11 +16,7 @@ import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { ClaimModule } from "../mechanics/marketing/claim/claim.module";
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
-import { Erc20TokenModule } from "../tokens/erc20/token/token.module";
-import { Erc721TokenModule } from "../tokens/erc721/token/token.module";
 import { ContractManagerServiceLog } from "./contract-manager.service.log";
-import { Erc1155TokenModule } from "../tokens/erc1155/token/token.module";
-import { Erc998TokenModule } from "../tokens/erc998/token/token.module";
 import { LotteryTicketModule } from "../mechanics/gambling/lottery/ticket/ticket.module";
 import { RaffleTicketModule } from "../mechanics/gambling/raffle/ticket/ticket.module";
 import { PaymentSplitterModule } from "../mechanics/meta/payment-splitter/payment-splitter.module";
@@ -34,12 +30,14 @@ import { WaitListListModule } from "../mechanics/marketing/wait-list/list/list.m
 import { ContractManagerErc20Module } from "./erc20/erc20.module";
 import { ContractManagerErc721Module } from "./erc721/erc721.module";
 import { ContractManagerErc998Module } from "./erc998/erc998.module";
+import { ContractManagerErc1155Module } from "./erc1155/erc1155.module";
 
 @Module({
   imports: [
     ContractManagerErc20Module,
     ContractManagerErc721Module,
     ContractManagerErc998Module,
+    ContractManagerErc1155Module,
 
     ConfigModule,
     EthersModule.deferred(),
@@ -53,10 +51,6 @@ import { ContractManagerErc998Module } from "./erc998/erc998.module";
     UserModule,
     ClaimModule,
     SecretManagerModule.deferred(),
-    Erc20TokenModule,
-    Erc721TokenModule,
-    Erc998TokenModule,
-    Erc1155TokenModule,
     MysteryBoxModule,
     LootBoxModule,
     LotteryRoundModule,

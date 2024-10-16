@@ -23,7 +23,6 @@ import { UserService } from "../../../infrastructure/user/user.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { Erc721TokenServiceLog } from "../../tokens/erc721/token/token.service.log";
 
 @Injectable()
 export class ContractManagerErc721ServiceEth {
@@ -41,7 +40,6 @@ export class ContractManagerErc721ServiceEth {
     private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
     private readonly userService: UserService,
-    private readonly erc721TokenServiceLog: Erc721TokenServiceLog,
   ) {}
 
   public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
@@ -96,8 +94,6 @@ export class ContractManagerErc721ServiceEth {
         templateStatus: TemplateStatus.ACTIVE,
       });
     }
-
-    this.erc721TokenServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

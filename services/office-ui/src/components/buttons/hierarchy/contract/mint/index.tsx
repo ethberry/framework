@@ -9,23 +9,23 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20MintABI from "@framework/abis/json/ERC20Simple/mint.json";
-import ERC721MintCommonABI from "@framework/abis/json/ERC721Simple/mintCommon.json";
-import ERC1155MintABI from "@framework/abis/json/ERC1155Simple/mint.json";
+import ERC20SimpleMintABI from "@framework/abis/json/ERC20Simple/mint.json";
+import ERC721SimpleMintCommonABI from "@framework/abis/json/ERC721Simple/mintCommon.json";
+import ERC1155SimpleMintABI from "@framework/abis/json/ERC1155Simple/mint.json";
 
+import { shouldDisableByContractType } from "../../../utils";
 import type { IMintTokenDto } from "./dialog";
 import { MintTokenDialog } from "./dialog";
-import { shouldDisableByContractType } from "../../../utils";
 import { useSetButtonPermission } from "../../../../../shared";
 
-export interface IMintButtonProps {
+export interface IContractMintButtonProps {
   className?: string;
   contract: IContract;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const ContractMintButton: FC<IMintButtonProps> = props => {
+export const ContractMintButton: FC<IContractMintButtonProps> = props => {
   const {
     className,
     contract,
@@ -54,21 +54,21 @@ export const ContractMintButton: FC<IMintButtonProps> = props => {
     if (templateComponent.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
         templateComponent.template.contract.address,
-        ERC20MintABI,
+        ERC20SimpleMintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc20.mint(values.account, templateComponent.amount) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC721 || templateComponent.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         templateComponent.template.contract.address,
-        ERC721MintCommonABI,
+        ERC721SimpleMintCommonABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.mintCommon(values.account, templateComponent.templateId) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         templateComponent.template.contract.address,
-        ERC1155MintABI,
+        ERC1155SimpleMintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.mint(
@@ -98,8 +98,8 @@ export const ContractMintButton: FC<IMintButtonProps> = props => {
         dataTestId="ContractMintButton"
         disabled={
           disabled ||
-          contractType === TokenType.NATIVE ||
           shouldDisableByContractType(contract) ||
+          contractType === TokenType.NATIVE ||
           contractFeatures.includes(ContractFeatures.GENES) ||
           !hasPermission
         }
@@ -115,14 +115,14 @@ export const ContractMintButton: FC<IMintButtonProps> = props => {
               {
                 tokenType: contractType,
                 contractId,
-                contract: {
-                  decimals,
-                  address,
-                  contractType,
-                },
                 template: {
                   id: 0,
                   tokens: [],
+                  contract: {
+                    decimals,
+                    address,
+                    contractType,
+                  },
                 },
                 tokenId: 0,
                 templateId: 0,

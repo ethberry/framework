@@ -66,7 +66,7 @@ export class SeedContractDispenserAt1692165706800 implements MigrationInterface 
             '',
             'ACTIVE',
             null,
-            '{}',
+            '{ALLOWANCE}',
             'DISPENSER',
             1,
             '${currentDateTime}',

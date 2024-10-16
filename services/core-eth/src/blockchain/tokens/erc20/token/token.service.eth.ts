@@ -3,12 +3,17 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IErc20TokenApproveEvent, IErc20TokenTransferEvent } from "@framework/types";
+import type {
+  IContractManagerERC20TokenDeployedEvent,
+  IErc20TokenApproveEvent,
+  IErc20TokenTransferEvent,
+} from "@framework/types";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { Erc20TokenServiceLog } from "./token.service.log";
 
 @Injectable()
 export class Erc20TokenServiceEth {
@@ -18,6 +23,7 @@ export class Erc20TokenServiceEth {
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
+    private readonly erc20TokenServiceLog: Erc20TokenServiceLog,
   ) {}
 
   public async transfer(event: ILogEvent<IErc20TokenTransferEvent>, context: Log): Promise<void> {
@@ -68,5 +74,16 @@ export class Erc20TokenServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.erc20TokenServiceLog.updateRegistry([account]);
   }
 }

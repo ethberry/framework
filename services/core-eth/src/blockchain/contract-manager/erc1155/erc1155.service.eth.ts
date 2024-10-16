@@ -8,23 +8,21 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
-import type { IContractManagerERC998TokenDeployedEvent } from "@framework/types";
 import {
   ContractFeatures,
-  Erc998ContractTemplates,
+  Erc1155ContractTemplates,
+  IContractManagerERC1155TokenDeployedEvent,
   RmqProviderType,
   SignalEventType,
-  TemplateStatus,
   TokenType,
 } from "@framework/types";
 
 import { UserService } from "../../../infrastructure/user/user.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import { TemplateService } from "../../hierarchy/template/template.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
-export class ContractManagerErc998ServiceEth {
+export class ContractManagerErc1155ServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
@@ -37,57 +35,44 @@ export class ContractManagerErc998ServiceEth {
     private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
-    private readonly templateService: TemplateService,
     private readonly userService: UserService,
   ) {}
 
-  public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, context: Log): Promise<void> {
+  public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, context: Log): Promise<void> {
     const {
+      name,
       args: { account, args, externalId },
     } = event;
     const { transactionHash } = context;
 
-    const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
+    const { royalty, baseTokenURI, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const contractEntity = await this.contractService.create({
+    await this.contractService.create({
       address: account.toLowerCase(),
-      title: name,
-      name,
-      symbol,
+      title: `${TokenType.ERC1155} (new)`,
       description: emptyStateString,
       imageUrl,
+      baseTokenURI,
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc998ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
-      contractType: TokenType.ERC998,
+          : (Object.values(Erc1155ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+      contractType: TokenType.ERC1155,
       chainId,
       royalty: Number(royalty),
-      baseTokenURI,
       fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
-
-    if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
-      await this.templateService.create({
-        title: name,
-        description: emptyStateString,
-        imageUrl,
-        cap: (1024 * 1024 * 1024 * 4).toString(),
-        contractId: contractEntity.id,
-        templateStatus: TemplateStatus.HIDDEN,
-      });
-    }
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: await this.getUserWalletById(externalId),
         transactionHash,
-        transactionType: event.name,
+        transactionType: name,
       })
       .toPromise();
   }
@@ -95,7 +80,7 @@ export class ContractManagerErc998ServiceEth {
   public async getMerchantId(userId: number): Promise<number> {
     const userEntity = await this.userService.findOne({ id: userId });
     if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", ContractManagerErc998ServiceEth.name);
+      this.loggerService.error("CRITICAL ERROR", ContractManagerErc1155ServiceEth.name);
       throw new NotFoundException("userNotFound");
     }
     return userEntity.merchantId;
@@ -104,7 +89,7 @@ export class ContractManagerErc998ServiceEth {
   public async getUserWalletById(userId: number): Promise<string> {
     const userEntity = await this.userService.findOne({ id: userId });
     if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", ContractManagerErc998ServiceEth.name);
+      this.loggerService.error("CRITICAL ERROR", ContractManagerErc1155ServiceEth.name);
       throw new NotFoundException("userNotFound");
     }
     return userEntity.wallet;

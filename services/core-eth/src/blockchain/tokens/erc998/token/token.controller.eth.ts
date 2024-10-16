@@ -4,6 +4,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
+  IContractManagerERC1155TokenDeployedEvent,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
@@ -15,7 +16,7 @@ import type {
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
 } from "@framework/types";
-import { Erc721EventType, Erc998EventType } from "@framework/types";
+import { ContractManagerEventType, Erc721EventType, Erc998EventType } from "@framework/types";
 
 import { ContractType } from "../../../../utils/contract-type";
 import { Erc998TokenServiceEth } from "./token.service.eth";
@@ -93,5 +94,15 @@ export class Erc998TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc998TokenServiceEth.unWhitelistChild(event, context);
+  }
+
+  @EventPattern([
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC998TokenDeployed },
+  ])
+  public deploy(
+    @Payload() event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.erc998TokenServiceEth.deploy(event, context);
   }
 }

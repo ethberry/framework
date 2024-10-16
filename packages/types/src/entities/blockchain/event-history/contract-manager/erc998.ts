@@ -6,7 +6,7 @@ export interface IERC998TokenDeployedEventArgs {
   contractTemplate: string;
 }
 
-export interface IContractManagerERC998TokenDeployedEvent {
+export interface IContractManagerERC1155TokenDeployedEvent {
   account: string;
   externalId: number;
   args: IERC998TokenDeployedEventArgs;

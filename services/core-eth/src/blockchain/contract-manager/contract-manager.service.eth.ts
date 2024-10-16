@@ -11,7 +11,6 @@ import { emptyStateString } from "@ethberry/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
 import type {
   IContractManagerCollectionDeployedEvent,
-  IContractManagerERC1155TokenDeployedEvent,
   IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
@@ -26,7 +25,6 @@ import {
   ContractFeatures,
   ContractSecurity,
   ContractStatus,
-  Erc1155ContractTemplates,
   IContractManagerPaymentSplitterDeployedEvent,
   LootContractTemplates,
   ModuleType,
@@ -46,8 +44,6 @@ import { BalanceService } from "../hierarchy/balance/balance.service";
 import { EventHistoryService } from "../event-history/event-history.service";
 import { ClaimService } from "../mechanics/marketing/claim/claim.service";
 import { decodeExternalId } from "../../common/utils";
-import { Erc721TokenServiceLog } from "../tokens/erc721/token/token.service.log";
-import { Erc1155TokenServiceLog } from "../tokens/erc1155/token/token.service.log";
 import { PaymentSplitterServiceLog } from "../mechanics/meta/payment-splitter/payment-splitter.service.log";
 import { LotteryRoundServiceLog } from "../mechanics/gambling/lottery/round/round.service.log";
 import { RaffleRoundServiceLog } from "../mechanics/gambling/raffle/round/round.service.log";
@@ -77,8 +73,6 @@ export class ContractManagerServiceEth {
     private readonly balanceService: BalanceService,
     private readonly userService: UserService,
     private readonly claimService: ClaimService,
-    private readonly erc721TokenService: Erc721TokenServiceLog,
-    private readonly erc1155TokenService: Erc1155TokenServiceLog,
     private readonly mysteryBoxServiceLog: MysteryBoxServiceLog,
     private readonly lootBoxServiceLog: LootBoxServiceLog,
     private readonly lotteryRoundServiceLog: LotteryRoundServiceLog,
@@ -156,53 +150,11 @@ export class ContractManagerServiceEth {
 
     await this.createBalancesBatch(externalId, entityArray);
 
-    this.erc721TokenService.updateRegistry([account]);
-
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: await this.getUserWalletById(externalId),
         transactionHash,
         transactionType: event.name,
-      })
-      .toPromise();
-  }
-
-  public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, context: Log): Promise<void> {
-    const {
-      name,
-      args: { account, args, externalId },
-    } = event;
-    const { transactionHash } = context;
-
-    const { royalty, baseTokenURI, contractTemplate } = args;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    await this.contractService.create({
-      address: account.toLowerCase(),
-      title: `${TokenType.ERC1155} (new)`,
-      description: emptyStateString,
-      imageUrl,
-      baseTokenURI,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(Erc1155ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
-      contractType: TokenType.ERC1155,
-      chainId,
-      royalty: Number(royalty),
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(externalId),
-    });
-    this.erc1155TokenService.updateRegistry([account]);
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
-        transactionHash,
-        transactionType: name,
       })
       .toPromise();
   }

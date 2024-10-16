@@ -11,7 +11,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractManagerABI } from "../interfaces";
 
 @Injectable()
-export class ContractManagerServiceLog {
+export class ContractManagerErc20ServiceLog {
   constructor(
     protected readonly configService: ConfigService,
     private readonly contractService: ContractService,

@@ -4,7 +4,8 @@ import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 
-import type {
+import {
+  IContractManagerERC1155TokenDeployedEvent,
   IErc1155TokenApprovalForAllEvent,
   IErc1155TokenTransferBatchEvent,
   IErc1155TokenTransferSingleEvent,
@@ -19,6 +20,7 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { Erc1155TokenServiceLog } from "./token.service.log";
 
 @Injectable()
 export class Erc1155TokenServiceEth extends TokenServiceEth {
@@ -33,6 +35,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     protected readonly contractService: ContractService,
     protected readonly assetService: AssetService,
     protected readonly notificatorService: NotificatorService,
+    protected readonly erc1155TokenServiceLog: Erc1155TokenServiceLog,
   ) {
     super(loggerService, signalClientProxy, tokenService, eventHistoryService);
   }
@@ -172,5 +175,16 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       // erc1155TokenEntity.instanceCount -= ~~amount;
       await this.balanceService.increment(erc1155TokenEntity.id, to, amount);
     }
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.erc1155TokenServiceLog.updateRegistry([account]);
   }
 }

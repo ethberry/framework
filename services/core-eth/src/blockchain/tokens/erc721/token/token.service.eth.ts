@@ -3,8 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-
-import type { IERC721TokenTransferEvent } from "@framework/types";
+import type { IContractManagerERC721TokenDeployedEvent, IERC721TokenTransferEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
@@ -15,6 +14,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { Erc721TokenServiceLog } from "./token.service.log";
 import { ERC721SimpleABI } from "./interfaces";
 
 @Injectable()
@@ -32,6 +32,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly assetService: AssetService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly notificatorService: NotificatorService,
+    protected readonly erc721TokenServiceLog: Erc721TokenServiceLog,
   ) {
     super(loggerService, signalClientProxy, tokenService, eventHistoryService);
   }
@@ -108,5 +109,16 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.erc721TokenServiceLog.updateRegistry([account]);
   }
 }

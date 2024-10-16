@@ -7,11 +7,11 @@ import type { IContractManagerERC998TokenDeployedEvent } from "@framework/types"
 import { ContractManagerEventType } from "@framework/types";
 
 import { ContractType } from "../../../utils/contract-type";
-import { ContractManagerServiceEth } from "./erc998.service.eth";
+import { ContractManagerErc998ServiceEth } from "./erc998.service.eth";
 
 @Controller()
 export class ContractManagerControllerEth {
-  constructor(private readonly contractManagerServiceEth: ContractManagerServiceEth) {}
+  constructor(private readonly contractManagerErc998ServiceEth: ContractManagerErc998ServiceEth) {}
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
@@ -21,6 +21,6 @@ export class ContractManagerControllerEth {
     @Payload() event: ILogEvent<IContractManagerERC998TokenDeployedEvent>,
     @Ctx() ctx: Log,
   ): Promise<void> {
-    return this.contractManagerServiceEth.erc998Token(event, ctx);
+    return this.contractManagerErc998ServiceEth.erc998Token(event, ctx);
   }
 }

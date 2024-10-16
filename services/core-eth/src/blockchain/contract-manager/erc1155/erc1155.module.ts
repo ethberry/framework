@@ -6,40 +6,46 @@ import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp
 
 import { signalServiceProvider } from "../../../common/providers";
 import { UserModule } from "../../../infrastructure/user/user.module";
+import { VestingModule } from "../../mechanics/marketing/vesting/vesting.module";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../hierarchy/template/template.module";
 import { TokenModule } from "../../hierarchy/token/token.module";
 import { EventHistoryModule } from "../../event-history/event-history.module";
-import { ContractManagerErc721ControllerEth } from "./erc721.controller.eth";
-import { ContractManagerErc721ServiceEth } from "./erc721.service.eth";
-import { ContractManagerErc721ServiceLog } from "./erc721.service.log";
+import { RentableModule } from "../../mechanics/gaming/rentable/rentable.module";
+import { BalanceModule } from "../../hierarchy/balance/balance.module";
+import { ContractManagerErc1155ControllerEth } from "./erc1155.controller.eth";
+import { ContractManagerErc1155ServiceEth } from "./erc1155.service.eth";
+import { ContractManagerErc1155ServiceLog } from "./erc1155.service.log";
 
 @Module({
   imports: [
     ConfigModule,
+    EthersModule.deferred(),
     ContractModule,
     EventHistoryModule,
+    VestingModule,
     TemplateModule,
     TokenModule,
+    RentableModule,
+    BalanceModule,
     UserModule,
-    EthersModule.deferred(),
     SecretManagerModule.deferred(),
   ],
   providers: [
     signalServiceProvider,
     Logger,
-    ContractManagerErc721ServiceLog,
-    ContractManagerErc721ServiceEth,
+    ContractManagerErc1155ServiceLog,
+    ContractManagerErc1155ServiceEth,
     ethersSignerProvider,
     ethersRpcProvider,
   ],
-  controllers: [ContractManagerErc721ControllerEth],
-  exports: [ContractManagerErc721ServiceLog, ContractManagerErc721ServiceEth],
+  controllers: [ContractManagerErc1155ControllerEth],
+  exports: [ContractManagerErc1155ServiceLog, ContractManagerErc1155ServiceEth],
 })
-export class ContractManagerErc721Module implements OnModuleInit {
-  constructor(protected readonly contractManagerErc721ServiceLog: ContractManagerErc721ServiceLog) {}
+export class ContractManagerErc1155Module implements OnModuleInit {
+  constructor(protected readonly contractManagerErc1155ServiceLog: ContractManagerErc1155ServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.contractManagerErc721ServiceLog.initRegistry();
+    await this.contractManagerErc1155ServiceLog.initRegistry();
   }
 }

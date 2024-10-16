@@ -3,13 +3,14 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
+import type {
+  IContractManagerERC721TokenDeployedEvent,
   IErc1155TokenApprovalForAllEvent,
   IErc1155TokenTransferBatchEvent,
   IErc1155TokenTransferSingleEvent,
   IErc1155TokenUriEvent,
 } from "@framework/types";
-import { Erc1155EventType } from "@framework/types";
+import { ContractManagerEventType, Erc1155EventType } from "@framework/types";
 
 import { ContractType } from "../../../../utils/contract-type";
 import { Erc1155TokenServiceEth } from "./token.service.eth";
@@ -45,5 +46,15 @@ export class Erc1155TokenControllerEth {
   @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155EventType.URI })
   public uri(@Payload() event: ILogEvent<IErc1155TokenUriEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.uri(event, context);
+  }
+
+  @EventPattern([
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC1155TokenDeployed },
+  ])
+  public deploy(
+    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.erc1155ServiceEth.deploy(event, context);
   }
 }

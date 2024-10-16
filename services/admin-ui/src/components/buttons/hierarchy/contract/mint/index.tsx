@@ -57,7 +57,7 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
         ERC20SimpleMintABI,
         web3Context.provider?.getSigner(),
       );
-      return contractErc20["mint(address,uint256)"](values.account, templateComponent.amount) as Promise<any>;
+      return contractErc20.mint(values.account, templateComponent.amount) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC721 || templateComponent.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         templateComponent.template.contract.address,
@@ -115,14 +115,14 @@ export const ContractMintButton: FC<IContractMintButtonProps> = props => {
               {
                 tokenType: contractType,
                 contractId,
-                contract: {
-                  decimals,
-                  address,
-                  contractType,
-                },
                 template: {
                   id: 0,
                   tokens: [],
+                  contract: {
+                    decimals,
+                    address,
+                    contractType,
+                  },
                 },
                 tokenId: 0,
                 templateId: 0,

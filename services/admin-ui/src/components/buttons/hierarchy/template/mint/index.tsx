@@ -115,14 +115,14 @@ export const TemplateMintButton: FC<ITemplateMintButtonProps> = props => {
               {
                 tokenType: contractType,
                 contractId,
-                contract: {
-                  decimals,
-                  address,
-                  contractType,
-                },
                 template: {
                   id: 0,
                   tokens,
+                  contract: {
+                    decimals,
+                    address,
+                    contractType,
+                  },
                 },
                 templateId,
                 amount: contractType === TokenType.ERC20 ? constants.WeiPerEther.toString() : "1",

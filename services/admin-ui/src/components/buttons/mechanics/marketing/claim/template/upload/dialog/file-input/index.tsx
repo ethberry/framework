@@ -3,9 +3,12 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 import csv2json from "csvtojson";
 import { v4 } from "uuid";
+import { utils } from "ethers";
+import { GridCellParams } from "@mui/x-data-grid";
 
 import { FileInput as AbstractFileInput } from "@ethberry/mui-inputs-file";
 import type { IClaimTemplateRowDto, IClaimTemplateUploadDto } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../../../tables/csv-content";
 import { claimsValidationSchema } from "../validation";
@@ -101,6 +104,11 @@ export const FileInput: FC<IFileInputProps> = props => {
       sortable: true,
       flex: 2,
       minWidth: 200,
+      renderCell: (params: GridCellParams<any, string>) => {
+        return params.row.tokenType === TokenType.NATIVE || params.row.tokenType === TokenType.ERC20
+          ? utils.formatEther(params.value!)
+          : params.value;
+      },
     },
     {
       field: "endTimestamp",

@@ -15,8 +15,8 @@ import { ERC721SimpleABI } from "./interfaces";
 export class Erc721TokenServiceLog {
   constructor(
     protected readonly configService: ConfigService,
-    private readonly contractService: ContractService,
-    private readonly ethersService: EthersService,
+    protected readonly contractService: ContractService,
+    protected readonly ethersService: EthersService,
   ) {}
 
   public async initRegistry(): Promise<void> {

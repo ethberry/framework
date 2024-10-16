@@ -14,9 +14,8 @@ import { EventHistoryModule } from "../../event-history/event-history.module";
 import { RentableModule } from "../../mechanics/gaming/rentable/rentable.module";
 import { BalanceModule } from "../../hierarchy/balance/balance.module";
 import { ContractManagerControllerEth } from "./erc998.controller.eth";
-import { ContractManagerServiceEth } from "./erc998.service.eth";
-import { ContractManagerServiceLog } from "./erc998.service.log";
-import { Erc998TokenModule } from "../../tokens/erc998/token/token.module";
+import { ContractManagerErc998ServiceEth } from "./erc998.service.eth";
+import { ContractManagerErc998ServiceLog } from "./erc998.service.log";
 
 @Module({
   imports: [
@@ -31,23 +30,22 @@ import { Erc998TokenModule } from "../../tokens/erc998/token/token.module";
     BalanceModule,
     UserModule,
     SecretManagerModule.deferred(),
-    Erc998TokenModule,
   ],
   providers: [
     signalServiceProvider,
     Logger,
-    ContractManagerServiceLog,
-    ContractManagerServiceEth,
+    ContractManagerErc998ServiceLog,
+    ContractManagerErc998ServiceEth,
     ethersSignerProvider,
     ethersRpcProvider,
   ],
   controllers: [ContractManagerControllerEth],
-  exports: [ContractManagerServiceLog, ContractManagerServiceEth],
+  exports: [ContractManagerErc998ServiceLog, ContractManagerErc998ServiceEth],
 })
 export class ContractManagerErc998Module implements OnModuleInit {
-  constructor(protected readonly contractManagerServiceLog: ContractManagerServiceLog) {}
+  constructor(protected readonly contractManagerErc998ServiceLog: ContractManagerErc998ServiceLog) {}
 
   public async onModuleInit(): Promise<void> {
-    await this.contractManagerServiceLog.initRegistry();
+    await this.contractManagerErc998ServiceLog.initRegistry();
   }
 }

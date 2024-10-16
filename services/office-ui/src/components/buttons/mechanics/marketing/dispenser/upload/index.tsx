@@ -1,14 +1,16 @@
 import { FC, Fragment, useState } from "react";
 import { Add } from "@mui/icons-material";
+import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract } from "ethers";
+import { FormattedMessage } from "react-intl";
 
 import { useMetamask, useSystemContract } from "@ethberry/react-hooks-eth";
-import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract } from "@framework/types";
 import { SystemModuleType, TokenType } from "@framework/types";
 
-import DispenserABI from "@framework/abis/json/Dispenser/disperse.json";
+import DispenserDisperseABI from "@framework/abis/json/Dispenser/disperse.json";
+
 import { DispenserUploadDialog } from "./dialog";
 import type { IDispenserRow, IDispenserUploadDto } from "./dialog/file-input";
 import { getEthPrice } from "./utils";
@@ -16,11 +18,10 @@ import { getEthPrice } from "./utils";
 export interface IDispenserUploadButtonProps {
   className?: string;
   disabled?: boolean;
-  variant?: ListActionVariant;
 }
 
 export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
-  const { className, disabled, variant = ListActionVariant.button } = props;
+  const { className, disabled } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +48,7 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
         };
       });
 
-      const contract = new Contract(systemContract.address, DispenserABI, web3Context.provider?.getSigner());
+      const contract = new Contract(systemContract.address, DispenserDisperseABI, web3Context.provider?.getSigner());
       return contract.disperse(assets, receivers, {
         value: getEthPrice(assets),
       }) as Promise<void>;
@@ -76,15 +77,16 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
 
   return (
     <Fragment>
-      <ListAction
+      <Button
         onClick={handleUpload}
-        icon={Add}
-        message="form.buttons.upload"
+        startIcon={<Add />}
         className={className}
-        dataTestId="DispenserUploadButton"
+        data-testid="DispenserUploadButton"
         disabled={disabled}
-        variant={variant}
-      />
+        variant="outlined"
+      >
+        <FormattedMessage id="form.buttons.upload" />
+      </Button>
       <DispenserUploadDialog
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}
