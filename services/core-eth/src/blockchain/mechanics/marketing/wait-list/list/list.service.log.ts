@@ -2,14 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { IsNull } from "typeorm";
 
-import { ModuleType, WaitListEventType } from "@framework/types";
+import { ModuleType, WaitListEventSignature } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import { WaitListABI } from "./interfaces";
 import { ContractType } from "../../../../../utils/contract-type";
+import { WaitListABI } from "./interfaces";
 
 @Injectable()
 export class WaitListListServiceLog {
@@ -35,7 +35,7 @@ export class WaitListListServiceLog {
       contractType: ContractType.WAIT_LIST,
       contractAddress: address,
       contractInterface: WaitListABI,
-      eventSignatures: [WaitListEventType.WaitListRewardSet, WaitListEventType.WaitListRewardClaimed],
+      eventSignatures: [WaitListEventSignature.WaitListRewardSet, WaitListEventSignature.WaitListRewardClaimed],
     });
   }
 }

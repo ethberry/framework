@@ -5,15 +5,14 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IContractManagerCollectionDeployedEvent,
-  IContractManagerLotteryDeployedEvent,
   IContractManagerLootTokenDeployedEvent,
+  IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerPaymentSplitterDeployedEvent,
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
-  IContractManagerWaitListDeployedEvent,
 } from "@framework/types";
 import { ContractManagerEventType } from "@framework/types";
 
@@ -92,14 +91,6 @@ export class ContractManagerControllerEth {
   })
   public raffle(@Payload() event: ILogEvent<IContractManagerRaffleDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
     return this.contractManagerServiceEth.raffle(event, ctx);
-  }
-
-  @EventPattern({
-    contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.WaitListDeployed,
-  })
-  public waitList(@Payload() event: ILogEvent<IContractManagerWaitListDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.waitList(event, ctx);
   }
 
   @EventPattern({

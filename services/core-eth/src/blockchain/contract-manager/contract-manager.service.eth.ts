@@ -14,18 +14,17 @@ import type {
   IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerPaymentSplitterDeployedEvent,
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
-  IContractManagerWaitListDeployedEvent,
 } from "@framework/types";
 import {
   CollectionContractTemplates,
   ContractFeatures,
   ContractSecurity,
   ContractStatus,
-  IContractManagerPaymentSplitterDeployedEvent,
   LootContractTemplates,
   ModuleType,
   MysteryContractTemplates,
@@ -50,7 +49,6 @@ import { RaffleRoundServiceLog } from "../mechanics/gambling/raffle/round/round.
 import { MysteryBoxServiceLog } from "../mechanics/marketing/mystery/box/box.service.log";
 import { LootBoxServiceLog } from "../mechanics/marketing/loot/box/box.service.log";
 import { PonziServiceLog } from "../mechanics/gambling/ponzi/ponzi.service.log";
-import { WaitListListServiceLog } from "../mechanics/marketing/wait-list/list/list.service.log";
 import { VestingServiceLog } from "../mechanics/marketing/vesting/vesting.service.log";
 import { StakingContractServiceLog } from "../mechanics/marketing/staking/contract/contract.service.log";
 
@@ -81,7 +79,6 @@ export class ContractManagerServiceEth {
     private readonly paymentSplitterServiceLog: PaymentSplitterServiceLog,
     private readonly ponziServiceLog: PonziServiceLog,
     private readonly stakingContractServiceLog: StakingContractServiceLog,
-    private readonly waitListListServiceLog: WaitListListServiceLog,
   ) {}
 
   public async erc721Collection(
@@ -406,40 +403,6 @@ export class ContractManagerServiceEth {
     });
 
     this.raffleRoundServiceLog.updateRegistry([account]);
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
-  }
-
-  public async waitList(event: ILogEvent<IContractManagerWaitListDeployedEvent>, context: Log): Promise<void> {
-    const {
-      name,
-      args: { account, externalId },
-    } = event;
-    const { transactionHash } = context;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    await this.contractService.create({
-      address: account.toLowerCase(),
-      title: `${ModuleType.WAIT_LIST} (new)`,
-      description: emptyStateString,
-      imageUrl,
-      contractFeatures: [ContractFeatures.PAUSABLE],
-      contractModule: ModuleType.WAIT_LIST,
-      chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(externalId),
-    });
-
-    this.waitListListServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

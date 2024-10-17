@@ -1,13 +1,3 @@
-export interface IRaffleConfig {
-  timeLagBeforeRelease: string;
-  commission: string;
-}
+import { IContractManagerCommonDeployedEvent } from "./common";
 
-export interface IRaffleDeployedEventArgs {
-  config: IRaffleConfig;
-}
-
-export interface IContractManagerRaffleDeployedEvent {
-  account: string;
-  externalId: number;
-}
+export interface IContractManagerRaffleDeployedEvent extends IContractManagerCommonDeployedEvent {}

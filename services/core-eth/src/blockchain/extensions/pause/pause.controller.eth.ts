@@ -3,7 +3,8 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import { IPausedEvent, PausableEventType } from "@framework/types";
+import type { IContractManagerWaitListDeployedEvent, IPausedEvent } from "@framework/types";
+import { ContractManagerEventType, PausableEventType } from "@framework/types";
 
 import { ContractType } from "../../../utils/contract-type";
 import { PauseServiceEth } from "./pause.service.eth";
@@ -20,5 +21,16 @@ export class PauseControllerEth {
   @EventPattern([{ contractType: ContractType.PAUSE, eventName: PausableEventType.Unpaused }])
   public unpause(@Payload() event: ILogEvent<IPausedEvent>, @Ctx() context: Log): Promise<void> {
     return this.pauseServiceEth.unpause(event, context);
+  }
+
+  @EventPattern([
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.WaitListDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.MysteryBoxDeployed },
+  ])
+  public deploy(
+    @Payload() event: ILogEvent<IContractManagerWaitListDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.pauseServiceEth.deploy(event, context);
   }
 }

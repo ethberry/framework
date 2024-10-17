@@ -1,3 +1,5 @@
+import { IContractManagerCommonDeployedEvent } from "./common";
+
 export interface IMysteryTokenDeployedEventArgs {
   name: string;
   symbol: string;
@@ -6,8 +8,6 @@ export interface IMysteryTokenDeployedEventArgs {
   contractTemplate: string;
 }
 
-export interface IContractManagerMysteryTokenDeployedEvent {
-  account: string;
-  externalId: number;
+export interface IContractManagerMysteryTokenDeployedEvent extends IContractManagerCommonDeployedEvent {
   args: IMysteryTokenDeployedEventArgs;
 }

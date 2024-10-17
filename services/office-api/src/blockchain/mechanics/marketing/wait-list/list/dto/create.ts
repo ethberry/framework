@@ -5,15 +5,15 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@ethberry/collection";
 import type { IWaitListListCreateDto } from "@framework/types";
 
-import { SemiCoinDto } from "@ethberry/nest-js-validators";
+import { NotNativeDto } from "@ethberry/nest-js-validators";
 
 export class WaitListListCreateDto extends SearchableDto implements IWaitListListCreateDto {
   @ApiProperty({
-    type: SemiCoinDto,
+    type: NotNativeDto,
   })
   @ValidateNested()
-  @Type(() => SemiCoinDto)
-  public item: InstanceType<typeof SemiCoinDto>;
+  @Type(() => NotNativeDto)
+  public item: InstanceType<typeof NotNativeDto>;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })

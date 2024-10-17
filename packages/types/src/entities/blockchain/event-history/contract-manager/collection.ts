@@ -1,3 +1,5 @@
+import { IContractManagerCommonDeployedEvent } from "./common";
+
 export interface ICollectionDeployedEventArgs {
   name: string;
   symbol: string;
@@ -7,8 +9,6 @@ export interface ICollectionDeployedEventArgs {
   contractTemplate: string;
 }
 
-export interface IContractManagerCollectionDeployedEvent {
-  account: string;
-  externalId: number;
+export interface IContractManagerCollectionDeployedEvent extends IContractManagerCommonDeployedEvent {
   args: ICollectionDeployedEventArgs;
 }

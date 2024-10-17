@@ -4,9 +4,9 @@ import { constants } from "ethers";
 import { useApiCall } from "@ethberry/react-hooks";
 import type { IContract } from "@framework/types";
 import { SystemModuleType } from "@framework/types";
-import { ListActionVariant } from "@framework/styled";
 
 import { AllowanceButton } from "../../../../../../components/buttons";
+import { ListActionVariant } from "@framework/styled";
 
 export const AllowanceButtonForDispenser: FC = props => {
   const [contract, setContract] = useState<IContract>({

@@ -35,6 +35,10 @@ export class WaitListItemService {
       waitListItemStatus: WaitListItemStatus.NEW,
     });
 
+    queryBuilder.orderBy({
+      "wait_list_item.createdAt": "DESC",
+    });
+
     return queryBuilder.getManyAndCount();
   }
 

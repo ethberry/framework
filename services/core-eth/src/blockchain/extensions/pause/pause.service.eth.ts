@@ -5,12 +5,13 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IPausedEvent } from "@framework/types";
+import type { IContractManagerWaitListDeployedEvent, IPausedEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
+import { PauseServiceLog } from "./pause.service.log";
 
 @Injectable()
 export class PauseServiceEth {
@@ -20,6 +21,7 @@ export class PauseServiceEth {
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly pauseServiceLog: PauseServiceLog,
   ) {}
 
   public async pause(event: ILogEvent<IPausedEvent>, context: Log): Promise<void> {
@@ -57,5 +59,16 @@ export class PauseServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerWaitListDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.pauseServiceLog.updateRegistry([account]);
   }
 }

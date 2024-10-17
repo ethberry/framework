@@ -1,4 +1,5 @@
 import type { IAssetItem } from "../exchange";
+import { IContractManagerCommonDeployedEvent } from "./common";
 
 export interface IVestingDeployedEventArgs {
   owner: string;
@@ -8,9 +9,7 @@ export interface IVestingDeployedEventArgs {
   contractTemplate: string;
 }
 
-export interface IContractManagerVestingDeployedEvent {
-  account: string;
-  externalId: number;
+export interface IContractManagerVestingDeployedEvent extends IContractManagerCommonDeployedEvent {
   args: IVestingDeployedEventArgs;
   items: Array<IAssetItem>;
 }

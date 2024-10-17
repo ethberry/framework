@@ -1,4 +1,3 @@
-export interface IContractManagerWaitListDeployedEvent {
-  account: string;
-  externalId: number;
-}
+import { IContractManagerCommonDeployedEvent } from "./common";
+
+export interface IContractManagerWaitListDeployedEvent extends IContractManagerCommonDeployedEvent {}

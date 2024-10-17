@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 
 import { DispenserUploadButton } from "../../../../../components/buttons";
-import { AllowanceButton } from "./allowance";
+import { AllowanceButtonForDispenser } from "./allowance";
 
 export const Dispenser: FC = () => {
   return (
@@ -13,7 +13,7 @@ export const Dispenser: FC = () => {
       <Breadcrumbs path={["dashboard", "dispenser"]} />
 
       <PageHeader message="pages.dispenser.title">
-        <AllowanceButton />
+        <AllowanceButtonForDispenser />
         <DispenserUploadButton />
       </PageHeader>
 

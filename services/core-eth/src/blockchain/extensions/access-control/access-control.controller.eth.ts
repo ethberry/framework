@@ -19,17 +19,17 @@ import { ContractType } from "../../../utils/contract-type";
 export class AccessControlControllerEth {
   constructor(private readonly accessControlServiceEth: AccessControlServiceEth) {}
 
-  @EventPattern([{ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleGranted }])
+  @EventPattern({ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleGranted })
   public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGrantedEvent>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleGranted(event, context);
   }
 
-  @EventPattern([{ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleRevoked }])
+  @EventPattern({ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleRevoked })
   public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevokedEvent>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleRevoked(event, context);
   }
 
-  @EventPattern([{ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleAdminChanged }])
+  @EventPattern({ contractType: ContractType.ACCESS_CONTROLL, eventName: AccessControlEventType.RoleAdminChanged })
   public roleAdmin(
     @Payload() event: ILogEvent<IAccessControlRoleAdminChangedEvent>,
     @Ctx() context: Log,
@@ -37,12 +37,7 @@ export class AccessControlControllerEth {
     return this.accessControlServiceEth.roleAdminChanged(event, context);
   }
 
-  @EventPattern([
-    {
-      contractType: ContractType.VESTING,
-      eventName: AccessControlEventType.OwnershipTransferred,
-    },
-  ])
+  @EventPattern({ contractType: ContractType.VESTING, eventName: AccessControlEventType.OwnershipTransferred })
   public ownershipTransferred(
     @Payload() event: ILogEvent<IOwnershipTransferredEvent>,
     @Ctx() context: Log,

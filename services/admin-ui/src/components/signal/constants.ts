@@ -1,11 +1,14 @@
+import { ContractManagerEventType } from "@framework/types";
+
 export const EventRouteMatch: Partial<Record<string, string>> = {
   // DEPLOY
-  ERC20TokenDeployed: "/erc20/contracts",
-  ERC721TokenDeployed: "/erc721/contracts",
-  ERC998TokenDeployed: "/erc998/contracts",
+  [ContractManagerEventType.ERC20TokenDeployed]: "/erc20/contracts",
+  [ContractManagerEventType.ERC721TokenDeployed]: "/erc721/contracts",
+  [ContractManagerEventType.ERC998TokenDeployed]: "/erc998/contracts",
+  [ContractManagerEventType.ERC1155TokenDeployed]: "/erc1155/contracts",
+  [ContractManagerEventType.WaitListDeployed]: "/wait-list/contracts",
   WhitelistedChild: "/erc998/composition",
   UnWhitelistedChild: "/erc998/composition",
-  ERC1155TokenDeployed: "/erc1155/contracts",
   LootBoxDeployed: "/loot/contracts",
   MysteryBoxDeployed: "/mystery/contracts",
   CollectionDeployed: "/collection/contracts",
@@ -14,7 +17,6 @@ export const EventRouteMatch: Partial<Record<string, string>> = {
   StakingDeployed: "/staking/contracts",
   LotteryDeployed: "/lottery/contracts",
   RaffleDeployed: "/raffle/contracts",
-  WaitListDeployed: "/wait-list/contracts",
   PaymentSplitterDeployed: "/payment-splitter/contracts",
   // STAKING RULES
   RuleCreated: "/staking/rules",

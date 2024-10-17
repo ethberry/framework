@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -29,4 +29,10 @@ import { WaitListListServiceLog } from "./list.service.log";
   controllers: [WaitListListControllerEth],
   exports: [WaitListListServiceLog, WaitListListServiceEth, WaitListListService],
 })
-export class WaitListListModule {}
+export class WaitListListModule implements OnModuleInit {
+  constructor(private readonly waitListListServiceLog: WaitListListServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.waitListListServiceLog.initRegistry();
+  }
+}

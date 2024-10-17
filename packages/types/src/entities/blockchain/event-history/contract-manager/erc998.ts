@@ -1,3 +1,5 @@
+import { IContractManagerCommonDeployedEvent } from "./common";
+
 export interface IERC998TokenDeployedEventArgs {
   name: string;
   symbol: string;
@@ -6,8 +8,6 @@ export interface IERC998TokenDeployedEventArgs {
   contractTemplate: string;
 }
 
-export interface IContractManagerERC1155TokenDeployedEvent {
-  account: string;
-  externalId: number;
+export interface IContractManagerERC998TokenDeployedEvent extends IContractManagerCommonDeployedEvent {
   args: IERC998TokenDeployedEventArgs;
 }

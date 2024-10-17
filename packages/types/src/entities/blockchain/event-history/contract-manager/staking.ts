@@ -1,9 +1,9 @@
+import { IContractManagerCommonDeployedEvent } from "./common";
+
 export interface IStakingDeployedEventArgs {
   contractTemplate: string;
 }
 
-export interface IContractManagerStakingDeployedEvent {
-  account: string;
-  externalId: number;
+export interface IContractManagerStakingDeployedEvent extends IContractManagerCommonDeployedEvent {
   args: IStakingDeployedEventArgs;
 }

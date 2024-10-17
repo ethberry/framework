@@ -158,6 +158,7 @@
       "TEMPLATE_ID": "Template"
     },
     "blockchainError": {
+      "WaitListRootAlreadySet": "Root already set",
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
       "Expired": "The item has expired",

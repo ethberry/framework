@@ -4,7 +4,7 @@ import { IContractManagerMysteryTokenDeployedEvent } from "./mystery";
 import { IContractManagerLootTokenDeployedEvent } from "./loot";
 import { IContractManagerERC20TokenDeployedEvent } from "./erc20";
 import { IContractManagerERC721TokenDeployedEvent } from "./erc721";
-import { IContractManagerERC1155TokenDeployedEvent } from "./erc998";
+import { IContractManagerERC998TokenDeployedEvent } from "./erc998";
 import { IContractManagerERC1155TokenDeployedEvent } from "./erc1155";
 import { IContractManagerPonziDeployedEvent } from "./ponzi";
 import { IContractManagerStakingDeployedEvent } from "./staking";
@@ -52,7 +52,6 @@ export type TContractManagerEvent =
   | IContractManagerERC20TokenDeployedEvent
   | IContractManagerERC721TokenDeployedEvent
   | IContractManagerERC1155TokenDeployedEvent
-   
   | IContractManagerMysteryTokenDeployedEvent
   | IContractManagerLootTokenDeployedEvent
   | IContractManagerCollectionDeployedEvent
@@ -67,7 +66,7 @@ export {
   IContractManagerVestingDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
-  IContractManagerERC1155TokenDeployedEvent,
+  IContractManagerERC998TokenDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerLootTokenDeployedEvent,

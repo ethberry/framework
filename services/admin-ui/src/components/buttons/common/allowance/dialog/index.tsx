@@ -1,8 +1,10 @@
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
+import { Alert } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
-import { ContractStatus, Erc721ContractFeatures, ModuleType, TokenType } from "@framework/types";
 import { FormDialog } from "@ethberry/mui-dialog-form";
 import { SelectInput } from "@ethberry/mui-inputs-core";
+import { ContractStatus, Erc721ContractFeatures, ModuleType, TokenType } from "@framework/types";
 
 import { CommonContractInput } from "../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
@@ -30,9 +32,12 @@ export interface IAllowanceDialogProps {
 export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
   const { initialValues, disabledTokenTypes = [], ...rest } = props;
 
+  const [showAlert, setShowAlert] = useState(false);
+
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any): void => {
+      setShowAlert(option?.title === "USDT");
       form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.contractType", option?.contractType ?? "0x");
@@ -62,6 +67,11 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
         }}
       />
       <AmountInput />
+      {showAlert ? (
+        <Alert severity="warning">
+          <FormattedMessage id="messages.allowanceUSDTWarning" />
+        </Alert>
+      ) : null}
     </FormDialog>
   );
 };

@@ -1,10 +1,10 @@
+import { IContractManagerCommonDeployedEvent } from "./common";
+
 export interface IPaymentSplitterDeployedEventArgs {
   payees: Array<string>;
   shares: Array<string>;
 }
 
-export interface IContractManagerPaymentSplitterDeployedEvent {
-  account: string;
-  externalId: number;
+export interface IContractManagerPaymentSplitterDeployedEvent extends IContractManagerCommonDeployedEvent {
   args: IPaymentSplitterDeployedEventArgs;
 }

@@ -11,7 +11,7 @@ import { RaffleEventType, TRaffleEvents } from "./raffle";
 import { ReferralProgramEventType, TReferralProgramEvents } from "./referral";
 import { StakingEventType, TStakingEvents } from "./staking";
 import { TVestingEvents, VestingEventType } from "./vesting";
-import { TWaitListEvents, WaitListEventType } from "./waitlist";
+import { TWaitListEvents, WaitListEventType } from "./wait-list";
 import { TWrapperEvents, WrapperEventType } from "./wrapper";
 
 export * from "./collection";
@@ -26,7 +26,7 @@ export * from "./raffle";
 export * from "./referral";
 export * from "./staking";
 export * from "./vesting";
-export * from "./waitlist";
+export * from "./wait-list";
 export * from "./wrapper";
 
 export type TMechanicsEventType =

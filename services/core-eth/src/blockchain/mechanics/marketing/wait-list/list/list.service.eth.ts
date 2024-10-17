@@ -1,16 +1,20 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IWaitListRewardClaimedEvent, IWaitListRewardSetEvent } from "@framework/types";
+import type {
+  IContractManagerWaitListDeployedEvent,
+  IWaitListRewardClaimedEvent,
+  IWaitListRewardSetEvent,
+} from "@framework/types";
 import { RmqProviderType, SignalEventType, WaitListItemStatus } from "@framework/types";
 
 import { EventHistoryService } from "../../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../../game/notificator/notificator.service";
 import { WaitListItemService } from "../item/item.service";
 import { WaitListListService } from "./list.service";
+import { WaitListListServiceLog } from "./list.service.log";
 
 @Injectable()
 export class WaitListListServiceEth {
@@ -23,6 +27,7 @@ export class WaitListListServiceEth {
     private readonly notificatorService: NotificatorService,
     private readonly waitListListService: WaitListListService,
     private readonly waitListItemService: WaitListItemService,
+    private readonly waitListListServiceLog: WaitListListServiceLog,
   ) {}
 
   public async rewardSet(event: ILogEvent<IWaitListRewardSetEvent>, context: Log): Promise<void> {
@@ -98,10 +103,11 @@ export class WaitListListServiceEth {
           alias: "wait_list_item",
           leftJoinAndSelect: {
             list: "wait_list_item.list",
+            contract: "list.contract",
             item: "list.item",
             item_components: "item.components",
             item_template: "item_components.template",
-            item_contract: "item_components.contract",
+            item_contract: "item_template.contract",
           },
         },
       },
@@ -128,5 +134,16 @@ export class WaitListListServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public async deploy(event: ILogEvent<IContractManagerWaitListDeployedEvent>, context: Log): Promise<void> {
+    const {
+      args: { account },
+    } = event;
+
+    // dummy call to keep interface compatible with same methods
+    await Promise.resolve(context);
+
+    this.waitListListServiceLog.updateRegistry([account]);
   }
 }

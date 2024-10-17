@@ -1,3 +1,5 @@
+import { IContractManagerCommonDeployedEvent } from "./common";
+
 export interface ILootTokenDeployedEventArgs {
   name: string;
   symbol: string;
@@ -6,8 +8,6 @@ export interface ILootTokenDeployedEventArgs {
   contractTemplate: string;
 }
 
-export interface IContractManagerLootTokenDeployedEvent {
-  account: string;
-  externalId: number;
+export interface IContractManagerLootTokenDeployedEvent extends IContractManagerCommonDeployedEvent {
   args: ILootTokenDeployedEventArgs;
 }

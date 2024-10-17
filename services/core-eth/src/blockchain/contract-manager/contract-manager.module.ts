@@ -26,11 +26,12 @@ import { PonziModule } from "../mechanics/gambling/ponzi/ponzi.module";
 import { StakingContractModule } from "../mechanics/marketing/staking/contract/contract.module";
 import { LotteryRoundModule } from "../mechanics/gambling/lottery/round/round.module";
 import { RaffleRoundModule } from "../mechanics/gambling/raffle/round/round.module";
-import { WaitListListModule } from "../mechanics/marketing/wait-list/list/list.module";
+
 import { ContractManagerErc20Module } from "./erc20/erc20.module";
 import { ContractManagerErc721Module } from "./erc721/erc721.module";
 import { ContractManagerErc998Module } from "./erc998/erc998.module";
 import { ContractManagerErc1155Module } from "./erc1155/erc1155.module";
+import { ContractManagerWaitListModule } from "./wait-list/wait-list.module";
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ContractManagerErc1155Module } from "./erc1155/erc1155.module";
     ContractManagerErc721Module,
     ContractManagerErc998Module,
     ContractManagerErc1155Module,
+    ContractManagerWaitListModule,
 
     ConfigModule,
     EthersModule.deferred(),
@@ -61,7 +63,6 @@ import { ContractManagerErc1155Module } from "./erc1155/erc1155.module";
     StakingContractModule,
     VestingModule,
     PaymentSplitterModule,
-    WaitListListModule,
   ],
   providers: [
     signalServiceProvider,
