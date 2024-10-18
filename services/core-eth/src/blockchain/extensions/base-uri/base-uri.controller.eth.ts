@@ -13,7 +13,7 @@ import { ContractType } from "../../../utils/contract-type";
 export class BaseUriControllerEth {
   constructor(private readonly baseUriServiceEth: BaseUriServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: BaseUrlEventType.BaseURIUpdate })
+  @EventPattern({ contractType: ContractType.BASE_URL, eventName: BaseUrlEventType.BaseURIUpdate })
   public updateBaseUri(@Payload() event: ILogEvent<IBaseURIUpdateEvent>, @Ctx() context: Log): Promise<void> {
     return this.baseUriServiceEth.updateBaseUri(event, context);
   }

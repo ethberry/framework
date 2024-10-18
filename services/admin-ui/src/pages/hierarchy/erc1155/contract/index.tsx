@@ -20,6 +20,7 @@ import {
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
+  SetBaseTokenURIButton,
   TransferButton,
   UnBlacklistButton,
   UnWhitelistButton,
@@ -133,6 +134,7 @@ export const Erc1155Contract: FC = () => {
               <ContractAllowanceButton contract={contract} />
               <TransferButton contract={contract} />
               <DefaultRoyaltyButton contract={contract} />
+              <SetBaseTokenURIButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

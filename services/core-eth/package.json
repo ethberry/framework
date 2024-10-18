@@ -10,7 +10,7 @@
     "@framework/types": "0.0.1",
     "@ethberry/collection": "3.3.27",
     "@ethberry/constants": "0.13.5",
-    "@ethberry/contracts-utils": "5.0.49",
+    "@ethberry/contracts-utils": "5.0.51",
     "@ethberry/draft-js-utils": "1.2.54",
     "@ethberry/nest-js-guards": "3.1.21",
     "@ethberry/nest-js-module-ethers-gcp": "7.0.7",

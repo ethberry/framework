@@ -7,7 +7,7 @@ import { useMetamask } from "@ethberry/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, ModuleType } from "@framework/types";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import ERC721RandomGemunionSetSubscriptionIdABI from "@framework/abis/json/ERC721RandomEthberry/setSubscriptionId.json";
+import ERC721RandomEthberrySetSubscriptionIdABI from "@framework/abis/json/ERC721RandomEthberry/setSubscriptionId.json";
 
 import { ChainLinkSetSubscriptionDialog } from "./dialog";
 import type { IChainLinkVrfSubscriptionDto } from "./dialog";
@@ -35,7 +35,7 @@ export const ChainLinkSetSubscriptionButton: FC<IChainLinkSetSubscriptionButtonP
 
   const metaFnSetSub = useMetamask(async (options: IChainLinkVrfSubscriptionDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
-    const contract = new Contract(address, ERC721RandomGemunionSetSubscriptionIdABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, ERC721RandomEthberrySetSubscriptionIdABI, web3Context.provider?.getSigner());
 
     const uintSub = BigInt(options.vrfSubId.substring(0, options.vrfSubId.length));
     return contract.setSubscriptionId(uintSub) as Promise<void>; // V2PLUS
