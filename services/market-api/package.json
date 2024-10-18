@@ -36,7 +36,7 @@
     "@ethberry/nest-js-module-winston-logdna": "3.1.20",
     "@ethberry/nest-js-utils": "4.2.17",
     "@ethberry/nest-js-validators": "4.1.6",
-    "@ethberry/traits-v6": "1.0.28",
+    "@ethberry/traits-v6": "1.0.30",
     "@ethberry/types-blockchain": "1.3.4",
     "@ethberry/types-collection": "1.5.20",
     "@ethberry/types-jwt": "0.4.8",
