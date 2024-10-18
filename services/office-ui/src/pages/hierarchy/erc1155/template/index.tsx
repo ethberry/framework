@@ -6,17 +6,17 @@ import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 import { DeleteDialog } from "@ethberry/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import { useUser } from "@ethberry/provider-user";
 import { emptyPrice } from "@ethberry/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
-import type { ITemplate, ITemplateSearchDto, IUser } from "@framework/types";
+import type { ITemplate, ITemplateSearchDto, IToken, IUser } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import { TemplateMintButton } from "../../../../components/buttons";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
+import { TemplateMintButton, TokenRoyaltyButton } from "../../../../components/buttons";
 import { WithCheckPermissionsListWrapper } from "../../../../components/wrappers";
 import { Erc1155TemplateEditDialog } from "./edit";
 
@@ -48,15 +48,14 @@ export const Erc1155Template: FC = () => {
       description: emptyStateString,
       price: emptyPrice,
       amount: "0",
-      contractId: 3,
     },
     search: {
       query: "",
-      templateStatus: [TemplateStatus.ACTIVE],
       contractIds: [],
+      templateStatus: [TemplateStatus.ACTIVE],
       merchantId: profile.merchantId,
     },
-    filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>
+    filter: ({ id, title, description, price, amount, imageUrl, contractId, templateStatus }) =>
       id
         ? { title, description, price: cleanUpAsset(price), amount, imageUrl, templateStatus }
         : { title, description, price: cleanUpAsset(price), amount, imageUrl, contractId },
@@ -100,11 +99,12 @@ export const Erc1155Template: FC = () => {
               <ListAction
                 onClick={handleDelete(template)}
                 message="form.buttons.delete"
-                dataTestId="ContractDeleteButton"
+                dataTestId="TemplateDeleteButton"
                 icon={Delete}
                 disabled={template.templateStatus === TemplateStatus.INACTIVE}
               />
               <TemplateMintButton template={template} />
+              <TokenRoyaltyButton token={{ ...template.tokens![0], template } as unknown as IToken} />
             </ListActions>
           </ListItem>
         ))}

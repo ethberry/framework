@@ -44,9 +44,7 @@ export class PonziDepositServiceEth {
     const { transactionHash, address } = context;
 
     const contractEntity = await this.contractService.findOne(
-      {
-        address: address.toLowerCase(),
-      },
+      { address: address.toLowerCase() },
       { relations: { merchant: true } },
     );
 

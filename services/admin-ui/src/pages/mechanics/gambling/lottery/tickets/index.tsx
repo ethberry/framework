@@ -13,14 +13,14 @@ import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, Erc721ContractTemplates } from "@framework/types";
 
 import {
-  ContractAllowanceButton,
   BlacklistButton,
+  ContractAllowanceButton,
   ContractMintButton,
+  DefaultRoyaltyButton,
   Erc721ContractDeployButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   TransferButton,
   UnBlacklistButton,
   UnWhitelistButton,
@@ -116,7 +116,7 @@ export const LotteryTicketContracts: FC = () => {
               <ContractMintButton contract={contract} />
               <ContractAllowanceButton contract={contract} />
               <TransferButton contract={contract} />
-              <RoyaltyButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

@@ -7,3 +7,7 @@ export * from "./set-base-token-uri";
 export * from "./transfer-ownership";
 export * from "./whitelist-add";
 export * from "./whitelist-remove";
+export * from "./default-royalty";
+export * from "./token-royalty";
+export * from "./pause";
+export * from "./unpause";

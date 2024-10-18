@@ -17,11 +17,11 @@ import {
   BlacklistButton,
   ContractAllowanceButton,
   ContractMintButton,
+  DefaultRoyaltyButton,
   Erc20ContractDeployButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   TransferButton,
   UnBlacklistButton,
   UnWhitelistButton,
@@ -139,7 +139,7 @@ export const Erc20Contract: FC = () => {
               <UnBlacklistButton contract={contract} />
               <WhitelistButton contract={contract} />
               <UnWhitelistButton contract={contract} />
-              <RoyaltyButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
               <ContractMintButton contract={contract} />
               <ContractAllowanceButton contract={contract} />
               <TransferButton contract={contract} />

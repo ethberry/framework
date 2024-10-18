@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -7,17 +7,16 @@ import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { TokenService } from "../token/token.service";
 import { ContractService } from "../contract/contract.service";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
+import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
-    @Inject(forwardRef(() => AssetService))
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
     protected readonly contractService: ContractService,
@@ -37,6 +36,8 @@ export class TemplateService {
 
     queryBuilder.leftJoin("template.contract", "contract");
     queryBuilder.addSelect([
+      "contract.id",
+      "contract.royalty",
       "contract.address",
       "contract.decimals",
       "contract.contractType",
@@ -48,7 +49,7 @@ export class TemplateService {
     queryBuilder.leftJoin("template.tokens", "tokens", "contract.contractType = :tokenType", {
       tokenType: TokenType.ERC1155,
     });
-    queryBuilder.addSelect(["tokens.id", "tokens.tokenId"]);
+    queryBuilder.addSelect(["tokens.id", "tokens.tokenId", "tokens.royalty"]);
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId,
@@ -122,7 +123,10 @@ export class TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: ITemplateAutocompleteDto, userEntity: UserEntity): Promise<Array<TemplateEntity>> {
+  public async autocomplete(
+    dto: Partial<ITemplateAutocompleteDto>,
+    userEntity: UserEntity,
+  ): Promise<Array<TemplateEntity>> {
     const { contractFeatures, templateStatus, contractIds, contractModule, contractType } = dto;
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
 
@@ -226,6 +230,10 @@ export class TemplateService {
       throw new NotFoundException("contractNotFound");
     }
 
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      // throw new ForbiddenException("insufficientPermissions");
+    }
+
     const assetEntity = await this.assetService.create();
     await this.assetService.update(assetEntity, price, userEntity);
 
@@ -256,6 +264,10 @@ export class TemplateService {
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
+    }
+
+    if (templateEntity.contract.merchantId !== userEntity.merchantId) {
+      // throw new ForbiddenException("insufficientPermissions");
     }
 
     if (price) {

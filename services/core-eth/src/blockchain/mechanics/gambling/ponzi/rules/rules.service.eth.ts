@@ -45,9 +45,7 @@ export class PonziRulesServiceEth {
     const { active } = rule;
 
     const contractEntity = await this.contractService.findOne(
-      {
-        address: address.toLowerCase(),
-      },
+      { address: address.toLowerCase() },
       { relations: { merchant: true } },
     );
 

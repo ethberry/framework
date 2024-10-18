@@ -15,10 +15,10 @@ import { BusinessType, ContractStatus, NativeContractFeatures } from "@framework
 import {
   ContractAllowanceButton,
   ContractMintButton,
+  DefaultRoyaltyButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   TransferButton,
 } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -109,7 +109,7 @@ export const NativeContract: FC = () => {
               <ContractMintButton contract={contract} disabled={true} />
               <ContractAllowanceButton contract={contract} disabled={true} />
               <TransferButton contract={contract} disabled={true} />
-              <RoyaltyButton contract={contract} disabled={true} />
+              <DefaultRoyaltyButton contract={contract} disabled={true} />
             </ListActions>
           </ListItem>
         ))}

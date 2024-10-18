@@ -5,35 +5,34 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
-import type { IContract } from "@framework/types";
+import type { IToken } from "@framework/types";
 import { AccessControlRoleType, ContractFeatures, TokenType } from "@framework/types";
 
-import ERC721SimpleSetDefaultRoyalty from "@framework/abis/json/ERC721Simple/setDefaultRoyalty.json";
+import ERC721SimpleSetTokenRoyalty from "@framework/abis/json/ERC721Simple/setTokenRoyalty.json";
 
 import { useSetButtonPermission } from "../../../../shared";
 import { shouldDisableByContractType } from "../../utils";
 import type { IRoyaltyDto } from "./dialog";
 import { RoyaltyEditDialog } from "./dialog";
 
-export interface IRoyaltyButtonProps {
+export interface ITokenRoyaltyButtonProps {
   className?: string;
-  contract: IContract;
+  token: IToken;
   disabled?: boolean;
   variant?: ListActionVariant;
 }
 
-export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
-  const {
-    className,
-    contract,
-    contract: { address, contractFeatures, royalty, contractType },
-    disabled,
-    variant,
-  } = props;
+export const TokenRoyaltyButton: FC<ITokenRoyaltyButtonProps> = props => {
+  const { className, token, disabled, variant } = props;
+
+  const { address, contractFeatures, royalty, contractType } = token.template!.contract!;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
 
-  const { hasPermission } = useSetButtonPermission(AccessControlRoleType.DEFAULT_ADMIN_ROLE, contract?.id);
+  const { hasPermission } = useSetButtonPermission(
+    AccessControlRoleType.DEFAULT_ADMIN_ROLE,
+    token.template!.contract!.id,
+  );
 
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);
@@ -44,8 +43,8 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, ERC721SimpleSetDefaultRoyalty, web3Context.provider?.getSigner());
-    return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
+    const contract = new Contract(address, ERC721SimpleSetTokenRoyalty, web3Context.provider?.getSigner());
+    return contract.setTokenRoyalty(token.tokenId, web3Context.account, values.royalty) as Promise<void>;
   });
 
   const handleRoyaltyConfirmed = async (values: IRoyaltyDto): Promise<void> => {
@@ -65,10 +64,10 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
         icon={PaidOutlined}
         message="form.buttons.royalty"
         className={className}
-        dataTestId="RoyaltyButton"
+        dataTestId="TokenRoyaltyButton"
         disabled={
           disabled ||
-          shouldDisableByContractType(contract) ||
+          shouldDisableByContractType(token.template!.contract!) ||
           contractFeatures.includes(ContractFeatures.SOULBOUND) ||
           !hasPermission
         }
@@ -78,7 +77,7 @@ export const RoyaltyButton: FC<IRoyaltyButtonProps> = props => {
         onCancel={handleRoyaltyCancel}
         onConfirm={handleRoyaltyConfirmed}
         open={isRoyaltyDialogOpen}
-        initialValues={{ royalty }}
+        initialValues={{ royalty: token.royalty || royalty }}
       />
     </Fragment>
   );

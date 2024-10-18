@@ -15,12 +15,12 @@ import { ContractStatus, Erc998ContractFeatures } from "@framework/types";
 import {
   AllowanceButton,
   BlacklistButton,
+  ContractMintButton,
+  DefaultRoyaltyButton,
   Erc998ContractDeployButton,
   GrantRoleButton,
-  ContractMintButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   TransferButton,
   UnBlacklistButton,
   UnWhitelistButton,
@@ -116,7 +116,7 @@ export const Erc998Contract: FC = () => {
                 <ContractMintButton contract={contract} />
                 <AllowanceButton contract={contract} />
                 <TransferButton contract={contract} />
-                <RoyaltyButton contract={contract} />
+                <DefaultRoyaltyButton contract={contract} />
               </ListActions>
             </ListItem>
           );

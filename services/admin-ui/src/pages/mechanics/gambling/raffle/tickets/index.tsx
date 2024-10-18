@@ -16,11 +16,11 @@ import {
   BlacklistButton,
   ContractAllowanceButton,
   ContractMintButton,
+  DefaultRoyaltyButton,
   Erc721ContractDeployButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   TransferButton,
   UnBlacklistButton,
   UnWhitelistButton,
@@ -116,7 +116,7 @@ export const RaffleTicketContracts: FC = () => {
               <ContractMintButton contract={contract} />
               <ContractAllowanceButton contract={contract} />
               <TransferButton contract={contract} />
-              <RoyaltyButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

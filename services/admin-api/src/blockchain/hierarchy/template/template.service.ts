@@ -39,6 +39,7 @@ export class TemplateService {
     queryBuilder.leftJoin("template.contract", "contract");
     queryBuilder.addSelect([
       "contract.id",
+      "contract.royalty",
       "contract.address",
       "contract.decimals",
       "contract.contractType",
@@ -50,7 +51,7 @@ export class TemplateService {
     queryBuilder.leftJoin("template.tokens", "tokens", "contract.contractType = :tokenType", {
       tokenType: TokenType.ERC1155,
     });
-    queryBuilder.addSelect(["tokens.id", "tokens.tokenId"]);
+    queryBuilder.addSelect(["tokens.id", "tokens.tokenId", "tokens.royalty"]);
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,

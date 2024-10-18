@@ -2,16 +2,19 @@ import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
+import { WithCheckPermissionsListWrapper } from "../../../../components/wrappers";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { Erc998TokenViewDialog } from "./view";
+import { TokenRoyaltyButton } from "../../../../components/buttons";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
+import { Erc998TokenViewDialog } from "./view";
 
 export const Erc998Token: FC = () => {
   const {
@@ -41,6 +44,8 @@ export const Erc998Token: FC = () => {
       metadata: {},
     },
   });
+
+  const { account = "" } = useWeb3React();
 
   const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
 
@@ -75,29 +80,24 @@ export const Erc998Token: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
+        contractType={[TokenType.ERC998]}
       />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(token => (
-            <StyledListItem key={token.id}>
-              <ListItemText>
-                {token.template?.title} #{token.tokenId}
-              </ListItemText>
-              <ListActions>
-                <ListAction
-                  onClick={handleWithdraw(token)}
-                  icon={AccountBalanceWallet}
-                  message="form.buttons.withdraw"
-                />
-                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+      <WithCheckPermissionsListWrapper count={rows.length} isLoading={isLoading}>
+        {rows.map(token => (
+          <ListItem key={token.template!.contract!.id} account={account} contract={token.template!.contract}>
+            <ListItemText>
+              {token.template?.title} #{token.tokenId}
+            </ListItemText>
+            <ListActions>
+              <ListAction onClick={handleWithdraw(token)} icon={AccountBalanceWallet} message="form.buttons.withdraw" />
+              <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
+              <TokenRoyaltyButton token={token} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"

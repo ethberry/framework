@@ -22,12 +22,12 @@ import {
 import {
   AllowanceButton,
   BlacklistButton,
+  ContractMintButton,
+  DefaultRoyaltyButton,
   Erc1155ContractDeployButton,
   GrantRoleButton,
-  ContractMintButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   TransferButton,
   UnBlacklistButton,
   UnWhitelistButton,
@@ -118,39 +118,37 @@ export const Erc1155Contract: FC = () => {
       />
 
       <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
-        {rows.map(contract => {
-          return (
-            <ListItem key={contract.id} account={account} contract={contract}>
-              <ListItemText>{contract.title}</ListItemText>
-              <ListActions dataTestId="ContractActionsMenuButton">
-                <ListAction
-                  onClick={handleEdit(contract)}
-                  message="form.buttons.edit"
-                  dataTestId="ContractEditButton"
-                  icon={Create}
-                />
-                <ListAction
-                  onClick={handleDelete(contract)}
-                  message="form.buttons.delete"
-                  dataTestId="ContractDeleteButton"
-                  icon={Delete}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
-                <GrantRoleButton contract={contract} />
-                <RevokeRoleButton contract={contract} />
-                <RenounceRoleButton contract={contract} />
-                <BlacklistButton contract={contract} />
-                <UnBlacklistButton contract={contract} />
-                <WhitelistButton contract={contract} />
-                <UnWhitelistButton contract={contract} />
-                <ContractMintButton contract={contract} />
-                <AllowanceButton contract={contract} />
-                <TransferButton contract={contract} />
-                <RoyaltyButton contract={contract} />
-              </ListActions>
-            </ListItem>
-          );
-        })}
+        {rows.map(contract => (
+          <ListItem key={contract.id} account={account} contract={contract}>
+            <ListItemText>{contract.title}</ListItemText>
+            <ListActions dataTestId="ContractActionsMenuButton">
+              <ListAction
+                onClick={handleEdit(contract)}
+                message="form.buttons.edit"
+                dataTestId="ContractEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(contract)}
+                message="form.buttons.delete"
+                dataTestId="ContractDeleteButton"
+                icon={Delete}
+                disabled={contract.contractStatus === ContractStatus.INACTIVE}
+              />
+              <GrantRoleButton contract={contract} />
+              <RevokeRoleButton contract={contract} />
+              <RenounceRoleButton contract={contract} />
+              <BlacklistButton contract={contract} />
+              <UnBlacklistButton contract={contract} />
+              <WhitelistButton contract={contract} />
+              <UnWhitelistButton contract={contract} />
+              <ContractMintButton contract={contract} />
+              <AllowanceButton contract={contract} />
+              <TransferButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
+            </ListActions>
+          </ListItem>
+        ))}
       </WithCheckPermissionsListWrapper>
 
       <StyledPagination

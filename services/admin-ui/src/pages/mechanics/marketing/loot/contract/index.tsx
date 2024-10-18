@@ -16,13 +16,13 @@ import {
   BlacklistButton,
   ChainLinkSetSubscriptionButton,
   ContractAllowanceButton,
+  DefaultRoyaltyButton,
   GrantRoleButton,
   LootContractDeployButton,
   LootContractMintButton,
   PauseButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   SetBaseTokenURIButton,
   TopUpButton,
   TransferButton,
@@ -123,7 +123,7 @@ export const LootContract: FC = () => {
               <UnPauseButton contract={contract} />
               <LootContractMintButton contract={contract} />
               <ContractAllowanceButton contract={contract} />
-              <RoyaltyButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
               <SetBaseTokenURIButton contract={contract} />
               <TransferButton contract={contract} />
               <ChainLinkSetSubscriptionButton contract={contract} />

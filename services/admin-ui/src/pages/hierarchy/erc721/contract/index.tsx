@@ -8,8 +8,8 @@ import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 import { DeleteDialog } from "@ethberry/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { emptyStateString } from "@ethberry/draft-js-utils";
-import { BusinessType, ContractStatus, Erc721ContractFeatures } from "@framework/types";
 import type { IContract, IContractSearchDto } from "@framework/types";
+import { BusinessType, ContractStatus, Erc721ContractFeatures } from "@framework/types";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 
 import {
@@ -17,11 +17,11 @@ import {
   ChainLinkSetSubscriptionButton,
   ContractAllowanceButton,
   ContractMintButton,
+  DefaultRoyaltyButton,
   Erc721ContractDeployButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   SetBaseTokenURIButton,
   TransferButton,
   UnBlacklistButton,
@@ -141,7 +141,7 @@ export const Erc721Contract: FC = () => {
               <ContractMintButton contract={contract} />
               <ContractAllowanceButton contract={contract} />
               <TransferButton contract={contract} />
-              <RoyaltyButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
               <SetBaseTokenURIButton contract={contract} />
               <ChainLinkSetSubscriptionButton contract={contract} />
             </ListActions>

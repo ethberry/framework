@@ -12,14 +12,14 @@ import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/
 import { BusinessType, ContractStatus, Erc1155ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
 
 import {
-  ContractAllowanceButton,
   BlacklistButton,
+  ContractAllowanceButton,
+  ContractMintButton,
+  DefaultRoyaltyButton,
   Erc1155ContractDeployButton,
   GrantRoleButton,
-  ContractMintButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   TransferButton,
   UnBlacklistButton,
   UnWhitelistButton,
@@ -132,7 +132,7 @@ export const Erc1155Contract: FC = () => {
               <ContractMintButton contract={contract} />
               <ContractAllowanceButton contract={contract} />
               <TransferButton contract={contract} />
-              <RoyaltyButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
             </ListActions>
           </ListItem>
         ))}

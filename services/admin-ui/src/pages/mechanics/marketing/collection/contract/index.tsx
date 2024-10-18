@@ -16,10 +16,10 @@ import {
   CollectionContractDeployButton,
   CollectionUploadButton,
   ContractAllowanceButton,
+  DefaultRoyaltyButton,
   GrantRoleButton,
   RenounceRoleButton,
   RevokeRoleButton,
-  RoyaltyButton,
   SetBaseTokenURIButton,
   TransferButton,
   UnBlacklistButton,
@@ -114,7 +114,7 @@ export const CollectionContract: FC = () => {
               <RevokeRoleButton contract={contract} />
               <RenounceRoleButton contract={contract} />
               <ContractAllowanceButton contract={contract} />
-              <RoyaltyButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
               <SetBaseTokenURIButton contract={contract} />
               <BlacklistButton contract={contract} />
               <UnBlacklistButton contract={contract} />

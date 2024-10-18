@@ -6,16 +6,16 @@ import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 import { DeleteDialog } from "@ethberry/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import { emptyPrice } from "@ethberry/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
 import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
-import type { ITemplate, ITemplateSearchDto } from "@framework/types";
+import type { ITemplate, ITemplateSearchDto, IToken } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { TemplateMintButton } from "../../../../components/buttons";
+import { TemplateMintButton, TokenRoyaltyButton } from "../../../../components/buttons";
 import { WithCheckPermissionsListWrapper } from "../../../../components/wrappers";
 import { Erc1155TemplateEditDialog } from "./edit";
 
@@ -100,6 +100,7 @@ export const Erc1155Template: FC = () => {
                 disabled={template.templateStatus === TemplateStatus.INACTIVE}
               />
               <TemplateMintButton template={template} />
+              <TokenRoyaltyButton token={{ ...template.tokens![0], template } as unknown as IToken} />
             </ListActions>
           </ListItem>
         ))}

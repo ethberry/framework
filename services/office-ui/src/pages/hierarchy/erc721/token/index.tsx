@@ -2,15 +2,18 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { useUser } from "@ethberry/provider-user";
-import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
 import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
+import { WithCheckPermissionsListWrapper } from "../../../../components/wrappers";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
+import { TokenRoyaltyButton } from "../../../../components/buttons";
 import { Erc721TokenViewDialog } from "./view";
 
 export const Erc721Token: FC = () => {
@@ -45,6 +48,8 @@ export const Erc721Token: FC = () => {
     },
   });
 
+  const { account = "" } = useWeb3React();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "erc721", "erc721.tokens"]} />
@@ -63,20 +68,19 @@ export const Erc721Token: FC = () => {
         contractType={[TokenType.ERC721]}
       />
 
-      <ProgressOverlay isLoading={isLoading}>
-        <StyledListWrapper count={rows.length} isLoading={isLoading}>
-          {rows.map(token => (
-            <StyledListItem key={token.id}>
-              <ListItemText>
-                {token.template?.title} #{token.tokenId}
-              </ListItemText>
-              <ListActions>
-                <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
-              </ListActions>
-            </StyledListItem>
-          ))}
-        </StyledListWrapper>
-      </ProgressOverlay>
+      <WithCheckPermissionsListWrapper count={rows.length} isLoading={isLoading}>
+        {rows.map(token => (
+          <ListItem key={token.template!.contract!.id} account={account} contract={token.template!.contract}>
+            <ListItemText>
+              {token.template?.title} #{token.tokenId}
+            </ListItemText>
+            <ListActions>
+              <ListAction onClick={handleView(token)} message="form.tips.view" icon={Visibility} />
+              <TokenRoyaltyButton token={token} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
 
       <StyledPagination
         shape="rounded"

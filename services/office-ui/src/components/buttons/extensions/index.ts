@@ -6,3 +6,7 @@ export * from "./blacklist-remove";
 export * from "./whitelist-add";
 export * from "./whitelist-remove";
 export * from "./transfer-ownership";
+export * from "./default-royalty";
+export * from "./token-royalty";
+export * from "./pause";
+export * from "./unpause";

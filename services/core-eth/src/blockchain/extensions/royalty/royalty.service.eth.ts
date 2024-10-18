@@ -13,6 +13,7 @@ import { RmqProviderType, SignalEventType } from "@framework/types";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { RoyaltyServiceLog } from "./royalty.service.log";
+import { TokenService } from "../../hierarchy/token/token.service";
 
 @Injectable()
 export class RoyaltyServiceEth {
@@ -20,6 +21,7 @@ export class RoyaltyServiceEth {
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     private readonly contractService: ContractService,
+    private readonly tokenService: TokenService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly royaltyServiceLog: RoyaltyServiceLog,
   ) {}
@@ -31,10 +33,10 @@ export class RoyaltyServiceEth {
     } = event;
     const { address, transactionHash } = context;
 
+    await this.eventHistoryService.updateHistory(event, context);
+
     const contractEntity = await this.contractService.findOne(
-      {
-        address: address.toLowerCase(),
-      },
+      { address: address.toLowerCase() },
       { relations: { merchant: true } },
     );
 
@@ -46,8 +48,6 @@ export class RoyaltyServiceEth {
 
     await contractEntity.save();
 
-    await this.eventHistoryService.updateHistory(event, context);
-
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
         account: contractEntity.merchant.wallet.toLowerCase(),
@@ -58,13 +58,16 @@ export class RoyaltyServiceEth {
   }
 
   public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfoEvent>, context: Log): Promise<void> {
-    const { name } = event;
+    const {
+      name,
+      args: { tokenId, royaltyNumerator },
+    } = event;
     const { address, transactionHash } = context;
 
+    await this.eventHistoryService.updateHistory(event, context);
+
     const contractEntity = await this.contractService.findOne(
-      {
-        address: address.toLowerCase(),
-      },
+      { address: address.toLowerCase() },
       { relations: { merchant: true } },
     );
 
@@ -72,7 +75,15 @@ export class RoyaltyServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context);
+    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    tokenEntity.royalty = Number(royaltyNumerator);
+
+    await tokenEntity.save();
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
