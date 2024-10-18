@@ -58,7 +58,7 @@
     "@ethberry/react-hooks": "2.0.45",
     "@ethberry/react-hooks-eth": "2.0.9",
     "@ethberry/redux": "0.3.37",
-    "@ethberry/traits-v5": "1.0.28",
+    "@ethberry/traits-v5": "1.0.30",
     "@ethberry/types-blockchain": "1.3.4",
     "@ethberry/types-coin-gecko": "0.3.4",
     "@ethberry/types-collection": "1.5.20",
