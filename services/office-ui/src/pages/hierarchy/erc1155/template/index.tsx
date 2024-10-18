@@ -16,7 +16,12 @@ import type { ITemplate, ITemplateSearchDto, IToken, IUser } from "@framework/ty
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
-import { TemplateMintButton, TokenRoyaltyButton } from "../../../../components/buttons";
+import {
+  ContractAllowanceButton,
+  TemplateMintButton,
+  TokenRoyaltyButton,
+  TransferButton,
+} from "../../../../components/buttons";
 import { WithCheckPermissionsListWrapper } from "../../../../components/wrappers";
 import { Erc1155TemplateEditDialog } from "./edit";
 
@@ -105,6 +110,8 @@ export const Erc1155Template: FC = () => {
               />
               <TemplateMintButton template={template} />
               <TokenRoyaltyButton token={{ ...template.tokens![0], template } as unknown as IToken} />
+              <ContractAllowanceButton contract={template.contract!} />
+              <TransferButton contract={template.contract!} />
             </ListActions>
           </ListItem>
         ))}

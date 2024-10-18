@@ -1,7 +1,7 @@
 import { DiscreteEventType, Erc721EventType, ExchangeEventType, WaitListEventType } from "@framework/types";
 
 export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
-  [Erc721EventType.Transfer]: ["/tokens", "/erc721/tokens", "/erc998/tokens"],
+  [Erc721EventType.Transfer]: ["/tokens", "/erc721/tokens", "/erc998/tokens", "/erc1155/tokens/:id/view"],
   [ExchangeEventType.ClaimTemplate]: ["/claim"],
   [ExchangeEventType.ClaimToken]: ["/claim"],
   [WaitListEventType.WaitListRewardSet]: ["/wait-list/item"],
