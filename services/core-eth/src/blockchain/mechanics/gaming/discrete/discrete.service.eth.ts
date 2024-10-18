@@ -4,12 +4,13 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log, stripZerosLeft, toUtf8String } from "ethers";
 
 import { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { ILevelUp } from "@framework/types";
-import { RmqProviderType, SignalEventType } from "@framework/types";
+import type { IContractManagerERC721TokenDeployedEvent, ILevelUp } from "@framework/types";
+import { ContractFeatures, Erc721ContractTemplates, RmqProviderType, SignalEventType } from "@framework/types";
 
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { DiscreteServiceLog } from "./discrete.service.log";
 
 @Injectable()
 export class DiscreteServiceEth extends TokenServiceEth {
@@ -21,6 +22,7 @@ export class DiscreteServiceEth extends TokenServiceEth {
     protected readonly tokenService: TokenService,
     protected readonly configService: ConfigService,
     protected readonly eventHistoryService: EventHistoryService,
+    protected readonly discreteServiceLog: DiscreteServiceLog,
   ) {
     super(loggerService, signalClientProxy, tokenService, eventHistoryService);
   }
@@ -51,5 +53,20 @@ export class DiscreteServiceEth extends TokenServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public deploy(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>): void {
+    const {
+      args: { account, args },
+    } = event;
+
+    const { contractTemplate } = args;
+
+    const contractFeatures = Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split("_");
+    if (!contractFeatures.includes(ContractFeatures.DISCRETE)) {
+      return;
+    }
+
+    this.discreteServiceLog.updateRegistry([account]);
   }
 }

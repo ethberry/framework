@@ -19,8 +19,8 @@ export class ContractManagerPaymentSplitterControllerEth {
   })
   public deploy(
     @Payload() event: ILogEvent<IContractManagerPaymentSplitterDeployedEvent>,
-    @Ctx() ctx: Log,
+    @Ctx() context: Log,
   ): Promise<void> {
-    return this.contractManagerPaymentSplitterServiceEth.deploy(event, ctx);
+    return this.contractManagerPaymentSplitterServiceEth.deploy(event, context);
   }
 }

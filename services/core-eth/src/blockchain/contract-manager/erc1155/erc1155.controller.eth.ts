@@ -19,8 +19,8 @@ export class ContractManagerErc1155ControllerEth {
   })
   public deploy(
     @Payload() event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>,
-    @Ctx() ctx: Log,
+    @Ctx() context: Log,
   ): Promise<void> {
-    return this.contractManagerErc1155ServiceEth.deploy(event, ctx);
+    return this.contractManagerErc1155ServiceEth.deploy(event, context);
   }
 }

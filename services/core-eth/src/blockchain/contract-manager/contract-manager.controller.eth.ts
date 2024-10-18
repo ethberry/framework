@@ -26,8 +26,11 @@ export class ContractManagerControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.VestingDeployed,
   })
-  public vesting(@Payload() event: ILogEvent<IContractManagerVestingDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.vesting(event, ctx);
+  public vesting(
+    @Payload() event: ILogEvent<IContractManagerVestingDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.contractManagerServiceEth.vesting(event, context);
   }
 
   @EventPattern({
@@ -36,9 +39,9 @@ export class ContractManagerControllerEth {
   })
   public collection(
     @Payload() event: ILogEvent<IContractManagerCollectionDeployedEvent>,
-    @Ctx() ctx: Log,
+    @Ctx() context: Log,
   ): Promise<void> {
-    return this.contractManagerServiceEth.erc721Collection(event, ctx);
+    return this.contractManagerServiceEth.erc721Collection(event, context);
   }
 
   @EventPattern({
@@ -47,48 +50,57 @@ export class ContractManagerControllerEth {
   })
   public mystery(
     @Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>,
-    @Ctx() ctx: Log,
+    @Ctx() context: Log,
   ): Promise<void> {
-    return this.contractManagerServiceEth.mystery(event, ctx);
+    return this.contractManagerServiceEth.mystery(event, context);
   }
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.LootBoxDeployed,
   })
-  public lootbox(@Payload() event: ILogEvent<IContractManagerLootTokenDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.loot(event, ctx);
+  public lootbox(
+    @Payload() event: ILogEvent<IContractManagerLootTokenDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.contractManagerServiceEth.loot(event, context);
   }
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.StakingDeployed,
   })
-  public staking(@Payload() event: ILogEvent<IContractManagerStakingDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.staking(event, ctx);
+  public staking(
+    @Payload() event: ILogEvent<IContractManagerStakingDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.contractManagerServiceEth.staking(event, context);
   }
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.PonziDeployed,
   })
-  public ponzi(@Payload() event: ILogEvent<IContractManagerPonziDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.ponzi(event, ctx);
+  public ponzi(@Payload() event: ILogEvent<IContractManagerPonziDeployedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.contractManagerServiceEth.ponzi(event, context);
   }
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.LotteryDeployed,
   })
-  public lottery(@Payload() event: ILogEvent<IContractManagerLotteryDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.lottery(event, ctx);
+  public lottery(
+    @Payload() event: ILogEvent<IContractManagerLotteryDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.contractManagerServiceEth.lottery(event, context);
   }
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.RaffleDeployed,
   })
-  public raffle(@Payload() event: ILogEvent<IContractManagerRaffleDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerServiceEth.raffle(event, ctx);
+  public raffle(@Payload() event: ILogEvent<IContractManagerRaffleDeployedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.contractManagerServiceEth.raffle(event, context);
   }
 }

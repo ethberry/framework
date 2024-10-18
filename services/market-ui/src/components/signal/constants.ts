@@ -1,4 +1,4 @@
-import { Erc721EventType, ExchangeEventType, WaitListEventType } from "@framework/types";
+import { DiscreteEventType, Erc721EventType, ExchangeEventType, WaitListEventType } from "@framework/types";
 
 export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
   [Erc721EventType.Transfer]: ["/tokens", "/erc721/tokens", "/erc998/tokens"],
@@ -6,6 +6,7 @@ export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
   [ExchangeEventType.ClaimToken]: ["/claim"],
   [WaitListEventType.WaitListRewardSet]: ["/wait-list/item"],
   [WaitListEventType.WaitListRewardClaimed]: ["/wait-list/item"],
+  [DiscreteEventType.LevelUp]: ["/erc721/tokens/:id/view"], // this does not work
   DepositWithdraw: ["/staking/deposits"],
   Lend: ["/rent/tokens"],
   LendMany: ["/rent/tokens"],
