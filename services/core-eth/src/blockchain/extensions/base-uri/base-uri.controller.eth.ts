@@ -3,7 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IBaseURIUpdateEvent, IContractManagerERC721TokenDeployedEvent } from "@framework/types";
+import type { IBaseURIUpdateEvent, IContractManagerCommonDeployedEvent } from "@framework/types";
 import { BaseUrlEventType, ContractManagerEventType } from "@framework/types";
 
 import { BaseUriServiceEth } from "./base-uri.service.eth";
@@ -32,10 +32,7 @@ export class BaseUriControllerEth {
       eventName: ContractManagerEventType.ERC1155TokenDeployed,
     },
   ])
-  public erc721Token(
-    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.baseUriServiceEth.deploy(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
+    return this.baseUriServiceEth.deploy(event);
   }
 }

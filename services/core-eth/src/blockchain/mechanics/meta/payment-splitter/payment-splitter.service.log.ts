@@ -4,7 +4,7 @@ import { IsNull } from "typeorm";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
-import { ModuleType, PaymentSplitterEventSignature } from "@framework/types";
+import { Erc1363EventSignature, ModuleType, PaymentSplitterEventSignature } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -40,7 +40,23 @@ export class PaymentSplitterServiceLog {
         PaymentSplitterEventSignature.PaymentReceived,
         PaymentSplitterEventSignature.PaymentReleased,
         PaymentSplitterEventSignature.ERC20PaymentReleased,
+        Erc1363EventSignature.TransferReceived,
       ],
     });
+  }
+
+  public readLastBlock(address: Array<string>, blockNumber: number): Promise<void> {
+    return this.ethersService.getPastEvents(
+      [
+        {
+          contractType: ContractType.PAYMENT_SPLITTER,
+          contractAddress: address,
+          contractInterface: PaymentSplitterABI,
+          eventSignatures: [PaymentSplitterEventSignature.PayeeAdded],
+        },
+      ],
+      blockNumber,
+      blockNumber,
+    );
   }
 }

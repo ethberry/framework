@@ -5,7 +5,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IContractManagerWaitListDeployedEvent, IPausedEvent } from "@framework/types";
+import type { IContractManagerCommonDeployedEvent, IPausedEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
@@ -61,13 +61,10 @@ export class PauseServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerWaitListDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.pauseServiceLog.updateRegistry([account]);
   }

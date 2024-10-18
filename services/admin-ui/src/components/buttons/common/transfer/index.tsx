@@ -12,6 +12,7 @@ import { ContractFeatures, TokenType } from "@framework/types";
 import ERC1155SimpleSafeTransferFromABI from "@framework/abis/json/ERC1155Simple/safeTransferFrom.json";
 import ERC721SimpleSafeTransferFromABI from "@framework/abis/json/ERC721Simple/safeTransferFrom.json";
 import ERC20SimpleTransferABI from "@framework/abis/json/ERC20Simple/transfer.json";
+// import ERC20SimpleTransferABI from "@framework/abis/json/ERC20Simple/transferAndCall.json";
 
 import { shouldDisableByContractType } from "../../utils";
 import { ITransferDto, TransferDialog } from "./dialog";
@@ -44,6 +45,7 @@ export const TransferButton: FC<ITransferButtonProps> = props => {
     } else if (asset.tokenType === TokenType.ERC20) {
       const contract = new Contract(address, ERC20SimpleTransferABI, web3Context.provider?.getSigner());
       return contract.transfer(values.address, asset.amount) as Promise<any>;
+      // return contract["transferAndCall(address,uint256)"](values.address, asset.amount) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC721 || asset.tokenType === TokenType.ERC998) {
       const contract = new Contract(address, ERC721SimpleSafeTransferFromABI, web3Context.provider?.getSigner());
       return contract["safeTransferFrom(address,address,uint256)"](

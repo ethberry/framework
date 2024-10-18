@@ -7,7 +7,7 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
   ExchangeType,
-  IContractManagerStakingDeployedEvent,
+  type IContractManagerCommonDeployedEvent,
   IReferralProgramEvent,
   RmqProviderType,
   SignalEventType,
@@ -170,13 +170,10 @@ export class ReferralServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerStakingDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.referralServiceLog.updateRegistry([account]);
   }

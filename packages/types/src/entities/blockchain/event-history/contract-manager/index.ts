@@ -13,6 +13,8 @@ import { IContractManagerRaffleDeployedEvent } from "./raffle";
 import { IContractManagerWaitListDeployedEvent } from "./wait-list";
 import { IContractManagerPaymentSplitterDeployedEvent } from "./payment-splitter";
 
+export { IContractManagerCommonDeployedEvent } from "./common";
+
 export enum ContractManagerEventType {
   VestingDeployed = "VestingDeployed",
   ERC20TokenDeployed = "ERC20TokenDeployed",

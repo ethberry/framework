@@ -3,12 +3,8 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import {
-  ContractManagerEventType,
-  type IContractManagerStakingDeployedEvent,
-  IReferralProgramEvent,
-  ReferralProgramEventType,
-} from "@framework/types";
+import type { IContractManagerCommonDeployedEvent, IReferralProgramEvent } from "@framework/types";
+import { ContractManagerEventType, ReferralProgramEventType } from "@framework/types";
 
 import { ReferralServiceEth } from "./referral.service.eth";
 import { ContractType } from "../../../../utils/contract-type";
@@ -30,11 +26,7 @@ export class ReferralControllerEth {
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.StakingDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PonziDeployed },
   ])
-  public deploy(
-    @Payload()
-    event: ILogEvent<IContractManagerStakingDeployedEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.referralServiceEth.deploy(event, context);
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
+    return this.referralServiceEth.deploy(event);
   }
 }

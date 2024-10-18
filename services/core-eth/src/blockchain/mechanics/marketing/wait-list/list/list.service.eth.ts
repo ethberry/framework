@@ -4,7 +4,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerWaitListDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IWaitListRewardClaimedEvent,
   IWaitListRewardSetEvent,
 } from "@framework/types";
@@ -136,13 +136,10 @@ export class WaitListListServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerWaitListDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.waitListListServiceLog.updateRegistry([account]);
   }

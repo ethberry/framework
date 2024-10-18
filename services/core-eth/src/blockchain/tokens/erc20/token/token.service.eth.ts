@@ -4,7 +4,7 @@ import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerERC20TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IErc20TokenApproveEvent,
   IErc20TokenTransferEvent,
 } from "@framework/types";
@@ -76,13 +76,10 @@ export class Erc20TokenServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.erc20TokenServiceLog.updateRegistry([account]);
   }

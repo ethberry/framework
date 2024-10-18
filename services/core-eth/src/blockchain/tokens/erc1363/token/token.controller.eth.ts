@@ -21,6 +21,7 @@ export class Erc1363TokenControllerEth {
     { contractType: ContractType.STAKING, eventName: Erc1363EventType.TransferReceived },
     { contractType: ContractType.VESTING, eventName: Erc1363EventType.TransferReceived },
     { contractType: ContractType.WAIT_LIST, eventName: Erc1363EventType.TransferReceived },
+    { contractType: ContractType.PAYMENT_SPLITTER, eventName: Erc1363EventType.TransferReceived },
   ])
   public transferReceived(
     @Payload() event: ILogEvent<IErc1363TransferReceivedEvent>,

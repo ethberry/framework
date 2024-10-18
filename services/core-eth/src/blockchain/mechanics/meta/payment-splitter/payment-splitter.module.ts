@@ -11,6 +11,7 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { PayeeModule } from "./payee/payee.module";
 import { PaymentSplitterControllerEth } from "./payment-splitter.controller.eth";
 import { PaymentSplitterServiceEth } from "./payment-splitter.service.eth";
+import { signalServiceProvider } from "../../../../common/providers";
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { PaymentSplitterServiceEth } from "./payment-splitter.service.eth";
     PayeeModule,
     EthersModule.deferred(),
   ],
-  providers: [PaymentSplitterServiceLog, PaymentSplitterServiceEth],
+  providers: [signalServiceProvider, PaymentSplitterServiceLog, PaymentSplitterServiceEth],
   controllers: [PaymentSplitterControllerEth],
   exports: [PaymentSplitterServiceLog, PaymentSplitterServiceEth],
 })

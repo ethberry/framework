@@ -4,7 +4,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerERC721TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
@@ -36,13 +36,11 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern([
-    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC721TokenDeployed },
-  ])
-  public deploy(
-    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.erc721TokenServiceEth.deploy(event, context);
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.ERC721TokenDeployed,
+  })
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
+    return this.erc721TokenServiceEth.deploy(event);
   }
 }

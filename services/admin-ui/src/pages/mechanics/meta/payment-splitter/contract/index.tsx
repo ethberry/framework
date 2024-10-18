@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Button, Grid, ListItemText } from "@mui/material";
-import { FilterList, Visibility } from "@mui/icons-material";
+import { Create, Delete, FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
-// import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
 import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IContractSearchDto } from "@framework/types";
@@ -14,6 +14,7 @@ import { ContractStatus } from "@framework/types";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 import { PaymentSplitterBalanceButton, PaymentSplitterContractDeployButton } from "../../../../../components/buttons";
 import { PaymentSplitterViewDialog } from "./view";
+import { PaymentSplitterEditDialog } from "./edit";
 
 export const PaymentSplitterContracts: FC = () => {
   const {
@@ -27,9 +28,15 @@ export const PaymentSplitterContracts: FC = () => {
     handleSearch,
     handleToggleFilters,
     handleView,
+    handleEdit,
+    handleDelete,
     handleViewCancel,
+    handleEditCancel,
+    handleDeleteCancel,
     handleChangePage,
     handleViewConfirm,
+    handleEditConfirm,
+    handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/payment-splitter/contracts",
     empty: {
@@ -80,18 +87,24 @@ export const PaymentSplitterContracts: FC = () => {
               <ListActions>
                 <ListActions>
                   <ListAction
+                    onClick={handleEdit(contract)}
+                    message="form.buttons.edit"
+                    dataTestId="ContractEditButton"
+                    icon={Create}
+                  />
+                  <ListAction
+                    onClick={handleDelete(contract)}
+                    message="form.buttons.delete"
+                    dataTestId="ContractDeleteButton"
+                    icon={Delete}
+                    disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  />
+                  <ListAction
                     onClick={handleView(contract)}
                     message="form.buttons.view"
                     dataTestId="ContractViewButton"
                     icon={Visibility}
                   />
-                  {/* <ListAction */}
-                  {/*  onClick={handleDelete(contract)} */}
-                  {/*  message="form.buttons.delete" */}
-                  {/*  dataTestId="ContractDeleteButton" */}
-                  {/*  icon={Delete} */}
-                  {/*  disabled={contract.contractStatus === ContractStatus.INACTIVE} */}
-                  {/* /> */}
                   <PaymentSplitterBalanceButton
                     contract={contract}
                     disabled={contract.contractStatus === ContractStatus.INACTIVE}
@@ -117,12 +130,19 @@ export const PaymentSplitterContracts: FC = () => {
         initialValues={selected}
       />
 
-      {/* <DeleteDialog */}
-      {/*  onCancel={handleDeleteCancel} */}
-      {/*  onConfirm={handleDeleteConfirm} */}
-      {/*  open={action === CollectionActions.delete} */}
-      {/*  initialValues={selected} */}
-      {/* /> */}
+      <PaymentSplitterEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
     </Grid>
   );
 };

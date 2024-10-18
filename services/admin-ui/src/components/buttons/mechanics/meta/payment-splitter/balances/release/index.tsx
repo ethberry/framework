@@ -10,12 +10,11 @@ import { ProgressOverlay } from "@ethberry/mui-page-layout";
 import { ConfirmationDialog } from "@ethberry/mui-dialog-confirmation";
 import { useMetamask } from "@ethberry/react-hooks-eth";
 import { useApiCall } from "@ethberry/react-hooks";
-import { formatEther } from "@framework/exchange";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper } from "@framework/styled";
-import type { IContract, IBalance, IUser } from "@framework/types";
+import type { IBalance, IContract, IUser } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import VestingReleaseABI from "@framework/abis/json/Vesting/release.json";
+import SplitterWalletReleaseABI from "@framework/abis/json/SplitterWallet/release.json";
 
 export interface IPaymentSplitterBalanceDialogProps {
   open: boolean;
@@ -44,7 +43,7 @@ export const PaymentSplitterBalanceDialog: FC<IPaymentSplitterBalanceDialogProps
   );
 
   const metaWithdraw = useMetamask(async (values: IBalance, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, VestingReleaseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, SplitterWalletReleaseABI, web3Context.provider?.getSigner());
 
     const tokenType = values.token!.template!.contract!.contractType;
     const token = values.token!.template!.contract!.address;
@@ -87,14 +86,6 @@ export const PaymentSplitterBalanceDialog: FC<IPaymentSplitterBalanceDialogProps
           {rows.map(balance => (
             <StyledListItem key={balance.id}>
               <ListItemText sx={{ width: 0.6 }}>{balance.token!.template!.title}</ListItemText>
-              <ListItemText>
-                {formatEther(
-                  balance.amount,
-                  // getReleasableBalance(balance),
-                  balance.token!.template!.contract!.decimals,
-                  balance.token!.template!.contract!.symbol,
-                )}
-              </ListItemText>
               <ListActions>
                 <ListAction onClick={handleRelease(balance)} icon={CurrencyExchange} message="form.buttons.setAmount" />
               </ListActions>

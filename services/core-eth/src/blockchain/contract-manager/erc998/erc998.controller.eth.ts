@@ -17,10 +17,7 @@ export class ContractManagerControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC998TokenDeployed,
   })
-  public erc998Token(
-    @Payload() event: ILogEvent<IContractManagerERC998TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.contractManagerErc998ServiceEth.erc998Token(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerErc998ServiceEth.deploy(event, ctx);
   }
 }

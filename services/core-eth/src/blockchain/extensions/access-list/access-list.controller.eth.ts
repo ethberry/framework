@@ -5,7 +5,7 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IBlacklistedEvent,
-  IContractManagerERC20TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IUnBlacklistedEvent,
   IUnWhitelistedEvent,
   IWhitelistedEvent,
@@ -55,7 +55,7 @@ export class AccessListControllerEth {
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PaymentSplitterDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingDeployed },
   ])
-  public deploy(@Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.accessListServiceEth.deploy(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
+    return this.accessListServiceEth.deploy(event);
   }
 }

@@ -17,10 +17,10 @@ export class ContractManagerErc1155ControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC1155TokenDeployed,
   })
-  public erc1155Token(
+  public deploy(
     @Payload() event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>,
     @Ctx() ctx: Log,
   ): Promise<void> {
-    return this.contractManagerErc1155ServiceEth.erc1155Token(event, ctx);
+    return this.contractManagerErc1155ServiceEth.deploy(event, ctx);
   }
 }

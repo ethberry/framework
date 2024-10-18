@@ -14,7 +14,6 @@ import type {
   IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
-  IContractManagerPaymentSplitterDeployedEvent,
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
@@ -24,7 +23,6 @@ import {
   CollectionContractTemplates,
   ContractFeatures,
   ContractSecurity,
-  ContractStatus,
   LootContractTemplates,
   ModuleType,
   MysteryContractTemplates,
@@ -43,7 +41,6 @@ import { BalanceService } from "../hierarchy/balance/balance.service";
 import { EventHistoryService } from "../event-history/event-history.service";
 import { ClaimService } from "../mechanics/marketing/claim/claim.service";
 import { decodeExternalId } from "../../common/utils";
-import { PaymentSplitterServiceLog } from "../mechanics/meta/payment-splitter/payment-splitter.service.log";
 import { LotteryRoundServiceLog } from "../mechanics/gambling/lottery/round/round.service.log";
 import { RaffleRoundServiceLog } from "../mechanics/gambling/raffle/round/round.service.log";
 import { MysteryBoxServiceLog } from "../mechanics/marketing/mystery/box/box.service.log";
@@ -76,7 +73,6 @@ export class ContractManagerServiceEth {
     private readonly lotteryRoundServiceLog: LotteryRoundServiceLog,
     private readonly raffleRoundServiceLog: RaffleRoundServiceLog,
     private readonly vestingServiceLog: VestingServiceLog,
-    private readonly paymentSplitterServiceLog: PaymentSplitterServiceLog,
     private readonly ponziServiceLog: PonziServiceLog,
     private readonly stakingContractServiceLog: StakingContractServiceLog,
   ) {}
@@ -403,52 +399,6 @@ export class ContractManagerServiceEth {
     });
 
     this.raffleRoundServiceLog.updateRegistry([account]);
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
-  }
-
-  public async paymentSplitter(
-    event: ILogEvent<IContractManagerPaymentSplitterDeployedEvent>,
-    context: Log,
-  ): Promise<void> {
-    const {
-      name,
-      args: { account, externalId, args },
-    } = event;
-    const { transactionHash } = context;
-
-    console.info(args);
-
-    const { payees, shares } = args;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    await this.contractService.create({
-      address: account.toLowerCase(),
-      title: `${ModuleType.PAYMENT_SPLITTER} (new)`,
-      description: emptyStateString,
-      parameters: {
-        payees: payees.map(payee => payee.toLowerCase()),
-        shares: shares.map(share => Number(share)),
-      },
-      imageUrl,
-      contractFeatures: [],
-      contractStatus: ContractStatus.ACTIVE,
-      contractModule: ModuleType.PAYMENT_SPLITTER,
-      chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(externalId),
-    });
-
-    this.paymentSplitterServiceLog.updateRegistry([account]);
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

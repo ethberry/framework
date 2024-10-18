@@ -5,13 +5,13 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerERC721TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IDefaultRoyaltyInfoEvent,
   ITokenRoyaltyInfoEvent,
 } from "@framework/types";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { RmqProviderType, SignalEventType } from "@framework/types";
 import { RoyaltyServiceLog } from "./royalty.service.log";
 
 @Injectable()
@@ -83,13 +83,10 @@ export class RoyaltyServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.royaltyServiceLog.updateRegistry([account]);
   }

@@ -19,7 +19,6 @@ import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 import { ContractManagerServiceLog } from "./contract-manager.service.log";
 import { LotteryTicketModule } from "../mechanics/gambling/lottery/ticket/ticket.module";
 import { RaffleTicketModule } from "../mechanics/gambling/raffle/ticket/ticket.module";
-import { PaymentSplitterModule } from "../mechanics/meta/payment-splitter/payment-splitter.module";
 import { MysteryBoxModule } from "../mechanics/marketing/mystery/box/box.module";
 import { LootBoxModule } from "../mechanics/marketing/loot/box/box.module";
 import { PonziModule } from "../mechanics/gambling/ponzi/ponzi.module";
@@ -32,6 +31,7 @@ import { ContractManagerErc721Module } from "./erc721/erc721.module";
 import { ContractManagerErc998Module } from "./erc998/erc998.module";
 import { ContractManagerErc1155Module } from "./erc1155/erc1155.module";
 import { ContractManagerWaitListModule } from "./wait-list/wait-list.module";
+import { ContractManagerPaymentSplitterModule } from "./payment-splitter/payment-splitter.module";
 
 @Module({
   imports: [
@@ -40,6 +40,7 @@ import { ContractManagerWaitListModule } from "./wait-list/wait-list.module";
     ContractManagerErc998Module,
     ContractManagerErc1155Module,
     ContractManagerWaitListModule,
+    ContractManagerPaymentSplitterModule,
 
     ConfigModule,
     EthersModule.deferred(),
@@ -62,7 +63,6 @@ import { ContractManagerWaitListModule } from "./wait-list/wait-list.module";
     PonziModule,
     StakingContractModule,
     VestingModule,
-    PaymentSplitterModule,
   ],
   providers: [
     signalServiceProvider,

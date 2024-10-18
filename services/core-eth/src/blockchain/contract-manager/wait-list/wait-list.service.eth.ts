@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
@@ -14,25 +14,28 @@ import { ContractFeatures, ModuleType, RmqProviderType, SignalEventType } from "
 import { UserService } from "../../../infrastructure/user/user.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
+import { ContractManagerServiceEth } from "../cm.service";
 
 @Injectable()
-export class ContractManagerWaitListServiceEth {
+export class ContractManagerWaitListServiceEth extends ContractManagerServiceEth {
   constructor(
     @Inject(Logger)
-    private readonly loggerService: LoggerService,
+    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_SIGNER)
     protected readonly ethersSignerProvider: Wallet,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
-    private readonly configService: ConfigService,
-    private readonly eventHistoryService: EventHistoryService,
-    private readonly contractService: ContractService,
-    private readonly userService: UserService,
-  ) {}
+    protected readonly configService: ConfigService,
+    protected readonly eventHistoryService: EventHistoryService,
+    protected readonly contractService: ContractService,
+    protected readonly userService: UserService,
+  ) {
+    super(loggerService, userService);
+  }
 
-  public async waitList(event: ILogEvent<IContractManagerWaitListDeployedEvent>, context: Log): Promise<void> {
+  public async deploy(event: ILogEvent<IContractManagerWaitListDeployedEvent>, context: Log): Promise<void> {
     const {
       name,
       args: { account, externalId },
@@ -62,23 +65,5 @@ export class ContractManagerWaitListServiceEth {
         transactionType: name,
       })
       .toPromise();
-  }
-
-  public async getMerchantId(userId: number): Promise<number> {
-    const userEntity = await this.userService.findOne({ id: userId });
-    if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", ContractManagerWaitListServiceEth.name);
-      throw new NotFoundException("userNotFound");
-    }
-    return userEntity.merchantId;
-  }
-
-  public async getUserWalletById(userId: number): Promise<string> {
-    const userEntity = await this.userService.findOne({ id: userId });
-    if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", ContractManagerWaitListServiceEth.name);
-      throw new NotFoundException("userNotFound");
-    }
-    return userEntity.wallet;
   }
 }

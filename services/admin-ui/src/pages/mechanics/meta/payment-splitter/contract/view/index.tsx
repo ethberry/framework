@@ -17,7 +17,7 @@ export interface IPaymentSplitterViewDialogProps {
 export const PaymentSplitterViewDialog: FC<IPaymentSplitterViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { address, parameters } = initialValues;
+  const { parameters } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -28,14 +28,6 @@ export const PaymentSplitterViewDialog: FC<IPaymentSplitterViewDialogProps> = pr
       <TableContainer component={Paper}>
         <Table aria-label="table">
           <TableBody>
-            <TableRow>
-              <StyledTableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.address" />
-              </StyledTableCell>
-              <TableCell>
-                <AddressLink address={address} />
-              </TableCell>
-            </TableRow>
             <TableRow>
               <StyledTableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.parameters" />

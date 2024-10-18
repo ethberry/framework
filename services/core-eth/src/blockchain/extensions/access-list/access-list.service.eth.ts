@@ -6,7 +6,7 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
   IBlacklistedEvent,
-  IContractManagerERC20TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IUnBlacklistedEvent,
   IUnWhitelistedEvent,
   IWhitelistedEvent,
@@ -121,13 +121,10 @@ export class AccessListServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.accessListServiceLog.updateRegistry([account]);
   }

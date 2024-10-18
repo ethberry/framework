@@ -3,9 +3,8 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-
-import {
-  IContractManagerERC1155TokenDeployedEvent,
+import type {
+  IContractManagerCommonDeployedEvent,
   IErc1155TokenApprovalForAllEvent,
   IErc1155TokenTransferBatchEvent,
   IErc1155TokenTransferSingleEvent,
@@ -177,13 +176,10 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     }
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.erc1155TokenServiceLog.updateRegistry([account]);
   }

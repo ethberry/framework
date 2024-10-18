@@ -9,7 +9,7 @@ import type {
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
-  IContractManagerERC20TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IOwnershipTransferredEvent,
 } from "@framework/types";
 import {
@@ -226,7 +226,7 @@ export class AccessControlServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, context: Log): Promise<void> {
+  public async deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>, context: Log): Promise<void> {
     const {
       args: { account },
     } = event;

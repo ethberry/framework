@@ -18,16 +18,11 @@ export class ChainLinkConsumerControllerEth {
     return this.chainLinkConsumerServiceEth.mintGenes(event, context);
   }
 
-  @EventPattern([
-    {
-      contractType: ContractType.CONTRACT_MANAGER,
-      eventName: ContractManagerEventType.ERC721TokenDeployed,
-    },
-  ])
-  public erc721Token(
-    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.chainLinkConsumerServiceEth.deploy(event, ctx);
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.ERC721TokenDeployed,
+  })
+  public deploy(@Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>): void {
+    return this.chainLinkConsumerServiceEth.deploy(event);
   }
 }

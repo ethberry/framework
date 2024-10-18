@@ -8,14 +8,8 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
-import {
-  ContractFeatures,
-  Erc1155ContractTemplates,
-  IContractManagerERC1155TokenDeployedEvent,
-  RmqProviderType,
-  SignalEventType,
-  TokenType,
-} from "@framework/types";
+import type { IContractManagerPaymentSplitterDeployedEvent } from "@framework/types";
+import { ContractStatus, ModuleType, RmqProviderType, SignalEventType } from "@framework/types";
 
 import { UserService } from "../../../infrastructure/user/user.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
@@ -23,7 +17,7 @@ import { EventHistoryService } from "../../event-history/event-history.service";
 import { ContractManagerServiceEth } from "../cm.service";
 
 @Injectable()
-export class ContractManagerErc1155ServiceEth extends ContractManagerServiceEth {
+export class ContractManagerPaymentSplitterServiceEth extends ContractManagerServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
@@ -41,14 +35,14 @@ export class ContractManagerErc1155ServiceEth extends ContractManagerServiceEth 
     super(loggerService, userService);
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, context: Log): Promise<void> {
+  public async deploy(event: ILogEvent<IContractManagerPaymentSplitterDeployedEvent>, context: Log): Promise<void> {
     const {
       name,
-      args: { account, args, externalId },
+      args: { account, externalId, args },
     } = event;
     const { transactionHash } = context;
 
-    const { royalty, baseTokenURI, contractTemplate } = args;
+    const { payees, shares } = args;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -56,17 +50,17 @@ export class ContractManagerErc1155ServiceEth extends ContractManagerServiceEth 
 
     await this.contractService.create({
       address: account.toLowerCase(),
-      title: `${TokenType.ERC1155} (new)`,
+      title: `${ModuleType.PAYMENT_SPLITTER} (new)`,
       description: emptyStateString,
+      parameters: {
+        payees: payees.map(payee => payee.toLowerCase()),
+        shares: shares.map(share => Number(share)),
+      },
       imageUrl,
-      baseTokenURI,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(Erc1155ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
-      contractType: TokenType.ERC1155,
+      contractFeatures: [],
+      contractStatus: ContractStatus.ACTIVE,
+      contractModule: ModuleType.PAYMENT_SPLITTER,
       chainId,
-      royalty: Number(royalty),
       fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });

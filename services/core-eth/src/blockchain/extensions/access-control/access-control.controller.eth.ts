@@ -7,7 +7,7 @@ import type {
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
-  IContractManagerERC20TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IOwnershipTransferredEvent,
 } from "@framework/types";
 import { AccessControlEventType, ContractManagerEventType } from "@framework/types";
@@ -61,10 +61,7 @@ export class AccessControlControllerEth {
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PaymentSplitterDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.WaitListDeployed },
   ])
-  public deploy(
-    @Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.deploy(event, context);
   }
 }

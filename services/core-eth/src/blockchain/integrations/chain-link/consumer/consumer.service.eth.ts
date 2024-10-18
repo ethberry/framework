@@ -5,11 +5,9 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerERC721TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
-  IContractManagerLootTokenDeployedEvent,
-  IContractManagerLotteryDeployedEvent,
-  IContractManagerRaffleDeployedEvent,
+  IContractManagerERC721TokenDeployedEvent,
   IVrfSubscriptionSetEvent,
 } from "@framework/types";
 import {
@@ -68,15 +66,12 @@ export class ChainLinkConsumerServiceEth {
       .toPromise();
   }
 
-  public async deploy1(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy1(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>): void {
     const {
       args: { account, args },
     } = event;
 
     const { contractTemplate } = args;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     const contractFeatures = Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split("_");
     if (
@@ -92,15 +87,12 @@ export class ChainLinkConsumerServiceEth {
     this.chainLinkConsumerServiceLog.updateRegistry([account]);
   }
 
-  public async deploy2(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy2(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>): void {
     const {
       args: { account, args },
     } = event;
 
     const { contractTemplate } = args;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     const contractFeatures = Object.values(Erc998ContractTemplates)[Number(contractTemplate)].split("_");
     if (!contractFeatures.includes(ContractFeatures.RANDOM)) {
@@ -110,20 +102,10 @@ export class ChainLinkConsumerServiceEth {
     this.chainLinkConsumerServiceLog.updateRegistry([account]);
   }
 
-  public async deploy3(
-    event: ILogEvent<
-      | IContractManagerLootTokenDeployedEvent
-      | IContractManagerLotteryDeployedEvent
-      | IContractManagerRaffleDeployedEvent
-    >,
-    context: Log,
-  ): Promise<void> {
+  public deploy3(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.chainLinkConsumerServiceLog.updateRegistry([account]);
   }

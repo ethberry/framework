@@ -28,10 +28,7 @@ export class ChainLinkConsumerControllerEth {
       eventName: ContractManagerEventType.ERC998TokenDeployed,
     },
   ])
-  public erc721Token(
-    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.chainLinkConsumerServiceEth.deploy(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>): void {
+    return this.chainLinkConsumerServiceEth.deploy(event);
   }
 }

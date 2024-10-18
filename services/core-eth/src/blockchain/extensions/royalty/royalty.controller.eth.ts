@@ -4,7 +4,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerERC721TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IDefaultRoyaltyInfoEvent,
   ITokenRoyaltyInfoEvent,
 } from "@framework/types";
@@ -41,10 +41,7 @@ export class RoyaltyControllerEth {
       eventName: ContractManagerEventType.ERC1155TokenDeployed,
     },
   ])
-  public erc721Token(
-    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.royaltyServiceEth.deploy(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
+    return this.royaltyServiceEth.deploy(event);
   }
 }

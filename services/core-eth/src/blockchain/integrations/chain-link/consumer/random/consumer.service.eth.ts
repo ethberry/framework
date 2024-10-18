@@ -67,15 +67,12 @@ export class ChainLinkConsumerServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>): void {
     const {
       args: { account, args },
     } = event;
 
     const { contractTemplate } = args;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     const contractFeatures = Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split("_");
 

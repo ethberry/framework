@@ -17,10 +17,7 @@ export class ContractManagerErc20ControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC20TokenDeployed,
   })
-  public erc20Token(
-    @Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.contractManagerErc20ServiceEth.erc20Token(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerErc20ServiceEth.deploy(event, ctx);
   }
 }

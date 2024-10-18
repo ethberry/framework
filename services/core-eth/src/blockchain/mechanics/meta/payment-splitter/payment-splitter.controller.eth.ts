@@ -3,13 +3,16 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type {
+import {
+  Erc1363EventType,
+  IContractManagerCommonDeployedEvent,
+  type IErc1363TransferReceivedEvent,
   IPaymentSplitterERC20PaymentReleasedEvent,
   IPaymentSplitterPayeeAddedEvent,
   IPaymentSplitterPaymentReceivedEvent,
   IPaymentSplitterPaymentReleasedEvent,
 } from "@framework/types";
-import { PaymentSplitterEventType } from "@framework/types";
+import { ContractManagerEventType, PaymentSplitterEventType } from "@framework/types";
 
 import { ContractType } from "../../../../utils/contract-type";
 import { PaymentSplitterServiceEth } from "./payment-splitter.service.eth";
@@ -24,16 +27,19 @@ export class PaymentSplitterControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.PAYMENT_SPLITTER, eventName: PaymentSplitterEventType.PaymentReceived })
-  public addEth(@Payload() event: ILogEvent<IPaymentSplitterPaymentReceivedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.paymentSplitterServiceEth.addEth(event, context);
+  public paymentReceived(
+    @Payload() event: ILogEvent<IPaymentSplitterPaymentReceivedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.paymentSplitterServiceEth.paymentReceived(event, context);
   }
 
   @EventPattern({ contractType: ContractType.PAYMENT_SPLITTER, eventName: PaymentSplitterEventType.PaymentReleased })
-  public releaseEth(
+  public paymentReleased(
     @Payload() event: ILogEvent<IPaymentSplitterPaymentReleasedEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
-    return this.paymentSplitterServiceEth.releaseEth(event, context);
+    return this.paymentSplitterServiceEth.paymentReleased(event, context);
   }
 
   @EventPattern({
@@ -45,5 +51,21 @@ export class PaymentSplitterControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.paymentSplitterServiceEth.releaseErc20(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.PAYMENT_SPLITTER, eventName: Erc1363EventType.TransferReceived })
+  public transferReceived(
+    @Payload() event: ILogEvent<IErc1363TransferReceivedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.paymentSplitterServiceEth.transferReceived(event, context);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.PaymentSplitterDeployed,
+  })
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.paymentSplitterServiceEth.deploy(event, context);
   }
 }

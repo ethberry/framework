@@ -5,11 +5,11 @@ import { Log } from "ethers";
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import {
   ContractManagerEventType,
-  type IContractManagerWaitListDeployedEvent,
+  type IContractManagerCommonDeployedEvent,
   IWaitListRewardClaimedEvent,
   IWaitListRewardSetEvent,
+  WaitListEventType,
 } from "@framework/types";
-import { WaitListEventType } from "@framework/types";
 
 import { ContractType } from "../../../../../utils/contract-type";
 import { WaitListListServiceEth } from "./list.service.eth";
@@ -32,7 +32,7 @@ export class WaitListListControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.WaitListDeployed,
   })
-  public waitList(@Payload() event: ILogEvent<IContractManagerWaitListDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.waitListListServiceEth.deploy(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
+    return this.waitListListServiceEth.deploy(event);
   }
 }

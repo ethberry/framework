@@ -17,10 +17,7 @@ export class ContractManagerErc721ControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC721TokenDeployed,
   })
-  public erc721Token(
-    @Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.contractManagerErc721ServiceEth.erc721Token(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerErc721ServiceEth.deploy(event, ctx);
   }
 }

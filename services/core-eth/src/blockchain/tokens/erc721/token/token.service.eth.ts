@@ -3,7 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IContractManagerERC721TokenDeployedEvent, IERC721TokenTransferEvent } from "@framework/types";
+import type { IContractManagerCommonDeployedEvent, IERC721TokenTransferEvent } from "@framework/types";
 import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
@@ -111,13 +111,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.erc721TokenServiceLog.updateRegistry([account]);
   }

@@ -4,7 +4,7 @@ import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerERC1155TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IERC721TokenTransferEvent,
   IErc998BatchReceivedChildEvent,
   IErc998BatchTransferChildEvent,
@@ -430,13 +430,10 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, context: Log): Promise<void> {
+  public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     const {
       args: { account },
     } = event;
-
-    // dummy call to keep interface compatible with same methods
-    await Promise.resolve(context);
 
     this.erc998TokenServiceLog.updateRegistry([account]);
   }

@@ -4,7 +4,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerERC20TokenDeployedEvent,
+  IContractManagerCommonDeployedEvent,
   IErc20TokenApproveEvent,
   IErc20TokenTransferEvent,
 } from "@framework/types";
@@ -27,13 +27,8 @@ export class Erc20TokenControllerEth {
     return this.erc20TokenServiceEth.approval(event, context);
   }
 
-  @EventPattern([
-    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC20TokenDeployed },
-  ])
-  public deploy(
-    @Payload() event: ILogEvent<IContractManagerERC20TokenDeployedEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.erc20TokenServiceEth.deploy(event, context);
+  @EventPattern({ contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC20TokenDeployed })
+  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
+    return this.erc20TokenServiceEth.deploy(event);
   }
 }

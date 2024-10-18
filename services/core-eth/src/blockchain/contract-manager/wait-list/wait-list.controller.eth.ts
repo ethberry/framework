@@ -17,7 +17,7 @@ export class ContractManagerWaitListControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.WaitListDeployed,
   })
-  public waitList(@Payload() event: ILogEvent<IContractManagerWaitListDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
-    return this.contractManagerWaitListServiceEth.waitList(event, ctx);
+  public deploy(@Payload() event: ILogEvent<IContractManagerWaitListDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerWaitListServiceEth.deploy(event, ctx);
   }
 }
