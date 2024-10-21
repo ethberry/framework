@@ -60,16 +60,28 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       token: tokenEntity,
       from: from.toLowerCase(),
       to: to.toLowerCase(),
-      amount: value, // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+      amount: value,
     });
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+    if (from !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: from.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
+
+    if (to !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: to.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
   }
 
   public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatchEvent>, context: Log): Promise<void> {
@@ -104,16 +116,28 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       tokens: tokensEntities,
       from: from.toLowerCase(),
       to: to.toLowerCase(),
-      amounts: values, // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+      amounts: values,
     });
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+    if (from !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: from.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
+
+    if (to !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: to.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
   }
 
   public async approvalForAllErc1155(event: ILogEvent<IErc1155TokenApprovalForAllEvent>, context: Log): Promise<void> {

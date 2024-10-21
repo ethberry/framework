@@ -2,6 +2,7 @@ import { FC, useLayoutEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
+import { matchPath } from "react-router";
 
 import { useApi } from "@ethberry/provider-api-firebase";
 import { useUser } from "@ethberry/provider-user";
@@ -64,7 +65,7 @@ export const Signal: FC = () => {
             },
           );
 
-          if (eventRouteMapping[dto.transactionType]?.includes(location.pathname)) {
+          if (eventRouteMapping[dto.transactionType]?.some(mask => matchPath(mask, location.pathname))) {
             void dispatch(setNeedRefresh(true));
           }
         } else {

@@ -5,6 +5,7 @@ import { ConfigModule } from "@nestjs/config";
 import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { signalServiceProvider } from "../../../../common/providers";
+import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenModule } from "../../../hierarchy/token/token.module";
@@ -21,6 +22,7 @@ import { Erc20TokenServiceLog } from "./token.service.log";
     TokenModule,
     BalanceModule,
     EventHistoryModule,
+    NotificatorModule,
     EthersModule.deferred(),
     TypeOrmModule.forFeature([TokenEntity]),
   ],

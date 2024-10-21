@@ -6,24 +6,21 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { CommonSearchForm } from "@ethberry/mui-form-search";
+import { EntityInput } from "@ethberry/mui-inputs-entity";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 import { useCollection, CollectionActions } from "@ethberry/provider-collection";
 import { useMetamask } from "@ethberry/react-hooks-eth";
-import { useUser } from "@ethberry/provider-user";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import { CompositionStatus, ContractStatus, ModuleType, TokenType } from "@framework/types";
-import type { IComposition, ICompositionSearchDto, IUser } from "@framework/types";
+import type { IComposition, ICompositionSearchDto } from "@framework/types";
 
-import ERC998WhitelistChildABI from "@framework/abis/json/ERC998Simple/whiteListChild.json";
+import ERC998SimpleUnWhitelistChildABI from "@framework/abis/json/ERC998Simple/unWhitelistChild.json";
+import ERC998SimpleWhiteListChildABI from "@framework/abis/json/ERC998Simple/whiteListChild.json";
 
-import { SearchMerchantContractsInput } from "../../../../components/inputs/search-merchant-contracts";
-import { SearchMerchantInput } from "../../../../components/inputs/search-merchant";
-import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
+import { Erc998CompositionCreateDialog } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
 
 export const Erc998Composition: FC = () => {
-  const { profile } = useUser<IUser>();
-
   const {
     rows,
     count,
@@ -41,12 +38,13 @@ export const Erc998Composition: FC = () => {
   } = useCollection<IComposition, ICompositionSearchDto>({
     baseUrl: "/erc998/composition",
     empty: {
-      amount: 0,
+      parentId: 0,
+      childId: 0,
+      amount: 1,
     },
     search: {
       parentIds: [],
       childIds: [],
-      merchantId: profile.merchantId,
     },
   });
 
@@ -57,7 +55,7 @@ export const Erc998Composition: FC = () => {
   const metaFn1 = useMetamask((composition: IComposition, web3Context: Web3ContextType) => {
     const contract = new Contract(
       composition.parent!.address,
-      ERC998WhitelistChildABI,
+      ERC998SimpleUnWhitelistChildABI,
       web3Context.provider?.getSigner(),
     );
     return contract.unWhitelistChild(composition.child!.address) as Promise<void>;
@@ -73,36 +71,24 @@ export const Erc998Composition: FC = () => {
     setIsCreateDialogOpen(true);
   };
 
-  const metaFn2 = useMetamask((composition: IErc998CompositionCreateDto, web3Context: Web3ContextType) => {
+  const metaFn2 = useMetamask((composition: IComposition, web3Context: Web3ContextType) => {
     const contract = new Contract(
-      composition.contract.parent.contract,
-      ERC998WhitelistChildABI,
+      composition.parent!.address,
+      ERC998SimpleWhiteListChildABI,
       web3Context.provider?.getSigner(),
     );
-    return contract.whiteListChild(composition.contract.child.contract, composition.amount) as Promise<void>;
+    return contract.whiteListChild(composition.child!.address, composition.amount) as Promise<void>;
   });
 
-  const handleCreateConfirm = (values: IErc998CompositionCreateDto) => {
+  const handleCreateConfirm = (values: IComposition) => {
     return metaFn2(values).finally(() => {
       setIsCreateDialogOpen(false);
     });
   };
 
   const handleActivate = (composition: IComposition) => {
-    const values = {
-      contract: {
-        parent: {
-          contract: composition.parent!.address,
-        },
-        child: {
-          contract: composition.child!.address,
-        },
-      },
-      amount: `${composition.amount}`,
-    };
-
     return () => {
-      return handleCreateConfirm(values);
+      return handleCreateConfirm(composition);
     };
   };
 
@@ -135,12 +121,10 @@ export const Erc998Composition: FC = () => {
         testId="Erc998CompositionSearchForm"
       >
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12}>
-            <SearchMerchantInput disableClear />
-          </Grid>
           <Grid item xs={6}>
-            <SearchMerchantContractsInput
+            <EntityInput
               name="parentIds"
+              controller="contracts"
               multiple
               data={{
                 contractType: [TokenType.ERC998],
@@ -151,8 +135,9 @@ export const Erc998Composition: FC = () => {
             />
           </Grid>
           <Grid item xs={6}>
-            <SearchMerchantContractsInput
+            <EntityInput
               name="childIds"
+              controller="contracts"
               multiple
               data={{
                 contractType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
@@ -169,8 +154,8 @@ export const Erc998Composition: FC = () => {
         <StyledListWrapper count={rows.length} isLoading={isLoading}>
           {rows.map(composition => (
             <StyledListItem key={composition.id}>
-              <ListItemText sx={{ flex: "0 1 80%" }}>
-                {composition.parent?.title} + {composition.child?.title}
+              <ListItemText>
+                {composition.parent?.title} {">"} {composition.child?.title}
               </ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(composition)} message="form.tips.view" icon={Visibility} />
@@ -204,6 +189,7 @@ export const Erc998Composition: FC = () => {
         onCancel={handleCreateCancel}
         onConfirm={handleCreateConfirm}
         open={isCreateDialogOpen}
+        initialValues={selected}
       />
 
       <Erc998CompositionViewDialog

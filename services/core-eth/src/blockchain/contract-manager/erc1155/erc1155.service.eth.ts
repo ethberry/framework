@@ -54,16 +54,18 @@ export class ContractManagerErc1155ServiceEth extends ContractManagerServiceEth 
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
+    const contractFeatures =
+      contractTemplate === "0"
+        ? []
+        : (Object.values(Erc1155ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>);
+
     await this.contractService.create({
       address: account.toLowerCase(),
       title: `${TokenType.ERC1155} (new)`,
       description: emptyStateString,
       imageUrl,
       baseTokenURI,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(Erc1155ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+      contractFeatures,
       contractType: TokenType.ERC1155,
       chainId,
       royalty: Number(royalty),

@@ -99,16 +99,28 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       token: erc721TokenEntity,
       from: from.toLowerCase(),
       to: to.toLowerCase(),
-      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+      amount: "1",
     });
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+    if (from !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: from.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
+
+    if (to !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: to.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
   }
 
   public deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>): void {

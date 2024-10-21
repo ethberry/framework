@@ -1,4 +1,10 @@
-import { DiscreteEventType, Erc721EventType, ExchangeEventType, WaitListEventType } from "@framework/types";
+import {
+  DiscreteEventType,
+  Erc721EventType,
+  Erc998EventType,
+  ExchangeEventType,
+  WaitListEventType,
+} from "@framework/types";
 
 export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
   [Erc721EventType.Transfer]: ["/tokens", "/erc721/tokens", "/erc998/tokens", "/erc1155/tokens/:id/view"],
@@ -14,6 +20,6 @@ export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
   OwnershipTransferred: ["/vesting"],
   WhitelistedChild: ["/erc998/tokens"],
   UnWhitelistedChild: ["/erc998/tokens"],
-  ReceivedChild: ["/erc998/tokens"],
-  TransferChild: ["/erc998/tokens"],
+  [Erc998EventType.ReceivedChild]: ["/erc998/tokens/:id/view"],
+  [Erc998EventType.TransferChild]: ["/erc998/tokens/:id/view"],
 };

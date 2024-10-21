@@ -83,7 +83,6 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
       </Grid>
       <ContractInput
         name="contractId"
-        related="address"
         controller="contracts"
         data={{
           contractModule: [ModuleType.STAKING],

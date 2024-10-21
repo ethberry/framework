@@ -22,7 +22,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         ERC998_BLACKLIST_ADDR: Wallet.createRandom().address.toLowerCase(),
         ERC998_DISCRETE_ADDR: Wallet.createRandom().address.toLowerCase(),
         ERC998_RANDOM_ADDR: Wallet.createRandom().address.toLowerCase(),
-        ERC998_GENES_ADDR: Wallet.createRandom().address.toLowerCase(),
         ERC998_RENTABLE_ADDR: Wallet.createRandom().address.toLowerCase(),
         ERC998_OWNER_ERC20_ADDR: Wallet.createRandom().address.toLowerCase(),
         ERC998_OWNER_ERC1155_ADDR: Wallet.createRandom().address.toLowerCase(),
@@ -38,7 +37,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR;
     const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR;
-    const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR;
     const erc998ContractRentableAddress = process.env.ERC998_RENTABLE_ADDR;
     const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR;
     const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR;
@@ -169,24 +167,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,DISCRETE,RANDOM}',
-        '${fromBlock}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        10407,
-        '${erc998ContractGenesAddress}',
-        '${chainId}',
-        'AXIE (genes)',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'GENES',
-        'DNA998',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC998',
-        '{ALLOWANCE,GENES}',
         '${fromBlock}',
         1,
         '${currentDateTime}',

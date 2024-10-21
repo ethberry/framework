@@ -17,7 +17,7 @@ import type { IComposition, ICompositionSearchDto } from "@framework/types";
 import ERC998SimpleUnWhitelistChildABI from "@framework/abis/json/ERC998Simple/unWhitelistChild.json";
 import ERC998SimpleWhiteListChildABI from "@framework/abis/json/ERC998Simple/whiteListChild.json";
 
-import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
+import { Erc998CompositionCreateDialog } from "./create";
 import { Erc998CompositionViewDialog } from "./view";
 
 export const Erc998Composition: FC = () => {
@@ -38,7 +38,9 @@ export const Erc998Composition: FC = () => {
   } = useCollection<IComposition, ICompositionSearchDto>({
     baseUrl: "/erc998/composition",
     empty: {
-      amount: 0,
+      parentId: 0,
+      childId: 0,
+      amount: 1,
     },
     search: {
       parentIds: [],
@@ -69,36 +71,24 @@ export const Erc998Composition: FC = () => {
     setIsCreateDialogOpen(true);
   };
 
-  const metaFn2 = useMetamask((composition: IErc998CompositionCreateDto, web3Context: Web3ContextType) => {
+  const metaFn2 = useMetamask((composition: IComposition, web3Context: Web3ContextType) => {
     const contract = new Contract(
-      composition.contract.parent.contract,
+      composition.parent!.address,
       ERC998SimpleWhiteListChildABI,
       web3Context.provider?.getSigner(),
     );
-    return contract.whiteListChild(composition.contract.child.contract, composition.amount) as Promise<void>;
+    return contract.whiteListChild(composition.child!.address, composition.amount) as Promise<void>;
   });
 
-  const handleCreateConfirm = (values: IErc998CompositionCreateDto) => {
+  const handleCreateConfirm = (values: IComposition) => {
     return metaFn2(values).finally(() => {
       setIsCreateDialogOpen(false);
     });
   };
 
   const handleActivate = (composition: IComposition) => {
-    const values = {
-      contract: {
-        parent: {
-          contract: composition.parent!.address,
-        },
-        child: {
-          contract: composition.child!.address,
-        },
-      },
-      amount: `${composition.amount}`,
-    };
-
     return () => {
-      return handleCreateConfirm(values);
+      return handleCreateConfirm(composition);
     };
   };
 
@@ -165,7 +155,7 @@ export const Erc998Composition: FC = () => {
           {rows.map(composition => (
             <StyledListItem key={composition.id}>
               <ListItemText>
-                {composition.parent?.title} + {composition.child?.title}
+                {composition.parent?.title} {">"} {composition.child?.title}
               </ListItemText>
               <ListActions>
                 <ListAction onClick={handleView(composition)} message="form.tips.view" icon={Visibility} />
@@ -199,6 +189,7 @@ export const Erc998Composition: FC = () => {
         onCancel={handleCreateCancel}
         onConfirm={handleCreateConfirm}
         open={isCreateDialogOpen}
+        initialValues={selected}
       />
 
       <Erc998CompositionViewDialog

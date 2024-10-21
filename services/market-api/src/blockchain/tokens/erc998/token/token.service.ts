@@ -29,8 +29,8 @@ export class Erc998TokenService extends TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.children", "contract_children");

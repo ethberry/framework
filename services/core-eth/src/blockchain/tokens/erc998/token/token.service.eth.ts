@@ -113,16 +113,28 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       token: erc998TokenEntity,
       from: from.toLowerCase(),
       to: to.toLowerCase(),
-      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+      amount: "1",
     });
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+    if (from !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: from.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
+
+    if (to !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: to.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
   }
 
   public async receivedChild(event: ILogEvent<IErc998TokenReceivedChildEvent>, context: Log): Promise<void> {
@@ -150,12 +162,17 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.balanceService.create({
+    const balanceEntity = await this.balanceService.findOne({
       account: erc998TokenEntity.template.contract.address,
-      targetId: erc998TokenEntity.id,
       tokenId: tokenEntity.id,
-      amount: "1",
     });
+
+    if (!balanceEntity) {
+      throw new NotFoundException("balanceNotFound");
+    }
+
+    Object.assign(balanceEntity, { targetId: erc998TokenEntity.id });
+    await balanceEntity.save();
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {
@@ -239,6 +256,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     const balanceEntity = await this.balanceService.findOne({
+      account: to.toLowerCase(),
       tokenId: erc721TokenEntity.id,
     });
 
@@ -246,8 +264,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("balanceNotFound");
     }
 
-    // await balanceEntity.remove();
-    await this.balanceService.delete({ id: balanceEntity.id });
+    Object.assign(balanceEntity, { targetId: null });
+    await balanceEntity.save();
 
     await this.signalClientProxy
       .emit(SignalEventType.TRANSACTION_HASH, {

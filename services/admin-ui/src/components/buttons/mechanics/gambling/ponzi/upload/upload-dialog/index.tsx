@@ -84,7 +84,6 @@ export const PonziRuleUploadDialog: FC<IPonziRuleUploadDialogProps> = props => {
       </Grid>
       <ContractInput
         name="contractId"
-        related="address"
         controller="contracts"
         data={{
           contractModule: [ModuleType.PONZI],

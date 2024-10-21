@@ -14,6 +14,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { Erc20TokenServiceLog } from "./token.service.log";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 
 @Injectable()
 export class Erc20TokenServiceEth {
@@ -23,6 +24,7 @@ export class Erc20TokenServiceEth {
     private readonly eventHistoryService: EventHistoryService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
+    protected readonly notificatorService: NotificatorService,
     private readonly erc20TokenServiceLog: Erc20TokenServiceLog,
   ) {}
 
@@ -50,13 +52,32 @@ export class Erc20TokenServiceEth {
       }
     }
 
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: from === ZeroAddress ? to.toLowerCase() : from.toLowerCase(),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
+    await this.notificatorService.tokenTransfer({
+      token: tokenEntity,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amount: value,
+    });
+
+    if (from !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: from.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
+
+    if (to !== ZeroAddress) {
+      await this.signalClientProxy
+        .emit(SignalEventType.TRANSACTION_HASH, {
+          account: to.toLowerCase(),
+          transactionHash,
+          transactionType: name,
+        })
+        .toPromise();
+    }
   }
 
   public async approval(event: ILogEvent<IErc20TokenApproveEvent>, context: Log): Promise<void> {

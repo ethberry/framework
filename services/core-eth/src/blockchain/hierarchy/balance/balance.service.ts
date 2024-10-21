@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { BalanceEntity } from "./balance.entity";
-import { ModuleType } from "@framework/types";
+import { IBalance, ModuleType } from "@framework/types";
 
 @Injectable()
 export class BalanceService {
@@ -27,6 +27,18 @@ export class BalanceService {
 
   public async createBatch(dto: Array<DeepPartial<BalanceEntity>>): Promise<Array<BalanceEntity>> {
     return this.balanceEntityRepository.save(dto, { chunk: 1000 });
+  }
+
+  public async update(where: FindOptionsWhere<BalanceEntity>, dto: Partial<IBalance>): Promise<BalanceEntity> {
+    const balanceEntity = await this.findOne(where);
+
+    if (!balanceEntity) {
+      throw new NotFoundException("balanceNotFound");
+    }
+
+    Object.assign(balanceEntity, dto);
+
+    return balanceEntity.save();
   }
 
   public delete(where: FindOptionsWhere<BalanceEntity>): Promise<DeleteResult> {

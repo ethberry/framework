@@ -16,7 +16,6 @@ export class SeedAccessControlErc998At1653616447240 implements MigrationInterfac
     const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR;
     const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR;
-    const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR;
     const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR;
     const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR;
     const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR;
@@ -132,24 +131,6 @@ export class SeedAccessControlErc998At1653616447240 implements MigrationInterfac
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
-        '${wallet}',
-        'METADATA_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc998ContractGenesAddress}',
-        '${wallet}',
-        'DEFAULT_ADMIN_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc998ContractGenesAddress}',
-        '${wallet}',
-        'MINTER_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc998ContractGenesAddress}',
         '${wallet}',
         'METADATA_ROLE',
         '${currentDateTime}',

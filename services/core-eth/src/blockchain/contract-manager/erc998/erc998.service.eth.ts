@@ -56,6 +56,11 @@ export class ContractManagerErc998ServiceEth extends ContractManagerServiceEth {
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
+    const contractFeatures =
+      contractTemplate === "0"
+        ? []
+        : (Object.values(Erc998ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>);
+
     const contractEntity = await this.contractService.create({
       address: account.toLowerCase(),
       title: name,
@@ -63,10 +68,7 @@ export class ContractManagerErc998ServiceEth extends ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(Erc998ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+      contractFeatures: [ContractFeatures.ALLOWANCE, ...contractFeatures],
       contractType: TokenType.ERC998,
       chainId,
       royalty: Number(royalty),
