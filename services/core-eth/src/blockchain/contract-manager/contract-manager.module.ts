@@ -32,6 +32,7 @@ import { ContractManagerErc998Module } from "./erc998/erc998.module";
 import { ContractManagerErc1155Module } from "./erc1155/erc1155.module";
 import { ContractManagerWaitListModule } from "./wait-list/wait-list.module";
 import { ContractManagerPaymentSplitterModule } from "./payment-splitter/payment-splitter.module";
+import { ContractManagerCollectionModule } from "./collection/collection.module";
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ContractManagerPaymentSplitterModule } from "./payment-splitter/payment
     ContractManagerErc721Module,
     ContractManagerErc998Module,
     ContractManagerErc1155Module,
+    ContractManagerCollectionModule,
     ContractManagerWaitListModule,
     ContractManagerPaymentSplitterModule,
 

@@ -1,14 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { ArrayOverlap } from "typeorm";
+import { Interface } from "ethers";
 
 import { ContractFeatures, ReferralProgramEventSignature } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
+import ReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Referral/Referral.sol/Referral.json";
 
 import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ReferralABI } from "./interfaces";
 
 @Injectable()
 export class ReferralServiceLog {
@@ -21,7 +23,7 @@ export class ReferralServiceLog {
   public async initRegistry(): Promise<void> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", String(testChainId));
     const contractEntities = await this.contractService.findAll({
-      contractFeatures: ContractFeatures.REFERRAL,
+      contractFeatures: ArrayOverlap([[ContractFeatures.REFERRAL]]),
       chainId,
     });
 
@@ -32,7 +34,7 @@ export class ReferralServiceLog {
     this.ethersService.updateRegistry({
       contractType: ContractType.REFERRAL,
       contractAddress: address,
-      contractInterface: ReferralABI,
+      contractInterface: new Interface(ReferralSol.abi),
       eventSignatures: [ReferralProgramEventSignature.ReferralEvent],
     });
   }

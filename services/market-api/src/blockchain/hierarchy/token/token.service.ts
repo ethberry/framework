@@ -99,8 +99,12 @@ export class TokenService {
       queryBuilder.andWhere("balance.account = :account", { account });
     }
 
-    // SHOW TOKENS ONLY WITH ACTIVE TEMPLATE
-    queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.andWhere("template.templateStatus = ANY(:templateStatus)", {
+      templateStatus: [
+        TemplateStatus.ACTIVE, // <- hierarchy
+        TemplateStatus.HIDDEN, // <- collection/raffle/lottery
+      ],
+    });
 
     const rarity = metadata[TokenMetadata.RARITY];
     if (rarity) {

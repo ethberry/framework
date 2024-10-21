@@ -1,15 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { In, ArrayContains } from "typeorm";
+import { Interface } from "ethers";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 import { ContractFeatures, DiscreteEventSignature, ModuleType, TokenType } from "@framework/types";
+import ERC721DiscreteSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Discrete/ERC721Discrete.sol/ERC721Discrete.json";
 
 import { ContractType } from "../../../../utils/contract-type";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ERC721DiscreteABI } from "./interfaces";
 
 @Injectable()
 export class DiscreteServiceLog {
@@ -35,7 +36,7 @@ export class DiscreteServiceLog {
     this.ethersService.updateRegistry({
       contractType: ContractType.DESCRETE,
       contractAddress: address,
-      contractInterface: ERC721DiscreteABI,
+      contractInterface: new Interface(ERC721DiscreteSol.abi),
       eventSignatures: [DiscreteEventSignature.LevelUp],
     });
   }

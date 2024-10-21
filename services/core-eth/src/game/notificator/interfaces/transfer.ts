@@ -1,4 +1,4 @@
-import type { IToken } from "@framework/types";
+import type { ITemplate, IToken } from "@framework/types";
 
 export interface ITokenTransferData {
   token: IToken;
@@ -15,6 +15,7 @@ export interface IBatchTransferData {
 }
 
 export interface IConsecutiveTransferData {
+  template: ITemplate;
   tokens: Array<IToken>;
   from: string;
   to: string;

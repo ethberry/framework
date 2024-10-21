@@ -2,7 +2,6 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ClientProxy } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
-import { DeepPartial } from "typeorm";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
@@ -10,7 +9,6 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
 import type {
-  IContractManagerCollectionDeployedEvent,
   IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
@@ -20,7 +18,6 @@ import type {
   IContractManagerVestingDeployedEvent,
 } from "@framework/types";
 import {
-  CollectionContractTemplates,
   ContractFeatures,
   ContractSecurity,
   LootContractTemplates,
@@ -28,7 +25,6 @@ import {
   MysteryContractTemplates,
   RmqProviderType,
   SignalEventType,
-  TemplateStatus,
   TokenType,
 } from "@framework/types";
 
@@ -36,7 +32,6 @@ import { UserService } from "../../infrastructure/user/user.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
-import { TokenEntity } from "../hierarchy/token/token.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { EventHistoryService } from "../event-history/event-history.service";
 import { ClaimService } from "../mechanics/marketing/claim/claim.service";
@@ -76,81 +71,6 @@ export class ContractManagerServiceEth {
     private readonly ponziServiceLog: PonziServiceLog,
     private readonly stakingContractServiceLog: StakingContractServiceLog,
   ) {}
-
-  public async erc721Collection(
-    event: ILogEvent<IContractManagerCollectionDeployedEvent>,
-    context: Log,
-  ): Promise<void> {
-    const {
-      args: { account, args, externalId },
-    } = event;
-    const { transactionHash } = context;
-
-    const { name, symbol, royalty, baseTokenURI, batchSize, contractTemplate } = args;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    const contractEntity = await this.contractService.create({
-      address: account.toLowerCase(),
-      title: name,
-      name,
-      symbol,
-      description: emptyStateString,
-      parameters: {
-        batchSize,
-      },
-      imageUrl,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(CollectionContractTemplates)[Number(contractTemplate)].split(
-              "_",
-            ) as Array<ContractFeatures>),
-      contractType: TokenType.ERC721,
-      contractModule: ModuleType.COLLECTION,
-      chainId,
-      royalty: Number(royalty),
-      baseTokenURI,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(externalId),
-    });
-
-    const templateEntity = await this.templateService.createTemplate({
-      title: name,
-      description: emptyStateString,
-      imageUrl,
-      cap: batchSize.toString(),
-      contractId: contractEntity.id,
-      templateStatus: TemplateStatus.HIDDEN,
-    });
-
-    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", `${baseTokenURI}`);
-
-    const currentDateTime = new Date().toISOString();
-    const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(Number(batchSize))].map((_, i) => ({
-      metadata: "{}",
-      tokenId: i.toString(),
-      royalty: Number(royalty),
-      imageUrl: `${imgUrl}/${account.toLowerCase()}/${i}.jpg`,
-      template: templateEntity,
-      createdAt: currentDateTime,
-      updatedAt: currentDateTime,
-    }));
-
-    const entityArray = await this.tokenService.createBatch(tokenArray);
-
-    await this.createBalancesBatch(externalId, entityArray);
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(externalId),
-        transactionHash,
-        transactionType: event.name,
-      })
-      .toPromise();
-  }
 
   public async mystery(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, context: Log): Promise<void> {
     const {
@@ -448,26 +368,6 @@ export class ContractManagerServiceEth {
         transactionType: name,
       })
       .toPromise();
-  }
-
-  private async createBalancesBatch(externalId: number, tokenArray: Array<TokenEntity>) {
-    const currentDateTime = new Date().toISOString();
-
-    const userEntity = await this.userService.findOne({ id: externalId });
-    if (!userEntity) {
-      this.loggerService.error("CRITICAL ERROR", ContractManagerServiceEth.name);
-      throw new NotFoundException("userNotFound");
-    }
-
-    await this.balanceService.createBatch(
-      new Array(tokenArray.length).fill(null).map((_, i) => ({
-        account: userEntity.wallet.toLowerCase(),
-        amount: "1",
-        tokenId: tokenArray[i].id,
-        createdAt: currentDateTime,
-        updatedAt: currentDateTime,
-      })),
-    );
   }
 
   public async getMerchantId(userId: number): Promise<number> {

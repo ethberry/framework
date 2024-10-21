@@ -61,7 +61,9 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.address" />
               </TableCell>
-              <TableCell align="right">{template?.contract?.address}</TableCell>
+              <TableCell align="right">
+                <AddressLink address={template?.contract?.address} />
+              </TableCell>
             </TableRow>
             {showAttributes && (
               <TableRow>

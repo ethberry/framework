@@ -82,12 +82,12 @@ export class ContractManagerCollectionSignService {
     switch (contractTemplate) {
       case CollectionContractTemplates.SIMPLE:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CSimple.sol/ERC721CSimple.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CollectionSimple.sol/ERC721CollectionSimple.json",
           chainId,
         );
       case CollectionContractTemplates.BLACKLIST:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CBlacklist.sol/ERC721CBlacklist.json",
+          "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CollectionBlacklist.sol/ERC721CollectionBlacklist.json",
           chainId,
         );
       default:

@@ -95,7 +95,7 @@ export class NotificatorService {
   }
 
   public consecutiveTransfer(data: IConsecutiveTransferData): Promise<any> {
-    return this.sendMessage(data.tokens[0].template!.contract!.merchantId, clientProxy => {
+    return this.sendMessage(data.template.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.CONSECUTIVE_TRANSFER, data).toPromise();
     });
   }

@@ -14,12 +14,11 @@ import { ReferralRewardShareEntity } from "./share/referral.reward.share.entity"
 @Module({
   imports: [
     ReferralProgramModule,
-    TypeOrmModule.forFeature([ReferralRewardEntity]),
-    TypeOrmModule.forFeature([ReferralRewardShareEntity]),
     ContractModule,
     TokenModule,
     AssetModule,
     ConfigModule,
+    TypeOrmModule.forFeature([ReferralRewardEntity, ReferralRewardShareEntity]),
   ],
   providers: [ReferralRewardService, ReferralRewardShareService],
   exports: [ReferralRewardService, ReferralRewardShareService],

@@ -6,13 +6,13 @@ import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 import { ContractManagerEventSignature, ModuleType } from "@framework/types";
-import ERC998FactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/ERC998FactoryFacet.sol/ERC998FactoryFacet.json";
+import CollectionFactoryFacet from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/CollectionFactoryFacet.sol/CollectionFactoryFacet.json";
 
 import { ContractType } from "../../../utils/contract-type";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
-export class ContractManagerErc998ServiceLog {
+export class ContractManagerCollectionServiceLog {
   constructor(
     protected readonly configService: ConfigService,
     private readonly contractService: ContractService,
@@ -29,8 +29,8 @@ export class ContractManagerErc998ServiceLog {
     this.ethersService.updateRegistry({
       contractType: ContractType.CONTRACT_MANAGER,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: new Interface(ERC998FactoryFacetSol.abi),
-      eventSignatures: [ContractManagerEventSignature.ERC998TokenDeployed],
+      contractInterface: new Interface(CollectionFactoryFacet.abi),
+      eventSignatures: [ContractManagerEventSignature.ERC721TokenDeployed],
     });
   }
 }
