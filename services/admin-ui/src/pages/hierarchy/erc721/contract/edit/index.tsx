@@ -60,7 +60,6 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
 
   const randomRequired =
     contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES);
-  const randomConfigured = !randomRequired || (randomRequired && parameters.vrfSubId && parameters.isConsumer);
 
   return (
     <FormDialog
@@ -96,13 +95,20 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       ) : null}
       <AvatarInput name="imageUrl" />
-      {!randomConfigured ? (
+      {randomRequired && !parameters.vrfSubId ? (
         <Fragment>
           <Alert severity="warning">
             <Typography>
-              <a id="anchor" href={"/chain-link"}>
-                <FormattedMessage id="alert.randomChainlink" />
-              </a>
+              <FormattedMessage id="alert.chainLinkSubId" />
+            </Typography>
+          </Alert>
+        </Fragment>
+      ) : null}
+      {randomRequired && !parameters.isConsumer ? (
+        <Fragment>
+          <Alert severity="warning">
+            <Typography>
+              <FormattedMessage id="alert.chainLinkConsumer" />
             </Typography>
           </Alert>
         </Fragment>

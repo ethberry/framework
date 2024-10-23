@@ -1,15 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Interface } from "ethers";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 import { ContractManagerEventSignature, ModuleType } from "@framework/types";
-import PaymentSplitterFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/PaymentSplitterFactoryFacet.sol/PaymentSplitterFactoryFacet.json";
 
 import { ContractType } from "../../../utils/contract-type";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractManagerABI } from "../interfaces";
 
 @Injectable()
 export class ContractManagerPaymentSplitterServiceLog {
@@ -29,7 +28,7 @@ export class ContractManagerPaymentSplitterServiceLog {
     this.ethersService.updateRegistry({
       contractType: ContractType.CONTRACT_MANAGER,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: new Interface(PaymentSplitterFactoryFacetSol.abi),
+      contractInterface: ContractManagerABI,
       eventSignatures: [ContractManagerEventSignature.ERC1155TokenDeployed],
     });
   }

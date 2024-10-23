@@ -53,7 +53,7 @@ export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props =
       message="form.buttons.unpack"
       className={className}
       dataTestId="WrapperUnpackButton"
-      disabled={disabled}
+      disabled={disabled || token.template?.contract?.isPaused}
       variant={variant}
     />
   );

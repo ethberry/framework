@@ -4,3 +4,4 @@ export * from "./ecommerce";
 export * from "./infrastructure";
 export * from "./integrations";
 export * from "./common";
+export * from "./errors";

@@ -60,8 +60,8 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
     // content or price template must be active

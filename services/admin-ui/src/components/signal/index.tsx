@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { io, Socket } from "socket.io-client";
+import { matchPath } from "react-router";
 
 import { useApi } from "@ethberry/provider-api-firebase";
 import { useUser } from "@ethberry/provider-user";
@@ -10,7 +11,7 @@ import { collectionActions } from "@ethberry/provider-collection";
 import type { IUser } from "@framework/types";
 import { SignalEventType } from "@framework/types";
 
-import { EventRouteMatch } from "./constants";
+import { eventRouteMapping } from "./constants";
 
 export const Signal: FC = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -36,12 +37,8 @@ export const Signal: FC = () => {
         },
       );
 
-      const isRouteMatchToEvent =
-        Object.keys(EventRouteMatch).includes(dto.transactionType) &&
-        location.pathname.startsWith(EventRouteMatch[dto.transactionType]!);
-
-      if (isRouteMatchToEvent) {
-        dispatch(setNeedRefresh(true));
+      if (eventRouteMapping[dto.transactionType]?.some(mask => matchPath(mask, location.pathname))) {
+        void dispatch(setNeedRefresh(true));
       }
     } else {
       enqueueSnackbar(formatMessage({ id: "snackbar.transactionExecuted" }, { txHash: dto.transactionHash }), {

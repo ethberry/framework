@@ -13,7 +13,8 @@
     "mergePrice": "Token to be merged and burned",
     "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
     "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
-    "randomChainlink": "Random Chain-Link VRF: Must Set Subscription and Add to Consumers list!",
+    "chainLinkSubId": "Chain-Link VRF: You MUST set subscription!",
+    "chainLinkConsumer": "Chain-Link VRF: You MUST add this contract to consumers list!",
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened"
   },

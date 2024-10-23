@@ -70,8 +70,8 @@ export class RentService {
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("rent.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",

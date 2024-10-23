@@ -29,6 +29,10 @@ export class ContractManagerServiceLog {
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: ContractManagerABI,
       eventSignatures: [
+        ContractManagerEventSignature.ERC20TokenDeployed,
+        ContractManagerEventSignature.ERC721TokenDeployed,
+        ContractManagerEventSignature.ERC998TokenDeployed,
+        ContractManagerEventSignature.ERC1155TokenDeployed,
         ContractManagerEventSignature.VestingDeployed,
         ContractManagerEventSignature.MysteryBoxDeployed,
         ContractManagerEventSignature.LootBoxDeployed,

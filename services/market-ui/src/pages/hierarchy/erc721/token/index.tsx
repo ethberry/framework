@@ -46,7 +46,7 @@ export const Erc721Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={8.5}>
-          <StyledImage component="img" src={selected.template!.imageUrl} alt="Gemunion token image" />
+          <StyledImage component="img" src={selected.template!.imageUrl} alt="token image" />
           <StyledDescription component="div">
             <RichTextDisplay data={selected.template!.description} />
           </StyledDescription>

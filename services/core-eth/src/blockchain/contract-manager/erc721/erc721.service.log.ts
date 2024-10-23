@@ -1,15 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Interface } from "ethers";
 
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
 import { ContractManagerEventSignature, ModuleType } from "@framework/types";
-import ERC721FactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/ERC721FactoryFacet.sol/ERC721FactoryFacet.json";
 
 import { ContractType } from "../../../utils/contract-type";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractManagerABI } from "../interfaces";
 
 @Injectable()
 export class ContractManagerErc721ServiceLog {
@@ -29,7 +28,7 @@ export class ContractManagerErc721ServiceLog {
     this.ethersService.updateRegistry({
       contractType: ContractType.CONTRACT_MANAGER,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
-      contractInterface: new Interface(ERC721FactoryFacetSol.abi),
+      contractInterface: ContractManagerABI,
       eventSignatures: [ContractManagerEventSignature.ERC721TokenDeployed],
     });
   }

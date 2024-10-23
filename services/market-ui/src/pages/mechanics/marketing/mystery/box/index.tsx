@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
 import { RichTextDisplay } from "@ethberry/mui-rte";
@@ -7,9 +7,9 @@ import { useCollection } from "@ethberry/provider-collection";
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import type { IMysteryBox } from "@framework/types";
 
-import { MysteryBoxContent } from "../token/mysterybox-content";
+import { MysteryBoxContent } from "../token/mystery-box-content";
 import { MysteryBoxPanel } from "./mystery-box-panel";
-import { StyledImage } from "./styled";
+import { StyledDescription, StyledImage } from "./styled";
 
 export const MysteryBox: FC = () => {
   const { selected, isLoading } = useCollection<IMysteryBox>({
@@ -37,9 +37,9 @@ export const MysteryBox: FC = () => {
       <Grid container>
         <Grid item xs={12} sm={9}>
           <StyledImage component="img" src={selected.imageUrl} />
-          <Typography variant="body2" color="textSecondary" component="div">
+          <StyledDescription component="div">
             <RichTextDisplay data={selected.description} />
-          </Typography>
+          </StyledDescription>
         </Grid>
         <Grid item xs={12} sm={3}>
           {selected.templateId ? (

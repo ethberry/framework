@@ -34,7 +34,7 @@ export class MysteryTokenService extends TokenService {
     queryBuilder.leftJoinAndSelect("box.content", "content");
     queryBuilder.leftJoinAndSelect("content.components", "content_components");
     queryBuilder.leftJoinAndSelect("content_components.template", "content_template");
-    queryBuilder.leftJoinAndSelect("content_components.contract", "content_contract");
+    queryBuilder.leftJoinAndSelect("content_template.contract", "content_contract");
 
     queryBuilder.andWhere("token.id = :id", {
       id: where.id,

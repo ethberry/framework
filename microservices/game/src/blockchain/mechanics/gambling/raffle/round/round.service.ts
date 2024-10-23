@@ -88,8 +88,8 @@ export class RaffleRoundService {
     queryBuilder.leftJoinAndSelect("round.ticketContract", "ticketContract");
     queryBuilder.leftJoinAndSelect("round.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
 
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
