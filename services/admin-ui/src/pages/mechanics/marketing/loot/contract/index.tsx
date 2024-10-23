@@ -58,6 +58,9 @@ export const LootContract: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      parameters: {
+        vrfSubId: "",
+      },
       contractStatus: ContractStatus.NEW,
     },
     search: {

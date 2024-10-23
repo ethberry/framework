@@ -71,7 +71,6 @@ export const LootBoxEditDialog: FC<ILootBoxEditDialogProps> = props => {
           },
         }}
         forceAmount
-        readOnly={!!id}
       />
       <TemplateAssetInput
         required

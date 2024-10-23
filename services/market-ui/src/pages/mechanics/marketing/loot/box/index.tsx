@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
 import { RichTextDisplay } from "@ethberry/mui-rte";
@@ -9,7 +9,7 @@ import type { ILootBox } from "@framework/types";
 
 import { LootBoxContent } from "../token/lootbox-content";
 import { LootBoxPanel } from "./loot-box-panel";
-import { StyledImage } from "./styled";
+import { StyledDescription, StyledImage } from "./styled";
 
 export const LootBox: FC = () => {
   const { selected, isLoading } = useCollection<ILootBox>({
@@ -37,9 +37,9 @@ export const LootBox: FC = () => {
       <Grid container>
         <Grid item xs={12} sm={9}>
           <StyledImage component="img" src={selected.imageUrl} />
-          <Typography variant="body2" color="textSecondary" component="div">
+          <StyledDescription component="div">
             <RichTextDisplay data={selected.description} />
-          </Typography>
+          </StyledDescription>
         </Grid>
         <Grid item xs={12} sm={3}>
           {selected.templateId ? (

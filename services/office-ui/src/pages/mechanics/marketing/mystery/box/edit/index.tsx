@@ -82,7 +82,6 @@ export const MysteryBoxEditDialog: FC<IMysteryBoxEditDialogProps> = props => {
             contractFeatures: [ContractFeatures.RANDOM],
           },
         }}
-        readOnly={!!id}
       />
       <TemplateInput
         required

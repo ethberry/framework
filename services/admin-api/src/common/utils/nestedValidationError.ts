@@ -15,26 +15,9 @@ export interface IValidationError {
 export const createNestedValidationError = (
   target: any,
   propertyPath: Array<string> | string = [],
-  childrens: Array<INestedProperty>,
+  children: Array<INestedProperty>,
 ): IValidationError[] => {
-  if (typeof propertyPath === "string") {
-    propertyPath = propertyPath.split(".");
-  }
-
-  if (propertyPath.length) {
-    const property = propertyPath[0];
-    const value = target[property];
-    return [
-      {
-        target,
-        property,
-        value,
-        children: createNestedValidationError(value, propertyPath.slice(1), childrens),
-      },
-    ];
-  }
-
-  return childrens.map(child => {
+  return children.map(child => {
     const { property, children = [], constraints } = child;
 
     // propery can be set as item.components.contractId

@@ -168,11 +168,6 @@ export class MysteryBoxService {
       },
     );
 
-    // queryBuilder.leftJoinAndSelect("box.price", "price");
-    // queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    // queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
-    // queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-
     // content or price template must be active
     queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {
       templateStatus: TemplateStatus.ACTIVE,

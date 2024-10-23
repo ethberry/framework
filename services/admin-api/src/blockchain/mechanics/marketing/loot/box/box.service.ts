@@ -266,15 +266,15 @@ export class LootBoxService {
 
     const { max, min } = rest;
 
-    if (max && content && max > content.components.length) {
+    if (min && content && content.components.length < min) {
       throw new BadRequestException(
-        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "rangeUnderflow" } }]),
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
       );
     }
 
-    if (min && content && content.components.length > min) {
+    if (max && content && max > content.components.length) {
       throw new BadRequestException(
-        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
+        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "rangeUnderflow" } }]),
       );
     }
 
@@ -295,7 +295,11 @@ export class LootBoxService {
     const { title, description, imageUrl } = rest;
     await this.templateService.update({ id: lootBoxEntity.templateId }, { title, description, imageUrl }, userEntity);
 
-    Object.assign(lootBoxEntity, rest);
+    Object.assign(lootBoxEntity, {
+      ...rest,
+      min,
+      max,
+    });
 
     return lootBoxEntity.save();
   }
@@ -313,15 +317,15 @@ export class LootBoxService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    if (max > content.components.length) {
+    if (content.components.length < min) {
       throw new BadRequestException(
-        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "rangeUnderflow" } }]),
+        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
       );
     }
 
-    if (content.components.length > min) {
+    if (max > content.components.length) {
       throw new BadRequestException(
-        createNestedValidationError(dto, "min", [{ property: "min", constraints: { message: "rangeOverflow" } }]),
+        createNestedValidationError(dto, "max", [{ property: "max", constraints: { message: "rangeUnderflow" } }]),
       );
     }
 

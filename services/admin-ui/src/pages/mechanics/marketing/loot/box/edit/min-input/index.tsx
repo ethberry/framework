@@ -5,6 +5,7 @@ import { NumberInput } from "@ethberry/mui-inputs-core";
 
 export interface IMinInputProps {
   name?: string;
+  readOnly?: boolean;
 }
 
 const changeMinByMaxAndTriggerMin = (
@@ -22,7 +23,7 @@ const changeMinByMaxAndTriggerMin = (
 };
 
 export const MinInput: FC<IMinInputProps> = props => {
-  const { name = "min" } = props;
+  const { name = "min", readOnly } = props;
 
   const minValue: number = useWatch({ name });
   const maxValue: number = useWatch({ name: "max" });
@@ -40,6 +41,7 @@ export const MinInput: FC<IMinInputProps> = props => {
     <NumberInput
       required
       name={name}
+      readOnly={readOnly}
       inputProps={{
         min: 1,
         max: changeMinByMaxAndTriggerMin(maxValue),

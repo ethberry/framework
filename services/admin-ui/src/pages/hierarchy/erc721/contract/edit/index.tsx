@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Alert, Typography } from "@mui/material";
 
@@ -82,6 +82,20 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
       }
       {...rest}
     >
+      {randomRequired && !parameters.vrfSubId ? (
+        <Alert severity="warning">
+          <Typography>
+            <FormattedMessage id="alert.chainLinkSubId" />
+          </Typography>
+        </Alert>
+      ) : null}
+      {randomRequired && !parameters.isConsumer ? (
+        <Alert severity="warning">
+          <Typography>
+            <FormattedMessage id="alert.chainLinkConsumer" />
+          </Typography>
+        </Alert>
+      ) : null}
       {!id ? (
         <Alert severity="warning">
           <FormattedMessage id="alert.risk" />
@@ -95,24 +109,6 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       ) : null}
       <AvatarInput name="imageUrl" />
-      {randomRequired && !parameters.vrfSubId ? (
-        <Fragment>
-          <Alert severity="warning">
-            <Typography>
-              <FormattedMessage id="alert.chainLinkSubId" />
-            </Typography>
-          </Alert>
-        </Fragment>
-      ) : null}
-      {randomRequired && !parameters.isConsumer ? (
-        <Fragment>
-          <Alert severity="warning">
-            <Typography>
-              <FormattedMessage id="alert.chainLinkConsumer" />
-            </Typography>
-          </Alert>
-        </Fragment>
-      ) : null}
     </FormDialog>
   );
 };

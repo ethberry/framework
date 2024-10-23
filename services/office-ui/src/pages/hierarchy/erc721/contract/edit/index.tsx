@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Alert } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 
 import { FormDialog } from "@ethberry/mui-dialog-form";
 import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
@@ -36,6 +36,7 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
     royalty,
     chainId,
     contractFeatures,
+    parameters,
     merchantId,
   } = initialValues;
 
@@ -47,10 +48,15 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
     description,
     contractStatus,
     imageUrl,
+    contractFeatures,
+    parameters,
     merchantId,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
+
+  const randomRequired =
+    contractFeatures.includes(ContractFeatures.RANDOM) || contractFeatures.includes(ContractFeatures.GENES);
 
   return (
     <FormDialog
@@ -73,6 +79,20 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
       }
       {...rest}
     >
+      {randomRequired && !parameters.vrfSubId ? (
+        <Alert severity="warning">
+          <Typography>
+            <FormattedMessage id="alert.chainLinkSubId" />
+          </Typography>
+        </Alert>
+      ) : null}
+      {randomRequired && !parameters.isConsumer ? (
+        <Alert severity="warning">
+          <Typography>
+            <FormattedMessage id="alert.chainLinkConsumer" />
+          </Typography>
+        </Alert>
+      ) : null}
       {!id ? (
         <Alert severity="warning">
           <FormattedMessage id="alert.risk" />

@@ -6,10 +6,11 @@ import { IAsset } from "@framework/types";
 
 export interface IMaxInputProps {
   name?: string;
+  readOnly?: boolean;
 }
 
 export const MaxInput: FC<IMaxInputProps> = props => {
-  const { name = "max" } = props;
+  const { name = "max", readOnly } = props;
 
   const maxValue: number = useWatch({ name });
   const content: IAsset = useWatch({ name: "content" });
@@ -29,6 +30,7 @@ export const MaxInput: FC<IMaxInputProps> = props => {
     <NumberInput
       required
       name={name}
+      readOnly={readOnly}
       inputProps={{
         min: 2,
         max: content.components.length || 2,

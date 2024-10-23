@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert, Typography } from "@mui/material";
 
 import { FormDialog } from "@ethberry/mui-dialog-form";
 import { SelectInput, TextInput } from "@ethberry/mui-inputs-core";
@@ -6,8 +8,8 @@ import { RichTextEditor } from "@ethberry/mui-inputs-draft";
 import { AvatarInput } from "@ethberry/mui-inputs-image-firebase";
 import { ContractFeatures, ContractStatus, IContract } from "@framework/types";
 
-import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../../components/popover/contract";
+import { validationSchema } from "./validation";
 
 export interface ILootContractEditDialogProps {
   open: boolean;
@@ -30,7 +32,9 @@ export const LootContractEditDialog: FC<ILootContractEditDialogProps> = props =>
     symbol,
     name,
     royalty,
+    chainId,
     contractFeatures,
+    parameters,
   } = initialValues;
 
   const fixedValues = {
@@ -57,6 +61,7 @@ export const LootContractEditDialog: FC<ILootContractEditDialogProps> = props =>
             symbol={symbol}
             address={address}
             baseTokenURI={baseTokenURI}
+            chainId={chainId}
             contractFeatures={contractFeatures}
             {...(!contractFeatures.includes(ContractFeatures.SOULBOUND) && { royalty: `${royalty / 100}%` })}
           />
@@ -64,6 +69,20 @@ export const LootContractEditDialog: FC<ILootContractEditDialogProps> = props =>
       }
       {...rest}
     >
+      {!parameters.vrfSubId ? (
+        <Alert severity="warning">
+          <Typography>
+            <FormattedMessage id="alert.chainLinkSubId" />
+          </Typography>
+        </Alert>
+      ) : null}
+      {!parameters.isConsumer ? (
+        <Alert severity="warning">
+          <Typography>
+            <FormattedMessage id="alert.chainLinkConsumer" />
+          </Typography>
+        </Alert>
+      ) : null}
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
