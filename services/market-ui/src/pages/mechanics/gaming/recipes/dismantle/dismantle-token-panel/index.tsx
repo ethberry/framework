@@ -19,7 +19,7 @@ import {
 import { StyledListWrapper } from "@framework/styled";
 import { IContract, IDismantle, IToken, TokenMetadata, TokenRarity } from "@framework/types";
 
-import DismantleABI from "@framework/abis/json/ExchangeDismantleFacet/dismantle.json";
+import ExchangeDismantleFacetDismantleABI from "@framework/abis/json/ExchangeDismantleFacet/dismantle.json";
 
 import { StyledToolbar, StyledTypography } from "../../../../../hierarchy/erc721/token/common-token-panel/styled";
 import { StyledCard } from "./styled";
@@ -57,7 +57,11 @@ export const DismantleTokenPanel: FC<IDismantleTokenPanelProps> = props => {
 
   const metaFnWithAllowance = useAllowance(
     (web3Context: Web3ContextType, values: IDismantle, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, DismantleABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeDismantleFacetDismantleABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const items = convertDatabaseAssetToChainAsset(values.item!.components, getMultiplier(level, values));
 

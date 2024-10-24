@@ -15,7 +15,7 @@ import {
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IMysteryBox } from "@framework/types";
 
-import MysteryBoxPurchaseABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
+import ExchangeMysteryBoxFacetPurchaseMysteryABI from "@framework/abis/json/ExchangeMysteryBoxFacet/purchaseMystery.json";
 
 interface IMysteryBoxBuyButtonProps {
   className?: string;
@@ -31,7 +31,11 @@ export const MysteryBoxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => 
 
   const metaFnWithAllowance = useAllowance(
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, MysteryBoxPurchaseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeMysteryBoxFacetPurchaseMysteryABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const content = convertDatabaseAssetToChainAsset(mysteryBox.content!.components);
       const price = convertDatabaseAssetToChainAsset(mysteryBox.template!.price!.components);

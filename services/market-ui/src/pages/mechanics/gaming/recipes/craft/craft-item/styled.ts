@@ -1,5 +1,5 @@
-import { Box, BoxProps, CSSObject } from "@mui/material";
-import { Theme, styled } from "@mui/material/styles";
+import { Box, BoxProps, CSSObject, Typography } from "@mui/material";
+import { styled, Theme } from "@mui/material/styles";
 
 const generateFanStyles = (count: number, angle: number, theme: Theme): CSSObject => {
   const offset = angle / 2;
@@ -58,9 +58,14 @@ export const StyledImageListItem = styled(Box)(({ theme }) => ({
   },
 })) as typeof Box;
 
-export const StyledDescription = styled(Box)(({ theme }) => ({
+export const StyledImage = styled(Box)(({ theme }) => ({
+  display: "block",
+  margin: theme.spacing(0, "auto"),
+  maxWidth: "70%",
+})) as typeof Box;
+
+export const StyledDescription = styled(Typography)(({ theme }) => ({
   ...theme.typography.body2,
   color: theme.palette.text.secondary,
-  marginTop: theme.spacing(4),
-  marginBottom: theme.spacing(4),
-})) as typeof Box;
+  margin: theme.spacing(1, 0),
+})) as typeof Typography;

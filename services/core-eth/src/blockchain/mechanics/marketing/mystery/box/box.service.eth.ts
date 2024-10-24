@@ -4,7 +4,11 @@ import { ClientProxy } from "@nestjs/microservices";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type { IERC721TokenTransferEvent, IUnpackMysteryBoxEvent } from "@framework/types";
+import type {
+  IContractManagerMysteryTokenDeployedEvent,
+  IERC721TokenTransferEvent,
+  IUnpackMysteryBoxEvent,
+} from "@framework/types";
 import { RmqProviderType, SignalEventType, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../../common/utils";
@@ -17,6 +21,7 @@ import { EventHistoryService } from "../../../../event-history/event-history.ser
 import { AssetService } from "../../../../exchange/asset/asset.service";
 import { NotificatorService } from "../../../../../game/notificator/notificator.service";
 import { MysteryBoxABI } from "./interfaces";
+import { MysteryBoxServiceLog } from "./box.service.log";
 
 @Injectable()
 export class MysteryBoxServiceEth extends TokenServiceEth {
@@ -34,6 +39,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly assetService: AssetService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly notificatorService: NotificatorService,
+    protected readonly mysteryBoxServiceLog: MysteryBoxServiceLog,
   ) {
     super(loggerService, signalClientProxy, tokenService, eventHistoryService);
   }
@@ -147,5 +153,13 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
         transactionType: name,
       })
       .toPromise();
+  }
+
+  public deploy(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>): void {
+    const {
+      args: { account },
+    } = event;
+
+    this.mysteryBoxServiceLog.updateRegistry([account]);
   }
 }

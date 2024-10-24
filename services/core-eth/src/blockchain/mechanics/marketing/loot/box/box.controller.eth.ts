@@ -4,12 +4,13 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
+  IContractManagerMysteryTokenDeployedEvent,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
   IUnpackLootBoxEvent,
 } from "@framework/types";
-import { Erc721EventType, LootEventType } from "@framework/types";
+import { ContractManagerEventType, Erc721EventType, LootEventType } from "@framework/types";
 
 import { LootBoxServiceEth } from "./box.service.eth";
 import { ContractType } from "../../../../../utils/contract-type";
@@ -39,5 +40,13 @@ export class LootBoxControllerEth {
   @EventPattern({ contractType: ContractType.LOOT, eventName: LootEventType.UnpackLootBox })
   public unpackItem(@Payload() event: ILogEvent<IUnpackLootBoxEvent>, @Ctx() context: Log): Promise<void> {
     return this.lootBoxServiceEth.unpack(event, context);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.MysteryBoxDeployed,
+  })
+  public mystery(@Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>): void {
+    return this.lootBoxServiceEth.deploy(event);
   }
 }

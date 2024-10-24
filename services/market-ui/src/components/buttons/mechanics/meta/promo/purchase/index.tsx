@@ -15,7 +15,7 @@ import {
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IAssetPromo, IContract, ILootBox, IMysteryBox } from "@framework/types";
 
-import PurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
+import ExchangePurchaseFacetPurchaseABI from "@framework/abis/json/ExchangePurchaseFacet/purchase.json";
 
 interface IPromoWithMystery extends IAssetPromo {
   box?: IMysteryBox | ILootBox;
@@ -35,7 +35,11 @@ export const PromoPurchaseButton: FC<IPromoPurchaseButtonProps> = props => {
 
   const metaFnWithAllowance = useAllowance(
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, PurchaseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangePurchaseFacetPurchaseABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const item = convertTemplateToChainAsset(promo.item!.components[0].template);
       const price = convertDatabaseAssetToChainAsset(promo.price!.components);

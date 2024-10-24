@@ -4,9 +4,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
-  IContractManagerLootTokenDeployedEvent,
   IContractManagerLotteryDeployedEvent,
-  IContractManagerMysteryTokenDeployedEvent,
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
@@ -30,28 +28,6 @@ export class ContractManagerControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.contractManagerServiceEth.vesting(event, context);
-  }
-
-  @EventPattern({
-    contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.MysteryBoxDeployed,
-  })
-  public mystery(
-    @Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.contractManagerServiceEth.mystery(event, context);
-  }
-
-  @EventPattern({
-    contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.LootBoxDeployed,
-  })
-  public lootbox(
-    @Payload() event: ILogEvent<IContractManagerLootTokenDeployedEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.contractManagerServiceEth.loot(event, context);
   }
 
   @EventPattern({

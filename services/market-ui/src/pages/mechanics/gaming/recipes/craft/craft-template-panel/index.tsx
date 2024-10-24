@@ -5,18 +5,16 @@ import { Construction } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
-import { comparator } from "@ethberry/utils";
 import { useApiCall } from "@ethberry/react-hooks";
 import { useMetamask, useServerSignature } from "@ethberry/react-hooks-eth";
 import type { IServerSignature } from "@ethberry/types-blockchain";
 import { useAppSelector } from "@ethberry/redux";
 import { walletSelectors } from "@ethberry/provider-wallet";
-import { formatItem, getEthPrice } from "@framework/exchange";
+import { convertDatabaseAssetToChainAsset, formatItem, getEthPrice } from "@framework/exchange";
 import { StyledListWrapper } from "@framework/styled";
 import type { IContract, ICraft, ITemplate } from "@framework/types";
-import { TokenType } from "@framework/types";
 
-import CraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
+import ExchangeCraftFacetCraftABI from "@framework/abis/json/ExchangeCraftFacet/craft.json";
 
 import { StyledTitle, StyledToolbar } from "./styled";
 
@@ -48,36 +46,30 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   };
 
   const metaFnWithSign = useServerSignature(
-    (values: ICraft, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, CraftABI, web3Context.provider?.getSigner());
+    (craft: ICraft, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeCraftFacetCraftABI,
+        web3Context.provider?.getSigner(),
+      );
+
+      const items = convertDatabaseAssetToChainAsset(craft.item!.components);
+      const price = convertDatabaseAssetToChainAsset(craft.price!.components);
 
       return contract.craft(
         {
-          externalId: values.id,
+          externalId: craft.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: constants.HashZero,
-          receiver: values.merchant!.wallet,
+          receiver: craft.merchant!.wallet,
           referrer: constants.AddressZero,
         },
-        values.item?.components.sort(comparator("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId:
-            component.contract!.contractType === TokenType.ERC1155
-              ? component.template!.tokens![0].tokenId
-              : (component.templateId || 0).toString(), // suppression types check with 0
-          amount: component.amount,
-        })),
-        values.price?.components.sort(comparator("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
-          amount: component.amount,
-        })),
+        items,
+        price,
         sign.signature,
         {
-          value: getEthPrice(values.price),
+          value: getEthPrice(craft.price),
         },
       ) as Promise<void>;
     },
@@ -85,15 +77,11 @@ export const CraftTemplatePanel: FC<ICraftTemplatePanelProps> = props => {
   );
 
   const metaFn = useMetamask((values: ICraft, web3Context: Web3ContextType) => {
-    const { chainId, account } = web3Context;
-
     return metaFnWithSign(
       {
-        url: "/recipies/craft/sign",
+        url: "/recipes/craft/sign",
         method: "POST",
         data: {
-          chainId,
-          account,
           referrer,
           craftId: values.id,
         },

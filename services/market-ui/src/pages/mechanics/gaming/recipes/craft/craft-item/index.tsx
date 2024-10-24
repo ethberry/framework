@@ -7,8 +7,9 @@ import { useCollection } from "@ethberry/provider-collection";
 import { emptyItem, emptyPrice } from "@ethberry/mui-inputs-asset";
 import type { ICraft } from "@framework/types";
 
-import { CraftTransactions } from "./transactions";
+import { StyledImage } from "../../../../marketing/mystery/box/styled";
 import { CraftItemPanel } from "../craft-item-panel";
+import { CraftTransactions } from "./transactions";
 import { StyledDescription, StyledImageList, StyledImageListItem } from "./styled";
 
 export const CraftItem: FC = () => {
@@ -45,15 +46,19 @@ export const CraftItem: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <StyledImageList count={selected.item?.components.length || 1}>
-            {selected.item?.components.map(component => {
-              return (
-                <StyledImageListItem key={component.template!.id}>
-                  <Box component="img" src={component.template!.imageUrl} alt={component.template!.title} />
-                </StyledImageListItem>
-              );
-            })}
-          </StyledImageList>
+          {selected.item?.components.length === 1 ? (
+            <StyledImage component="img" src={selected.item?.components[0].template!.imageUrl} />
+          ) : (
+            <StyledImageList count={selected.item?.components.length}>
+              {selected.item?.components.map(component => {
+                return (
+                  <StyledImageListItem key={component.template!.id}>
+                    <Box component="img" src={component.template!.imageUrl} alt={component.template!.title} />
+                  </StyledImageListItem>
+                );
+              })}
+            </StyledImageList>
+          )}
         </Grid>
         <Grid item xs={12} sm={3}>
           <CraftItemPanel craft={selected} />

@@ -43,7 +43,7 @@ export const CraftIngredients: FC<ICraftIngredientsProps> = props => {
           <MenuItem
             key={component.id}
             component={RouterLink}
-            to={`/${component.contract?.contractType?.toLowerCase()}/templates/${component.template?.id}`}
+            to={`/${component.template?.contract?.contractType?.toLowerCase()}/templates/${component.template?.id}/view`}
           >
             <ListItemText>
               {component.template!.title} {`${BigInt(component.amount) > 1 ? `(${component.amount})` : ""}`}

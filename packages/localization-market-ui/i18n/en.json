@@ -86,6 +86,7 @@
       "UNCOMMON": "Uncommon"
     },
     "blockchainError": {
+      "ERC1155InsufficientBalance": "Insufficient balance",
       "ERC721NonexistentToken": "Token doesn't exist",
       "AccessControlUnauthorizedAccount": "Unauthorized Account",
       "BalanceExceed": "The balance exceeds the limit",

@@ -16,7 +16,7 @@ import { ListAction, ListActionVariant } from "@framework/styled";
 import { bool36ArrayToByte32 } from "@ethberry/traits-v5";
 import type { IContract, ILotteryRound } from "@framework/types";
 
-import LotteryPurchaseABI from "@framework/abis/json/ExchangeLotteryFacet/purchaseLottery.json";
+import ExchangeLotteryFacetPurchaseLotteryABI from "@framework/abis/json/ExchangeLotteryFacet/purchaseLottery.json";
 
 export interface ILotteryPurchaseButtonProps {
   className?: string;
@@ -33,7 +33,11 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
 
   const metaFnWithAllowance = useAllowance(
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, LotteryPurchaseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeLotteryFacetPurchaseLotteryABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const price = convertDatabaseAssetToChainAsset(round.price!.components);
 

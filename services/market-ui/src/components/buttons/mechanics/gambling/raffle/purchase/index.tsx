@@ -15,7 +15,7 @@ import {
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IRaffleRound } from "@framework/types";
 
-import RafflePurchaseABI from "@framework/abis/json/ExchangeRaffleFacet/purchaseRaffle.json";
+import ExchangeRaffleFacetPurchaseRaffleABI from "@framework/abis/json/ExchangeRaffleFacet/purchaseRaffle.json";
 
 export interface IRafflePurchaseButtonProps {
   className?: string;
@@ -31,7 +31,11 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
 
   const metaFnWitnAllowance = useAllowance(
     (web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, RafflePurchaseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeRaffleFacetPurchaseRaffleABI,
+        web3Context.provider?.getSigner(),
+      );
 
       const price = convertDatabaseAssetToChainAsset(round.price!.components);
 

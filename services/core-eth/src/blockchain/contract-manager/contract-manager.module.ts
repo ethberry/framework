@@ -19,8 +19,6 @@ import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 import { ContractManagerServiceLog } from "./contract-manager.service.log";
 import { LotteryTicketModule } from "../mechanics/gambling/lottery/ticket/ticket.module";
 import { RaffleTicketModule } from "../mechanics/gambling/raffle/ticket/ticket.module";
-import { MysteryBoxModule } from "../mechanics/marketing/mystery/box/box.module";
-import { LootBoxModule } from "../mechanics/marketing/loot/box/box.module";
 import { PonziModule } from "../mechanics/gambling/ponzi/ponzi.module";
 import { StakingContractModule } from "../mechanics/marketing/staking/contract/contract.module";
 import { LotteryRoundModule } from "../mechanics/gambling/lottery/round/round.module";
@@ -33,6 +31,8 @@ import { ContractManagerErc1155Module } from "./erc1155/erc1155.module";
 import { ContractManagerWaitListModule } from "./wait-list/wait-list.module";
 import { ContractManagerPaymentSplitterModule } from "./payment-splitter/payment-splitter.module";
 import { ContractManagerCollectionModule } from "./collection/collection.module";
+import { ContractManagerMysteryModule } from "./mystery/mystery.module";
+import { ContractManagerLootModule } from "./loot/loot.module";
 
 @Module({
   imports: [
@@ -41,6 +41,8 @@ import { ContractManagerCollectionModule } from "./collection/collection.module"
     ContractManagerErc998Module,
     ContractManagerErc1155Module,
     ContractManagerCollectionModule,
+    ContractManagerMysteryModule,
+    ContractManagerLootModule,
     ContractManagerWaitListModule,
     ContractManagerPaymentSplitterModule,
 
@@ -56,8 +58,6 @@ import { ContractManagerCollectionModule } from "./collection/collection.module"
     UserModule,
     ClaimModule,
     SecretManagerModule.deferred(),
-    MysteryBoxModule,
-    LootBoxModule,
     LotteryRoundModule,
     LotteryTicketModule,
     RaffleRoundModule,

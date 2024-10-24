@@ -14,7 +14,7 @@ import type { IServerSignature } from "@ethberry/types-blockchain";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import BreedABI from "@framework/abis/json/ExchangeGenesFacet/breed.json";
+import ExchangeGenesFacetBreedABI from "@framework/abis/json/ExchangeGenesFacet/breed.json";
 
 import { CommonContractInput } from "../../../../../components/inputs/common-contract";
 import { TemplateInput } from "./template-input";
@@ -49,7 +49,11 @@ export const Breed: FC = () => {
 
   const metaFnWithSign = useServerSignature(
     (values: IBreedDto, web3Context: Web3ContextType, sign: IServerSignature, systemContract: IContract) => {
-      const contract = new Contract(systemContract.address, BreedABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        ExchangeGenesFacetBreedABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.breed(
         {

@@ -11,7 +11,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractManagerABI } from "../interfaces";
 
 @Injectable()
-export class ContractManagerCollectionServiceLog {
+export class ContractManagerLootServiceLog {
   constructor(
     protected readonly configService: ConfigService,
     private readonly contractService: ContractService,
@@ -29,7 +29,7 @@ export class ContractManagerCollectionServiceLog {
       contractType: ContractType.CONTRACT_MANAGER,
       contractAddress: contractEntities.filter(c => c.address !== wallet).map(c => c.address),
       contractInterface: ContractManagerABI,
-      eventSignatures: [ContractManagerEventSignature.CollectionDeployed],
+      eventSignatures: [ContractManagerEventSignature.LootBoxDeployed],
     });
   }
 }
