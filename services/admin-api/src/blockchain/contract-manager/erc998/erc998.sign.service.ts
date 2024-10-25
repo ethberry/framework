@@ -122,13 +122,6 @@ export class ContractManagerErc998SignService {
           "@framework/core-contracts/artifacts/contracts/ERC998/ERC998BlacklistDiscrete.sol/ERC998BlacklistDiscrete.json",
           chainId,
         );
-
-      case Erc998ContractTemplates.GENES:
-        return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/Mechanics/Genes/networks/ERC998Genes.sol/ERC998Genes.json",
-          chainId,
-        );
-
       case Erc998ContractTemplates.BLACKLIST_RANDOM:
         return getContractABI(
           "@framework/core-contracts/artifacts/contracts/Mechanics/Random/networks/ERC998BlacklistRandom.sol/ERC998BlacklistRandom.json",

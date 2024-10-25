@@ -8,7 +8,6 @@ import type {
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
-  IContractManagerVestingDeployedEvent,
 } from "@framework/types";
 import { ContractManagerEventType } from "@framework/types";
 
@@ -18,17 +17,6 @@ import { ContractType } from "../../utils/contract-type";
 @Controller()
 export class ContractManagerControllerEth {
   constructor(private readonly contractManagerServiceEth: ContractManagerServiceEth) {}
-
-  @EventPattern({
-    contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.VestingDeployed,
-  })
-  public vesting(
-    @Payload() event: ILogEvent<IContractManagerVestingDeployedEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.contractManagerServiceEth.vesting(event, context);
-  }
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,

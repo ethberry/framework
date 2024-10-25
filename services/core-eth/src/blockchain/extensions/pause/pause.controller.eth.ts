@@ -26,6 +26,7 @@ export class PauseControllerEth {
   @EventPattern([
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.WaitListDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.MysteryBoxDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LootBoxDeployed },
   ])
   public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     return this.pauseServiceEth.deploy(event);

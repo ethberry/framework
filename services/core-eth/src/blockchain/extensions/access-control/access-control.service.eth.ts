@@ -5,7 +5,8 @@ import { ConfigService } from "@nestjs/config";
 import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
-import type {
+import {
+  ContractSecurity,
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
@@ -31,7 +32,7 @@ import { AccessControlServiceLog } from "./access-control.service.log";
 export class AccessControlServiceEth {
   constructor(
     @Inject(RmqProviderType.SIGNAL_SERVICE)
-    protected readonly signalClientProxy: ClientProxy,
+    private readonly signalClientProxy: ClientProxy,
     private readonly accessControlService: AccessControlService,
     private readonly contractService: ContractService,
     private readonly eventHistoryService: EventHistoryService,
@@ -226,13 +227,21 @@ export class AccessControlServiceEth {
       .toPromise();
   }
 
-  public async deploy(event: ILogEvent<IContractManagerCommonDeployedEvent>, context: Log): Promise<void> {
+  public async deploy(
+    event: ILogEvent<IContractManagerCommonDeployedEvent>,
+    context: Log,
+    securityType: ContractSecurity,
+  ): Promise<void> {
     const {
       args: { account },
     } = event;
 
-    this.accessControlServiceLog.updateRegistry([account]);
+    this.accessControlServiceLog.updateRegistry([account], securityType);
 
-    await this.accessControlServiceLog.readLastBlock([account], parseInt(context.blockNumber.toString(), 16));
+    await this.accessControlServiceLog.readLastBlock(
+      [account],
+      parseInt(context.blockNumber.toString(), 16),
+      securityType,
+    );
   }
 }

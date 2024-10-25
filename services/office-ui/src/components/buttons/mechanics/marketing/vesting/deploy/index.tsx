@@ -1,13 +1,13 @@
 import { FC, Fragment } from "react";
 import { Add } from "@mui/icons-material";
-import { BigNumber, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@ethberry/react-hooks-eth";
 import { useUser } from "@ethberry/provider-user";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { IContract, IUser, IVestingContractDeployDto } from "@framework/types";
 import { VestingContractTemplates } from "@framework/types";
-import DeployVestingABI from "@framework/abis/json/VestingFactoryFacet/deployVesting.json";
+import VestingFactoryFacetDeployVestingABI from "@framework/abis/json/VestingFactoryFacet/deployVesting.json";
 
 import { VestingDeployDialog } from "./dialog";
 
@@ -21,34 +21,32 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
-  // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
-  const encodedExternalId = BigNumber.from(
-    utils.hexlify(
-      utils.concat([utils.zeroPad(utils.hexlify(profile.id), 3), utils.zeroPad(utils.hexlify(0 /* claim.id */), 4)]),
-    ),
-  );
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IVestingContractDeployDto, web3Context, sign, systemContract: IContract) => {
-      const { owner, startTimestamp, cliffInMonth, monthlyRelease } = values;
+      const { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate } = values;
 
       const nonce = utils.arrayify(sign.nonce);
 
-      const contract = new Contract(systemContract.address, DeployVestingABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        systemContract.address,
+        VestingFactoryFacetDeployVestingABI,
+        web3Context.provider?.getSigner(),
+      );
 
       return contract.deployVesting(
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: encodedExternalId,
+          externalId: profile.id,
         },
         {
           owner,
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
           cliffInMonth,
           monthlyRelease,
+          contractTemplate: Object.values(VestingContractTemplates).indexOf(contractTemplate).toString(),
         },
-        [],
         sign.signature,
       ) as Promise<void>;
     },
@@ -59,7 +57,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
       {
         url: "/contract-manager/vesting",
         method: "POST",
-        data: Object.assign(values, { externalId: encodedExternalId.toString() }),
+        data: values,
       },
       form,
     );

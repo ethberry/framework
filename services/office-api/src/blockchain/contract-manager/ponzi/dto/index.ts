@@ -1,1 +1,1 @@
-export * from "./ponzi";
+export * from "./deploy";

@@ -17,7 +17,7 @@ export class ContractManagerMysteryControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.MysteryBoxDeployed,
   })
-  public mystery(
+  public deploy(
     @Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>,
     @Ctx() context: Log,
   ): Promise<void> {

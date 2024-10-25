@@ -17,7 +17,10 @@ export class ContractManagerLootControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.LootBoxDeployed,
   })
-  public loot(@Payload() event: ILogEvent<IContractManagerLootTokenDeployedEvent>, @Ctx() context: Log): Promise<void> {
+  public deploy(
+    @Payload() event: ILogEvent<IContractManagerLootTokenDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
     return this.contractManagerLootServiceEth.deploy(event, context);
   }
 }

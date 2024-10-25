@@ -10,7 +10,7 @@ import type {
   IContractManagerCommonDeployedEvent,
   IOwnershipTransferredEvent,
 } from "@framework/types";
-import { AccessControlEventType, ContractManagerEventType } from "@framework/types";
+import { AccessControlEventType, ContractManagerEventType, ContractSecurity } from "@framework/types";
 
 import { AccessControlServiceEth } from "./access-control.service.eth";
 import { ContractType } from "../../../utils/contract-type";
@@ -37,7 +37,7 @@ export class AccessControlControllerEth {
     return this.accessControlServiceEth.roleAdminChanged(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.VESTING, eventName: AccessControlEventType.OwnershipTransferred })
+  @EventPattern({ contractType: ContractType.OWNABLE, eventName: AccessControlEventType.OwnershipTransferred })
   public ownershipTransferred(
     @Payload() event: ILogEvent<IOwnershipTransferredEvent>,
     @Ctx() context: Log,
@@ -61,7 +61,18 @@ export class AccessControlControllerEth {
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PaymentSplitterDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.WaitListDeployed },
   ])
-  public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.deploy(event, context);
+  public deployAccessControl(
+    @Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.accessControlServiceEth.deploy(event, context, ContractSecurity.ACCESS_CONTROL);
+  }
+
+  @EventPattern([{ contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingDeployed }])
+  public deployOwnable(
+    @Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.accessControlServiceEth.deploy(event, context, ContractSecurity.OWNABLE);
   }
 }

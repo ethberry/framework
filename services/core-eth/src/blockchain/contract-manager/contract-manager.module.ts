@@ -6,7 +6,6 @@ import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp
 
 import { signalServiceProvider } from "../../common/providers";
 import { UserModule } from "../../infrastructure/user/user.module";
-import { VestingModule } from "../mechanics/marketing/vesting/vesting.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
@@ -33,6 +32,7 @@ import { ContractManagerPaymentSplitterModule } from "./payment-splitter/payment
 import { ContractManagerCollectionModule } from "./collection/collection.module";
 import { ContractManagerMysteryModule } from "./mystery/mystery.module";
 import { ContractManagerLootModule } from "./loot/loot.module";
+import { ContractManagerVestingModule } from "./vesting/vesting.module";
 
 @Module({
   imports: [
@@ -44,13 +44,13 @@ import { ContractManagerLootModule } from "./loot/loot.module";
     ContractManagerMysteryModule,
     ContractManagerLootModule,
     ContractManagerWaitListModule,
+    ContractManagerVestingModule,
     ContractManagerPaymentSplitterModule,
 
     ConfigModule,
     EthersModule.deferred(),
     ContractModule,
     EventHistoryModule,
-    VestingModule,
     TemplateModule,
     TokenModule,
     RentableModule,
@@ -64,7 +64,6 @@ import { ContractManagerLootModule } from "./loot/loot.module";
     RaffleTicketModule,
     PonziModule,
     StakingContractModule,
-    VestingModule,
   ],
   providers: [
     signalServiceProvider,

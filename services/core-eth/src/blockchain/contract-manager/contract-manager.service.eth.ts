@@ -13,19 +13,15 @@ import type {
   IContractManagerPonziDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
-  IContractManagerVestingDeployedEvent,
 } from "@framework/types";
-import { ContractFeatures, ContractSecurity, ModuleType, RmqProviderType, SignalEventType } from "@framework/types";
+import { ContractFeatures, ModuleType, RmqProviderType, SignalEventType } from "@framework/types";
 
 import { UserService } from "../../infrastructure/user/user.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../event-history/event-history.service";
-import { ClaimService } from "../mechanics/marketing/claim/claim.service";
-import { decodeExternalId } from "../../common/utils";
 import { LotteryRoundServiceLog } from "../mechanics/gambling/lottery/round/round.service.log";
 import { RaffleRoundServiceLog } from "../mechanics/gambling/raffle/round/round.service.log";
 import { PonziServiceLog } from "../mechanics/gambling/ponzi/ponzi.service.log";
-import { VestingServiceLog } from "../mechanics/marketing/vesting/vesting.service.log";
 import { StakingContractServiceLog } from "../mechanics/marketing/staking/contract/contract.service.log";
 
 @Injectable()
@@ -43,66 +39,11 @@ export class ContractManagerServiceEth {
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly userService: UserService,
-    private readonly claimService: ClaimService,
     private readonly lotteryRoundServiceLog: LotteryRoundServiceLog,
     private readonly raffleRoundServiceLog: RaffleRoundServiceLog,
-    private readonly vestingServiceLog: VestingServiceLog,
     private readonly ponziServiceLog: PonziServiceLog,
     private readonly stakingContractServiceLog: StakingContractServiceLog,
   ) {}
-
-  public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, context: Log): Promise<void> {
-    const {
-      name,
-      args: { account, args, externalId /* <-- userId + claimId */ },
-    } = event;
-    const { transactionHash } = context;
-
-    const decodedExternalId: Record<string, number> = decodeExternalId(BigInt(externalId), ["userId", "claimId"]);
-
-    const { userId, claimId } = decodedExternalId;
-
-    const { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate } = args;
-
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
-    const contractFeatures = contractTemplate === "1" ? [ContractFeatures.VOTES] : [];
-
-    await this.contractService.create({
-      address: account.toLowerCase(),
-      title: "Vesting",
-      description: emptyStateString,
-      imageUrl,
-      parameters: {
-        account: owner.toLowerCase(),
-        startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
-        cliffInMonth,
-        monthlyRelease,
-      },
-      contractFeatures,
-      contractModule: ModuleType.VESTING,
-      contractSecurity: ContractSecurity.OWNABLE,
-      chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(userId),
-    });
-
-    if (claimId && claimId > 0) {
-      await this.claimService.redeemClaim(claimId);
-    }
-
-    this.vestingServiceLog.updateRegistry([account]);
-
-    await this.signalClientProxy
-      .emit(SignalEventType.TRANSACTION_HASH, {
-        account: await this.getUserWalletById(userId),
-        transactionHash,
-        transactionType: name,
-      })
-      .toPromise();
-  }
 
   public async ponzi(event: ILogEvent<IContractManagerPonziDeployedEvent>, context: Log): Promise<void> {
     const {

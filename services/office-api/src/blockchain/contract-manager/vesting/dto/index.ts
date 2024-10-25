@@ -1,1 +1,1 @@
-export * from "./vesting";
+export * from "./deploy";

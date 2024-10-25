@@ -86,11 +86,16 @@ export class BalanceService {
     return balanceEntity.save();
   }
 
-  public async decrement(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
+  public async decrement(tokenId: number, account: string, amount: string): Promise<BalanceEntity | null> {
     const balanceEntity = await this.findOne({ tokenId, account });
 
     if (!balanceEntity) {
-      throw new NotFoundException("balanceNotFound");
+      // throw new NotFoundException("balanceNotFound");
+      this.loggerService.log(
+        `Balance not found ${JSON.stringify({ tokenId, account }, null, "\t")}`,
+        BalanceService.name,
+      );
+      return null;
     } else {
       balanceEntity.amount =
         BigInt(balanceEntity.amount) - BigInt(amount) > 0

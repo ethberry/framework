@@ -38,7 +38,7 @@ export class MysteryBoxControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.MYSTERY, eventName: MysteryEventType.UnpackMysteryBox })
-  public unpackItem(@Payload() event: ILogEvent<IUnpackMysteryBoxEvent>, @Ctx() context: Log): Promise<void> {
+  public unpack(@Payload() event: ILogEvent<IUnpackMysteryBoxEvent>, @Ctx() context: Log): Promise<void> {
     return this.mysteryBoxServiceEth.unpack(event, context);
   }
 
@@ -46,7 +46,7 @@ export class MysteryBoxControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.MysteryBoxDeployed,
   })
-  public mystery(@Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>): void {
+  public deploy(@Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>): void {
     return this.mysteryBoxServiceEth.deploy(event);
   }
 }

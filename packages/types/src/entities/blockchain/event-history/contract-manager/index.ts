@@ -33,7 +33,7 @@ export enum ContractManagerEventType {
 }
 
 export enum ContractManagerEventSignature {
-  VestingDeployed = "VestingDeployed(address,uint256,(address,uint64,uint16,uint16,string),(uint8,address,uint256,uint256)[])",
+  VestingDeployed = "VestingDeployed(address,uint256,(address,uint64,uint16,uint16,string))",
   ERC20TokenDeployed = "ERC20TokenDeployed(address,uint256,(string,string,uint256,string))",
   ERC721TokenDeployed = "ERC721TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC998TokenDeployed = "ERC998TokenDeployed(address,uint256,(string,string,uint96,string,string))",

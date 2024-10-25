@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { Add } from "@mui/icons-material";
-import { BigNumber, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@ethberry/react-hooks-eth";
 import { useUser } from "@ethberry/provider-user";
@@ -21,12 +21,6 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   const { className, disabled, variant = ListActionVariant.button } = props;
 
   const { profile } = useUser<IUser>();
-  // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
-  const encodedExternalId = BigNumber.from(
-    utils.hexlify(
-      utils.concat([utils.zeroPad(utils.hexlify(profile.id), 3), utils.zeroPad(utils.hexlify(0 /* claim.id */), 4)]),
-    ),
-  );
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IVestingContractDeployDto, web3Context, sign, systemContract: IContract) => {
@@ -44,7 +38,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: encodedExternalId,
+          externalId: profile.id,
         },
         {
           owner,
@@ -53,7 +47,6 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
           monthlyRelease,
           contractTemplate: Object.values(VestingContractTemplates).indexOf(contractTemplate).toString(),
         },
-        [],
         sign.signature,
       ) as Promise<void>;
     },
@@ -64,7 +57,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
       {
         url: "/contract-manager/vesting",
         method: "POST",
-        data: Object.assign(values, { externalId: encodedExternalId.toString() }),
+        data: values,
       },
       form,
     );

@@ -4,12 +4,11 @@ import { hexlify, randomBytes, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 import type { IServerSignature } from "@ethberry/types-blockchain";
 import type { IVestingContractDeployDto } from "@framework/types";
-import { ModuleType, TokenType, VestingContractTemplates } from "@framework/types";
+import { ModuleType, VestingContractTemplates } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { RatePlanService } from "../../../infrastructure/rate-plan/rate-plan.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import { AssetEntity } from "../../exchange/asset/asset.entity";
 import { getContractABI } from "../utils";
 
 @Injectable()
@@ -21,12 +20,8 @@ export class ContractManagerVestingSignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async vesting(
-    dto: IVestingContractDeployDto,
-    userEntity: UserEntity,
-    asset?: AssetEntity,
-  ): Promise<IServerSignature> {
-    const { owner, startTimestamp, cliffInMonth, monthlyRelease, externalId, contractTemplate } = dto;
+  public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { owner, startTimestamp, cliffInMonth, monthlyRelease, contractTemplate } = dto;
 
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByVestingContractTemplate(dto, userEntity.chainId);
@@ -48,7 +43,6 @@ export class ContractManagerVestingSignService {
         EIP712: [
           { name: "params", type: "Params" },
           { name: "args", type: "VestingArgs" },
-          { name: "items", type: "Asset[]" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
@@ -62,19 +56,13 @@ export class ContractManagerVestingSignService {
           { name: "monthlyRelease", type: "uint16" },
           { name: "contractTemplate", type: "string" },
         ],
-        Asset: [
-          { name: "tokenType", type: "uint256" },
-          { name: "token", type: "address" },
-          { name: "tokenId", type: "uint256" },
-          { name: "amount", type: "uint256" },
-        ],
       },
       // Values
       {
         params: {
           nonce,
           bytecode,
-          externalId: externalId || userEntity.id,
+          externalId: userEntity.id,
         },
         args: {
           owner: owner.toLowerCase(),
@@ -83,15 +71,6 @@ export class ContractManagerVestingSignService {
           monthlyRelease,
           contractTemplate: Object.values(VestingContractTemplates).indexOf(contractTemplate).toString(),
         },
-        // items: [],
-        items: asset
-          ? asset.components.map(component => ({
-              tokenType: Object.values(TokenType).indexOf(component.tokenType),
-              token: component.template.contract.address,
-              tokenId: (component.templateId || 0).toString(), // suppression types check with 0
-              amount: component.amount,
-            }))
-          : [],
       },
     );
 

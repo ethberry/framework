@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { IsNull } from "typeorm";
 
-import { AccessControlEventSignature, Erc1363EventType, ModuleType, VestingEventType } from "@framework/types";
+import { Erc1363EventType, ModuleType, VestingEventType } from "@framework/types";
 import { EthersService } from "@ethberry/nest-js-module-ethers-gcp";
 import { wallet } from "@ethberry/constants";
 import { testChainId } from "@framework/constants";
@@ -40,8 +40,6 @@ export class VestingServiceLog {
         VestingEventType.EtherReleased,
         VestingEventType.PaymentReceived,
         Erc1363EventType.TransferReceived,
-        // extensions
-        AccessControlEventSignature.OwnershipTransferred,
       ],
     });
   }

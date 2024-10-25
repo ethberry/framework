@@ -1,1 +1,1 @@
-export * from "./payment-splitter";
+export * from "./deploy";

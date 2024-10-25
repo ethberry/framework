@@ -38,15 +38,15 @@ export class LootBoxControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.LOOT, eventName: LootEventType.UnpackLootBox })
-  public unpackItem(@Payload() event: ILogEvent<IUnpackLootBoxEvent>, @Ctx() context: Log): Promise<void> {
+  public unpack(@Payload() event: ILogEvent<IUnpackLootBoxEvent>, @Ctx() context: Log): Promise<void> {
     return this.lootBoxServiceEth.unpack(event, context);
   }
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.MysteryBoxDeployed,
+    eventName: ContractManagerEventType.LootBoxDeployed,
   })
-  public mystery(@Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>): void {
+  public deploy(@Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>): void {
     return this.lootBoxServiceEth.deploy(event);
   }
 }

@@ -5,6 +5,5 @@ export interface IVestingContractDeployDto {
   startTimestamp: string;
   cliffInMonth: number;
   monthlyRelease: number;
-  externalId?: string;
   contractTemplate: VestingContractTemplates;
 }

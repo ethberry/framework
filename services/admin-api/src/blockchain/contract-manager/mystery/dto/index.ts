@@ -1,1 +1,1 @@
-export * from "./mystery";
+export * from "./deploy";

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { EthersModule } from "@ethberry/nest-js-module-ethers-gcp";
@@ -27,4 +27,10 @@ import { VestingServiceLog } from "./vesting.service.log";
   controllers: [VestingControllerEth],
   exports: [VestingServiceLog, VestingServiceEth],
 })
-export class VestingModule {}
+export class VestingModule implements OnModuleInit {
+  constructor(protected readonly vestingServiceLog: VestingServiceLog) {}
+
+  public async onModuleInit(): Promise<void> {
+    await this.vestingServiceLog.initRegistry();
+  }
+}

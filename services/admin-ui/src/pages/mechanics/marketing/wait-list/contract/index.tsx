@@ -13,7 +13,6 @@ import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
 import {
-  AllowanceButton,
   GrantRoleButton,
   PauseButton,
   RenounceRoleButton,
@@ -107,7 +106,6 @@ export const WaitListContracts: FC = () => {
               <RenounceRoleButton contract={contract} />
               <PauseButton contract={contract} />
               <UnPauseButton contract={contract} />
-              <AllowanceButton contract={contract} />
               <TopUpButton contract={contract} />
             </ListActions>
           </ListItem>

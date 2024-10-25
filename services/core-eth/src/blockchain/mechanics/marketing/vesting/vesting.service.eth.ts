@@ -5,11 +5,13 @@ import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@ethberry/nest-js-module-ethers-gcp";
 import type {
+  IContractManagerVestingDeployedEvent,
   IOwnershipTransferredEvent,
   IVestingERC20ReleasedEvent,
-  IVestingPaymentReceivedEvent,
   IVestingEtherReleasedEvent,
+  IVestingPaymentReceivedEvent,
 } from "@framework/types";
+import { RmqProviderType, SignalEventType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -17,7 +19,7 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
-import { RmqProviderType, SignalEventType } from "@framework/types";
+import { VestingServiceLog } from "./vesting.service.log";
 
 @Injectable()
 export class VestingServiceEth {
@@ -30,6 +32,7 @@ export class VestingServiceEth {
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
     private readonly notificatorService: NotificatorService,
+    private readonly vestingServiceLog: VestingServiceLog,
   ) {}
 
   public async erc20Released(event: ILogEvent<IVestingERC20ReleasedEvent>, context: Log): Promise<void> {
@@ -146,9 +149,7 @@ export class VestingServiceEth {
       .toPromise();
   }
 
-  public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
-    // history and notifications processed by AccessControlServiceEth
-    // await this.eventHistoryService.updateHistory(event, context);
+  public async ownershipTransferred(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
     const {
       args: { newOwner, previousOwner },
     } = event;
@@ -165,5 +166,13 @@ export class VestingServiceEth {
       Object.assign(vestingEntity, { parameters: vestingParams });
       await vestingEntity.save();
     }
+  }
+
+  public deploy(event: ILogEvent<IContractManagerVestingDeployedEvent>): void {
+    const {
+      args: { account },
+    } = event;
+
+    this.vestingServiceLog.updateRegistry([account]);
   }
 }

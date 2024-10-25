@@ -1,1 +1,1 @@
-export * from "./erc998";
+export * from "./deploy";

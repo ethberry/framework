@@ -1,1 +1,1 @@
-export * from "./loot";
+export * from "./deploy";
