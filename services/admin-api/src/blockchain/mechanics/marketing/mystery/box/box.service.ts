@@ -156,8 +156,8 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.content", "content");
     queryBuilder.leftJoinAndSelect("content.components", "components");
-    queryBuilder.leftJoinAndSelect("components.contract", "content_contract");
     queryBuilder.leftJoinAndSelect("components.template", "content_template");
+    queryBuilder.leftJoinAndSelect("content_template.contract", "content_contract");
 
     queryBuilder.leftJoinAndSelect(
       "content_template.tokens",

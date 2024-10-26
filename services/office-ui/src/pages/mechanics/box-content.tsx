@@ -1,19 +1,24 @@
 import { FC } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid, Link, Paper, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { formatEther } from "@framework/exchange";
-import type { IMysteryBox } from "@framework/types";
+import type { IAsset } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-export interface IMysteryBoxContentProps {
-  mysteryBox: IMysteryBox;
+export interface IContentProps {
+  content: IAsset;
 }
 
-export const MysteryBoxContent: FC<IMysteryBoxContentProps> = props => {
-  const { mysteryBox } = props;
+export const BoxContent: FC<IContentProps> = props => {
+  const { content } = props;
 
   return (
     <Paper elevation={1} sx={{ mt: 1, p: 2 }}>
+      <Typography variant="h6">
+        <FormattedMessage id="components.box-content.title" />
+      </Typography>
       <Grid container>
         <Grid xs={4} item>
           <Typography fontWeight={500}>
@@ -31,16 +36,25 @@ export const MysteryBoxContent: FC<IMysteryBoxContentProps> = props => {
           </Typography>
         </Grid>
       </Grid>
-      {mysteryBox.content!.components.map(component => (
+      {content.components.map(component => (
         <Grid key={component.id} container>
           <Grid xs={4} item>
             {component.tokenType}
           </Grid>
           <Grid xs={4} item>
-            {component.template!.title}
+            {component.tokenType !== TokenType.ERC20 ? (
+              <Link
+                component={RouterLink}
+                to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId || 0}`}
+              >
+                {component.template!.title}
+              </Link>
+            ) : (
+              component.template!.title
+            )}
           </Grid>
           <Grid xs={4} item>
-            {formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)}
+            {formatEther(component.amount, component.template!.contract!.decimals, "")}
           </Grid>
         </Grid>
       ))}

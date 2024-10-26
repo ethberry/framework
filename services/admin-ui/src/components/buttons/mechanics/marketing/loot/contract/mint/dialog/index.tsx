@@ -7,8 +7,8 @@ import { TextInput } from "@ethberry/mui-inputs-core";
 import { EntityInput } from "@ethberry/mui-inputs-entity";
 
 import { LootBoxInput } from "../../../../../../../inputs/loot";
-import { BoxContent } from "../../../box-content";
 import { validationSchema } from "./validation";
+import { LootBoxContent } from "./content";
 
 export interface IMintLootBoxDto {
   account: string;
@@ -32,7 +32,7 @@ export const MintLootBoxDialog: FC<IMintLootBoxDialogProps> = props => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.mintToken"
-      testId="MintForm"
+      testId="LootContractMintForm"
       disabled={false}
       {...rest}
     >
@@ -49,7 +49,7 @@ export const MintLootBoxDialog: FC<IMintLootBoxDialogProps> = props => {
       />
       <LootBoxInput />
       <TextInput name="account" required />
-      <BoxContent />
+      <LootBoxContent />
     </FormDialog>
   );
 };

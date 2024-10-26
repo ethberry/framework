@@ -22,6 +22,9 @@
     "download-metamask": "Download Metamask"
   },
   "components": {
+    "box-content": {
+      "title": "Box content"
+    },
     "dropzone": {
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
       "file-too-large": "File is {size}, maximum file size is {maxSize}",

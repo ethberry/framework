@@ -12,6 +12,7 @@ import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhe
 import type { IMysteryBoxAutocompleteDto, IMysteryBoxSearchDto } from "@framework/types";
 import { ContractFeatures, MysteryBoxStatus, TemplateStatus, TokenType } from "@framework/types";
 
+import type { INestedProperty } from "../../../../../common/utils/nestedValidationError";
 import { createNestedValidationError } from "../../../../../common/utils/nestedValidationError";
 import { TemplateService } from "../../../../hierarchy/template/template.service";
 import { AssetService } from "../../../../exchange/asset/asset.service";
@@ -20,7 +21,6 @@ import { TokenService } from "../../../../hierarchy/token/token.service";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { AssetEntity } from "../../../../exchange/asset/asset.entity";
 import { TemplateDeleteService } from "../../../../hierarchy/template/template.delete.service";
-import type { INestedProperty } from "../../../../../common/utils/nestedValidationError";
 import { ClaimTemplateService } from "../../claim/template/template.service";
 import type { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
 import { MysteryBoxEntity } from "./box.entity";
@@ -156,8 +156,8 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.content", "content");
     queryBuilder.leftJoinAndSelect("content.components", "components");
-    queryBuilder.leftJoinAndSelect("components.contract", "content_contract");
     queryBuilder.leftJoinAndSelect("components.template", "content_template");
+    queryBuilder.leftJoinAndSelect("content_template.contract", "content_contract");
 
     queryBuilder.leftJoinAndSelect(
       "content_template.tokens",

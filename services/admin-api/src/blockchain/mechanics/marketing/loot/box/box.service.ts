@@ -63,7 +63,7 @@ export class LootBoxService {
     queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
-    // item or price template must be active
+    // content or price template must be active
     queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {
       templateStatus: TemplateStatus.ACTIVE,
     });
@@ -155,8 +155,8 @@ export class LootBoxService {
 
     queryBuilder.leftJoinAndSelect("box.content", "content");
     queryBuilder.leftJoinAndSelect("content.components", "components");
-    queryBuilder.leftJoinAndSelect("components.contract", "content_contract");
     queryBuilder.leftJoinAndSelect("components.template", "content_template");
+    queryBuilder.leftJoinAndSelect("content_template.contract", "content_contract");
 
     queryBuilder.leftJoinAndSelect(
       "content_template.tokens",
@@ -166,11 +166,6 @@ export class LootBoxService {
         contractType: TokenType.ERC1155,
       },
     );
-
-    // queryBuilder.leftJoinAndSelect("box.price", "price");
-    // queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    // queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
-    // queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
     // content or price template must be active
     queryBuilder.andWhere("content_template.templateStatus = :templateStatus", {

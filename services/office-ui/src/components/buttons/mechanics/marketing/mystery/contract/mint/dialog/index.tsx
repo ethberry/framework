@@ -7,7 +7,7 @@ import { TextInput } from "@ethberry/mui-inputs-core";
 import { EntityInput } from "@ethberry/mui-inputs-entity";
 
 import { MysteryBoxInput } from "../../../../../../../inputs/mystery-box";
-import { BoxContent } from "../../../box-content";
+import { MysteryBoxContent } from "./content";
 import { validationSchema } from "./validation";
 
 export interface IMintMysteryBoxDto {
@@ -32,7 +32,7 @@ export const MysteryBoxMintDialog: FC<IMintMysteryBoxDialogProps> = props => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.mintToken"
-      testId="MintForm"
+      testId="MysteryContractMintForm"
       disabled={false}
       {...rest}
     >
@@ -48,7 +48,7 @@ export const MysteryBoxMintDialog: FC<IMintMysteryBoxDialogProps> = props => {
       />
       <MysteryBoxInput />
       <TextInput name="account" />
-      <BoxContent />
+      <MysteryBoxContent />
     </FormDialog>
   );
 };

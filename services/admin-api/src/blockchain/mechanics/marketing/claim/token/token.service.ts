@@ -212,6 +212,7 @@ export class ClaimTokenService {
       verifyingContract,
       account,
       params,
+      // do not use convertTemplateToChainAsset because of tokenId
       claimEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.template.contract.address,

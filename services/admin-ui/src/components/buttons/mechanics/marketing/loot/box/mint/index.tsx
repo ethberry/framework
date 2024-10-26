@@ -6,8 +6,8 @@ import { Contract } from "ethers";
 import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
 import type { ILootBox } from "@framework/types";
-import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 import { AccessControlRoleType } from "@framework/types";
+import { convertDatabaseAssetToChainAsset } from "@framework/exchange";
 
 import ERC721LootBoxSimpleMintBoxABI from "@framework/abis/json/ERC721LootBoxSimple/mintBox.json";
 
@@ -45,13 +45,16 @@ export const LootBoxMintButton: FC<ILootBoxMintButtonProps> = props => {
   };
 
   const metaFn = useMetamask((values: IMintLootBoxDto, web3Context: Web3ContextType) => {
-    const contractLootbox = new Contract(
+    const contractLootBox = new Contract(
       template!.contract!.address,
       ERC721LootBoxSimpleMintBoxABI,
       web3Context.provider?.getSigner(),
     );
-    const items = convertDatabaseAssetToChainAsset(values.lootBox!.content!.components);
-    return contractLootbox.mintBox(values.account, values.lootBox!.templateId, items) as Promise<any>;
+    const content = convertDatabaseAssetToChainAsset(values.lootBox!.content!.components);
+    return contractLootBox.mintBox(values.account, values.lootBox!.templateId, content, {
+      min: values.lootBox!.min,
+      max: values.lootBox!.max,
+    }) as Promise<any>;
   });
 
   const handleMintTokenConfirmed = async (values: IMintLootBoxDto): Promise<void> => {

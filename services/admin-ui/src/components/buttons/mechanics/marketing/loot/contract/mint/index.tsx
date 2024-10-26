@@ -45,7 +45,10 @@ export const LootContractMintButton: FC<ILootContractMintButtonProps> = props =>
   const metaFn = useMetamask((values: IMintLootBoxDto, web3Context: Web3ContextType) => {
     const contractLootBox = new Contract(address, ERC721LootBoxSimpleMintBoxABI, web3Context.provider?.getSigner());
     const content = convertDatabaseAssetToChainAsset(values.lootBox!.content!.components);
-    return contractLootBox.mintBox(values.account, values.lootBox!.templateId, content) as Promise<any>;
+    return contractLootBox.mintBox(values.account, values.lootBox!.templateId, content, {
+      min: values.lootBox!.min,
+      max: values.lootBox!.max,
+    }) as Promise<any>;
   });
 
   const handleMintTokenConfirmed = async (values: IMintLootBoxDto): Promise<void> => {
