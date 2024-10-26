@@ -26,7 +26,7 @@ export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
   [PausableEventType.Unpaused]: ["/erc721/tokens/:id/view"],
   [ExchangeEventType.PurchaseMysteryBox]: ["/mystery/tokens"],
   [ExchangeEventType.PurchaseLootBox]: ["/loot/tokens"],
-  [AccessControlEventType.OwnershipTransferred]: ["/vesting/contracts"],
+  [AccessControlEventType.OwnershipTransferred]: ["/vesting"],
   DepositWithdraw: ["/staking/deposits"],
   Lend: ["/rent/tokens"],
   LendMany: ["/rent/tokens"],

@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { emptyItem } from "@ethberry/mui-inputs-asset";
 import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
@@ -8,7 +8,7 @@ import { useCollection } from "@ethberry/provider-collection";
 import type { IMerge } from "@framework/types";
 
 import { MergeItemPanel } from "../merge-item-panel";
-import { StyledDescription, StyledImageList, StyledImageListItem } from "./styled";
+import { StyledDescription, StyledImage } from "./styled";
 
 export const MergeItem: FC = () => {
   const { selected, isLoading } = useCollection<IMerge>({
@@ -27,25 +27,17 @@ export const MergeItem: FC = () => {
     <Fragment>
       <Breadcrumbs
         path={["dashboard", "recipes", "recipes.merge"]}
-        data={[{}, {}, { title: selected.item?.components.map(comp => comp.template?.title).join(" + ") }]}
+        data={[{}, {}, { title: selected.item?.components[0].template?.title }]}
       />
 
-      <PageHeader
-        message="pages.recipes.merge.title"
-        data={{ title: selected.item?.components.map(comp => comp.template?.title).join(" + ") }}
-      />
+      <PageHeader message="pages.recipes.merge.title" data={{ title: selected.item?.components[0].template?.title }} />
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <StyledImageList count={selected.item?.components.length || 1}>
-            {selected.item?.components.map(component => {
-              return (
-                <StyledImageListItem key={component.template!.id}>
-                  <Box component="img" src={component.template!.imageUrl} alt="Gemunion template image" />
-                </StyledImageListItem>
-              );
-            })}
-          </StyledImageList>
+          <StyledImage component="img" src={selected.item?.components[0].template!.imageUrl} />
+          <StyledDescription component="div">
+            <RichTextDisplay data={selected.item?.components[0].template!.description} />
+          </StyledDescription>
         </Grid>
         <Grid item xs={12} sm={3}>
           <MergeItemPanel merge={selected} />

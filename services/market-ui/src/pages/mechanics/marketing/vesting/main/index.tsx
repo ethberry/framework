@@ -27,7 +27,7 @@ export const Vesting: FC = () => {
     handleViewCancel,
     handleChangePage,
   } = useCollection<IContract, IVestingSearchDto>({
-    baseUrl: `/vesting`,
+    baseUrl: "/vesting",
     empty: emptyVestingContract,
   });
 

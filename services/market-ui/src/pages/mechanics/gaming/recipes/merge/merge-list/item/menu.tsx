@@ -39,29 +39,17 @@ export const MergeIngredients: FC<IMergeIngredientsProps> = props => {
         <Construction />
       </IconButton>
       <Menu id="merge-ingredients" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
-        {merge.price?.components.map(component =>
-          component.templateId ? (
-            <MenuItem
-              key={component.id}
-              component={RouterLink}
-              to={`/${component.contract?.contractType?.toLowerCase()}/templates/${component.template?.id}`}
-            >
-              <ListItemText>
-                {component.template!.title} {`${BigInt(component.amount) > 1 ? `(${component.amount})` : ""}`}
-              </ListItemText>
-            </MenuItem>
-          ) : (
-            <MenuItem
-              key={component.id}
-              component={RouterLink}
-              to={`/${component.contract?.contractType?.toLowerCase()}/contracts/${component.contract?.id}`}
-            >
-              <ListItemText>
-                {component.contract!.title} {`${BigInt(component.amount) > 1 ? `(${component.amount})` : ""}`}
-              </ListItemText>
-            </MenuItem>
-          ),
-        )}
+        {merge.price?.components.map(component => (
+          <MenuItem
+            key={component.id}
+            component={RouterLink}
+            to={`/${component.template?.contract?.contractType?.toLowerCase()}/templates/${component.template?.id}/view`}
+          >
+            <ListItemText>
+              {component.template!.title} {`${BigInt(component.amount) > 1 ? `(${component.amount})` : ""}`}
+            </ListItemText>
+          </MenuItem>
+        ))}
       </Menu>
     </Fragment>
   );

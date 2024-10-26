@@ -7,7 +7,7 @@ export const vestingRoutes: Array<RouteObject> = [
     path: "/vesting",
     children: [
       { index: true, element: <Vesting /> },
-      { path: "/vesting/:id", element: <Vesting /> },
+      { path: "/vesting/:id/:action", element: <Vesting /> },
     ],
   },
 ];
