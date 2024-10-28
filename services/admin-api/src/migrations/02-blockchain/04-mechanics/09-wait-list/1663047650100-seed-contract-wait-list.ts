@@ -22,7 +22,6 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
 
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
     const waitListAddr = process.env.WAIT_LIST_ADDR;
 
     await queryRunner.query(`
@@ -39,7 +38,6 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         contract_status,
         contract_features,
         contract_module,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -56,7 +54,6 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         'ACTIVE',
         '{PAUSABLE}',
         'WAIT_LIST',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -73,7 +70,6 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         'INACTIVE',
         '{PAUSABLE}',
         'WAIT_LIST',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -90,7 +86,6 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         'ACTIVE',
         '{PAUSABLE}',
         'WAIT_LIST',
-        '${fromBlock}',
         2,
         '${currentDateTime}',
         '${currentDateTime}'

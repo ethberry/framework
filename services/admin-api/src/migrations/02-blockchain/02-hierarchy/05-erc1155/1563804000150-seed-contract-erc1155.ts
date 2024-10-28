@@ -30,7 +30,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
     const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR;
     const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -47,7 +46,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -65,7 +63,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ACTIVE',
         'ERC1155',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -83,7 +80,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'INACTIVE',
         'ERC1155',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -101,7 +97,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'NEW',
         'ERC1155',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -119,7 +114,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ACTIVE',
         'ERC1155',
         '{BLACKLIST}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -137,7 +131,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ACTIVE',
         'ERC1155',
         '{}',
-        '${fromBlock}',
         2,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -155,7 +148,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ACTIVE',
         'ERC1155',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

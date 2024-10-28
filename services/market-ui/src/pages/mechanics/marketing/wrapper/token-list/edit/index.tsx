@@ -1,12 +1,11 @@
-import { ChangeEvent, FC } from "react";
+import { FC } from "react";
 import { FormDialog } from "@ethberry/mui-dialog-form";
-import { TokenAssetInput } from "@ethberry/mui-inputs-asset";
 import type { ITokenAsset } from "@ethberry/mui-inputs-asset";
+import { TokenAssetInput } from "@ethberry/mui-inputs-asset";
 import { ModuleType, TokenType } from "@framework/types";
-
-import { CommonContractInput } from "../../../../../../components/inputs/common-contract";
 import { TemplateInput } from "./template-input";
 import { validationSchema } from "./validation";
+import { ContractInput } from "../../../../../../components/inputs/contract";
 
 export interface ICreateWrappedToken {
   tokenType: TokenType;
@@ -28,17 +27,9 @@ export interface IWrapperEditDialogProps {
 export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { item, tokenType, contract, templateId } = initialValues;
+  const { item, tokenType, templateId } = initialValues;
 
-  const fixedValues = { item, tokenType, contract, templateId };
-
-  const handleContractChange =
-    (form: any) =>
-    (_event: ChangeEvent<unknown>, option: any): void => {
-      form.setValue("contractId", option?.id ?? 0, { shouldDirty: true });
-      form.setValue("contract.address", option?.address ?? "0x");
-      form.setValue("contract.decimals", option?.decimals ?? 0);
-    };
+  const fixedValues = { item, tokenType, templateId };
 
   return (
     <FormDialog
@@ -48,13 +39,14 @@ export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
       testId="WrapperEditForm"
       {...rest}
     >
-      <CommonContractInput
+      <ContractInput
         name="contractId"
-        data={{ contractModule: [ModuleType.WRAPPER] }}
-        onChange={handleContractChange}
-        withTokenType
+        data={{
+          contractModule: [ModuleType.WRAPPER],
+          contractType: [TokenType.ERC721],
+        }}
       />
-      <TemplateInput />
+      <TemplateInput autoselect />
       <TokenAssetInput prefix="item" multiple />
     </FormDialog>
   );

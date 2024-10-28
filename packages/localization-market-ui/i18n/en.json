@@ -86,6 +86,7 @@
       "UNCOMMON": "Uncommon"
     },
     "blockchainError": {
+      "ERC721InsufficientApproval": "Insufficient balance",
       "ERC1155InsufficientBalance": "Insufficient balance",
       "ERC721NonexistentToken": "Token doesn't exist",
       "AccessControlUnauthorizedAccount": "Unauthorized Account",
@@ -1202,6 +1203,7 @@
       "genesis": "Genesis",
       "loot": "Loot box",
       "mystery": "Mystery box",
+      "wrapper": "Wrapper box",
       "price": "Base price",
       "priceTitle": "Base price:",
       "rarity": "Rarity",
@@ -1232,6 +1234,7 @@
       "title": "My wallet"
     },
     "wrapper": {
+      "title": "Wrapped Tokens",
       "token": {
         "content": "Wrapper Token Content",
         "title": "Wrapped Token: {title}"

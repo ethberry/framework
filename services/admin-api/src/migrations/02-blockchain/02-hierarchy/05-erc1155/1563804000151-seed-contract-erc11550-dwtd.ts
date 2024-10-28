@@ -27,7 +27,6 @@ export class SeedContractErc1155DumbWayToDieAt1563804000151 implements Migration
         contract_status,
         contract_type,
         contract_features,
-        from_block,
         merchant_id,
         created_at,
         updated_at

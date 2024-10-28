@@ -73,7 +73,6 @@ export class ContractManagerErc998ServiceEth extends ContractManagerServiceEth {
       chainId,
       royalty: Number(royalty),
       baseTokenURI,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 

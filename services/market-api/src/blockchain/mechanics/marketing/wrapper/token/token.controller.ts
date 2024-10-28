@@ -9,7 +9,7 @@ import { TokenEntity } from "../../../../hierarchy/token/token.entity";
 import { TokenAutocompleteDto, TokenSearchDto } from "../../../../hierarchy/token/dto";
 
 @ApiBearerAuth()
-@Controller("/wrapper-tokens")
+@Controller("/wrapper/tokens")
 export class WrapperTokenController {
   constructor(private readonly wrapperboxTokenService: WrapperTokenService) {}
 

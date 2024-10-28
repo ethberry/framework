@@ -22,7 +22,6 @@ export class SeedContractPonziAt1660436477100 implements MigrationInterface {
 
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
     const ponziAddr = process.env.PONZI_ADDR;
 
     await queryRunner.query(`
@@ -39,7 +38,6 @@ export class SeedContractPonziAt1660436477100 implements MigrationInterface {
         contract_status,
         contract_features,
         contract_module,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -56,7 +54,6 @@ export class SeedContractPonziAt1660436477100 implements MigrationInterface {
         'ACTIVE',
         '{WITHDRAW,ALLOWANCE,SPLITTER,REFERRAL}',
         'PONZI',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

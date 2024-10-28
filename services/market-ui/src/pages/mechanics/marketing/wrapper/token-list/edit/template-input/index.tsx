@@ -6,16 +6,18 @@ import { ModuleType, TokenType } from "@framework/types";
 
 export interface ITemplateInputProps {
   name?: string;
+  autoselect?: boolean;
 }
 
 export const TemplateInput: FC<ITemplateInputProps> = props => {
-  const { name = "templateId" } = props;
+  const { name = "templateId", autoselect } = props;
 
   const contractId = useWatch({ name: "contractId" });
 
   return (
     <EntityInput
       name={name}
+      autoselect={autoselect}
       controller="templates"
       data={{
         contractIds: contractId ? [contractId] : [],

@@ -6,17 +6,17 @@ import { formatItemHtmlList } from "@framework/exchange";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
-import { LootBoxUnpackButton } from "../../../../../../components/buttons";
+import { WrapperBoxUnpackButton } from "../../../../../../components/buttons";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
-export interface ILootTokenPanelProps {
+export interface IWrapperTokenPanelProps {
   token: IToken;
 }
 
-export const LootTokenPanel: FC<ILootTokenPanelProps> = props => {
+export const WrapperTokenPanel: FC<IWrapperTokenPanelProps> = props => {
   const { token } = props;
 
-  if (token.template?.contract?.contractModule !== ModuleType.LOOT) {
+  if (token.template?.contract?.contractModule !== ModuleType.WRAPPER) {
     return null;
   }
 
@@ -25,7 +25,7 @@ export const LootTokenPanel: FC<ILootTokenPanelProps> = props => {
       <CardContent>
         <StyledToolbar disableGutters>
           <StyledTypography gutterBottom variant="h5" component="p">
-            <FormattedMessage id="pages.token.loot" />
+            <FormattedMessage id="pages.token.wrapper" />
           </StyledTypography>
         </StyledToolbar>
         {/* @ts-ignore */}
@@ -33,7 +33,7 @@ export const LootTokenPanel: FC<ILootTokenPanelProps> = props => {
       </CardContent>
 
       <CardActions>
-        <LootBoxUnpackButton token={token} />
+        <WrapperBoxUnpackButton token={token} />
       </CardActions>
     </StyledCard>
   );

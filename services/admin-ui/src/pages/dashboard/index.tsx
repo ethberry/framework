@@ -54,9 +54,9 @@ export const Dashboard: FC = () => {
           <Erc998Section />
           <Erc1155Section />
           <Divider sx={{ m: 2 }} />
+          <CollectionSection />
           <MysterySection />
           <LootSection />
-          <CollectionSection />
         </Grid>
         <Grid item xs={12} md={4}>
           <DispenserSection />

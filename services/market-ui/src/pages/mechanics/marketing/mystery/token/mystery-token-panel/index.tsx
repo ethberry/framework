@@ -6,7 +6,7 @@ import { formatItemHtmlList } from "@framework/exchange";
 import type { IToken } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
-import { MysteryWrapperUnpackButton } from "../../../../../../components/buttons";
+import { MysteryBoxUnpackButton } from "../../../../../../components/buttons";
 import { StyledCard, StyledList, StyledToolbar, StyledTypography } from "./styled";
 
 export interface IMysteryTokenPanelProps {
@@ -33,7 +33,7 @@ export const MysteryTokenPanel: FC<IMysteryTokenPanelProps> = props => {
       </CardContent>
 
       <CardActions>
-        <MysteryWrapperUnpackButton token={token} />
+        <MysteryBoxUnpackButton token={token} />
       </CardActions>
     </StyledCard>
   );

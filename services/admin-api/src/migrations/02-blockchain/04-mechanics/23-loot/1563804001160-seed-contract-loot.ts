@@ -30,7 +30,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
     const erc721ContractLootBlacklistAddress = process.env.ERC721_LOOTBOX_BLACKLIST_ADDR;
     const erc721ContractLootBlacklistPausableAddress = process.env.ERC721_LOOTBOX_BLACKLIST_PAUSABLE_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -48,7 +47,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         contract_type,
         contract_features,
         contract_module,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -67,7 +65,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         'ERC721',
         '{ALLOWANCE}',
         'LOOT',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -86,7 +83,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         'ERC721',
         '{PAUSABLE,ALLOWANCE}',
         'LOOT',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -105,7 +101,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         'ERC721',
         '{ALLOWANCE}',
         'LOOT',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -124,7 +119,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         'ERC721',
         '{PAUSABLE,ALLOWANCE}',
         'LOOT',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -143,7 +137,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         'ERC721',
         '{BLACKLIST,ALLOWANCE}',
         'LOOT',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -162,7 +155,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         'ERC721',
         '{ALLOWANCE}',
         'LOOT',
-        '${fromBlock}',
         2,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -181,7 +173,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         'ERC721',
         '{BLACKLIST,PAUSABLE,ALLOWANCE}',
         'LOOT',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -200,7 +191,6 @@ export class SeedContractLootAt1563804001160 implements MigrationInterface {
         'ERC721',
         '{ALLOWANCE}',
         'LOOT',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

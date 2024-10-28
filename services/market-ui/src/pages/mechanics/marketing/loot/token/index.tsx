@@ -13,7 +13,7 @@ import { LootTokenPanel } from "./loot-token-panel";
 import { StyledDescription, StyledImage } from "./styled";
 
 export const LootBoxToken: FC = () => {
-  const { selected, handleRefreshPage, isLoading } = useCollection<IToken>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/loot/tokens",
     empty: {
       template: {
@@ -45,7 +45,7 @@ export const LootBoxToken: FC = () => {
           {selected.templateId ? (
             <>
               <CommonTokenPanel token={selected} />
-              <LootTokenPanel token={selected} onRefreshPage={handleRefreshPage} />
+              <LootTokenPanel token={selected} />
             </>
           ) : null}
         </Grid>

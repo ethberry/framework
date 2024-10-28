@@ -6,6 +6,7 @@ import { mysteryRoutes } from "./mystery/routes";
 import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
 import { waitListRoutes } from "./wait-list/routes";
+import { wrapperRoutes } from "./wrapper/routes";
 
 export const marketingMechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
@@ -14,4 +15,5 @@ export const marketingMechanicsRoutes: Array<RouteObject> = [
   ...stakingRoutes,
   ...vestingRoutes,
   ...waitListRoutes,
+  ...wrapperRoutes,
 ];

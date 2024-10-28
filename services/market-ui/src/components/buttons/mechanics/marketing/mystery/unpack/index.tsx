@@ -17,7 +17,7 @@ export interface IMysteryUnpackButtonProps {
   variant?: ListActionVariant;
 }
 
-export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props => {
+export const MysteryBoxUnpackButton: FC<IMysteryUnpackButtonProps> = props => {
   const { className, disabled, token, variant = ListActionVariant.button } = props;
 
   const navigate = useNavigate();

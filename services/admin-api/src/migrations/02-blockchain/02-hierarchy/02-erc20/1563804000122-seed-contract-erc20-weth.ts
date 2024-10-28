@@ -21,7 +21,6 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
     );
 
     const currentDateTime = new Date().toISOString();
-    const fromBlock = process.env.STARTING_BLOCK || 0;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
     const wethAddr = process.env.WETH_ADDR;
     const wethImgUrl = `${imagePath}/weth.png`;
@@ -42,7 +41,6 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         contract_status,
         contract_type,
         contract_features,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -61,7 +59,6 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         'ACTIVE',
         'ERC20',
         '{EXTERNAL}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -80,7 +77,6 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         'ACTIVE',
         'ERC20',
         '{EXTERNAL}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -99,7 +95,6 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         'ACTIVE',
         'ERC20',
         '{EXTERNAL}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -118,7 +113,6 @@ export class SeedContractErc20WethAt1563804000122 implements MigrationInterface 
         'ACTIVE',
         'ERC20',
         '{EXTERNAL}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

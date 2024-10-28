@@ -61,7 +61,6 @@ export class ContractManagerPaymentSplitterServiceEth extends ContractManagerSer
       contractStatus: ContractStatus.ACTIVE,
       contractModule: ModuleType.PAYMENT_SPLITTER,
       chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 

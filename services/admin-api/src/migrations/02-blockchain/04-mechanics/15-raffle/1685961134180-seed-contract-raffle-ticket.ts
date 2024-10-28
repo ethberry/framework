@@ -24,7 +24,6 @@ export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterfa
     const currentDateTime = new Date().toISOString();
     const erc721ContractRaffleAddress = process.env.ERC721_RAFFLE_TICKET_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -42,7 +41,6 @@ export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterfa
         contract_type,
         contract_features,
         contract_module,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -61,7 +59,6 @@ export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterfa
         'ERC721',
         '{}',
         'RAFFLE',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

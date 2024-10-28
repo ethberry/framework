@@ -209,11 +209,6 @@ export class CreateContract1563804000100 implements MigrationInterface {
           default: false,
         },
         {
-          name: "from_block",
-          type: "int",
-          default: 0,
-        },
-        {
           name: "merchant_id",
           type: "int",
         },

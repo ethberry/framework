@@ -42,7 +42,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR;
     const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -59,7 +58,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -77,7 +75,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -95,7 +92,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'INACTIVE',
         'ERC998',
         '{ALLOWANCE}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -113,7 +109,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'NEW',
         'ERC998',
         '{ALLOWANCE}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -131,7 +126,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,BLACKLIST}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -149,7 +143,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,DISCRETE}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -167,7 +160,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,DISCRETE,RANDOM}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -185,7 +177,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,RENTABLE}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -203,7 +194,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,ERC20OWNER}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -221,7 +211,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,ERC1155OWNER}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -239,7 +228,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,ERC20OWNER,ERC1155OWNER}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -257,7 +245,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{DISCRETE}',
-        '${fromBlock}',
         2,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -275,7 +262,6 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

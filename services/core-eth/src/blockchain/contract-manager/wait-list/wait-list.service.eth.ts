@@ -54,7 +54,6 @@ export class ContractManagerWaitListServiceEth extends ContractManagerServiceEth
       contractFeatures: [ContractFeatures.PAUSABLE],
       contractModule: ModuleType.WAIT_LIST,
       chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 

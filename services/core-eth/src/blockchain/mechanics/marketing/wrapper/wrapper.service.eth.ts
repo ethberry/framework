@@ -16,28 +16,31 @@ import {
 
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { getMetadata } from "../../../../common/utils";
-import { ERC721SimpleABI } from "../../../tokens/erc721/token/interfaces";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
+import { WrapperABI } from "./interfaces";
 
 @Injectable()
-export class WrapperServiceEth {
+export class WrapperServiceEth extends TokenServiceEth {
   constructor(
     @Inject(Logger)
-    private readonly loggerService: LoggerService,
+    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(RmqProviderType.SIGNAL_SERVICE)
     protected readonly signalClientProxy: ClientProxy,
     protected readonly configService: ConfigService,
-    private readonly eventHistoryService: EventHistoryService,
-    private readonly tokenService: TokenService,
-    private readonly balanceService: BalanceService,
-    private readonly assetService: AssetService,
-    private readonly templateService: TemplateService,
-  ) {}
+    protected readonly eventHistoryService: EventHistoryService,
+    protected readonly tokenService: TokenService,
+    protected readonly balanceService: BalanceService,
+    protected readonly assetService: AssetService,
+    protected readonly templateService: TemplateService,
+  ) {
+    super(loggerService, signalClientProxy, tokenService, eventHistoryService);
+  }
 
   public async unpack(event: ILogEvent<IUnpackWrapper>, context: Log): Promise<void> {
     const {
@@ -75,7 +78,7 @@ export class WrapperServiceEth {
       const metadata = await getMetadata(
         Number(tokenId).toString(),
         address,
-        ERC721SimpleABI,
+        WrapperABI,
         this.jsonRpcProvider,
         this.loggerService,
       );
@@ -87,7 +90,7 @@ export class WrapperServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        metadata: JSON.stringify(metadata),
+        metadata,
         royalty: templateEntity.contract.royalty,
         template: templateEntity,
       });

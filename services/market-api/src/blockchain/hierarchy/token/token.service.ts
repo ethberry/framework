@@ -14,7 +14,6 @@ import {
 } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { MysteryBoxEntity } from "../../mechanics/marketing/mystery/box/box.entity";
 import { LotteryRoundEntity } from "../../mechanics/gambling/lottery/round/round.entity";
 import { TokenEntity } from "./token.entity";
 
@@ -270,13 +269,6 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("round_price.components", "round_price_components");
     queryBuilder.leftJoinAndSelect("round_price_components.template", "round_price_template");
     queryBuilder.leftJoinAndSelect("round_price_template.contract", "round_price_contract");
-
-    // MODULE:MYSTERY
-    queryBuilder.leftJoinAndMapOne("template.box", MysteryBoxEntity, "box", "box.templateId = template.id");
-    queryBuilder.leftJoinAndSelect("box.content", "content");
-    queryBuilder.leftJoinAndSelect("content.components", "content_components");
-    queryBuilder.leftJoinAndSelect("content_components.template", "content_template");
-    queryBuilder.leftJoinAndSelect("content_template.contract", "content_contract");
 
     // MODULE:RENT
     queryBuilder.leftJoinAndSelect("contract.rent", "rent");

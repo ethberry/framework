@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@ethberry/mui-rte";
 import { StyledCardContentDescription, StyledCardMedia } from "@framework/styled";
 import type { IToken } from "@framework/types";
 
-import { OpenSeaSellButton, WrapperUnpackButton } from "../../../../../../components/buttons";
+import { OpenSeaSellButton, WrapperBoxUnpackButton } from "../../../../../../components/buttons";
 import { RarityBadge } from "../../../../../../components/common/badge";
 import { formatTokenTitle } from "../../../../../../utils/token";
 
@@ -19,7 +19,7 @@ export const WrapperTokenListItem: FC<IWrapperTokenListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/wrapper-tokens/${token.id}`}>
+      <CardActionArea component={RouterLink} to={`/wrapper/tokens/${token.id}`}>
         <RarityBadge token={token} />
         <CardHeader title={formatTokenTitle(token)} />
         <StyledCardMedia image={token.template!.imageUrl} />
@@ -35,7 +35,7 @@ export const WrapperTokenListItem: FC<IWrapperTokenListItemProps> = props => {
             <OpenSeaSellButton token={token} />
           </Grid>
           <Grid item xs={12}>
-            <WrapperUnpackButton token={token} />
+            <WrapperBoxUnpackButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

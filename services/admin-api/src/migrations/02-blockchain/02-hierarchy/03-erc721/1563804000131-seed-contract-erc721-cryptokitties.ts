@@ -11,7 +11,6 @@ export class SeedContractErc721CryptoKittiesAt1563804000131 implements Migration
     }
 
     const currentDateTime = new Date().toISOString();
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -28,7 +27,6 @@ export class SeedContractErc721CryptoKittiesAt1563804000131 implements Migration
         contract_status,
         contract_type,
         contract_features,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -46,7 +44,6 @@ export class SeedContractErc721CryptoKittiesAt1563804000131 implements Migration
         'ACTIVE',
         'ERC721',
         '{EXTERNAL}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

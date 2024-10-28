@@ -13,7 +13,6 @@ import { GenesTokenPanel } from "../../../mechanics/gaming/genes/genes-token-pan
 import { TraitTokenPanel } from "../../../mechanics/gaming/traits/traits-token-panel";
 import { DiscreteTokenPanel } from "../../../mechanics/gaming/discrete/discrete-token-panel";
 import { RarityTokenPanel } from "../../../mechanics/gaming/rarity/rarity-token-panel";
-import { MysteryTokenPanel } from "../../../mechanics/marketing/mystery/token/mystery-token-panel";
 import { LendTokenPanel } from "../../../mechanics/gaming/rent/token-item/lend-token-panel";
 import { CommonTokenPanel } from "./common-token-panel";
 import { IpfsTokenPanel } from "./ipfs-token-panel";
@@ -57,7 +56,6 @@ export const Erc721Token: FC = () => {
               <CommonTokenPanel token={selected} />
               <RarityTokenPanel token={selected} />
               <DiscreteTokenPanel token={selected} />
-              <MysteryTokenPanel token={selected} />
               <GenesTokenPanel token={selected} />
               <TraitTokenPanel token={selected} />
               <DismantleTokenPanel token={selected} />

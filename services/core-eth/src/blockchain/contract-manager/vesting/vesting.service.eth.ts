@@ -67,7 +67,6 @@ export class ContractManagerVestingServiceEth extends ContractManagerServiceEth 
       contractModule: ModuleType.VESTING,
       contractSecurity: ContractSecurity.OWNABLE,
       chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 

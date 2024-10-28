@@ -24,7 +24,6 @@ export class SeedContractPaymentSplitterAt1697876719370 implements MigrationInte
     const currentDateTime = new Date().toISOString();
     const paymentSplitterAddress = process.env.PAYMENT_SPLITTER_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -42,7 +41,6 @@ export class SeedContractPaymentSplitterAt1697876719370 implements MigrationInte
         contract_status,
         contract_features,
         contract_module,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -64,7 +62,6 @@ export class SeedContractPaymentSplitterAt1697876719370 implements MigrationInte
         'ACTIVE',
         '{}',
         'PAYMENT_SPLITTER',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

@@ -1,22 +1,19 @@
 import { FC, Fragment } from "react";
-import { Grid, Typography } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
 import { RichTextDisplay } from "@ethberry/mui-rte";
 import { useCollection } from "@ethberry/provider-collection";
 import { emptyStateString } from "@ethberry/draft-js-utils";
-import { formatItem } from "@framework/exchange";
 import type { ITemplate, IToken } from "@framework/types";
-import { ModuleType } from "@framework/types";
 
-import { OpenSeaSellButton } from "../../../../../components/buttons";
-import { WrapperContent } from "./wrapper-content";
-import { StyledImage, StyledPaper } from "./styled";
+import { CommonTokenPanel } from "../../../../hierarchy/erc721/token/common-token-panel";
+import { WrapperTokenPanel } from "./wrapper-token-panel";
+import { StyledDescription, StyledImage } from "./styled";
 
 export const WrapperToken: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
-    baseUrl: "/wrapper-tokens",
+    baseUrl: "/wrapper/tokens",
     empty: {
       template: {
         title: "",
@@ -31,41 +28,28 @@ export const WrapperToken: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "wrapper.tokens": "wrapper-tokens",
-          "wrapper.token": "wrapper.token",
-        }}
-        data={[{}, {}, selected.template]}
-      />
+      <Breadcrumbs path={["dashboard", "wrapper", "wrapper.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.wrapper.token.title" data={selected.template} />
 
       <Grid container>
         <Grid item xs={9}>
           <StyledImage component="img" src={selected.template!.imageUrl} />
-          <Typography variant="body2" color="textSecondary" component="div">
+          <StyledDescription component="div">
             <RichTextDisplay data={selected.template!.description} />
-          </Typography>
+          </StyledDescription>
         </Grid>
-        <Grid item xs={3}>
-          {selected.template?.contract?.contractModule === ModuleType.HIERARCHY ||
-          selected.template?.contract?.contractModule === ModuleType.MYSTERY ? (
-            <StyledPaper>
-              <Typography>
-                <FormattedMessage
-                  id="pages.wrapper.token.price"
-                  values={{ amount: formatItem(selected.template?.price) }}
-                />
-              </Typography>
-              <OpenSeaSellButton token={selected} />
-            </StyledPaper>
+        <Grid item xs={12} sm={3}>
+          {selected.templateId ? (
+            <>
+              <CommonTokenPanel token={selected} />
+              <WrapperTokenPanel token={selected} />
+            </>
           ) : null}
         </Grid>
-      </Grid>
 
-      <WrapperContent wrapper={selected} />
+        <Grid item xs={3}></Grid>
+      </Grid>
     </Fragment>
   );
 };

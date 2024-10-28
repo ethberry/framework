@@ -6,7 +6,6 @@ import { formatItem } from "@framework/exchange";
 import type { ILootBox } from "@framework/types";
 
 import { LootBoxPurchaseButton } from "../../../../../../components/buttons";
-import { AllowanceButton } from "../../../../../exchange/wallet/allowance";
 import { StyledCard, StyledToolbar, StyledTypography } from "./styled";
 
 export interface ILootBoxPanelProps {
@@ -28,7 +27,6 @@ export const LootBoxPanel: FC<ILootBoxPanelProps> = props => {
       </CardContent>
       <CardActions>
         <LootBoxPurchaseButton lootBox={box} />
-        <AllowanceButton token={box.template?.price} isSmall isExchange />
       </CardActions>
     </StyledCard>
   );

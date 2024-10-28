@@ -69,7 +69,6 @@ export class ContractManagerErc1155ServiceEth extends ContractManagerServiceEth 
       contractType: TokenType.ERC1155,
       chainId,
       royalty: Number(royalty),
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 

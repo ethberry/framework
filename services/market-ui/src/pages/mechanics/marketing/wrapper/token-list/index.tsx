@@ -3,21 +3,22 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid } from "@mui/material";
 import { Add, FilterList } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { constants, Contract, utils } from "ethers";
+import { constants, Contract } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
-import { useMetamask } from "@ethberry/react-hooks-eth";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
+import { useAllowance, useMetamask } from "@ethberry/react-hooks-eth";
 import { emptyToken } from "@ethberry/mui-inputs-asset";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
+import type { IAsset, IToken, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
-import type { IToken, ITokenSearchDto } from "@framework/types";
+import { getEthPrice } from "@framework/exchange";
 
 import ERC721WrapperMintBoxABI from "@framework/abis/json/ERC721Wrapper/mintBox.json";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
-import { WrapperEditDialog } from "./edit";
 import type { ICreateWrappedToken } from "./edit";
+import { WrapperEditDialog } from "./edit";
 import { WrapperTokenListItem } from "./item";
 
 export interface IWrapperTokenListProps {
@@ -40,29 +41,42 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/wrapper-tokens",
+    baseUrl: "/wrapper/tokens",
     embedded,
   });
 
-  const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {
-    // TODO use convertDatabaseAssetToChainAsset
+  const metaFnWithAllowance = useAllowance((web3Context: Web3ContextType, values: ICreateWrappedToken) => {
+    // do not use convertTemplateToChainAsset
     const content = values.item.components.map(component => ({
       tokenType: Object.values(TokenType).indexOf(component.tokenType),
       token: component.template.contract.address,
-      tokenId: component.token.tokenId || 0,
+      tokenId: component.token.tokenId, // <- custom
       amount: component.amount,
     }));
-    let totalValue = utils.parseEther("0");
-    values.item.components.map(token => {
-      if (token.tokenType === TokenType.NATIVE) {
-        totalValue = totalValue.add(utils.parseUnits(token.amount, "wei"));
-      }
-      return token;
-    });
 
     const contract = new Contract(values.contract.address, ERC721WrapperMintBoxABI, web3Context.provider?.getSigner());
+    return contract.mintBox(web3Context.account, values.templateId, content, {
+      value: getEthPrice(values.item as unknown as IAsset),
+    }) as Promise<any>;
+  });
 
-    return contract.mintBox(web3Context.account, values.templateId, content, { value: totalValue }) as Promise<any>;
+  const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {
+    // do not use convertTemplateToChainAsset
+    const assets = values.item.components.map(component => ({
+      tokenType: component.tokenType, // <- custom
+      token: component.template.contract.address,
+      tokenId: component.token.tokenId, // <- custom
+      amount: component.amount,
+    }));
+
+    return metaFnWithAllowance(
+      {
+        contract: values.contract.address,
+        assets,
+      },
+      web3Context,
+      values,
+    );
   });
 
   const handleEditConfirm = async (values: ICreateWrappedToken, _form: any) => {

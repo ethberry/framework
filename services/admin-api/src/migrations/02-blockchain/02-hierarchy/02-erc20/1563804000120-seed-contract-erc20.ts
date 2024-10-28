@@ -31,7 +31,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
     const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR;
     const erc20TokenWhiteListAddress = process.env.ERC20_WHITELIST_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -49,7 +48,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -68,7 +66,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -87,7 +84,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'INACTIVE',
         'ERC20',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -106,7 +102,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'NEW',
         'ERC20',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -125,7 +120,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{BLACKLIST}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -144,7 +138,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{WHITELIST}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -163,7 +156,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{}',
-        '${fromBlock}',
         2,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -182,7 +174,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{}',
-        '${fromBlock}',
         2,
         '${currentDateTime}',
         '${currentDateTime}'

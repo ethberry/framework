@@ -7,9 +7,9 @@ import { useCollection } from "@ethberry/provider-collection";
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import type { ILootBox } from "@framework/types";
 
-import { LootBoxContent } from "../token/lootbox-content";
 import { LootBoxPanel } from "./loot-box-panel";
 import { StyledDescription, StyledImage } from "./styled";
+import { BoxContent } from "../../../index";
 
 export const LootBox: FC = () => {
   const { selected, isLoading } = useCollection<ILootBox>({
@@ -52,7 +52,7 @@ export const LootBox: FC = () => {
         <Grid item xs={3}></Grid>
       </Grid>
 
-      <LootBoxContent lootBox={selected} />
+      <BoxContent content={selected.content} />
     </Fragment>
   );
 };

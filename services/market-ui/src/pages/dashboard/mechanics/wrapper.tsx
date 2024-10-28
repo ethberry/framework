@@ -25,7 +25,7 @@ export const WrapperSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/wrapper-tokens">
+        <ListItemButton component={RouterLink} to="/wrapper/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>

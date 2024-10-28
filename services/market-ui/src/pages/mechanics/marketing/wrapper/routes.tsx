@@ -5,10 +5,10 @@ import { WrapperToken } from "./token";
 
 export const wrapperRoutes: Array<RouteObject> = [
   {
-    path: "/wrapper-tokens",
+    path: "/wrapper/tokens",
     children: [
       { index: true, element: <WrapperTokenList /> },
-      { path: "/wrapper-tokens/:id", element: <WrapperToken /> },
+      { path: "/wrapper/tokens/:id", element: <WrapperToken /> },
     ],
   },
 ];

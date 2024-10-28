@@ -40,7 +40,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
     const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR;
     const erc721ContractRentableAddress = process.env.ERC721_RENTABLE_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -57,7 +56,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -75,7 +73,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -93,7 +90,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'INACTIVE',
         'ERC721',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -111,7 +107,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'NEW',
         'ERC721',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -129,7 +124,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{BLACKLIST}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -147,7 +141,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{DISCRETE}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -165,7 +158,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{DISCRETE,RANDOM}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -183,7 +175,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{GENES}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -201,7 +192,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{SOULBOUND}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -219,7 +209,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{RENTABLE}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -237,7 +226,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{DISCRETE}',
-        '${fromBlock}',
         2,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -255,7 +243,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{}',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

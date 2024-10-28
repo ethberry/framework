@@ -7,7 +7,7 @@ import { useCollection } from "@ethberry/provider-collection";
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import type { IMysteryBox } from "@framework/types";
 
-import { MysteryBoxContent } from "../token/mystery-box-content";
+import { BoxContent } from "../../../index";
 import { MysteryBoxPanel } from "./mystery-box-panel";
 import { StyledDescription, StyledImage } from "./styled";
 
@@ -52,7 +52,7 @@ export const MysteryBox: FC = () => {
         <Grid item xs={3}></Grid>
       </Grid>
 
-      <MysteryBoxContent mysteryBox={selected} />
+      <BoxContent content={selected.content} />
     </Fragment>
   );
 };

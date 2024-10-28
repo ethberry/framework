@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
 
 import { PageHeader } from "@ethberry/mui-page-layout";
 
@@ -48,6 +48,7 @@ export const Dashboard: FC = () => {
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
+          <Divider sx={{ m: 2 }} />
           <MysterySection />
           <LootSection />
           <WrapperSection />

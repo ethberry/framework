@@ -73,7 +73,6 @@ export class ContractManagerServiceEth {
           : (["WITHDRAW", "ALLOWANCE", "SPLITTER", "REFERRAL", "PAUSABLE"] as Array<ContractFeatures>),
       contractModule: ModuleType.PONZI,
       chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -114,7 +113,6 @@ export class ContractManagerServiceEth {
       contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.ALLOWANCE, ContractFeatures.PAUSABLE],
       contractModule: ModuleType.LOTTERY,
       chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -148,7 +146,6 @@ export class ContractManagerServiceEth {
       contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.ALLOWANCE, ContractFeatures.PAUSABLE],
       contractModule: ModuleType.RAFFLE,
       chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 
@@ -189,7 +186,6 @@ export class ContractManagerServiceEth {
       //     : (Object.values(StakingContractFeatures)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 

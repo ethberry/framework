@@ -68,7 +68,6 @@ export class ContractManagerErc20ServiceEth extends ContractManagerServiceEth {
       contractFeatures,
       contractType: TokenType.ERC20,
       chainId,
-      fromBlock: parseInt(context.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),
     });
 

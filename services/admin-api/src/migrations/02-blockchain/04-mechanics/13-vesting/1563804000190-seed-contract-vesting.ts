@@ -27,7 +27,6 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
     const vestingGradedAddress = process.env.VESTING_GRADED_ADDR;
     const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
     const vestingImgUrl = `${imagePath}/hourglass.png`;
 
     await queryRunner.query(`
@@ -46,7 +45,6 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         contract_features,
         contract_module,
         contract_security,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -70,7 +68,6 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '{}',
         'VESTING',
         'OWNABLE',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -94,7 +91,6 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '{}',
         'VESTING',
         'OWNABLE',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -118,7 +114,6 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '{VOTES}',
         'VESTING',
         'OWNABLE',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

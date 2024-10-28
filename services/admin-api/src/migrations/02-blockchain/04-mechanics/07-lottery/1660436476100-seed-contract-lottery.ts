@@ -24,7 +24,6 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
     const lotteryAddr = process.env.LOTTERY_ADDR;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
         INSERT INTO ${ns}.contract (
@@ -42,7 +41,6 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
           contract_type,
           contract_features,
           contract_module,
-          from_block,
           merchant_id,
           created_at,
           updated_at
@@ -66,7 +64,6 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
           null,
           '{RANDOM,ALLOWANCE,PAUSABLE}',
           'LOTTERY',
-          '${fromBlock}',
           1,
           '${currentDateTime}',
           '${currentDateTime}'

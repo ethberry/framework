@@ -24,7 +24,6 @@ export class SeedContractCollectionAt1679894500000 implements MigrationInterface
     const currentDateTime = new Date().toISOString();
     const erc721ContractGenerativeAddress = process.env.ERC721_GENERATIVE_ADDR;
     const chainId = process.env.CHAIN_ID_ETHBERRY || process.env.CHAIN_ID_ETHBERRY_BESU || testChainId;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -42,7 +41,6 @@ export class SeedContractCollectionAt1679894500000 implements MigrationInterface
         contract_type,
         contract_features,
         contract_module,
-        from_block,
         merchant_id,
         created_at,
         updated_at
@@ -61,7 +59,6 @@ export class SeedContractCollectionAt1679894500000 implements MigrationInterface
         'ERC721',
         '{TRAITS}',
         'COLLECTION',
-        '${fromBlock}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

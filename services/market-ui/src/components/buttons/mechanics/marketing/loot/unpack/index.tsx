@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
+import { useNavigate } from "react-router";
 
 import { useMetamask } from "@ethberry/react-hooks-eth";
 import { ListAction, ListActionVariant } from "@framework/styled";
@@ -13,20 +14,13 @@ export interface ILootUnpackButtonProps {
   className?: string;
   disabled?: boolean;
   token: IToken;
-  onRefreshPage?: () => Promise<void>;
   variant?: ListActionVariant;
 }
 
-export const LootWrapperUnpackButton: FC<ILootUnpackButtonProps> = props => {
-  const {
-    className,
-    disabled,
-    onRefreshPage = () => {
-      /* empty */
-    },
-    token,
-    variant = ListActionVariant.button,
-  } = props;
+export const LootBoxUnpackButton: FC<ILootUnpackButtonProps> = props => {
+  const { className, disabled, token, variant = ListActionVariant.button } = props;
+
+  const navigate = useNavigate();
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
     const contract = new Contract(
@@ -40,7 +34,7 @@ export const LootWrapperUnpackButton: FC<ILootUnpackButtonProps> = props => {
   const handleUnpack = (token: IToken): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaFn(token).then(() => {
-        onRefreshPage();
+        navigate("/tokens");
       });
     };
   };
@@ -59,7 +53,7 @@ export const LootWrapperUnpackButton: FC<ILootUnpackButtonProps> = props => {
       message="form.buttons.unpack"
       className={className}
       dataTestId="WrapperUnpackButton"
-      disabled={disabled}
+      disabled={disabled || token.template?.contract?.isPaused}
       variant={variant}
     />
   );

@@ -6,8 +6,9 @@ import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
 import { WaitListModule } from "./wait-list/wait-list.module";
 import { LootModule } from "./loot/loot.module";
+import { WrapperModule } from "./wrapper/wrapper.module";
 
 @Module({
-  imports: [ClaimModule, MysteryModule, LootModule, StakingModule, VestingModule, WaitListModule],
+  imports: [ClaimModule, MysteryModule, LootModule, StakingModule, VestingModule, WaitListModule, WrapperModule],
 })
 export class MarketingMechanicsModule {}

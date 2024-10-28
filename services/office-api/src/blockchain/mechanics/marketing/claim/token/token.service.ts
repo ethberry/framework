@@ -213,10 +213,11 @@ export class ClaimTokenService {
       verifyingContract,
       account,
       params,
+      // do not use convertTemplateToChainAsset
       claimEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.template.contract.address,
-        tokenId: component.token.tokenId.toString(),
+        tokenId: component.token.tokenId.toString(), // <- custom
         amount: component.amount,
       })),
       [],
