@@ -6,7 +6,7 @@ import { dispenserRoutes } from "./dispenser/routes";
 import { lootRoutes } from "./loot/routes";
 import { mysteryRoutes } from "./mystery/routes";
 import { stakingRoutes } from "./staking/routes";
-import { vestingRoutes } from "./vesting/routes";
+import { legacyVestingRoutes } from "./legacy-vesting/routes";
 import { waitListRoutes } from "./wait-list/routes";
 
 export const marketingMechanicsRoutes: Array<RouteObject> = [
@@ -16,6 +16,6 @@ export const marketingMechanicsRoutes: Array<RouteObject> = [
   ...lootRoutes,
   ...mysteryRoutes,
   ...stakingRoutes,
-  ...vestingRoutes,
+  ...legacyVestingRoutes,
   ...waitListRoutes,
 ];

@@ -9,7 +9,7 @@ export * from "./wait-list";
 export * from "./raffle";
 export * from "./lottery";
 export * from "./rent";
-export * from "./vesting";
+export * from "./legacy-vesting";
 export * from "./transfer";
 export * from "./loot";
 export * from "./mystery";

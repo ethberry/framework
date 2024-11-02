@@ -20,7 +20,7 @@ export class ContractManagerLootSignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async loot(dto: ILootContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: ILootContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByLootContractTemplates(dto, userEntity.chainId);
 

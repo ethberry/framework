@@ -19,7 +19,7 @@ export class ContractManagerRaffleSignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async raffle(userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByRaffleContractTemplate(userEntity.chainId);
 

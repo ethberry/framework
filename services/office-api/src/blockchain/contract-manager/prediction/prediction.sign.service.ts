@@ -20,7 +20,7 @@ export class ContractManagerPredictionSignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async prediction(dto: IPredictionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: IPredictionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByPredictionContractTemplate(dto, userEntity.chainId);
 

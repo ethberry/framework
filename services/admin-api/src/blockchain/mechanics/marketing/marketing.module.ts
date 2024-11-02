@@ -5,10 +5,10 @@ import { CollectionModule } from "./collection/collection.module";
 import { LootModule } from "./loot/loot.module";
 import { MysteryModule } from "./mystery/mystery.module";
 import { StakingModule } from "./staking/staking.module";
-import { VestingModule } from "./vesting/vesting.module";
+import { LegacyVestingModule } from "./legacy-vesting/legacy-vesting.module";
 import { WaitListModule } from "./wait-list/wait-list.module";
 
 @Module({
-  imports: [ClaimModule, CollectionModule, LootModule, MysteryModule, StakingModule, VestingModule, WaitListModule],
+  imports: [ClaimModule, CollectionModule, LootModule, MysteryModule, StakingModule, LegacyVestingModule, WaitListModule],
 })
 export class MarketingMechanicsModule {}

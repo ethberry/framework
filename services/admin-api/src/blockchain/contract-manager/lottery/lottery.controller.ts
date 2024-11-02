@@ -14,7 +14,7 @@ export class ContractManagerLotteryController {
   constructor(private readonly contractManagerLotterySignService: ContractManagerLotterySignService) {}
 
   @Post("/lottery")
-  public lottery(@Body() dto: LotteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerLotterySignService.lottery(dto, userEntity);
+  public deploy(@Body() dto: LotteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerLotterySignService.deploy(dto, userEntity);
   }
 }

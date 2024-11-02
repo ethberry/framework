@@ -14,7 +14,7 @@ export class ContractManagerPonziController {
   constructor(private readonly contractManagerPonziSignService: ContractManagerPonziSignService) {}
 
   @Post("/ponzi")
-  public ponzi(@Body() dto: PonziContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerPonziSignService.ponzi(dto, userEntity);
+  public deploy(@Body() dto: PonziContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerPonziSignService.deploy(dto, userEntity);
   }
 }

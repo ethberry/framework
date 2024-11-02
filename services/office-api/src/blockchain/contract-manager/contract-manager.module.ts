@@ -10,7 +10,7 @@ import { ContractManagerStakingModule } from "./staking/staking.module";
 import { ContractManagerPonziModule } from "./ponzi/ponzi.module";
 import { ContractManagerPredictionModule } from "./prediction/prediction.module";
 import { ContractManagerWaitListModule } from "./wait-list/wait-list.module";
-import { ContractManagerVestingModule } from "./vesting/vesting.module";
+import { ContractManagerVestingModule } from "./legacy-vesting/legacy-vesting.module";
 
 @Module({
   imports: [

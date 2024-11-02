@@ -32,7 +32,7 @@ import { ContractManagerPaymentSplitterModule } from "./payment-splitter/payment
 import { ContractManagerCollectionModule } from "./collection/collection.module";
 import { ContractManagerMysteryModule } from "./mystery/mystery.module";
 import { ContractManagerLootModule } from "./loot/loot.module";
-import { ContractManagerVestingModule } from "./vesting/vesting.module";
+import { ContractManagerLegacyVestingModule } from "./legacy-vesting/legacy-vesting.module";
 
 @Module({
   imports: [
@@ -44,7 +44,7 @@ import { ContractManagerVestingModule } from "./vesting/vesting.module";
     ContractManagerMysteryModule,
     ContractManagerLootModule,
     ContractManagerWaitListModule,
-    ContractManagerVestingModule,
+    ContractManagerLegacyVestingModule,
     ContractManagerPaymentSplitterModule,
 
     ConfigModule,

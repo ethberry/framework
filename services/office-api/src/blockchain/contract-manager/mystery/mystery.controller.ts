@@ -14,7 +14,7 @@ export class ContractManagerMysteryController {
   constructor(private readonly contractManagerMysterySignService: ContractManagerMysterySignService) {}
 
   @Post("/mystery")
-  public mystery(@Body() dto: MysteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerMysterySignService.mystery(dto, userEntity);
+  public deploy(@Body() dto: MysteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerMysterySignService.deploy(dto, userEntity);
   }
 }

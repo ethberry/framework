@@ -14,10 +14,10 @@ export class ContractManagerErc1155Controller {
   constructor(private readonly contractManagerSignErc1155Service: ContractManagerSignErc1155Service) {}
 
   @Post("/erc1155")
-  public erc1155Token(
+  public deploy(
     @Body() dto: Erc1155ContractDeployDto,
     @User() userEntity: UserEntity,
   ): Promise<IServerSignature> {
-    return this.contractManagerSignErc1155Service.erc1155Token(dto, userEntity);
+    return this.contractManagerSignErc1155Service.deploy(dto, userEntity);
   }
 }

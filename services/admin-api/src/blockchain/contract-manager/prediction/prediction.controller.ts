@@ -14,10 +14,10 @@ export class ContractManagerPredictionController {
   constructor(private readonly contractManagerSignService: ContractManagerPredictionSignService) {}
 
   @Post("/prediction")
-  public prediction(
+  public deploy(
     @Body() dto: PredictionContractDeployDto,
     @User() userEntity: UserEntity,
   ): Promise<IServerSignature> {
-    return this.contractManagerSignService.prediction(dto, userEntity);
+    return this.contractManagerSignService.deploy(dto, userEntity);
   }
 }

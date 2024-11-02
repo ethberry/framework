@@ -165,7 +165,7 @@ export enum PredictionContractTemplates {
   "REFERRAL" = "REFERRAL",
 }
 
-export enum VestingContractTemplates {
+export enum LegacyVestingContractTemplates {
   "VESTING" = "VESTING",
   "VESTING_VOTES" = "VESTING_VOTES",
 }

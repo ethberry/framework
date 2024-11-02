@@ -17,7 +17,7 @@ import { PagesSection } from "./infrastructure/pages";
 import { StakingSection } from "./mechanics/staking";
 import { RaffleSection } from "./mechanics/raffle";
 import { LotterySection } from "./mechanics/lottery";
-import { VestingSection } from "./mechanics/vesting";
+import { LegacyVestingSection } from "./mechanics/legacy-vesting";
 import { ClaimSection } from "./mechanics/claim";
 import { RecipesSection } from "./mechanics/recipes";
 import { AssetPromoSection } from "./mechanics/promo";
@@ -56,7 +56,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={12} sm={4}>
           <WaitListSection />
           <ClaimSection />
-          <VestingSection />
+          <LegacyVestingSection />
           <RecipesSection />
           <AssetPromoSection />
           <RentSection />

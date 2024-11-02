@@ -18,7 +18,7 @@ export class ContractManagerWaitListSignService {
     private readonly contractService: ContractService,
   ) {}
 
-  public async waitList(userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByWaitListContractTemplate({}, userEntity.chainId);
 

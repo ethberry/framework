@@ -20,7 +20,7 @@ export class ContractManagerStakingSignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async staking(dto: IStakingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: IStakingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByStakingContractTemplate(dto, userEntity.chainId);
 

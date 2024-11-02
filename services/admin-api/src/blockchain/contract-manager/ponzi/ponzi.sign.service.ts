@@ -20,7 +20,7 @@ export class ContractManagerPonziSignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async ponzi(dto: IPonziContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: IPonziContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByPonziContractTemplate(dto, userEntity.chainId);
 

@@ -20,7 +20,7 @@ export class ContractManagerPaymentSplitterSignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async paymentSplitter(dto: IWalletContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: IWalletContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByPaymentSplitterContractTemplate(dto, userEntity.chainId);
 

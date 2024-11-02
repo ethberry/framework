@@ -20,7 +20,7 @@ import { AdminSection } from "./infrastructure";
 import { PonziSection } from "./mechanics/ponzi";
 import { StakingSection } from "./mechanics/staking";
 import { DispenserSection } from "./mechanics/dispenser";
-import { VestingSection } from "./mechanics/vesting";
+import { LegacyVestingSection } from "./mechanics/legacy-vesting";
 import { WaitListSection } from "./mechanics/wait-list";
 import { MysterySection } from "./mechanics/mystery";
 
@@ -43,7 +43,7 @@ export const Dashboard: FC = () => {
           <DispenserSection />
           <WaitListSection />
           <ClaimSection />
-          <VestingSection />
+          <LegacyVestingSection />
           <DiscreteSection />
           <AssetPromoSection />
           <StakingSection />

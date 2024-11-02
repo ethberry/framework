@@ -29,7 +29,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'PREDICTION',
         'RAFFLE',
         'STAKING',
-        'VESTING',
+        'LEGACY_VESTING',
         'WAIT_LIST',
         'WRAPPER'
       );

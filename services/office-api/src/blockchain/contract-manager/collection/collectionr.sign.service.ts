@@ -20,7 +20,7 @@ export class ContractManagerCollectionSignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async collection(dto: ICollectionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: ICollectionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByCollectionTemplates(dto, userEntity.chainId);
 

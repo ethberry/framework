@@ -14,7 +14,7 @@ export class ContractManagerErc998Controller {
   constructor(private readonly contractManagerErc998SignService: ContractManagerErc998SignService) {}
 
   @Post("/erc998")
-  public erc998Token(@Body() dto: Erc998ContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerErc998SignService.erc998Token(dto, userEntity);
+  public deploy(@Body() dto: Erc998ContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerErc998SignService.deploy(dto, userEntity);
   }
 }

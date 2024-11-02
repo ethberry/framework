@@ -14,7 +14,7 @@ export class ContractManagerLootController {
   constructor(private readonly contractManagerLootSignService: ContractManagerLootSignService) {}
 
   @Post("/loot")
-  public loot(@Body() dto: LootContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerLootSignService.loot(dto, userEntity);
+  public deploy(@Body() dto: LootContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerLootSignService.deploy(dto, userEntity);
   }
 }

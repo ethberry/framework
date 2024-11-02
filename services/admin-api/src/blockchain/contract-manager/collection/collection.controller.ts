@@ -14,7 +14,7 @@ export class ContractManagerCollectionController {
   constructor(private readonly contractManagerSignService: ContractManagerCollectionSignService) {}
 
   @Post("/collection")
-  public collection(@Body() dto: Erc721CollectionDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.collection(dto, userEntity);
+  public deploy(@Body() dto: Erc721CollectionDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.deploy(dto, userEntity);
   }
 }

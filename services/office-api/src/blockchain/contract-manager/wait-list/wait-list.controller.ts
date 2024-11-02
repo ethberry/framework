@@ -13,7 +13,7 @@ export class ContractManagerWaitListController {
   constructor(private readonly contractManagerSignService: ContractManagerWaitListSignService) {}
 
   @Post("/wait-list")
-  public waitList(@User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.waitList(userEntity);
+  public deploy(@User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.deploy(userEntity);
   }
 }

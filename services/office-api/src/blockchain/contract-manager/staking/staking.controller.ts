@@ -10,11 +10,11 @@ import { StakingContractDeployDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")
-export class ContractManagerController {
+export class ContractManagerStakingController {
   constructor(private readonly contractManagerStakingSignService: ContractManagerStakingSignService) {}
 
   @Post("/staking")
-  public staking(@Body() dto: StakingContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerStakingSignService.staking(dto, userEntity);
+  public deploy(@Body() dto: StakingContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerStakingSignService.deploy(dto, userEntity);
   }
 }

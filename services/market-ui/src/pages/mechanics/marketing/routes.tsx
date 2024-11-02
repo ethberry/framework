@@ -4,7 +4,7 @@ import { claimRoutes } from "./claim/routes";
 import { lootRoutes } from "./loot/routes";
 import { mysteryRoutes } from "./mystery/routes";
 import { stakingRoutes } from "./staking/routes";
-import { vestingRoutes } from "./vesting/routes";
+import { legacyVestingRoutes } from "./legacy-vesting/routes";
 import { waitListRoutes } from "./wait-list/routes";
 import { wrapperRoutes } from "./wrapper/routes";
 
@@ -13,7 +13,7 @@ export const marketingMechanicsRoutes: Array<RouteObject> = [
   ...lootRoutes,
   ...mysteryRoutes,
   ...stakingRoutes,
-  ...vestingRoutes,
+  ...legacyVestingRoutes,
   ...waitListRoutes,
   ...wrapperRoutes,
 ];

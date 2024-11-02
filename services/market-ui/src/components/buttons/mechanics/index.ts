@@ -26,9 +26,9 @@ export * from "./marketing/staking/deposit";
 export * from "./marketing/staking/reward";
 export * from "./marketing/staking/reward-complex";
 
-export * from "./marketing/vesting/release";
-export * from "./marketing/vesting/releasable";
-export * from "./marketing/vesting/transfer-ownership";
+export * from "./marketing/legacy-vesting/release";
+export * from "./marketing/legacy-vesting/releasable";
+export * from "./marketing/legacy-vesting/transfer-ownership";
 
 export * from "./marketing/wait-list/claim";
 export * from "./marketing/wait-list/join";

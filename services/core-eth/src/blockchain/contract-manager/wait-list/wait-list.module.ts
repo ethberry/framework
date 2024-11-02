@@ -6,7 +6,7 @@ import { SecretManagerModule } from "@ethberry/nest-js-module-secret-manager-gcp
 
 import { signalServiceProvider } from "../../../common/providers";
 import { UserModule } from "../../../infrastructure/user/user.module";
-import { VestingModule } from "../../mechanics/marketing/vesting/vesting.module";
+import { LegacyVestingModule } from "../../mechanics/marketing/legacy-vesting/legacy-vesting.module";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../hierarchy/template/template.module";
 import { TokenModule } from "../../hierarchy/token/token.module";
@@ -23,7 +23,7 @@ import { ContractManagerWaitListServiceLog } from "./wait-list.service.log";
     EthersModule.deferred(),
     ContractModule,
     EventHistoryModule,
-    VestingModule,
+    LegacyVestingModule,
     TemplateModule,
     TokenModule,
     RentableModule,

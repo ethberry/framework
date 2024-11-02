@@ -10,7 +10,7 @@ import { PonziEventType, TPonziEvents } from "./ponzi";
 import { RaffleEventType, TRaffleEvents } from "./raffle";
 import { ReferralProgramEventType, TReferralProgramEvents } from "./referral";
 import { StakingEventType, TStakingEvents } from "./staking";
-import { TVestingEvents, VestingEventType } from "./vesting";
+import { TLegacyVestingEvents, LegacyVestingEventType } from "./legacy-vesting";
 import { TWaitListEvents, WaitListEventType } from "./wait-list";
 import { TWrapperEvents, WrapperEventType } from "./wrapper";
 
@@ -25,7 +25,7 @@ export * from "./ponzi";
 export * from "./raffle";
 export * from "./referral";
 export * from "./staking";
-export * from "./vesting";
+export * from "./legacy-vesting";
 export * from "./wait-list";
 export * from "./wrapper";
 
@@ -41,7 +41,7 @@ export type TMechanicsEventType =
   | RaffleEventType
   | ReferralProgramEventType
   | StakingEventType
-  | VestingEventType
+  | LegacyVestingEventType
   | WaitListEventType
   | WrapperEventType;
 
@@ -57,6 +57,6 @@ export type TMechanicsEventData =
   | TRaffleEvents
   | TReferralProgramEvents
   | TStakingEvents
-  | TVestingEvents
+  | TLegacyVestingEvents
   | TWaitListEvents
   | TWrapperEvents;

@@ -10,7 +10,7 @@ export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
   MysteryBoxDeployed: ["/mystery/contracts"],
   CollectionDeployed: ["/collection/contracts"],
   PonziDeployed: ["/ponzi/contracts"],
-  VestingDeployed: ["/vesting/contracts"],
+  VestingDeployed: ["/legacy-vesting/contracts"],
   StakingDeployed: ["/staking/contracts"],
   LotteryDeployed: ["/lottery/contracts"],
   RaffleDeployed: ["/raffle/contracts"],

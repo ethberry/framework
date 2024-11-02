@@ -764,7 +764,7 @@
         "promo": "Promo",
         "staking": "Staking",
         "title": "Mechanics",
-        "vesting": "Vesting",
+        "legacy-vesting": "Legacy Vesting",
         "wait-list": "Waitlist"
       },
       "title": "Dashboard"
@@ -967,11 +967,11 @@
     "users": {
       "title": "Users"
     },
-    "vesting": {
+    "legacy-vesting": {
       "contracts": {
-        "title": "Vesting Contracts"
+        "title": "Legacy Vesting Contracts"
       },
-      "title": "Vesting"
+      "title": "Legacy Vesting"
     },
     "wait-list": {
       "contracts": {

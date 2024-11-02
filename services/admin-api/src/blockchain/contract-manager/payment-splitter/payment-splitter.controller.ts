@@ -14,10 +14,10 @@ export class ContractManagerPaymentSplitterController {
   constructor(private readonly contractManagerPaymentSplitterSignService: ContractManagerPaymentSplitterSignService) {}
 
   @Post("/payment-splitter")
-  public wallet(
+  public deploy(
     @Body() dto: PaymentSplitterContractDeployDto,
     @User() userEntity: UserEntity,
   ): Promise<IServerSignature> {
-    return this.contractManagerPaymentSplitterSignService.paymentSplitter(dto, userEntity);
+    return this.contractManagerPaymentSplitterSignService.deploy(dto, userEntity);
   }
 }

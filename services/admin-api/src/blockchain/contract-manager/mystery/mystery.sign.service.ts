@@ -20,7 +20,7 @@ export class ContractManagerMysterySignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async mystery(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByMysteryContractTemplates(dto, userEntity.chainId);
 

@@ -23,8 +23,8 @@ export * from "./staking/report";
 export * from "./staking/rule";
 export * from "./staking/deposit";
 
-export * from "./vesting/deploy";
-export * from "./vesting/search";
+export * from "./legacy-vesting/deploy";
+export * from "./legacy-vesting/search";
 
 export * from "./wait-list/item/create";
 export * from "./wait-list/item/search";

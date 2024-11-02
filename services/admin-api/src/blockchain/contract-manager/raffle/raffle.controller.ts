@@ -13,7 +13,7 @@ export class ContractManagerRaffleController {
   constructor(private readonly contractManagerRaffleSignService: ContractManagerRaffleSignService) {}
 
   @Post("/raffle")
-  public raffle(@User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerRaffleSignService.raffle(userEntity);
+  public deploy(@User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerRaffleSignService.deploy(userEntity);
   }
 }

@@ -44,7 +44,6 @@ export class SeedContractErc1155DumbWayToDieAt1563804000151 implements Migration
         'ACTIVE',
         'ERC1155',
         '{EXTERNAL}',
-        14498221,
         1,
         '${currentDateTime}',
         '${currentDateTime}'

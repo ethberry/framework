@@ -232,18 +232,6 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1040701,
-        'Infinity',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        10100040701,
-        0,
-        1,
-        'ACTIVE',
-        10407,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         1040901,
         'Archery',
         '${simpleFormatting}',

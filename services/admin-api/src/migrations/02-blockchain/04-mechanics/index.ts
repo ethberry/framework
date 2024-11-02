@@ -10,7 +10,7 @@ export * from "./09-wait-list";
 export * from "./10-ponzi";
 export * from "./11-rent";
 export * from "./12-staking";
-export * from "./13-vesting";
+export * from "./13-legacy-vesting";
 export * from "./14-wrapper";
 export * from "./15-raffle";
 export * from "./16-dispenser";

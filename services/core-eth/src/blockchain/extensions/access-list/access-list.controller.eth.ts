@@ -53,7 +53,7 @@ export class AccessListControllerEth {
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.StakingDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.WaitListDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PaymentSplitterDeployed },
-    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LegacyVestingDeployed },
   ])
   public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     return this.accessListServiceEth.deploy(event);

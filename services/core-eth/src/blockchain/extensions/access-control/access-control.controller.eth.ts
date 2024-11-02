@@ -55,7 +55,7 @@ export class AccessControlControllerEth {
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LootBoxDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.StakingDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PonziDeployed },
-    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LegacyVestingDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LotteryDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.RaffleDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PaymentSplitterDeployed },
@@ -68,7 +68,7 @@ export class AccessControlControllerEth {
     return this.accessControlServiceEth.deploy(event, context, ContractSecurity.ACCESS_CONTROL);
   }
 
-  @EventPattern([{ contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingDeployed }])
+  @EventPattern([{ contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LegacyVestingDeployed }])
   public deployOwnable(
     @Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>,
     @Ctx() context: Log,

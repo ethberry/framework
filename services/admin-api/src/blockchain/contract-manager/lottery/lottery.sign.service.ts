@@ -20,7 +20,7 @@ export class ContractManagerLotterySignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async lottery(dto: ILotteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: ILotteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByLotteryContractTemplate(dto, userEntity.chainId);
 

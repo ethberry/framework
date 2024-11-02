@@ -26,6 +26,6 @@ export * from "./marketing/wait-list/list/upload";
 export * from "./marketing/wait-list/list/create";
 export * from "./marketing/wait-list/list/generate";
 
-export * from "./marketing/vesting/deploy";
-export * from "./marketing/vesting/release";
-export * from "./marketing/vesting/releasable";
+export * from "./marketing/legacy-vesting/deploy";
+export * from "./marketing/legacy-vesting/release";
+export * from "./marketing/legacy-vesting/releasable";

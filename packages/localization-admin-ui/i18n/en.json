@@ -454,7 +454,7 @@
       "Unpaused": "Unpaused",
       "UpdateUser": "UpdateUser",
       "Upgrade": "Upgrade",
-      "VestingDeployed": "VestingDeployed",
+      "LegacyVestingDeployed": "LegacyVestingDeployed",
       "VrfSubscriptionSet": "VrfSubscriptionSet",
       "WaitListDeployed": "WaitListDeployed",
       "WaitListRewardClaimed": "WaitListRewardClaimed",
@@ -1201,7 +1201,7 @@
         "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",
-        "vesting": "Vesting",
+        "legacy-vesting": "Legacy Vesting",
         "wait-list": "Waitlist"
       },
       "title": "Dashboard"
@@ -1541,7 +1541,7 @@
         "undefined": "Staking"
       },
       "title": "Rate plans",
-      "vesting": {
+      "legacy-vesting": {
         "undefined": "Vesting"
       },
       "wait_list": {
@@ -1623,11 +1623,11 @@
       },
       "title": "Users"
     },
-    "vesting": {
+    "legacy-vesting": {
       "contracts": {
-        "title": "Vesting Contracts"
+        "title": "Legacy Vesting Contracts"
       },
-      "title": "Vesting"
+      "title": "Legacy Vesting"
     },
     "wait-list": {
       "contracts": {

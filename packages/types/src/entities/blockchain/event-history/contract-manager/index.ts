@@ -1,5 +1,5 @@
 import { IContractManagerCollectionDeployedEvent } from "./collection";
-import { IContractManagerVestingDeployedEvent } from "./vesting";
+import { IContractManagerLegacyVestingDeployedEvent } from "./legacy-vesting";
 import { IContractManagerMysteryTokenDeployedEvent } from "./mystery";
 import { IContractManagerLootTokenDeployedEvent } from "./loot";
 import { IContractManagerERC20TokenDeployedEvent } from "./erc20";
@@ -16,7 +16,7 @@ import { IContractManagerPaymentSplitterDeployedEvent } from "./payment-splitter
 export { IContractManagerCommonDeployedEvent } from "./common";
 
 export enum ContractManagerEventType {
-  VestingDeployed = "VestingDeployed",
+  LegacyVestingDeployed = "LegacyVestingDeployed",
   ERC20TokenDeployed = "ERC20TokenDeployed",
   ERC721TokenDeployed = "ERC721TokenDeployed",
   ERC998TokenDeployed = "ERC998TokenDeployed",
@@ -33,7 +33,7 @@ export enum ContractManagerEventType {
 }
 
 export enum ContractManagerEventSignature {
-  VestingDeployed = "VestingDeployed(address,uint256,(address,uint64,uint16,uint16,string))",
+  LegacyVestingDeployed = "LegacyVestingDeployed(address,uint256,(address,uint64,uint16,uint16,string))",
   ERC20TokenDeployed = "ERC20TokenDeployed(address,uint256,(string,string,uint256,string))",
   ERC721TokenDeployed = "ERC721TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC998TokenDeployed = "ERC998TokenDeployed(address,uint256,(string,string,uint96,string,string))",
@@ -50,7 +50,7 @@ export enum ContractManagerEventSignature {
 }
 
 export type TContractManagerEvent =
-  | IContractManagerVestingDeployedEvent
+  | IContractManagerLegacyVestingDeployedEvent
   | IContractManagerERC20TokenDeployedEvent
   | IContractManagerERC721TokenDeployedEvent
   | IContractManagerERC1155TokenDeployedEvent
@@ -65,7 +65,7 @@ export type TContractManagerEvent =
   | IContractManagerWaitListDeployedEvent;
 
 export {
-  IContractManagerVestingDeployedEvent,
+  IContractManagerLegacyVestingDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,

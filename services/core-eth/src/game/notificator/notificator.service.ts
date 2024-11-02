@@ -39,7 +39,7 @@ import type {
   IStakingRuleCreatedData,
   IStakingRuleUpdatedData,
   ITokenTransferData,
-  IVestingReleaseData,
+  ILegacyVestingReleaseData,
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
@@ -303,7 +303,7 @@ export class NotificatorService {
   }
 
   // MODULE:VESTING
-  public vestingRelease(data: IVestingReleaseData): Promise<any> {
+  public vestingRelease(data: ILegacyVestingReleaseData): Promise<any> {
     return this.sendMessage(data.vesting.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.VESTING_RELEASED, data).toPromise();
     });

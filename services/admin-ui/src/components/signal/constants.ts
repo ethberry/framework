@@ -13,7 +13,7 @@ export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
   [ContractManagerEventType.MysteryBoxDeployed]: ["/mystery/contracts"],
   [ContractManagerEventType.CollectionDeployed]: ["/collection/contracts"],
   PonziDeployed: ["/ponzi/contracts"],
-  [ContractManagerEventType.VestingDeployed]: ["/vesting/contracts"],
+  [ContractManagerEventType.LegacyVestingDeployed]: ["/legacy-vesting/contracts"],
   StakingDeployed: ["/staking/contracts"],
   LotteryDeployed: ["/lottery/contracts"],
   RaffleDeployed: ["/raffle/contracts"],

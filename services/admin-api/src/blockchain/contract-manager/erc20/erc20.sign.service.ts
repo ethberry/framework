@@ -20,7 +20,7 @@ export class ContractManagerErc20SignService {
     private readonly planService: RatePlanService,
   ) {}
 
-  public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async deploy(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const { bytecode } = await this.getBytecodeByErc20ContractTemplates(dto, userEntity.chainId);
 
