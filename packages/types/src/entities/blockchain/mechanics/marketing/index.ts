@@ -11,5 +11,7 @@ export * from "./staking/deposit";
 
 export * from "./legacy-vesting/vesting";
 
+export * from "./vesting/vesting";
+
 export * from "./wait-list/list";
 export * from "./wait-list/item";

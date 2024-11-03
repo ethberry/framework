@@ -56,6 +56,7 @@ export class AccessControlControllerEth {
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.StakingDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PonziDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LegacyVestingDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingBoxDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LotteryDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.RaffleDeployed },
     { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.PaymentSplitterDeployed },

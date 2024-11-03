@@ -125,6 +125,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
     "test": "cross-env NODE_ENV=${NODE_ENV:=test} BUSINESS_TYPE=${BUSINESS_TYPE:=B2B} jest --config jest.config.json --detectOpenHandles --passWithNoTests"
   },
-  "title": "Gemunion Framework - Admin API",
+  "title": "Ethberry Framework - Admin API",
   "version": "2.0.0"
 }

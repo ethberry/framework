@@ -30,6 +30,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'RAFFLE',
         'STAKING',
         'LEGACY_VESTING',
+        'VESTING',
         'WAIT_LIST',
         'WRAPPER'
       );
@@ -118,6 +119,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // 25x - staking
     // 26x - ponzi
     // 27x - prediction
+    // 28x - vesting
 
     const table = new Table({
       name: `${ns}.contract`,

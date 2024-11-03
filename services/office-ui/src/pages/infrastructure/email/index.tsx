@@ -1,6 +1,6 @@
-import { FC, Fragment, MouseEvent } from "react";
+import { FC, MouseEvent } from "react";
+import { Grid, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Mail } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
@@ -23,7 +23,7 @@ export const Email: FC = () => {
     };
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "emails"]} />
 
       <PageHeader message="pages.emails.title" />
@@ -42,6 +42,6 @@ export const Email: FC = () => {
           ))}
         </List>
       </ProgressOverlay>
-    </Fragment>
+    </Grid>
   );
 };

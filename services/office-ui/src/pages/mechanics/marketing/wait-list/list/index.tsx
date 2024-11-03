@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
@@ -6,7 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { CommonSearchForm } from "@ethberry/mui-form-search";
 import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { useUser } from "@ethberry/provider-user";
 import { DeleteDialog } from "@ethberry/mui-dialog-delete";
 import { emptyStateString } from "@ethberry/draft-js-utils";
@@ -17,8 +17,8 @@ import type { IUser, IWaitListList, IWaitListListSearchDto } from "@framework/ty
 
 import {
   WaitListListCreateButton,
-  WaitListListUploadButton,
   WaitListListGenerateButton,
+  WaitListListUploadButton
 } from "../../../../../components/buttons";
 import { SearchMerchantInput } from "../../../../../components/inputs/search-merchant";
 import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
@@ -77,7 +77,7 @@ export const WaitListList: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "wait-list", "wait-list.list"]} />
 
       <PageHeader message="pages.wait-list.list.title">
@@ -148,6 +148,6 @@ export const WaitListList: FC = () => {
         testId="WaitListListEditDialog"
         initialValues={selected}
       />
-    </Fragment>
+    </Grid>
   );
 };

@@ -1,5 +1,5 @@
-import { FC, Fragment } from "react";
-import { Avatar, Box, Typography } from "@mui/material";
+import { FC } from "react";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
@@ -30,7 +30,7 @@ export const RaffleContract: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "raffle", "raffle.contract"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.raffle.contract.title" data={selected} />
@@ -60,6 +60,6 @@ export const RaffleContract: FC = () => {
 
       <RafflePurchase contract={selected} />
       <RaffleStatistic contract={selected} />
-    </Fragment>
+    </Grid>
   );
 };

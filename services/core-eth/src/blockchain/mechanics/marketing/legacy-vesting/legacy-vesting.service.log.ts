@@ -39,6 +39,7 @@ export class LegacyVestingServiceLog {
         LegacyVestingEventType.ERC20Released,
         LegacyVestingEventType.EtherReleased,
         LegacyVestingEventType.PaymentReceived,
+        LegacyVestingEventType.TransferReceived,
         Erc1363EventType.TransferReceived,
       ],
     });

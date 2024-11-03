@@ -30,6 +30,8 @@ export * from "./marketing/legacy-vesting/release";
 export * from "./marketing/legacy-vesting/releasable";
 export * from "./marketing/legacy-vesting/transfer-ownership";
 
+export * from "./marketing/vesting/purchase";
+
 export * from "./marketing/wait-list/claim";
 export * from "./marketing/wait-list/join";
 

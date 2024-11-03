@@ -1,5 +1,5 @@
-import { FC, Fragment, useCallback, useEffect, useRef } from "react";
-import { Box, Button } from "@mui/material";
+import { FC, useCallback, useEffect, useRef } from "react";
+import { Box, Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
@@ -120,7 +120,7 @@ export const ReferralChart: FC = () => {
   }, [chartRef.current, rows]);
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.chart"]} />
 
       <PageHeader message="pages.referral.chart.title">
@@ -134,6 +134,6 @@ export const ReferralChart: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <Box mt={4} width="100%" ref={chartRef} overflow="visible" />
       </ProgressOverlay>
-    </Fragment>
+    </Grid>
   );
 };

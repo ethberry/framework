@@ -19,18 +19,12 @@ export class BaseUriControllerEth {
   }
 
   @EventPattern([
-    {
-      contractType: ContractType.CONTRACT_MANAGER,
-      eventName: ContractManagerEventType.ERC721TokenDeployed,
-    },
-    {
-      contractType: ContractType.CONTRACT_MANAGER,
-      eventName: ContractManagerEventType.ERC998TokenDeployed,
-    },
-    {
-      contractType: ContractType.CONTRACT_MANAGER,
-      eventName: ContractManagerEventType.ERC1155TokenDeployed,
-    },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC721TokenDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC998TokenDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.ERC1155TokenDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.MysteryBoxDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.LootBoxDeployed },
+    { contractType: ContractType.CONTRACT_MANAGER, eventName: ContractManagerEventType.VestingBoxDeployed }
   ])
   public deploy(@Payload() event: ILogEvent<IContractManagerCommonDeployedEvent>): void {
     return this.baseUriServiceEth.deploy(event);

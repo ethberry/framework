@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 import { DateRange } from "@mui/x-date-pickers-pro";
 import { stringify } from "qs";
@@ -51,7 +51,7 @@ export const OrderList: FC = () => {
   };
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "ecommerce", "orders"]} />
 
       <PageHeader message="pages.orders.title" />
@@ -74,6 +74,6 @@ export const OrderList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

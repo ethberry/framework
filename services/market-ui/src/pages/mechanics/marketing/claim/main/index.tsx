@@ -1,5 +1,5 @@
-import { FC, Fragment } from "react";
-import { Button, ListItemText } from "@mui/material";
+import { FC } from "react";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -24,7 +24,7 @@ export const Claim: FC = () => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "claim"]} />
       <PageHeader message="pages.claim.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -54,6 +54,6 @@ export const Claim: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

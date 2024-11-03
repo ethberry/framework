@@ -29,7 +29,7 @@ export const MysteryBoxToken: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "mystery", "mystery.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.mystery.token.title" data={selected.template} />
@@ -52,6 +52,6 @@ export const MysteryBoxToken: FC = () => {
       </Grid>
 
       {selected.id ? <TokenHistory token={selected} /> : null}
-    </Fragment>
+    </Grid>
   );
 };

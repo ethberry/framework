@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
@@ -7,7 +7,7 @@ import { SelectInput } from "@ethberry/mui-inputs-core";
 import { CommonSearchForm } from "@ethberry/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 import { DeleteDialog } from "@ethberry/mui-dialog-delete";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { useUser } from "@ethberry/provider-user";
 import { emptyItem } from "@ethberry/mui-inputs-asset";
 import { cleanUpAsset } from "@framework/exchange";
@@ -66,7 +66,7 @@ export const ClaimTemplate: FC = () => {
 
   const { formatMessage } = useIntl();
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "claims", "claims.template"]} />
 
       <PageHeader message="pages.claims.template.title">
@@ -148,6 +148,6 @@ export const ClaimTemplate: FC = () => {
         open={action === CollectionActions.edit}
         initialValues={selected}
       />
-    </Fragment>
+    </Grid>
   );
 };

@@ -102,7 +102,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'test1@gemunion.io',
+        'test1@ethberry.io',
         'qwerty',
         'Yuri',
         '${avatarWhiteUrl}',
@@ -118,7 +118,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'test2@gemunion.io',
+        'test2@ethberry.io',
         'qwerty',
         'Arthur',
         '${avatarWhiteUrl}',
@@ -134,7 +134,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'test3@gemunion.io',
+        'test3@ethberry.io',
         'qwerty',
         'Jenya',
         '${avatarWhiteUrl}',

@@ -29,7 +29,7 @@ export const MysteryBox: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "mystery", "mystery.box"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.mystery.box.title" data={selected} />
@@ -53,6 +53,6 @@ export const MysteryBox: FC = () => {
       </Grid>
 
       <BoxContent content={selected.content} />
-    </Fragment>
+    </Grid>
   );
 };

@@ -1,5 +1,5 @@
-import { FC, Fragment, useCallback, useEffect, useRef, useState } from "react";
-import { Box, Button } from "@mui/material";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { Box, Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
@@ -147,7 +147,7 @@ export const PonziChart: FC = () => {
   }, [recentDeposits, chartRef.current, rows]);
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "ponzi", "ponzi.chart"]} />
 
       <PageHeader message="pages.ponzi.chart.title">
@@ -169,6 +169,6 @@ export const PonziChart: FC = () => {
           <Box sx={{ mt: 4, mb: 2 }} width="100%" ref={chartRef} />
         </StyledEmptyWrapper>
       </ProgressOverlay>
-    </Fragment>
+    </Grid>
   );
 };

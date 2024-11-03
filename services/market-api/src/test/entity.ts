@@ -1,14 +1,45 @@
 import { v4 } from "uuid";
-import { ZeroAddress } from "ethers";
+import { WeiPerEther, ZeroAddress } from "ethers";
 import { DeepPartial } from "typeorm";
 
 import { simpleFormatting } from "@ethberry/draft-js-utils";
 import { baseTokenURI } from "@ethberry/contracts-constants";
-import type { IContract, IUser } from "@framework/types";
-import { ContractStatus, TokenType, UserRole, UserStatus } from "@framework/types";
+import { wallet } from "@ethberry/constants";
+import type { IAsset, IAssetComponent, IContract, ITemplate, IUser, IVestingBox } from "@framework/types";
+import {
+  ContractStatus,
+  IMerchant,
+  MerchantStatus,
+  RatePlanType,
+  TokenType,
+  UserRole,
+  UserStatus,
+} from "@framework/types";
 import { EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
 
 import { UserEntity } from "../infrastructure/user/user.entity";
+import { MerchantEntity } from "../infrastructure/merchant/merchant.entity";
+
+export const generateTestMerchant = (data: Partial<IMerchant> = {}): DeepPartial<MerchantEntity> => {
+  return Object.assign(
+    {
+      title: "GEMUNION",
+      description: simpleFormatting,
+      email: `trejgun+${v4()}@gmail.com`,
+      imageUrl,
+      wallet,
+      merchantStatus: MerchantStatus.ACTIVE,
+      // social: IMerchantSocial,
+      ratePlan: RatePlanType.GOLD,
+      users: [],
+      products: [],
+      orders: [],
+      chainLinkSubscriptions: [],
+      refLevels: [],
+    },
+    data,
+  );
+};
 
 export const generateTestUser = (data: Partial<IUser> = {}): DeepPartial<UserEntity> => {
   return Object.assign(
@@ -46,6 +77,54 @@ export const generateTestContract = (data: Partial<IContract> = {}): Record<stri
       contractStatus: ContractStatus.ACTIVE,
       contractType: TokenType.NATIVE,
       contractFeatures: [],
+    },
+    data,
+  );
+};
+
+export const generateTemplate = (data: Partial<ITemplate> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      title: "Native token",
+      description: simpleFormatting,
+      imageUrl,
+    },
+    data,
+  );
+};
+
+export const generateVestingBox = (data: Partial<IVestingBox> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      title: "Native token",
+      description: simpleFormatting,
+      imageUrl,
+      shape: "LINEAR",
+      cliff: 100,
+      startTimestamp: new Date().toISOString(),
+      duration: 1000,
+      period: 1000,
+      afterCliffBasisPoints: 0,
+      growthRate: 0,
+    },
+    data,
+  );
+};
+
+export const generateAsset = (data: Partial<IAsset> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      components: [],
+    },
+    data,
+  );
+};
+
+export const generateAssetComponent = (data: Partial<IAssetComponent> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      tokenType: TokenType.NATIVE,
+      amount: WeiPerEther.toString(),
     },
     data,
   );

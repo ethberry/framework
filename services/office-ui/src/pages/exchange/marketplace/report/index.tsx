@@ -1,12 +1,12 @@
-import { FC, Fragment, useCallback } from "react";
-import { Button } from "@mui/material";
+import { FC, useCallback } from "react";
+import { Button, Grid } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
 import {
   DataGridPremium,
   DataGridPremiumProps,
   GridCellParams,
   gridClasses,
-  GridRowParams,
+  GridRowParams
 } from "@mui/x-data-grid-premium";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
@@ -115,7 +115,7 @@ export const MarketplaceReport: FC = () => {
   ];
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "marketplace", "marketplace.report"]} />
 
       <PageHeader message="pages.marketplace.report.title">
@@ -168,6 +168,6 @@ export const MarketplaceReport: FC = () => {
         disableAggregation
         disableRowGrouping
       />
-    </Fragment>
+    </Grid>
   );
 };

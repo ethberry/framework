@@ -34,6 +34,7 @@ export class ContractManagerServiceLog {
         ContractManagerEventSignature.ERC998TokenDeployed,
         ContractManagerEventSignature.ERC1155TokenDeployed,
         ContractManagerEventSignature.LegacyVestingDeployed,
+        ContractManagerEventSignature.VestingBoxDeployed,
         ContractManagerEventSignature.MysteryBoxDeployed,
         ContractManagerEventSignature.LootBoxDeployed,
         ContractManagerEventSignature.CollectionDeployed,

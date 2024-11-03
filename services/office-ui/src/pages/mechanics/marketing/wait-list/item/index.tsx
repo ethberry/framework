@@ -1,11 +1,11 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Delete, FilterList } from "@mui/icons-material";
 
 import { CommonSearchForm } from "@ethberry/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { useUser } from "@ethberry/provider-user";
 import { DeleteDialog } from "@ethberry/mui-dialog-delete";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
@@ -51,7 +51,7 @@ export const WaitListItem: FC = () => {
   const { formatMessage } = useIntl();
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "wait-list", "wait-list.item"]} />
 
       <PageHeader message="pages.wait-list.item.title">
@@ -125,6 +125,6 @@ export const WaitListItem: FC = () => {
         testId="WaitListEditDialog"
         initialValues={selected}
       />
-    </Fragment>
+    </Grid>
   );
 };

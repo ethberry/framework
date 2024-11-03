@@ -29,7 +29,7 @@ export const LootBoxToken: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "loot", "loot.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.loot.token.title" data={selected.template} />
@@ -52,6 +52,6 @@ export const LootBoxToken: FC = () => {
       </Grid>
 
       {selected.id ? <TokenHistory token={selected} /> : null}
-    </Fragment>
+    </Grid>
   );
 };

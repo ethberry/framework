@@ -1,5 +1,5 @@
-import { FC, Fragment } from "react";
-import { Button, ListItemText } from "@mui/material";
+import { FC } from "react";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
@@ -35,7 +35,7 @@ export const WaitListItem: FC = () => {
   });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "wait-list", "wait-list.item"]} />
 
       <PageHeader message="pages.wait-list.item.title">
@@ -71,6 +71,6 @@ export const WaitListItem: FC = () => {
         open={action === CollectionActions.edit}
         initialValues={selected}
       />
-    </Fragment>
+    </Grid>
   );
 };

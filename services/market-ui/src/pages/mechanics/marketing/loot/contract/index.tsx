@@ -1,7 +1,7 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import { Avatar, Box, Typography } from "@mui/material";
-import { useParams } from "react-router";
+import { FC, useEffect, useState } from "react";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
+import { useParams } from "react-router";
 
 import { StyledAvatar } from "@framework/styled";
 import type { IContract } from "@framework/types";
@@ -42,7 +42,7 @@ export const LootContract: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "loot", "loot.contract"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.loot.contract.title" data={selected} />
@@ -71,6 +71,6 @@ export const LootContract: FC = () => {
       </Box>
 
       <LootBoxList embedded />
-    </Fragment>
+    </Grid>
   );
 };

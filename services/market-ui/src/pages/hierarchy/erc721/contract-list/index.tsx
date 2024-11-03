@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import type { ISearchDto } from "@ethberry/types-collection";
@@ -16,7 +16,7 @@ export const Erc721ContractList: FC = () => {
   });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "erc721", "erc721.contracts"]} />
 
       <PageHeader message="pages.erc721.contracts.title" />
@@ -39,6 +39,6 @@ export const Erc721ContractList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

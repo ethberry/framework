@@ -65,6 +65,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} LOG_MODE=${LOG_MODE:=true} node .",
     "test": "exit 0"
   },
-  "title": "Gemunion Framework - Cron microservice",
+  "title": "EthBerry Framework - Cron microservice",
   "version": "0.0.1"
 }

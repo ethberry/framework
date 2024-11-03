@@ -1,5 +1,5 @@
-import { ChangeEvent, FC, Fragment, useState } from "react";
-import { Tab, Tabs } from "@mui/material";
+import { ChangeEvent, FC, useState } from "react";
+import { Grid, Tab, Tabs } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 
@@ -24,7 +24,7 @@ export const MarketplaceOld: FC = () => {
   };
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "marketplace"]} />
 
       <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange}>
@@ -37,6 +37,6 @@ export const MarketplaceOld: FC = () => {
       <Erc998 value={value} />
       <Erc1155 value={value} />
       <Mystery value={value} />
-    </Fragment>
+    </Grid>
   );
 };

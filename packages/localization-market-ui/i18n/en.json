@@ -724,6 +724,7 @@
         "rent": "Rent",
         "staking": "Staking",
         "legacy-vesting": "Legacy Vesting",
+        "vesting": "Vesting",
         "wait-list": "Waitlist",
         "wrapper": "Token wrapper"
       },
@@ -1219,6 +1220,17 @@
     "legacy-vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Legacy Vesting"
+    },
+    "vesting": {
+      "title": "Vesting",
+      "box": {
+        "content": "Vesting Box Content",
+        "price": "Price",
+        "title": "Mystery Box: {title}",
+        "unlockStart": "Unlock starts",
+        "endDate": "End date",
+        "immediateRelease": "Immediate release"
+      }
     },
     "wait-list": {
       "item": {

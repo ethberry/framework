@@ -25,7 +25,7 @@ export const Template: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "marketplace", "marketplace.template"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.marketplace.template.title" data={selected} />
@@ -46,6 +46,6 @@ export const Template: FC = () => {
           ) : null}
         </Grid>
       </Grid>
-    </Fragment>
+    </Grid>
   );
 };

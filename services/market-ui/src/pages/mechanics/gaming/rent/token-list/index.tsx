@@ -1,7 +1,7 @@
-import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
+import { FC } from "react";
 import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
@@ -21,7 +21,7 @@ export const Rent: FC = () => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "rent"]} />
 
       <PageHeader message="pages.rent.title">
@@ -57,6 +57,6 @@ export const Rent: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

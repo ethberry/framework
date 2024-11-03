@@ -1,5 +1,5 @@
-import { FC, Fragment, useCallback, useEffect, useRef, useState } from "react";
-import { Box, Button } from "@mui/material";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { Box, Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
@@ -151,7 +151,7 @@ export const StakingChart: FC = () => {
   }, [recentDeposits, chartRef.current, rows]);
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.chart"]} />
 
       <PageHeader message="pages.staking.chart.title">
@@ -173,6 +173,6 @@ export const StakingChart: FC = () => {
           <Box sx={{ mt: 4, mb: 2 }} width="100%" ref={chartRef} />
         </StyledEmptyWrapper>
       </ProgressOverlay>
-    </Fragment>
+    </Grid>
   );
 };

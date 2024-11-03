@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -25,7 +25,7 @@ export const CraftList: FC = () => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "recipes", "recipes.craft-list"]} />
 
       <PageHeader message="pages.recipes.craft-list.title">
@@ -67,6 +67,6 @@ export const CraftList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

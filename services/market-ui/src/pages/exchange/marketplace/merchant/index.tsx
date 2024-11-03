@@ -1,5 +1,5 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import { Avatar, Box, Typography } from "@mui/material";
+import { FC, useEffect, useState } from "react";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { Skeleton } from "@mui/lab";
 
@@ -42,7 +42,7 @@ export const Merchant: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "marketplace", "marketplace.merchant"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.marketplace.merchant.title" data={selected} />
@@ -71,6 +71,6 @@ export const Merchant: FC = () => {
       </Box>
 
       <ContractList embedded />
-    </Fragment>
+    </Grid>
   );
 };

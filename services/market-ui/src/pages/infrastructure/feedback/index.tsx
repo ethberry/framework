@@ -1,4 +1,5 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
+import { Grid } from "@mui/material";
 
 import { FormWrapper } from "@ethberry/mui-form";
 import { TextArea } from "@ethberry/mui-inputs-core";
@@ -23,7 +24,7 @@ export const Feedback: FC = () => {
   };
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "feedback"]} />
 
       <PageHeader message={"pages.feedback.title"} />
@@ -39,6 +40,6 @@ export const Feedback: FC = () => {
       >
         <TextArea name="text" />
       </FormWrapper>
-    </Fragment>
+    </Grid>
   );
 };

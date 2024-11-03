@@ -34,7 +34,7 @@ export const Erc1155Token: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "erc1155", "erc1155.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.erc1155.token.title" data={selected.template} />
@@ -58,6 +58,6 @@ export const Erc1155Token: FC = () => {
       </Grid>
 
       {selected.id ? <TokenHistory token={selected} /> : null}
-    </Fragment>
+    </Grid>
   );
 };

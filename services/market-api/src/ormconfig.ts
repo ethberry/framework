@@ -41,6 +41,7 @@ import { PonziDepositEntity } from "./blockchain/mechanics/gambling/ponzi/deposi
 import { BreedEntity } from "./blockchain/mechanics/gaming/breed/breed.entity";
 import { PredictionAnswerEntity } from "./blockchain/mechanics/gambling/prediction/answer/answer.entity";
 import { PredictionQuestionEntity } from "./blockchain/mechanics/gambling/prediction/question/question.entity";
+import { VestingBoxEntity } from "./blockchain/mechanics/marketing/vesting/box/box.entity";
 // extensions
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 // integrations
@@ -124,6 +125,7 @@ const config: PostgresConnectionOptions = {
     RentEntity,
     PredictionAnswerEntity,
     PredictionQuestionEntity,
+    VestingBoxEntity,
     // extensions
     AccessControlEntity,
     // integrations

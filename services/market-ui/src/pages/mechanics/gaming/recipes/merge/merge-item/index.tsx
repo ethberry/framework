@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import { emptyItem } from "@ethberry/mui-inputs-asset";
@@ -24,7 +24,7 @@ export const MergeItem: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs
         path={["dashboard", "recipes", "recipes.merge"]}
         data={[{}, {}, { title: selected.item?.components[0].template?.title }]}
@@ -47,6 +47,6 @@ export const MergeItem: FC = () => {
       <StyledDescription component="div">
         <RichTextDisplay data={selected.item?.components[0].template!.description} />
       </StyledDescription>
-    </Fragment>
+    </Grid>
   );
 };

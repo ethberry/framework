@@ -7,6 +7,7 @@ import { lootRoutes } from "./loot/routes";
 import { mysteryRoutes } from "./mystery/routes";
 import { stakingRoutes } from "./staking/routes";
 import { legacyVestingRoutes } from "./legacy-vesting/routes";
+import { vestingRoutes } from "./vesting/routes";
 import { waitListRoutes } from "./wait-list/routes";
 
 export const marketingMechanicsRoutes: Array<RouteObject> = [
@@ -17,5 +18,6 @@ export const marketingMechanicsRoutes: Array<RouteObject> = [
   ...mysteryRoutes,
   ...stakingRoutes,
   ...legacyVestingRoutes,
+  ...vestingRoutes,
   ...waitListRoutes,
 ];

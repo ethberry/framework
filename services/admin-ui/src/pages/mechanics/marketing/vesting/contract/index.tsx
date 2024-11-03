@@ -1,0 +1,145 @@
+import { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { Button, Grid, ListItemText } from "@mui/material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
+import { useWeb3React } from "@web3-react/core";
+
+import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
+import { DeleteDialog } from "@ethberry/mui-dialog-delete";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
+import { emptyStateString } from "@ethberry/draft-js-utils";
+import { ListAction, ListActions, ListItem, StyledPagination } from "@framework/styled";
+import type { IContract, IContractSearchDto } from "@framework/types";
+import { ContractStatus, VestingContractFeatures } from "@framework/types";
+
+import {
+  ContractAllowanceButton,
+  GrantRoleButton,
+  VestingContractMintButton,
+  VestingContractDeployButton,
+  PauseButton,
+  RenounceRoleButton,
+  RevokeRoleButton,
+  DefaultRoyaltyButton,
+  SetBaseTokenURIButton,
+  TransferButton,
+  UnPauseButton,
+} from "../../../../../components/buttons";
+import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
+import { VestingContractEditDialog } from "./edit";
+
+export const VestingContract: FC = () => {
+  const {
+    rows,
+    count,
+    search,
+    action,
+    selected,
+    isLoading,
+    isFiltersOpen,
+    handleToggleFilters,
+    handleEdit,
+    handleEditCancel,
+    handleEditConfirm,
+    handleDelete,
+    handleDeleteCancel,
+    handleDeleteConfirm,
+    handleSearch,
+    handleChangePage,
+  } = useCollection<IContract, IContractSearchDto>({
+    baseUrl: "/vesting/contracts",
+    empty: {
+      title: "",
+      description: emptyStateString,
+      contractStatus: ContractStatus.NEW,
+    },
+    search: {
+      query: "",
+      contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+      contractFeatures: [],
+    },
+    filter: ({ title, description, imageUrl, contractStatus }) => ({
+      title,
+      description,
+      imageUrl,
+      contractStatus,
+    }),
+  });
+
+  const { account = "" } = useWeb3React();
+
+  return (
+    <Grid>
+      <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
+
+      <PageHeader message="pages.vesting.contracts.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        </Button>
+        <VestingContractDeployButton />
+      </PageHeader>
+
+      <ContractSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractFeaturesOptions={VestingContractFeatures}
+      />
+
+      <WithCheckPermissionsListWrapper isLoading={isLoading} count={rows.length}>
+        {rows.map(contract => (
+          <ListItem key={contract.id} account={account} contract={contract}>
+            <ListItemText>{contract.title}</ListItemText>
+            <ListActions dataTestId="VestingActionsMenuButton">
+              <ListAction
+                onClick={handleEdit(contract)}
+                message="form.buttons.edit"
+                dataTestId="ContractEditButton"
+                icon={Create}
+              />
+              <ListAction
+                onClick={handleDelete(contract)}
+                message="form.buttons.delete"
+                dataTestId="ContractDeleteButton"
+                icon={Delete}
+                disabled={contract.contractStatus === ContractStatus.INACTIVE}
+              />
+              <GrantRoleButton contract={contract} />
+              <RevokeRoleButton contract={contract} />
+              <RenounceRoleButton contract={contract} />
+              <PauseButton contract={contract} />
+              <UnPauseButton contract={contract} />
+              <VestingContractMintButton contract={contract} />
+              <ContractAllowanceButton contract={contract} />
+              <DefaultRoyaltyButton contract={contract} />
+              <SetBaseTokenURIButton contract={contract} />
+              <TransferButton contract={contract} />
+            </ListActions>
+          </ListItem>
+        ))}
+      </WithCheckPermissionsListWrapper>
+
+      <StyledPagination
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
+
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={action === CollectionActions.delete}
+        initialValues={selected}
+      />
+
+      <VestingContractEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={action === CollectionActions.edit}
+        initialValues={selected}
+      />
+    </Grid>
+  );
+};

@@ -1,5 +1,5 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import { Avatar, Box, Typography } from "@mui/material";
+import { FC, useEffect, useState } from "react";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { Skeleton } from "@mui/lab";
 
@@ -43,7 +43,7 @@ export const Erc998Contract: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "erc998", "erc998.contract"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.erc998.contract.title" data={selected}>
@@ -74,6 +74,6 @@ export const Erc998Contract: FC = () => {
       </Box>
 
       <Erc998TemplateList embedded />
-    </Fragment>
+    </Grid>
   );
 };

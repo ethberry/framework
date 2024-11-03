@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
@@ -59,7 +59,7 @@ export const ClaimTemplate: FC = () => {
 
   const { formatMessage } = useIntl();
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "claims", "claims.template"]} />
 
       <PageHeader message="pages.claims.template.title">
@@ -138,6 +138,6 @@ export const ClaimTemplate: FC = () => {
         open={action === CollectionActions.edit}
         initialValues={selected}
       />
-    </Fragment>
+    </Grid>
   );
 };

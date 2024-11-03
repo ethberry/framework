@@ -1,13 +1,13 @@
-import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
+import { FC } from "react";
 import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 import { useCollection } from "@ethberry/provider-collection";
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
-import { ModuleType, TokenType } from "@framework/types";
 import type { IToken, ITokenSearchDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { TokenSearchForm } from "../../../components/forms/token-search";
 import { MyTokenListItem } from "./item";
@@ -27,7 +27,7 @@ export const MyTokensList: FC<IMyTokenListProps> = props => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "tokens"]} isHidden={embedded} />
 
       <PageHeader message="pages.tokens.title">
@@ -70,6 +70,6 @@ export const MyTokensList: FC<IMyTokenListProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

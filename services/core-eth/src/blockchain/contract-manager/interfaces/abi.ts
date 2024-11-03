@@ -12,6 +12,7 @@ import PonziFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/
 import RaffleFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/RaffleFactoryFacet.sol/RaffleFactoryFacet.json";
 import StakingFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/StakingFactoryFacet.sol/StakingFactoryFacet.json";
 import LegacyVestingFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/LegacyVestingFactoryFacet.sol/LegacyVestingFactoryFacet.json";
+import VestingFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/VestingFactoryFacet.sol/VestingFactoryFacet.json";
 import WaitListFactoryFacetSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/WaitListFactoryFacet.sol/WaitListFactoryFacet.json";
 import PaymentSplitterFactoryFacet from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManagerFacets/PaymentSplitterFactoryFacet.sol/PaymentSplitterFactoryFacet.json";
 
@@ -30,6 +31,7 @@ export const ContractManagerABI = new Interface([
       .concat(RaffleFactoryFacetSol.abi)
       .concat(StakingFactoryFacetSol.abi)
       .concat(LegacyVestingFactoryFacetSol.abi)
+      .concat(VestingFactoryFacetSol.abi)
       .concat(WaitListFactoryFacetSol.abi)
       .concat(PaymentSplitterFactoryFacet.abi),
   ),

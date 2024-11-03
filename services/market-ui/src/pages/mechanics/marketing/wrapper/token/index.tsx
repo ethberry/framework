@@ -27,7 +27,7 @@ export const WrapperToken: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "wrapper", "wrapper.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.wrapper.token.title" data={selected.template} />
@@ -50,6 +50,6 @@ export const WrapperToken: FC = () => {
 
         <Grid item xs={3}></Grid>
       </Grid>
-    </Fragment>
+    </Grid>
   );
 };

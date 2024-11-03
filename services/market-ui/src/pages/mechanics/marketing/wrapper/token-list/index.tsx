@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid } from "@mui/material";
 import { Add, FilterList } from "@mui/icons-material";
@@ -84,7 +84,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
   };
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "wrapper.tokens"]} isHidden={embedded} />
 
       <PageHeader message="pages.wrapper.tokens.title">
@@ -135,6 +135,6 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
           item: emptyToken,
         }}
       />
-    </Fragment>
+    </Grid>
   );
 };

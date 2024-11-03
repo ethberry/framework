@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router";
 import { stringify } from "qs";
@@ -31,7 +31,7 @@ export const ContractList: FC<IContractListProps> = props => {
   });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "marketplace", "marketplace.contracts"]} isHidden={embedded} />
 
       <PageHeader message="pages.marketplace.contracts.title" />
@@ -54,6 +54,6 @@ export const ContractList: FC<IContractListProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

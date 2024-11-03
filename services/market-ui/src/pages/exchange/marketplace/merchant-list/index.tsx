@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 import { stringify } from "qs";
 
@@ -18,7 +18,7 @@ export const MerchantList: FC = () => {
   });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "marketplace", "marketplace.merchants"]} />
 
       <PageHeader message="pages.marketplace.merchants.title" />
@@ -41,6 +41,6 @@ export const MerchantList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

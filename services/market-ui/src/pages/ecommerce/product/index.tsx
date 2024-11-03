@@ -1,7 +1,7 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { Box, Grid, Hidden, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
-import { Box, Grid, Hidden, Typography } from "@mui/material";
 import { useParams } from "react-router";
 
 import { formatItem } from "@framework/exchange";
@@ -59,7 +59,7 @@ export const Product: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "ecommerce", "products"]} />
 
       <PageHeader message="pages.product.title" data={product} />
@@ -90,6 +90,6 @@ export const Product: FC = () => {
           </Grid>
         </Hidden>
       </Grid>
-    </Fragment>
+    </Grid>
   );
 };

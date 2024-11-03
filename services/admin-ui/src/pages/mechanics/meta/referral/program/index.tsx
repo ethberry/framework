@@ -1,4 +1,5 @@
-import { FC, Fragment, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
+import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
 import { useApiCall } from "@ethberry/react-hooks";
@@ -97,7 +98,7 @@ export const ReferralProgram: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.program"]} />
 
       <PageHeader message="pages.referral.program.title">
@@ -108,6 +109,6 @@ export const ReferralProgram: FC = () => {
           <ReferralProgramForm onSubmit={handleSubmit} initialValues={initialValues} />
         </StyledDisableOverlay>
       </ProgressOverlay>
-    </Fragment>
+    </Grid>
   );
 };

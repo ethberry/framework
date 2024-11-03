@@ -34,6 +34,7 @@ import { AchievementsSection } from "./mechanics/achievements";
 import { DexSection } from "./integrations/dex";
 import { ReferralSection } from "./mechanics/referral";
 import { PredictionSection } from "./mechanics/prediction";
+import { VestingSection } from "./mechanics/vesting";
 
 export const Dashboard: FC = () => {
   return (
@@ -57,6 +58,7 @@ export const Dashboard: FC = () => {
           <WaitListSection />
           <ClaimSection />
           <LegacyVestingSection />
+          <VestingSection />
           <RecipesSection />
           <AssetPromoSection />
           <RentSection />

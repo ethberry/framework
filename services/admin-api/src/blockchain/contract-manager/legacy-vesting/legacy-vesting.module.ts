@@ -15,4 +15,4 @@ import { ContractManagerLegacyVestingSignService } from "./legacy-vesting.sign.s
   controllers: [ContractManagerLegacyVestingController],
   exports: [ContractManagerLegacyVestingSignService],
 })
-export class ContractManagerVestingModule {}
+export class ContractManagerLegacyVestingModule {}

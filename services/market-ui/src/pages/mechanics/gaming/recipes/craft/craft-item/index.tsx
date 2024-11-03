@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Box, Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@ethberry/mui-page-layout";
@@ -33,7 +33,7 @@ export const CraftItem: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs
         path={["dashboard", "recipes", "recipes.craft"]}
         data={[{}, {}, { title: selected.item?.components.map(comp => comp.template?.title).join(" + ") }]}
@@ -70,6 +70,6 @@ export const CraftItem: FC = () => {
       </StyledDescription>
 
       {selected.id ? <CraftTransactions craft={selected} /> : null}
-    </Fragment>
+    </Grid>
   );
 };

@@ -26,6 +26,11 @@ export * from "./staking/deposit";
 export * from "./legacy-vesting/deploy";
 export * from "./legacy-vesting/search";
 
+export * from "./vesting/autocomplete";
+export * from "./vesting/deploy";
+export * from "./vesting/search";
+export * from "./vesting/sign";
+
 export * from "./wait-list/item/create";
 export * from "./wait-list/item/search";
 export * from "./wait-list/list/autocomplete";

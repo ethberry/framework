@@ -1,7 +1,7 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
+import { Grid } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
-import { Grid } from "@mui/material";
 import { BigNumber, constants, Contract, utils } from "ethers";
 
 import { SelectInput } from "@ethberry/mui-inputs-core";
@@ -102,7 +102,7 @@ export const Breed: FC = () => {
   };
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "breed"]} />
 
       <PageHeader message="pages.breed.title" />
@@ -168,6 +168,6 @@ export const Breed: FC = () => {
           </Grid>
         </Grid>
       </FormWrapper>
-    </Fragment>
+    </Grid>
   );
 };

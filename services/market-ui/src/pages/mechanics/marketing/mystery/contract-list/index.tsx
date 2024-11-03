@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -21,7 +21,7 @@ export const MysteryContractList: FC = () => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "mystery", "mystery.contracts"]} />
 
       <PageHeader message="pages.mystery.contracts.title">
@@ -61,6 +61,6 @@ export const MysteryContractList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

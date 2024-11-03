@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import { StyledEmptyWrapper } from "@framework/styled";
@@ -14,7 +14,7 @@ export const AssetPromoList: FC = () => {
   });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "promo-list"]} />
 
       <PageHeader message="pages.promo-list.title" />
@@ -30,6 +30,6 @@ export const AssetPromoList: FC = () => {
           </StyledEmptyWrapper>
         </Grid>
       </ProgressOverlay>
-    </Fragment>
+    </Grid>
   );
 };

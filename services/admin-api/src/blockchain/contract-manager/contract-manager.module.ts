@@ -14,7 +14,8 @@ import { ContractManagerPonziModule } from "./ponzi/ponzi.module";
 import { ContractManagerPredictionModule } from "./prediction/prediction.module";
 import { ContractManagerWaitListModule } from "./wait-list/wait-list.module";
 import { ContractManagerPaymentSplitterModule } from "./payment-splitter/payment-splitter.module";
-import { ContractManagerVestingModule } from "./legacy-vesting/legacy-vesting.module";
+import { ContractManagerLegacyVestingModule } from "./legacy-vesting/legacy-vesting.module";
+import { ContractManagerVestingModule } from "./vesting/vesting.module";
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ContractManagerVestingModule } from "./legacy-vesting/legacy-vesting.mo
     ContractManagerStakingModule,
     ContractManagerPonziModule,
     ContractManagerPredictionModule,
+    ContractManagerLegacyVestingModule,
     ContractManagerVestingModule,
     ContractManagerWaitListModule,
     ContractManagerPaymentSplitterModule,

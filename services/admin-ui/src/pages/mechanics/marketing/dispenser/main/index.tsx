@@ -1,6 +1,7 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
+import { Grid, Typography } from "@mui/material";
+
 import { FormattedMessage } from "react-intl";
-import { Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 
@@ -9,7 +10,7 @@ import { AllowanceButtonForDispenser } from "./allowance";
 
 export const Dispenser: FC = () => {
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "dispenser"]} />
 
       <PageHeader message="pages.dispenser.title">
@@ -20,6 +21,6 @@ export const Dispenser: FC = () => {
       <Typography>
         <FormattedMessage id="pages.dispenser.description" />
       </Typography>
-    </Fragment>
+    </Grid>
   );
 };

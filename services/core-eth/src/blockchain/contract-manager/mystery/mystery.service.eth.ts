@@ -8,14 +8,14 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@ethberry/nest-js-module-ethers-gcp";
 
 import { emptyStateString } from "@ethberry/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
+import type { IContractManagerMysteryTokenDeployedEvent } from "@framework/types";
 import {
   ContractFeatures,
-  IContractManagerMysteryTokenDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
   RmqProviderType,
   SignalEventType,
-  TokenType,
+  TokenType
 } from "@framework/types";
 
 import { UserService } from "../../../infrastructure/user/user.service";

@@ -1,7 +1,7 @@
-import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
+import { FC } from "react";
 import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 import { constants } from "ethers";
 import { useParams } from "react-router";
 
@@ -35,7 +35,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "mystery", "mystery.boxes"]} isHidden={embedded} />
 
       <PageHeader message="pages.mystery.boxes.title">
@@ -64,6 +64,6 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

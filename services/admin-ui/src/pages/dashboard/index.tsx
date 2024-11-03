@@ -39,6 +39,7 @@ import { RecipesSection } from "./mechanics/recipes";
 import { ReferralSection } from "./mechanics/referral";
 import { StakingSection } from "./mechanics/staking";
 import { LegacyVestingSection } from "./mechanics/legacy-vesting";
+import { VestingSection } from "./mechanics/vesting";
 import { WaitListSection } from "./mechanics/wait-list";
 
 export const Dashboard: FC = () => {
@@ -63,6 +64,7 @@ export const Dashboard: FC = () => {
           <WaitListSection />
           <ClaimSection />
           <LegacyVestingSection />
+          <VestingSection />
           <DiscreteSection />
           <RecipesSection />
           <AssetPromoSection />

@@ -54,3 +54,8 @@ export * from "./marketing/wait-list/list/generate";
 export * from "./marketing/legacy-vesting/deploy";
 export * from "./marketing/legacy-vesting/release";
 export * from "./marketing/legacy-vesting/releasable";
+
+export * from "./marketing/vesting/contract/deploy";
+export * from "./marketing/vesting/contract/mint";
+export * from "./marketing/vesting/box/mint";
+

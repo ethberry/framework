@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import { StyledEmptyWrapper, StyledPagination } from "@framework/styled";
@@ -25,7 +25,7 @@ export const Erc20CoinsList: FC<IErc20CoinsListProps> = props => {
   });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "erc20.coins"]} isHidden={embedded} />
 
       <PageHeader message="pages.erc20.coins.title" />
@@ -50,6 +50,6 @@ export const Erc20CoinsList: FC<IErc20CoinsListProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

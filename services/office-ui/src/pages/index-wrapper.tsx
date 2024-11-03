@@ -1,4 +1,6 @@
-import { FC, Fragment, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from "react";
+import { Grid } from "@mui/material";
+
 import { Breadcrumbs, PageHeader } from "@ethberry/mui-page-layout";
 
 export interface IIndexWrapperProps {
@@ -8,12 +10,12 @@ export interface IIndexWrapperProps {
 export const IndexWrapper: FC<PropsWithChildren<IIndexWrapperProps>> = props => {
   const { children, index } = props;
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", index]} />
 
       <PageHeader message={`pages.${index}.title`} />
 
       {children}
-    </Fragment>
+    </Grid>
   );
 };

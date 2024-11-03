@@ -1,5 +1,5 @@
-import { FC, Fragment, useCallback, useEffect, useRef } from "react";
-import { Box, Button } from "@mui/material";
+import { FC, useCallback, useEffect, useRef } from "react";
+import { Box, Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
@@ -128,7 +128,7 @@ export const MarketplaceChart: FC = () => {
   }, [chartRef.current, rows]);
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "marketplace", "marketplace.chart"]} />
 
       <PageHeader message="pages.marketplace.chart.title">
@@ -144,6 +144,6 @@ export const MarketplaceChart: FC = () => {
           <Box mt={4} width="100%" ref={chartRef} />
         </StyledEmptyWrapper>
       </ProgressOverlay>
-    </Fragment>
+    </Grid>
   );
 };

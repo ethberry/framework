@@ -1,6 +1,6 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 
@@ -18,7 +18,7 @@ import type { IWaitListList } from "@framework/types";
 import {
   WaitListListCreateButton,
   WaitListListGenerateButton,
-  WaitListListUploadButton,
+  WaitListListUploadButton
 } from "../../../../../components/buttons";
 import { WithCheckPermissionsListWrapper } from "../../../../../components/wrappers";
 import { WaitListListEditDialog } from "./edit";
@@ -71,7 +71,7 @@ export const WaitListList: FC = () => {
   const { account = "" } = useWeb3React();
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "wait-list", "wait-list.list"]} />
 
       <PageHeader message="pages.wait-list.list.title">
@@ -128,6 +128,6 @@ export const WaitListList: FC = () => {
         testId="WaitListListEditDialog"
         initialValues={selected}
       />
-    </Fragment>
+    </Grid>
   );
 };

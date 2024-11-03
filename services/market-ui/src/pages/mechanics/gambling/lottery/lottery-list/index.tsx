@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import type { ISearchDto } from "@ethberry/types-collection";
@@ -18,7 +18,7 @@ export const LotteryList: FC = () => {
     },
   });
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "lottery"]} />
 
       <PageHeader message="pages.lottery-list.title" />
@@ -43,6 +43,6 @@ export const LotteryList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

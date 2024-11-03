@@ -170,9 +170,17 @@ export enum LegacyVestingContractTemplates {
   "VESTING_VOTES" = "VESTING_VOTES",
 }
 
-export enum VestingContractFeatures {
+export enum LegacyVestingContractFeatures {
   "SIMPLE" = "SIMPLE",
   "VOTES" = "VOTES",
+}
+
+export enum VestingContractFeatures {
+  "VOTES" = "VOTES",
+}
+
+export enum VestingContractTemplates {
+  "SIMPLE" = "SIMPLE",
 }
 
 export enum ContractFeatures {

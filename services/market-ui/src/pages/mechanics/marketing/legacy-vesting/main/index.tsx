@@ -1,10 +1,10 @@
-import { FC, Fragment, useState } from "react";
-import { ListItemText } from "@mui/material";
+import { FC, useState } from "react";
+import { Grid, ListItemText } from "@mui/material";
 import { AccountBalanceWallet, Visibility } from "@mui/icons-material";
 import { addMonths, formatDistance } from "date-fns";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@ethberry/mui-page-layout";
-import { useCollection, CollectionActions } from "@ethberry/provider-collection";
+import { CollectionActions, useCollection } from "@ethberry/provider-collection";
 import { AddressLink } from "@ethberry/mui-scanner";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, ILegacyVestingContractSearchDto } from "@framework/types";
@@ -50,7 +50,7 @@ export const LegacyVesting: FC = () => {
   };
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "legacy-vesting"]} />
 
       <PageHeader message="pages.legacy-vesting.title" />
@@ -108,6 +108,6 @@ export const LegacyVesting: FC = () => {
         open={isWithdrawDialogOpen}
         initialValues={contract}
       />
-    </Fragment>
+    </Grid>
   );
 };

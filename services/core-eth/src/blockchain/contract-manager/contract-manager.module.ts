@@ -33,6 +33,7 @@ import { ContractManagerCollectionModule } from "./collection/collection.module"
 import { ContractManagerMysteryModule } from "./mystery/mystery.module";
 import { ContractManagerLootModule } from "./loot/loot.module";
 import { ContractManagerLegacyVestingModule } from "./legacy-vesting/legacy-vesting.module";
+import { ContractManagerVestingModule } from "./vesting/vesting.module";
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { ContractManagerLegacyVestingModule } from "./legacy-vesting/legacy-vest
     ContractManagerWaitListModule,
     ContractManagerLegacyVestingModule,
     ContractManagerPaymentSplitterModule,
+    ContractManagerVestingModule,
 
     ConfigModule,
     EthersModule.deferred(),

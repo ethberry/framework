@@ -1,6 +1,6 @@
 # Token Management System
 
-Welcome to Gemunion Framework monorepo.
+Welcome to EthBerry Framework monorepo.
 
 ## Installation
 
@@ -9,7 +9,7 @@ All commands are given for mac, please figure windows equivalents yourself
 1. Clone repo from git
 
 ```shell script
-git clone git@github.com:Gemunion/framework.git
+git clone git@github.com:Ethberry/framework.git
 git submodule update --init --recursive
 ```
 
@@ -35,7 +35,7 @@ nvm alias default 22
 docker compose up -d
 ```
 
-Then connect to Postgres and manually create `gemunion-development` database
+Then connect to Postgres and manually create `ethberry-development` database
 
 5. Fill up sensitive keys in .env files
 

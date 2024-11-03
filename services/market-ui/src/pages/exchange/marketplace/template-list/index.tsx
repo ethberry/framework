@@ -1,6 +1,6 @@
-import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
+import { FC } from "react";
 import { Button, Grid } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 import { useParams } from "react-router";
@@ -38,7 +38,7 @@ export const TemplateList: FC<ITemplateListProps> = props => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "marketplace", "marketplace.templates"]} isHidden={embedded} />
 
       <PageHeader message="pages.marketplace.templates.title">
@@ -74,6 +74,6 @@ export const TemplateList: FC<ITemplateListProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

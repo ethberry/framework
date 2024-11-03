@@ -29,7 +29,7 @@ export const LootBox: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "loot", "loot.box"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.loot.box.title" data={selected} />
@@ -53,6 +53,6 @@ export const LootBox: FC = () => {
       </Grid>
 
       <BoxContent content={selected.content} />
-    </Fragment>
+    </Grid>
   );
 };

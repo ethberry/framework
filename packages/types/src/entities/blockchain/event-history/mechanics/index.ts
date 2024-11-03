@@ -13,6 +13,7 @@ import { StakingEventType, TStakingEvents } from "./staking";
 import { TLegacyVestingEvents, LegacyVestingEventType } from "./legacy-vesting";
 import { TWaitListEvents, WaitListEventType } from "./wait-list";
 import { TWrapperEvents, WrapperEventType } from "./wrapper";
+import { TVestingEvents, VestingEventType } from "./vesting";
 
 export * from "./collection";
 export * from "./discrete";
@@ -26,6 +27,7 @@ export * from "./raffle";
 export * from "./referral";
 export * from "./staking";
 export * from "./legacy-vesting";
+export * from "./vesting";
 export * from "./wait-list";
 export * from "./wrapper";
 
@@ -42,6 +44,7 @@ export type TMechanicsEventType =
   | ReferralProgramEventType
   | StakingEventType
   | LegacyVestingEventType
+  | VestingEventType
   | WaitListEventType
   | WrapperEventType;
 
@@ -58,5 +61,6 @@ export type TMechanicsEventData =
   | TReferralProgramEvents
   | TStakingEvents
   | TLegacyVestingEvents
+  | TVestingEvents
   | TWaitListEvents
   | TWrapperEvents;

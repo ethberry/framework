@@ -14,6 +14,7 @@ export const eventRouteMapping: Partial<Record<string, Array<string>>> = {
   [ContractManagerEventType.CollectionDeployed]: ["/collection/contracts"],
   PonziDeployed: ["/ponzi/contracts"],
   [ContractManagerEventType.LegacyVestingDeployed]: ["/legacy-vesting/contracts"],
+  [ContractManagerEventType.VestingBoxDeployed]: ["/vesting/contracts"],
   StakingDeployed: ["/staking/contracts"],
   LotteryDeployed: ["/lottery/contracts"],
   RaffleDeployed: ["/raffle/contracts"],

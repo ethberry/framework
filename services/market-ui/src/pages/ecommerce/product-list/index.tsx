@@ -1,6 +1,6 @@
-import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
+import { FC } from "react";
 import { Button, Grid } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
@@ -32,7 +32,7 @@ export const ProductList: FC = () => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "ecommerce", "products"]} />
 
       <PageHeader message="pages.products.title">
@@ -67,6 +67,6 @@ export const ProductList: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

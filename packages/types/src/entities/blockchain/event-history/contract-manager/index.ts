@@ -1,22 +1,24 @@
 import { IContractManagerCollectionDeployedEvent } from "./collection";
-import { IContractManagerLegacyVestingDeployedEvent } from "./legacy-vesting";
-import { IContractManagerMysteryTokenDeployedEvent } from "./mystery";
-import { IContractManagerLootTokenDeployedEvent } from "./loot";
 import { IContractManagerERC20TokenDeployedEvent } from "./erc20";
 import { IContractManagerERC721TokenDeployedEvent } from "./erc721";
 import { IContractManagerERC998TokenDeployedEvent } from "./erc998";
 import { IContractManagerERC1155TokenDeployedEvent } from "./erc1155";
-import { IContractManagerPonziDeployedEvent } from "./ponzi";
-import { IContractManagerStakingDeployedEvent } from "./staking";
+import { IContractManagerLegacyVestingDeployedEvent } from "./legacy-vesting";
+import { IContractManagerLootTokenDeployedEvent } from "./loot";
 import { IContractManagerLotteryDeployedEvent } from "./lottery";
-import { IContractManagerRaffleDeployedEvent } from "./raffle";
-import { IContractManagerWaitListDeployedEvent } from "./wait-list";
+import { IContractManagerMysteryTokenDeployedEvent } from "./mystery";
 import { IContractManagerPaymentSplitterDeployedEvent } from "./payment-splitter";
+import { IContractManagerPonziDeployedEvent } from "./ponzi";
+import { IContractManagerRaffleDeployedEvent } from "./raffle";
+import { IContractManagerStakingDeployedEvent } from "./staking";
+import { IContractManagerVestingTokenDeployedEvent } from "./vesting";
+import { IContractManagerWaitListDeployedEvent } from "./wait-list";
 
 export { IContractManagerCommonDeployedEvent } from "./common";
 
 export enum ContractManagerEventType {
   LegacyVestingDeployed = "LegacyVestingDeployed",
+  VestingBoxDeployed = "VestingBoxDeployed",
   ERC20TokenDeployed = "ERC20TokenDeployed",
   ERC721TokenDeployed = "ERC721TokenDeployed",
   ERC998TokenDeployed = "ERC998TokenDeployed",
@@ -34,6 +36,7 @@ export enum ContractManagerEventType {
 
 export enum ContractManagerEventSignature {
   LegacyVestingDeployed = "LegacyVestingDeployed(address,uint256,(address,uint64,uint16,uint16,string))",
+  VestingBoxDeployed = "VestingBoxDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC20TokenDeployed = "ERC20TokenDeployed(address,uint256,(string,string,uint256,string))",
   ERC721TokenDeployed = "ERC721TokenDeployed(address,uint256,(string,string,uint96,string,string))",
   ERC998TokenDeployed = "ERC998TokenDeployed(address,uint256,(string,string,uint96,string,string))",
@@ -51,6 +54,7 @@ export enum ContractManagerEventSignature {
 
 export type TContractManagerEvent =
   | IContractManagerLegacyVestingDeployedEvent
+  | IContractManagerVestingTokenDeployedEvent
   | IContractManagerERC20TokenDeployedEvent
   | IContractManagerERC721TokenDeployedEvent
   | IContractManagerERC1155TokenDeployedEvent
@@ -66,6 +70,7 @@ export type TContractManagerEvent =
 
 export {
   IContractManagerLegacyVestingDeployedEvent,
+  IContractManagerVestingTokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,

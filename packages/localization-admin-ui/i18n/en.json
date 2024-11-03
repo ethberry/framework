@@ -3,6 +3,8 @@
     "allowanceClaim": "You have to allow tokens for Contract Manager contract",
     "allowanceErc20": "You have to allow ERC20 tokens before Top up",
     "allowanceWarning": "You are going to allow all tokens of the contract",
+    "chainLinkConsumer": "Chain-Link VRF: You MUST add this contract to consumers list!",
+    "chainLinkSubId": "Chain-Link VRF: You MUST set subscription!",
     "craftItem": "Items to be crafted",
     "craftPrice": "Craft ingredients",
     "dismantleItem": "Items to get after dismantle",
@@ -13,8 +15,6 @@
     "mergePrice": "Token to be merged and burned",
     "minterRole": "After deploy you need manually grant MINTER_ROLE role on tickets contract",
     "onlyIfUserExists": "We will send invitation only if user with such email exist in the system",
-    "chainLinkSubId": "Chain-Link VRF: You MUST set subscription!",
-    "chainLinkConsumer": "Chain-Link VRF: You MUST add this contract to consumers list!",
     "risk": "You are doing this at your own risk!",
     "uncaughtError": "Uncaught error happened"
   },
@@ -162,7 +162,6 @@
       "TEMPLATE_ID": "Template"
     },
     "blockchainError": {
-      "WaitListRootAlreadySet": "Root already set",
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
       "Expired": "The item has expired",
@@ -179,6 +178,7 @@
       "StakeNotExist": "The stake is wrong",
       "TemplateZero": "The template is zero",
       "UnsupportedTokenType": "The token type is not supported",
+      "WaitListRootAlreadySet": "Root already set",
       "WrongToken": "The token is wrong",
       "ZeroBalance": "The balance is zero"
     },
@@ -186,6 +186,15 @@
       "EXPIRED": "Expired",
       "NEW": "New",
       "REDEEMED": "Redeemed"
+    },
+    "cliff": {
+      "MONTH": "30 days",
+      "ONE_DAY": "1 day",
+      "SEVEN_DAYS": "7 days",
+      "SIX_MONTH": "180 days",
+      "TWO_DAYS": "2 days",
+      "TWO_YEARS": "2 years",
+      "YEAR": "1 year"
     },
     "contractFeatures": {
       "ALLOWANCE": "Allowance",
@@ -268,6 +277,13 @@
       "EXPONENTIAL": "Exponential",
       "FLAT": "Flat",
       "LINEAR": "Linear"
+    },
+    "duration": {
+      "MONTH": "30 days",
+      "SIX_MONTH": "180 days",
+      "THREE_MONTH": "90 days",
+      "TWO_YEARS": "2 years",
+      "YEAR": "1 year"
     },
     "durationUnit": {
       "DAY": "Day",
@@ -387,9 +403,9 @@
       "ERC20TokenDeployed": "ERC20TokenDeployed",
       "ERC721TokenDeployed": "ERC721TokenDeployed",
       "ERC998TokenDeployed": "ERC998TokenDeployed",
-      "PurchaseEcommerce": "PurchaseEcommerce",
       "EtherReceived": "EtherReceived",
       "EtherReleased": "EtherReleased",
+      "LegacyVestingDeployed": "LegacyVestingDeployed",
       "Lend": "Lend",
       "LevelUp": "LevelUp",
       "LootBoxDeployed": "LootBoxDeployed",
@@ -408,6 +424,7 @@
       "PonziDeployed": "PonziDeployed",
       "Prize": "Prize",
       "Purchase": "Purchase",
+      "PurchaseEcommerce": "PurchaseEcommerce",
       "PurchaseLootBox": "PurchaseLootBox",
       "PurchaseLottery": "PurchaseLottery",
       "PurchaseMysteryBox": "PurchaseMysteryBox",
@@ -454,7 +471,7 @@
       "Unpaused": "Unpaused",
       "UpdateUser": "UpdateUser",
       "Upgrade": "Upgrade",
-      "LegacyVestingDeployed": "LegacyVestingDeployed",
+      "VestingBoxDeployed": "VestingBoxDeployed",
       "VrfSubscriptionSet": "VrfSubscriptionSet",
       "WaitListDeployed": "WaitListDeployed",
       "WaitListRewardClaimed": "WaitListRewardClaimed",
@@ -557,6 +574,21 @@
       "PAUSER_ROLE": "PAUSER_ROLE",
       "PREDICATE_ROLE": "PREDICATE_ROLE"
     },
+    "shape": {
+      "EXPONENTIAL": "Exponential Vesting",
+      "EXPONENTIAL_CLIFF": "Exponential Vesting with Cliff",
+      "EXPONENTIAL_CLIFF_IMMEDIATE": "Exponential Vesting with Cliff Unlock",
+      "EXPONENTIAL_IMMEDIATE": "Exponential Vesting with Immediate Unlock",
+      "HYPERBOLIC": "Hyperbolic Vesting",
+      "HYPERBOLIC_CLIFF": "Hyperbolic Vesting with Cliff",
+      "HYPERBOLIC_CLIFF_IMMEDIATE": "Hyperbolic Vesting with Cliff Unlock",
+      "HYPERBOLIC_IMMEDIATE": "Hyperbolic Vesting with Immediate Unlock",
+      "LINEAR": "Linear Vesting",
+      "LINEAR_CLIFF": "Linear Vesting with Cliff",
+      "LINEAR_CLIFF_IMMEDIATE": "Linear Vesting with Cliff Unlock",
+      "LINEAR_IMMEDIATE": "Linear Vesting with Immediate Unlock",
+      "LINEAR_STEPS": "Linear Steps"
+    },
     "stakingDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
@@ -602,6 +634,10 @@
       "SUPER": "Super Admin"
     },
     "userStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "vestingBoxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     }
@@ -712,6 +748,7 @@
       "addressLine2": "Address (line 2)",
       "addresses": "Addresses",
       "advance": "Advance reward payment",
+      "afterCliffBasisPoints": "After cliff percent",
       "allDeposits": "All deposits",
       "allStakes": "All Stakes",
       "allUsers": "All Users",
@@ -729,6 +766,7 @@
       "childIds": "Child",
       "city": "City",
       "claimStatus": "Status",
+      "cliff": "Cliff",
       "cliffInMonth": "Cliff in month",
       "comment": "Comment",
       "commission": "Commission",
@@ -770,6 +808,7 @@
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
+      "immediateUnlockPercent": "Immediate unlock percent",
       "instagramUrl": "Instagram",
       "isDefault": "Is default",
       "isPrivate": "Private",
@@ -851,6 +890,7 @@
       "royalty": "Royalty",
       "ruleCounter": "Rule Counter",
       "schedule": "Round Schedule",
+      "shape": "Shape",
       "share": "Share",
       "shares": "Shares",
       "sire": "Sire",
@@ -889,6 +929,8 @@
       "userRoles": "Roles",
       "userStakes": "User Stakes",
       "userStatus": "Status",
+      "vestingBoxStatus": "Status",
+      "vestingId": "Vesting",
       "vrfConsumer": "Chain-Link Consumer Status",
       "vrfSubId": "VRF Subscription Id",
       "vrfSubscription": "Chain-Link Subscription ID",
@@ -910,6 +952,7 @@
       "addressId": "Address",
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
+      "afterCliffBasisPoints": "After cliff percent",
       "amount": "10",
       "attribute": "LEVEL",
       "baseTokenURI": "https://ethberry.io/",
@@ -1188,6 +1231,7 @@
         "collection": "Collections",
         "discrete": "Discrete",
         "dispenser": "Dispenser",
+        "legacy-vesting": "Legacy Vesting",
         "loot": "Loot",
         "lottery": "Lottery",
         "mystery": "Mystery",
@@ -1201,7 +1245,7 @@
         "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",
-        "legacy-vesting": "Legacy Vesting",
+        "vesting": "Vesting",
         "wait-list": "Waitlist"
       },
       "title": "Dashboard"
@@ -1282,6 +1326,12 @@
     },
     "kanban": {
       "title": "Orders"
+    },
+    "legacy-vesting": {
+      "contracts": {
+        "title": "Legacy Vesting Contracts"
+      },
+      "title": "Legacy Vesting"
     },
     "loot": {
       "boxContent": {
@@ -1512,6 +1562,9 @@
         "erc998": "ERC998 contracts",
         "native": "Native token"
       },
+      "legacy-vesting": {
+        "undefined": "Vesting"
+      },
       "loot": {
         "erc721": "Loot box"
       },
@@ -1541,9 +1594,6 @@
         "undefined": "Staking"
       },
       "title": "Rate plans",
-      "legacy-vesting": {
-        "undefined": "Vesting"
-      },
       "wait_list": {
         "undefined": "Wait list"
       }
@@ -1623,11 +1673,20 @@
       },
       "title": "Users"
     },
-    "legacy-vesting": {
-      "contracts": {
-        "title": "Legacy Vesting Contracts"
+    "vesting": {
+      "boxes": {
+        "title": "Vesting Boxes"
       },
-      "title": "Legacy Vesting"
+      "contracts": {
+        "title": "Vesting Contracts"
+      },
+      "create": {
+        "title": "Create Vesting Box"
+      },
+      "title": "Vesting",
+      "tokens": {
+        "title": "Vesting Tokens"
+      }
     },
     "wait-list": {
       "contracts": {

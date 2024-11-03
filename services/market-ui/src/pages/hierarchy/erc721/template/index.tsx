@@ -25,7 +25,7 @@ export const Erc721Template: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "erc721", "erc721.template"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.erc721.template.title" data={selected} />
@@ -46,6 +46,6 @@ export const Erc721Template: FC = () => {
           ) : null}
         </Grid>
       </Grid>
-    </Fragment>
+    </Grid>
   );
 };

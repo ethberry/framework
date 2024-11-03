@@ -1,7 +1,7 @@
-import { FC, Fragment } from "react";
-import { FormattedMessage } from "react-intl";
+import { FC } from "react";
 import { Button, Grid } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 import { constants } from "ethers";
 import { useParams } from "react-router";
 
@@ -36,7 +36,7 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
     });
 
   return (
-    <Fragment>
+    <Grid>
       <Breadcrumbs path={["dashboard", "erc721", "erc721.templates"]} isHidden={embedded} />
 
       <PageHeader message="pages.erc721.templates.title">
@@ -72,6 +72,6 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Fragment>
+    </Grid>
   );
 };

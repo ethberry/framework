@@ -11,7 +11,7 @@ import { AddressLink } from "@ethberry/mui-scanner";
 import { CommonSearchForm } from "@ethberry/mui-form-search";
 import { ListAction, ListActions, StyledListItem, StyledListWrapper, StyledPagination } from "@framework/styled";
 import type { IContract, IUser, ILegacyVestingContractSearchDto } from "@framework/types";
-import { VestingContractFeatures } from "@framework/types";
+import { LegacyVestingContractFeatures } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../../components/common/interfaces";
 import {
@@ -67,7 +67,7 @@ export const LegacyVestingContracts: FC = () => {
             <SearchMerchantInput disableClear />
           </Grid>
           <Grid item xs={12}>
-            <SelectInput name="contractFeatures" options={VestingContractFeatures} multiple />
+            <SelectInput name="contractFeatures" options={LegacyVestingContractFeatures} multiple />
           </Grid>
         </Grid>
       </CommonSearchForm>
