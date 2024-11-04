@@ -10,7 +10,7 @@
   "devDependencies": {
     "@framework/types": "0.0.1",
     "@ethberry/types-collection": "1.5.20",
-    "@ethberry/utils": "1.5.3",
+    "@ethberry/utils": "1.6.0",
     "@mui/material": "6.1.6",
     "ethers": "5.7.2",
     "react": "18.3.1"
