@@ -7,7 +7,7 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@ethberry/constants": "0.13.5",
-    "@ethberry/types-blockchain": "1.3.4",
+    "@ethberry/types-blockchain": "1.3.5",
     "@ethberry/types-collection": "1.5.20"
   },
   "devDependencies": {
