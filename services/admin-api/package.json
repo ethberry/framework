@@ -56,16 +56,16 @@
     "@nestjs/websockets": "10.4.6",
     "@openzeppelin/merkle-tree": "1.0.7",
     "amqp-connection-manager": "4.1.14",
-    "amqplib": "0.10.4",
+    "amqplib": "0.10.5",
     "archiver": "7.0.1",
     "async": "3.2.6",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
     "csvtojson": "2.0.10",
     "date-fns": "4.1.0",
-    "dotenv": "16.4.5",
+    "dotenv": "16.4.7",
     "ethers": "6.13.4",
-    "express": "4.21.1",
+    "express": "4.21.2",
     "firebase-admin": "12.7.0",
     "ioredis": "5.4.1",
     "json2csv": "5.0.7",
@@ -80,7 +80,7 @@
     "typedi": "0.10.0",
     "typeorm": "0.3.20",
     "typeorm-naming-strategies": "4.1.0",
-    "uuid": "11.0.2",
+    "uuid": "11.0.3",
     "zxcvbn": "4.4.2"
   },
   "devDependencies": {
@@ -92,7 +92,7 @@
     "@types/jest": "29.5.14",
     "@types/json2csv": "5.0.7",
     "@types/multer": "1.4.12",
-    "@types/node": "22.8.7",
+    "@types/node": "22.10.1",
     "@types/passport": "1.0.17",
     "@types/passport-jwt": "4.0.1",
     "@types/uuid": "10.0.0",
@@ -101,8 +101,8 @@
     "rimraf": "6.0.1",
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
-    "tsc-watch": "6.2.0",
-    "typescript": "5.6.3"
+    "tsc-watch": "6.2.1",
+    "typescript": "5.7.2"
   },
   "engines": {
     "node": ">=22"
