@@ -6,9 +6,9 @@
   },
   "dependencies": {
     "@framework/constants": "0.0.1",
-    "@ethberry/constants": "0.13.5",
-    "@ethberry/types-blockchain": "1.3.5",
-    "@ethberry/types-collection": "1.5.20"
+    "@ethberry/constants": "0.13.6",
+    "@ethberry/types-blockchain": "1.3.6",
+    "@ethberry/types-collection": "1.5.21"
   },
   "devDependencies": {
     "rimraf": "6.0.1"
