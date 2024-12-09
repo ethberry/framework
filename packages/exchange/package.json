@@ -13,7 +13,7 @@
     "@ethberry/utils": "1.6.1",
     "@mui/material": "6.1.10",
     "ethers": "5.7.2",
-    "react": "18.3.1"
+    "react": "19.0.0"
   },
   "engines": {
     "node": ">=22"
@@ -26,7 +26,7 @@
     "@framework/types": "^0.0.1",
     "@mui/material": "^5.14.18 || ^6.0.0",
     "ethers": "^5.0.0",
-    "react": "^18.3.1"
+    "react": "^18.3.1 || ^19.0.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
