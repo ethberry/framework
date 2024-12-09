@@ -8,8 +8,8 @@
     "url": "https://github.com/ethberry/framework"
   },
   "dependencies": {
-    "@emotion/react": "11.13.5",
-    "@emotion/styled": "11.13.5",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.0",
     "@ethberry/common-pages": "13.0.0",
     "@ethberry/constants": "0.13.6",
     "@ethberry/draft-js-utils": "2.0.1",
