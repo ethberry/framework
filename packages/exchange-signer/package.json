@@ -10,8 +10,8 @@
   "dependencies": {
     "@framework/types": "0.0.1",
     "@ethberry/contracts-constants": "5.0.52",
-    "@ethberry/nest-js-module-ethers-gcp": "7.0.9",
-    "@ethberry/nest-js-module-secret-manager-gcp": "1.1.52",
+    "@ethberry/nest-js-module-ethers-gcp": "8.0.0",
+    "@ethberry/nest-js-module-secret-manager-gcp": "2.0.0",
     "@ethberry/types-blockchain": "1.3.6"
   },
   "devDependencies": {
