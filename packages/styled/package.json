@@ -18,8 +18,8 @@
   "devDependencies": {
     "@mui/icons-material": "6.1.10",
     "@mui/material": "6.1.10",
-    "@types/node": "22.10.1",
-    "@types/react": "19.0.1",
+    "@types/node": "22.10.2",
+    "@types/react": "19.0.2",
     "react": "19.0.0",
     "react-intl": "7.0.4"
   },
